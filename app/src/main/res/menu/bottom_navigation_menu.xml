@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_today"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="투데이"/>
+
+    <item
+        android:id="@+id/menu_myrecord"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="MY 레코드"/>
+
+    <item
+        android:id="@+id/menu_allrecords"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="전체 레코드"/>
+
+    <item
+        android:id="@+id/menu_mydj"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="MY DJ"/>
+
+    <item
+        android:id="@+id/menu_mypage"
+        android:enabled="true"
+        android:icon="@drawable/ic_launcher_foreground"
+        android:title="MY 페이지"/>
+
+</menu>
