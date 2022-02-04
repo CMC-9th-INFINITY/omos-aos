@@ -5,30 +5,30 @@
         android:id="@+id/menu_today"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="투데이"/>
+        android:title="@string/today_title"/>
 
     <item
         android:id="@+id/menu_myrecord"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="MY 레코드"/>
+        android:title="@string/myrecord_title"/>
 
     <item
         android:id="@+id/menu_allrecords"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="전체 레코드"/>
+        android:title="@string/allrecord_title"/>
 
     <item
         android:id="@+id/menu_mydj"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="MY DJ"/>
+        android:title="@string/mydj_title"/>
 
     <item
         android:id="@+id/menu_mypage"
         android:enabled="true"
         android:icon="@drawable/ic_launcher_foreground"
-        android:title="MY 페이지"/>
+        android:title="@string/mypage_title"/>
 
 </menu>

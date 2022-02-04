@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">OMOS</string>
+    <string name="today_title">투데이</string>
+    <string name="myrecord_title">MY 레코드</string>
+    <string name="allrecord_title">전체 레코드</string>
+    <string name="mydj_title">MY DJ</string>
+    <string name="mypage_title">MY 페이지</string>
 </resources>
