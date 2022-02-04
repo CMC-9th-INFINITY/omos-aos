@@ -6,16 +6,15 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.LiveData
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.infinity.omos.ui.*
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
-    private val fragmentToday by lazy {TodayFragment()}
-    private val fragmentMyRecord by lazy {MyRecordFragment()}
-    private val fragmentAllRecords by lazy {AllRecordFragment()}
-    private val fragmentMyDj by lazy {MyDjFragment()}
-    private val fragmentMyPage by lazy {MyPageFragment()}
+    private val fragmentToday by lazy { TodayFragment() }
+    private val fragmentMyRecord by lazy { MyRecordFragment() }
+    private val fragmentAllRecords by lazy { AllRecordFragment() }
+    private val fragmentMyDj by lazy { MyDjFragment() }
+    private val fragmentMyPage by lazy { MyPageFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

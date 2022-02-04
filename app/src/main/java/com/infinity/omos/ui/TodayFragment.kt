@@ -1,10 +1,11 @@
-package com.infinity.omos
+package com.infinity.omos.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.infinity.omos.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 private const val ARG_PARAM1 = "param1"
