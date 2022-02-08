@@ -25,8 +25,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = "OMOS"
+        toolbar.title = ""
         setSupportActionBar(toolbar)
+
+        // OMOS 텍스트 이미지 추가
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.omos_title)
     }
 
     private fun initNavigationBar(){
@@ -34,23 +38,28 @@ class MainActivity : AppCompatActivity() {
             setOnItemSelectedListener { item ->
                 when(item.itemId){
                     R.id.menu_today -> {
-                        toolbar.title = "OMOS"
+                        toolbar.title = ""
+                        supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         changeFragment(fragmentToday)
                     }
                     R.id.menu_myrecord -> {
                         toolbar.title = "MY 레코드"
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentMyRecord)
                     }
                     R.id.menu_allrecords -> {
                         toolbar.title = "전체 레코드"
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentAllRecords)
                     }
                     R.id.menu_mydj -> {
                         toolbar.title = "MY DJ"
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentMyDj)
                     }
                     R.id.menu_mypage -> {
                         toolbar.title = "MY 페이지"
+                        supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentMyPage)
                     }
                 }
