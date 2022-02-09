@@ -10,7 +10,7 @@ import com.infinity.omos.repository.Repository
 /**
  *  수정 필요 ( Repository 인자 )
  */
-class MyRecordViewModel(application: Application): AndroidViewModel(application) {
+class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
     private val records = repository.getMyRecordData()

@@ -7,9 +7,6 @@ import com.google.gson.annotations.SerializedName
  */
 data class MyRecord(
     @SerializedName("title") val title: String,
-    @SerializedName("contents") val contents: String,
-    @SerializedName("music") val music: String,
-    @SerializedName("category") val category: String,
-    @SerializedName("heart") val heart: String,
-    @SerializedName("scrap") val scrap: String
+    @SerializedName("original_title") val contents: String,
+    @SerializedName("overview") val category: String
 )
