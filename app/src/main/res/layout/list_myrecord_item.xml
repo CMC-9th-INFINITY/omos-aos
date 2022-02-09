@@ -14,9 +14,10 @@
         android:layout_height="wrap_content"
         android:layout_margin="4dp">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
@@ -26,23 +27,52 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"/>
 
-            <TextView
-                android:id="@+id/contents"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@{record.contents}"
-                app:layout_constraintTop_toBottomOf="@+id/title"
-                app:layout_constraintStart_toStartOf="parent"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/category"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="@{record.category}"
-                app:layout_constraintTop_toBottomOf="@+id/contents"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                <LinearLayout
+                    android:id="@+id/linear1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/album_cover_path"
+                    app:layout_constraintBottom_toBottomOf="parent">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                    <TextView
+                        android:id="@+id/contents"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@{record.contents}"
+                        app:layout_constraintTop_toBottomOf="@+id/title"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/category"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        tools:text="@{record.category}"
+                        app:layout_constraintTop_toBottomOf="@+id/contents"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:id="@+id/album_cover_path"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="4dp"
+                    android:background="@android:color/darker_gray"
+                    app:imageUrl="@{record.album_cover_path}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 </layout>
