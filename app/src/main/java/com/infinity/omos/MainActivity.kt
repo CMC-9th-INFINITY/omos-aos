@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initToolBar(){
         toolbar.title = ""
-        setSupportActionBar(toolbar)
+        setSupportActionBar(toolbar) // 툴바 사용
 
         // OMOS 텍스트 이미지 추가
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
