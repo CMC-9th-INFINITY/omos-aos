@@ -6,7 +6,7 @@ name: OMOS-CD
 on:
   push:
     branches:
-      - master
+      - dist
   pull_request:
     branches:
       - dist
@@ -50,7 +50,7 @@ jobs:
         file_path: 'app/build/outputs/apk/debug/app-debug.apk'
         file_name: 'app-debug.apk'
         file_type: 'apk'
-        initial_comment: 'OMOS 최신 빌드 앱 배포 - ${{github.event.head_commit.message}}'
+        initial_comment: 'OMOS 최신 빌드 앱 배포(Android) - ${{github.event.head_commit.message}}'
 
        
     - name: apk upload
