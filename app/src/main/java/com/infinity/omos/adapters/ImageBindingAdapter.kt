@@ -5,6 +5,9 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.infinity.omos.R
 
+/**
+ *  수정 필요
+ */
 object ImageBindingAdapter {
     @BindingAdapter("imageUrl")
     @JvmStatic
