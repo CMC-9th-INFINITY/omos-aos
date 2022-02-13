@@ -6,15 +6,16 @@
     <data>
         <variable
             name="vm"
-            type="com.infinity.omos.viewmodels.LoginViewModel" />
+            type="com.infinity.omos.viewmodels.RegisterViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity"
+        tools:context=".RegisterActivity"
         android:padding="16dp"
         android:background="@color/dark">
+
 
         <ImageView
             android:id="@+id/main_logo"
@@ -34,13 +35,13 @@
             app:layout_constraintTop_toBottomOf="@+id/main_logo"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/linear2">
+            app:layout_constraintBottom_toTopOf="@+id/btn_next">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="26dp"
-                android:text="로그인"
+                android:text="회원가입"
                 android:textSize="22sp"
                 android:textColor="@color/orange"/>
 
@@ -60,12 +61,12 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <TextView
-                    android:id="@+id/tv_error_id"
+                    android:id="@+id/tv_success_msg"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="아이디 에러 메시지"
+                    android:text="인증을 성공했어요."
                     android:textSize="12sp"
-                    android:textColor="@color/orange"
+                    android:textColor="@color/gray_05"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
@@ -75,47 +76,40 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="14dp"
                 android:hint="이메일(아이디)을 입력해주세요."
                 android:textSize="16sp"
                 android:textColor="@color/gray_02"
                 android:textColorHint="@color/dark_gray"
-                android:background="@drawable/rectangle_stroke_box"/>
+                android:background="@drawable/rectangle_box"/>
+
+            <TextView
+                android:id="@+id/btn_send_auth_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_gravity="right"
+                android:text="@string/send_auth_mail"
+                android:textSize="14sp"
+                android:textColor="@color/light_gray"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp"
+                android:text="비밀번호"
+                android:textSize="14sp"
+                android:textColor="@color/ivory"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="비밀번호"
-                    android:textSize="14sp"
-                    android:textColor="@color/ivory"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <TextView
-                    android:id="@+id/tv_error_pw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="비밀번호 에러 메시지"
-                    android:textSize="12sp"
-                    android:textColor="@color/orange"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="16dp"
                 android:background="@color/deep_dark">
 
                 <EditText
@@ -138,129 +132,81 @@
                     app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
-                    android:id="@+id/ic_eye"
+                    android:id="@+id/ic_eye1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:padding="13dp"
                     android:src="@drawable/ic_visible_eye"
-                    android:onClick="@{()->vm.eyeClick()}"
+                    android:onClick="@{()->vm.eye1Click()}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <LinearLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:text="비밀번호 재확인"
+                android:textSize="14sp"
+                android:textColor="@color/ivory"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:background="@color/deep_dark">
 
-                <TextView
-                    android:id="@+id/btn_find_id"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="아이디 찾기"
-                    android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="  |  "
-                    android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
-
-                <TextView
-                    android:id="@+id/btn_find_pw"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="비밀번호 찾기"
-                    android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/btn_register"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="회원가입"
-                    android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
-
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linear2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginBottom="36dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
-
-            <Button
-                android:id="@+id/btn_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="로그인"
-                android:textSize="16sp"
-                android:textColor="@color/dark_gray"
-                android:background="@drawable/rectangle_box"
-                android:backgroundTint="@color/light_gray"/>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
+                <EditText
+                    android:id="@+id/et_again_pw"
                     android:layout_width="match_parent"
-                    android:layout_height="2px"
-                    android:layout_gravity="center"
-                    android:background="@color/divide"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:paddingVertical="12dp"
+                    android:hint="비밀번호를 다시 입력해주세요."
                     android:paddingHorizontal="16dp"
-                    android:text="or"
-                    android:textSize="14sp"
-                    android:textColor="@color/dark_gray"
-                    android:background="@color/dark"/>
-
-            </FrameLayout>
-
-            <LinearLayout
-                android:id="@+id/btn_kakao_login"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:background="@drawable/rectangle_box"
-                android:backgroundTint="@color/yellow">
+                    android:paddingVertical="14dp"
+                    android:textSize="16sp"
+                    android:textColor="@color/gray_02"
+                    android:textColorHint="@color/dark_gray"
+                    android:singleLine="true"
+                    android:background="@drawable/rectangle_box"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.0"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.0" />
 
                 <ImageView
+                    android:id="@+id/ic_eye2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginRight="12dp"
-                    android:src="@drawable/ic_kakao"/>
+                    android:padding="13dp"
+                    android:src="@drawable/ic_visible_eye"
+                    android:onClick="@{()->vm.eye2Click()}"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="카카오로 로그인"
-                    android:textSize="16sp"
-                    android:textColor="@color/kakao"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            android:text="다음"
+            android:textSize="16sp"
+            android:textColor="@color/dark_gray"
+            android:background="@drawable/rectangle_box"
+            android:backgroundTint="@color/light_gray"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
