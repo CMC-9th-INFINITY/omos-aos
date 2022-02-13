@@ -1,5 +1,6 @@
 package com.infinity.omos
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.InputType
@@ -26,6 +27,7 @@ class LoginActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
+        // 비밀번호 표시 ON/OFF
         viewModel.visibleEye.observe(this, Observer { state ->
             state?.let {
                 if (it){
@@ -39,5 +41,11 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
         })
+
+        // 회원가입 페이지 이동
+        btn_register.setOnClickListener {
+            var intent = Intent(this, RegisterActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
