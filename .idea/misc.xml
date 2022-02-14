@@ -7,6 +7,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/circle_check_box.xml" value="0.2453125" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_eye.xml" value="0.25416666666666665" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_launcher_background.xml" value="0.22083333333333333" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_today.xml" value="0.26614583333333336" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/menu_selector_color.xml" value="0.14583333333333334" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_2.xml" value="0.25416666666666665" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_box.xml" value="0.2421875" />
@@ -14,7 +15,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_login.xml" value="0.2453125" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_stroke_box.xml" value="0.2453125" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_login.xml" value="0.25" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_main.xml" value="0.1296875" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_record_detail.xml" value="0.18697916666666667" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_register.xml" value="0.25" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_register_nick.xml" value="0.25" />

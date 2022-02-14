@@ -13,9 +13,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OMOS">
         <activity
-            android:name=".SplashActivity"
-            android:exported="false" />
-        <activity
             android:name=".RegisterNickActivity"
             android:exported="false" />
         <activity
@@ -25,20 +22,33 @@
             android:name=".RecordDetailActivity"
             android:exported="false" />
         <activity
+            android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
+                <data
+                    android:host="oauth"
+                    android:scheme="kakao${KAKAO_NATIVE_APP_KEY}"/>
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".LoginActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
-
-                <data
-                    android:host="oauth"
-                    android:scheme="kakao405cf352df9ea10356f176b6c3dd28cb" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".SplashActivity"
             android:exported="false" />
     </application>
 

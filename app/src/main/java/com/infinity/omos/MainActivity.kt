@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigationBar(){
+        bottom_nav.itemIconTintList = null // 아이콘 변경 시 색상 적용되는 문제 해결
         bottom_nav.run {
             setOnItemSelectedListener { item ->
                 when(item.itemId){
@@ -43,26 +44,51 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = ""
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         changeFragment(fragmentToday)
+                        item.setIcon(R.drawable.ic_selected_today)
+                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
+                        bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
+                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
+                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
                     }
                     R.id.menu_myrecord -> {
                         toolbar.title = "MY 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentMyRecord)
+                        item.setIcon(R.drawable.ic_selected_myrecord)
+                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
+                        bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
+                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
+                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
                     }
                     R.id.menu_allrecords -> {
                         toolbar.title = "전체 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentAllRecords)
+                        item.setIcon(R.drawable.ic_selected_allrecords)
+                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
+                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
+                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
+                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
                     }
                     R.id.menu_mydj -> {
                         toolbar.title = "MY DJ"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentMyDj)
+                        item.setIcon(R.drawable.ic_selected_mydj)
+                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
+                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
+                        bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
+                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
                     }
                     R.id.menu_mypage -> {
                         toolbar.title = "MY 페이지"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         changeFragment(fragmentMyPage)
+                        item.setIcon(R.drawable.ic_selected_mypage)
+                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
+                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
+                        bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
+                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
                     }
                 }
                 true

@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/menu_today"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_today"
         android:title="@string/today_title"/>
 
     <item
         android:id="@+id/menu_myrecord"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_myrecord"
         android:title="@string/myrecord_title"/>
 
     <item
         android:id="@+id/menu_allrecords"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_allrecords"
         android:title="@string/allrecord_title"/>
 
     <item
         android:id="@+id/menu_mydj"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_mydj"
         android:title="@string/mydj_title"/>
 
     <item
         android:id="@+id/menu_mypage"
         android:enabled="true"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_mypage"
         android:title="@string/mypage_title"/>
 
 </menu>
