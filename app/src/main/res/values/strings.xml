@@ -8,4 +8,6 @@
 
     <string name="send_auth_mail"><u>인증메일 보내기</u></string>
     <string name="look"><u>보기</u></string>
+
+    <string name="_ing">서비스 준비 중</string>
 </resources>
