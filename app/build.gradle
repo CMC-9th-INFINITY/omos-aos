@@ -19,6 +19,9 @@ android {
         versionName "1.0"
 
         buildConfigField "String", "RECORD_API_KEY", properties['record_api_key']
+        buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
+        buildConfigField "String", "KAKAO_REST_API_KEY", properties['kakao_rest_api_key']
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = properties['kakao_native_app_key']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -76,4 +79,7 @@ dependencies {
     def glideVersion = '4.12.0'
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+
+    //Kakao login
+    implementation "com.kakao.sdk:v2-user:2.8.5"
 }

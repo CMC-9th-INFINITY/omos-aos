@@ -67,6 +67,7 @@
                     android:text="인증을 성공했어요."
                     android:textSize="12sp"
                     android:textColor="@color/gray_05"
+                    android:visibility="invisible"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
