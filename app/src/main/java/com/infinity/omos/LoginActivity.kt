@@ -8,6 +8,7 @@ import android.text.InputType.*
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -42,10 +43,32 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        // 로그인 완료
+        btn_login.setOnClickListener {
+            var intent = Intent(this, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+        }
+
+        // 소셜 로그인 페이지 이동
+        btn_kakao_login.setOnClickListener {
+            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
+        }
+
         // 회원가입 페이지 이동
         btn_register.setOnClickListener {
             var intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
+        }
+
+        // 아이디 찾기 페이지 이동
+        btn_find_id.setOnClickListener {
+            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
+        }
+
+        // 비밀번호 찾기 페이지 이동
+        btn_find_pw.setOnClickListener {
+            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
     }
 }

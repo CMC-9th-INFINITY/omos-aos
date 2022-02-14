@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -59,6 +60,11 @@ class RegisterActivity : AppCompatActivity() {
         btn_next.setOnClickListener {
             var intent = Intent(this, RegisterNickActivity::class.java)
             startActivity(intent)
+        }
+
+        // 인증메일 전송
+        btn_send_auth_mail.setOnClickListener {
+            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
     }
 }
