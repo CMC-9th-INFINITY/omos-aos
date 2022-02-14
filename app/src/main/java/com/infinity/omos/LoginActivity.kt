@@ -46,19 +46,6 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        // 로그인 정보 확인
-        UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
-            if (error != null) {
-                Log.d("LoginActivity", "토큰 정보 보기 실패")
-            }
-            else if (tokenInfo != null) {
-                Log.d("LoginActivity", "토큰 정보 보기 성공")
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-        }
-
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
