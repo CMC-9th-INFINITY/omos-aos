@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="14dp"
             android:layout_gravity="center_vertical"
-            app:imageUrl="@{record.album_cover_path}"/>
+            android:src="@drawable/ic_album_cover"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"

@@ -10,4 +10,9 @@
     <string name="look"><u>보기</u></string>
 
     <string name="_ing">서비스 준비 중</string>
+    <string name="category1">한 줄 감상</string>
+    <string name="category2">내 인생의 OST</string>
+    <string name="category3">노래 속 나의 이야기</string>
+    <string name="category4">나만의 가사해석</string>
+    <string name="category5">자유 공간</string>
 </resources>

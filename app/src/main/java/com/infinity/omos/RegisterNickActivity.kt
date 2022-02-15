@@ -5,8 +5,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.SpannableStringBuilder
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -28,6 +31,10 @@ class RegisterNickActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityRegisterNickBinding>(this, R.layout.activity_register_nick)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        // 텍스트 색상 변경
+        changeTextColor(tv_tos, 4, 9, R.color.orange)
+        changeTextColor(tv_pp, 4, 14, R.color.orange)
 
         // 이용약관 체크박스 클릭 시
         viewModel.checkBoxTos.observe(this, Observer { state ->
@@ -82,5 +89,11 @@ class RegisterNickActivity : AppCompatActivity() {
         btn_look_pp.setOnClickListener {
             Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun changeTextColor(tv: TextView, start: Int, end: Int, color: Int){
+        var ssb = SpannableStringBuilder(tv.text)
+        ssb.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, color)), start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tv.text = ssb
     }
 }
