@@ -49,7 +49,6 @@
             android:id="@+id/rv_category"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/list_category_item"
-            android:scrollbars="horizontal"/>
+            tools:listitem="@layout/list_category_item"/>
     </LinearLayout>
 </layout>

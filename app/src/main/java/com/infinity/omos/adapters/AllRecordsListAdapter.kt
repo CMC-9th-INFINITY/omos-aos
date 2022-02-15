@@ -4,9 +4,12 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
+import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 
 class AllRecordsListAdapter internal constructor(context: Context)
@@ -33,13 +36,18 @@ class AllRecordsListAdapter internal constructor(context: Context)
             mAdapter.setRecords(content.myRecord)
             binding.rvCategory.apply{
                 adapter = mAdapter
-                layoutManager = LinearLayoutManager(context)
+                layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
             }
         }
     }
 
     internal fun setCategory(category: List<AllRecords>) {
         this.category = category
+        notifyDataSetChanged()
+    }
+
+    internal fun updateCategory(record: List<MyRecord>, pos: Int) {
+        this.category[pos].myRecord = record
         notifyDataSetChanged()
     }
 

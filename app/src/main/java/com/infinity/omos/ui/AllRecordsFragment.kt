@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
@@ -42,6 +42,12 @@ class AllRecordFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        viewModel.oneLine.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(it, 0)
+            }
+        })
 
         return binding.root
     }

@@ -40,6 +40,7 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListCategoryItemBinding.inflate(inflater,parent,false)
 
+        // 앨범커버 반 가릴 수 있도록 커스텀
         binding.imgAlbumCover.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
                 var imgWidth = binding.imgAlbumCover.width
@@ -56,12 +57,7 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
                 binding.imgAlbumCover.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         })
-//
-//        var params = binding.constraint.layoutParams
-//        var metrics = context.resources.displayMetrics
-//        Log.d("TEST", metrics.widthPixels.toString())
-//        Log.d("TEST", binding.imgAlbumCover.width.toString())
-//        params.width = metrics.widthPixels - (binding.imgAlbumCover.width / 2)
+
         return ViewHolder(binding)
     }
 
