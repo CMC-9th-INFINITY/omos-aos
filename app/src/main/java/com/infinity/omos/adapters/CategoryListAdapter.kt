@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
@@ -38,6 +39,29 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = ListCategoryItemBinding.inflate(inflater,parent,false)
+
+        binding.imgAlbumCover.viewTreeObserver.addOnGlobalLayoutListener(object: ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                var imgWidth = binding.imgAlbumCover.width
+                var layoutWidth = binding.constraint.width
+
+                val params = binding.constraint.layoutParams
+                params.apply {
+                    width = layoutWidth - imgWidth/2
+                }
+                binding.constraint.apply {
+                    layoutParams = params
+                }
+
+                binding.imgAlbumCover.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
+//
+//        var params = binding.constraint.layoutParams
+//        var metrics = context.resources.displayMetrics
+//        Log.d("TEST", metrics.widthPixels.toString())
+//        Log.d("TEST", binding.imgAlbumCover.width.toString())
+//        params.width = metrics.widthPixels - (binding.imgAlbumCover.width / 2)
         return ViewHolder(binding)
     }
 
