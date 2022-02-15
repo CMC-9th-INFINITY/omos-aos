@@ -13,10 +13,15 @@ import com.infinity.omos.repository.Repository
 class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
-    private val records = repository.getMyRecordData()
+    private val myRecord = repository.getMyRecordData(1)
+    private val oneLine = repository.getMyRecordData(2)
 
     // xml 연결 (listData)
     fun getMyRecordData(): LiveData<List<MyRecord>> {
-        return records
+        return myRecord
+    }
+
+    fun getOneLineData(): LiveData<List<MyRecord>> {
+        return oneLine
     }
 }

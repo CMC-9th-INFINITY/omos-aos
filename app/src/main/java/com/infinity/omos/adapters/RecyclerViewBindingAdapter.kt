@@ -5,9 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.MyRecord
 
 object RecyclerViewBindingAdapter {
-    @BindingAdapter("listData")
+    @BindingAdapter("myRecordListData")
     @JvmStatic
-    fun bindData(recyclerView: RecyclerView, records: List<MyRecord>?){
+    fun myRecordBindData(recyclerView: RecyclerView, records: List<MyRecord>?){
         val adapter = recyclerView.adapter as MyRecordListAdapter
         adapter.submitList(records)
     }

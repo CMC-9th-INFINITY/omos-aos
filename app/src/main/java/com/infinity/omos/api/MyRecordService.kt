@@ -12,8 +12,8 @@ import retrofit2.http.Query
 interface MyRecordService {
     @GET("movie/upcoming")
     fun getResultGetMyRecord(
-        @Query("api_key") api_key: String = BuildConfig.RECORD_API_KEY,
+        @Query("page") page: Int,
         @Query("language") language: String = "en-US",
-        @Query("page") page: Int = 1
+        @Query("api_key") api_key: String = BuildConfig.RECORD_API_KEY
     ): Call<ResultGetMyRecord>
 }

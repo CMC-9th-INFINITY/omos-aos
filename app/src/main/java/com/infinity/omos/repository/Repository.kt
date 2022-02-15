@@ -19,10 +19,10 @@ class Repository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val api = retrofit.create(MyRecordService::class.java)
 
-    fun getMyRecordData(): LiveData<List<MyRecord>>{
+    fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
 
-        api.getResultGetMyRecord().enqueue(object: Callback<ResultGetMyRecord> {
+        api.getResultGetMyRecord(page).enqueue(object: Callback<ResultGetMyRecord> {
             override fun onResponse(
                 call: Call<ResultGetMyRecord>,
                 response: Response<ResultGetMyRecord>

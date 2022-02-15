@@ -112,6 +112,7 @@
                         android:onClick="@{()->vm.checkBoxTosClick()}"/>
 
                     <TextView
+                        android:id="@+id/tv_tos"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -148,6 +149,7 @@
                         android:onClick="@{()->vm.checkBoxPPClick()}"/>
 
                     <TextView
+                        android:id="@+id/tv_pp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
