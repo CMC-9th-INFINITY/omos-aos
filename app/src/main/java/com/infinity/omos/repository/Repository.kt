@@ -27,7 +27,7 @@ class Repository {
                 call: Call<ResultGetMyRecord>,
                 response: Response<ResultGetMyRecord>
             ) {
-                data.value = response.body()!!.myRecordList
+                data.value = response.body()?.myRecordList
             }
 
             override fun onFailure(call: Call<ResultGetMyRecord>, t: Throwable) {
