@@ -1,6 +1,7 @@
 package com.infinity.omos.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,9 +42,9 @@ class MyRecordFragment : Fragment() {
         }
 
         // 레코드가 비었을 때 확인,
-        viewModel.getMyRecordData().observe(this, Observer { record ->
-            record?.let {
-                if (it.isEmpty()){
+        viewModel.isEmpty.observe(this, Observer { state ->
+            state?.let {
+                if (it){
                     binding.lnNorecord.visibility = View.VISIBLE
                 } else{
                     binding.lnNorecord.visibility = View.GONE
