@@ -21,7 +21,7 @@ android {
         buildConfigField "String", "RECORD_API_KEY", properties['record_api_key']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
 //        buildConfigField "String", "KAKAO_REST_API_KEY", properties['kakao_rest_api_key']
-        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = properties['kakao_native_app_key']
+//        manifestPlaceholders["KAKAO_NATIVE_APP_KEY"] = properties['kakao_native_app_key']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
