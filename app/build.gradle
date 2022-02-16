@@ -70,16 +70,19 @@ dependencies {
     // BottomNavigation
     implementation 'com.google.android.material:material:1.6.0-alpha02'
 
-    //Retrofit
+    // Retrofit
     def retrofitVersion = '2.9.0'
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
 
-    //Glide
+    // Glide
     def glideVersion = '4.12.0'
     implementation "com.github.bumptech.glide:glide:$glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
 
-    //Kakao login
+    // Kakao login
     implementation "com.kakao.sdk:v2-user:2.8.5"
+
+    // Gson
+    implementation "com.google.code.gson:gson:2.8.7"
 }
