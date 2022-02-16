@@ -9,6 +9,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -69,6 +70,12 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="8px"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@color/orange"/>
 
         </FrameLayout>
 

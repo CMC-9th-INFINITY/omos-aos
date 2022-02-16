@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -11,6 +12,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
+import kotlinx.android.synthetic.main.list_category_item.view.*
 
 class AllRecordsListAdapter internal constructor(context: Context)
     : RecyclerView.Adapter<AllRecordsListAdapter.AllRecordsViewHolder>(){
