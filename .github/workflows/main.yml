@@ -29,9 +29,9 @@ jobs:
         KAKAO_REST_API_KEY: ${{secrets.KAKAO_REST_API_KEY}}
         KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
       run: |
-        echo record_api_key="$RECORD_API_KEY" > ./local.properties
-        echo kakao_rest_api_key="$KAKAO_REST_API_KEY" > ./local.properties
-        echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" > ./local.properties
+        echo record_api_key="$RECORD_API_KEY",
+          kakao_rest_api_key="$KAKAO_REST_API_KEY",
+          kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" > ./local.properties
         
     - name: Change gradlew permissions
       run: chmod +x ./gradlew
