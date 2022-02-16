@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
@@ -38,6 +39,17 @@ class MyRecordFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        // 레코드가 비었을 때 확인,
+        viewModel.getMyRecordData().observe(this, Observer { record ->
+            record?.let {
+                if (it.isEmpty()){
+                    binding.lnNorecord.visibility = View.VISIBLE
+                } else{
+                    binding.lnNorecord.visibility = View.GONE
+                }
+            }
+        })
 
         return binding.root
     }

@@ -20,5 +20,27 @@
             android:layout_height="wrap_content"
             app:myRecordListData="@{vm.myRecordData}"/>
 
+        <LinearLayout
+            android:id="@+id/ln_norecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:src="@drawable/ic_norecord"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="작성된 레코드가 없어요!"
+                android:textSize="18sp"
+                android:textColor="@color/gray_03"/>
+
+        </LinearLayout>
     </FrameLayout>
 </layout>

@@ -21,6 +21,26 @@ class AllRecordsListAdapter internal constructor(context: Context)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AllRecordsViewHolder {
         val binding = ListAllrecordsItemBinding.inflate(inflater, parent, false)
+
+        // 앨범커버 반 가릴 수 있도록 커스텀
+        binding.lnNorecord.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
+            override fun onPreDraw(): Boolean {
+                var imgWidth = binding.lnNorecord.img_album_cover.width
+                var layoutWidth = binding.lnNorecord.constraint.width
+
+                val params = binding.lnNorecord.constraint.layoutParams
+                params.apply {
+                    width = layoutWidth - imgWidth/2
+                }
+                binding.lnNorecord.constraint.apply {
+                    layoutParams = params
+                }
+
+                binding.lnNorecord.constraint.viewTreeObserver.removeOnPreDrawListener(this)
+                return true
+            }
+        })
+
         return AllRecordsViewHolder(binding)
     }
 
@@ -42,26 +62,6 @@ class AllRecordsListAdapter internal constructor(context: Context)
             // 레코드가 없을 때,
             if (content.myRecord == null){
                 binding.lnNorecord.visibility = View.VISIBLE
-
-                // 앨범커버 반 가릴 수 있도록 커스텀
-                binding.lnNorecord.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
-                    override fun onPreDraw(): Boolean {
-                        var imgWidth = binding.lnNorecord.img_album_cover.width
-                        var layoutWidth = binding.lnNorecord.constraint.width
-
-                        val params = binding.lnNorecord.constraint.layoutParams
-                        params.apply {
-                            width = layoutWidth - imgWidth/4
-                        }
-                        binding.lnNorecord.constraint.apply {
-                            layoutParams = params
-                        }
-
-                        binding.lnNorecord.constraint.viewTreeObserver.removeOnPreDrawListener(this)
-                        return true
-                    }
-                })
-
             } else{
                 binding.lnNorecord.visibility = View.GONE
             }
