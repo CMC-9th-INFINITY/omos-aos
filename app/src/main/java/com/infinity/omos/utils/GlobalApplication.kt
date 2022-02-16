@@ -11,7 +11,7 @@ class GlobalApplication: Application() {
     override fun onCreate() {
         super.onCreate()
         prefs = PreferenceUtil(applicationContext)
-        //KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
+        KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
     }
 
     companion object{
