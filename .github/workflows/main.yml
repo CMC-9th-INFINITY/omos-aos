@@ -42,7 +42,7 @@ jobs:
       run: chmod +x ./gradlew
 
     - name: Build with Gradle
-      run: ./gradlew build --warning-mode all --stacktrace
+      run: ./gradlew build
        
     - name: Get current date
       id: date
