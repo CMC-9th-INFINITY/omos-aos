@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/action_write"
-        android:icon="@drawable/ic_launcher_foreground"
+        android:icon="@drawable/ic_write"
         android:title="Write"
         app:showAsAction="always"/>
 

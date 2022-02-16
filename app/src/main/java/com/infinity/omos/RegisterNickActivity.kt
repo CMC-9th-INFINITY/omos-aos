@@ -2,24 +2,22 @@ package com.infinity.omos
 
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.SpannableStringBuilder
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import android.text.style.ForegroundColorSpan
+import android.view.MenuItem
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import com.infinity.omos.databinding.ActivityRegisterBinding
 import com.infinity.omos.databinding.ActivityRegisterNickBinding
 import com.infinity.omos.viewmodels.RegisterNickViewModel
-import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
+import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class RegisterNickActivity : AppCompatActivity() {
 
@@ -31,6 +29,8 @@ class RegisterNickActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityRegisterNickBinding>(this, R.layout.activity_register_nick)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        initToolBar()
 
         // 텍스트 색상 변경
         changeTextColor(tv_tos, 4, 9, R.color.orange)
@@ -95,5 +95,22 @@ class RegisterNickActivity : AppCompatActivity() {
         var ssb = SpannableStringBuilder(tv.text)
         ssb.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, color)), start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
         tv.text = ssb
+    }
+
+    private fun initToolBar(){
+        toolbar.title = ""
+        setSupportActionBar(toolbar) // 툴바 사용
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            android.R.id.home -> {
+                finish()
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }

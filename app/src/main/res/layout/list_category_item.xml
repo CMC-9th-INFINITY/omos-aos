@@ -9,6 +9,7 @@
     </data>
 
     <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -38,7 +39,8 @@
                     android:id="@+id/tv_music_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
+                    android:paddingHorizontal="10dp"
+                    android:paddingVertical="5dp"
                     android:text="@{record.title}"
                     android:textSize="12sp"
                     android:textColor="@color/gray_01"
@@ -51,10 +53,12 @@
                     android:id="@+id/tv_record_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:gravity="bottom"
                     android:layout_marginBottom="6dp"
-                    android:text="@{record.contents}"
+                    android:text="@{record.category}"
                     android:textColor="@color/white"
                     android:textSize="16sp"
+                    android:maxLength="30"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/tv_nick"/>
 
@@ -62,13 +66,19 @@
                     android:id="@+id/tv_nick"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{record.category}"
+                    android:text="@{record.contents}"
                     android:textSize="12sp"
                     android:textColor="@color/white"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="8px"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="@color/orange"/>
 
         </FrameLayout>
 

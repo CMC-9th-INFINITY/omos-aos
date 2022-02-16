@@ -1,12 +1,12 @@
 package com.infinity.omos.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.LiveData
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
@@ -15,6 +15,7 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.viewmodels.SharedViewModel
+import kotlinx.android.synthetic.main.list_allrecords_item.view.*
 
 class AllRecordFragment : Fragment() {
 
@@ -42,6 +43,20 @@ class AllRecordFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        // 한 줄 감상 데이터 관찰
+        viewModel.oneLine.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(it, 0)
+            }
+        })
+
+        // 내 인생의 OST 데이터 관찰
+        viewModel.myOst.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(null, 1)
+            }
+        })
 
         return binding.root
     }

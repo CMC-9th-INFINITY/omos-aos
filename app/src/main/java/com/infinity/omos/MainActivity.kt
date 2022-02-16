@@ -1,14 +1,12 @@
 package com.infinity.omos
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.infinity.omos.ui.*
-import com.kakao.sdk.common.util.Utility
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -17,6 +15,8 @@ class MainActivity : AppCompatActivity() {
     private val fragmentAllRecords by lazy { AllRecordFragment() }
     private val fragmentMyDj by lazy { MyDjFragment() }
     private val fragmentMyPage by lazy { MyPageFragment() }
+
+    private var stateWrite = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_today -> {
                         toolbar.title = ""
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                        stateWrite = false
+                        invalidateOptionsMenu()
                         changeFragment(fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
@@ -53,6 +55,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_myrecord -> {
                         toolbar.title = "MY 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        stateWrite = true
+                        invalidateOptionsMenu()
                         changeFragment(fragmentMyRecord)
                         item.setIcon(R.drawable.ic_selected_myrecord)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
@@ -63,6 +67,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_allrecords -> {
                         toolbar.title = "전체 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        stateWrite = false
+                        invalidateOptionsMenu()
                         changeFragment(fragmentAllRecords)
                         item.setIcon(R.drawable.ic_selected_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
@@ -73,6 +79,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_mydj -> {
                         toolbar.title = "MY DJ"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        stateWrite = false
+                        invalidateOptionsMenu()
                         changeFragment(fragmentMyDj)
                         item.setIcon(R.drawable.ic_selected_mydj)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
@@ -83,6 +91,8 @@ class MainActivity : AppCompatActivity() {
                     R.id.menu_mypage -> {
                         toolbar.title = "MY 페이지"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
+                        stateWrite = false
+                        invalidateOptionsMenu()
                         changeFragment(fragmentMyPage)
                         item.setIcon(R.drawable.ic_selected_mypage)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
@@ -106,7 +116,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action, menu)
-
+        var actionWrite = menu.findItem(R.id.action_write)
+        actionWrite.isVisible = stateWrite
         return true
     }
 

@@ -22,5 +22,6 @@
 
     <color name="gray_01">#E5E5EA</color>
     <color name="gray_02">#D1D1D7</color>
+    <color name="gray_03">#C7C7CC</color>
     <color name="gray_05">#8E8E93</color>
 </resources>
