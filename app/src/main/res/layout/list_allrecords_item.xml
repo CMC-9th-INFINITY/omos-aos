@@ -50,5 +50,58 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_category_item"/>
+
+        <LinearLayout
+            android:id="@+id/ln_norecord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="148dp"
+                android:background="@color/deep_dark">
+
+                <ImageView
+                    android:id="@+id/img_album_cover"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="14dp"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/ic_album_cover"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/constraint"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:background="#DE212121"
+                    android:padding="14dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:layout_marginBottom="6dp"
+                        android:text="레코드가 아직 생성되지 않았어요!"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:maxLength="30"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2px"
+                android:layout_marginTop="14dp"
+                android:background="@color/divide2"/>
+
+        </LinearLayout>
     </LinearLayout>
 </layout>

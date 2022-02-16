@@ -14,13 +14,10 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     private val repository: Repository = Repository()
     private val myRecord = repository.getMyRecordData(1)
     var oneLine = repository.getMyRecordData(2)
+    var myOst = repository.getMyRecordData(3)
 
     // xml 연결 (listData)
     fun getMyRecordData(): LiveData<List<MyRecord>> {
         return myRecord
-    }
-
-    fun getOneLineData(): LiveData<List<MyRecord>> {
-        return oneLine
     }
 }

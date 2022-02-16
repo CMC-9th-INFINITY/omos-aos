@@ -15,6 +15,7 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.viewmodels.SharedViewModel
+import kotlinx.android.synthetic.main.list_allrecords_item.view.*
 
 class AllRecordFragment : Fragment() {
 
@@ -47,6 +48,13 @@ class AllRecordFragment : Fragment() {
         viewModel.oneLine.observe(this, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 0)
+            }
+        })
+
+        // 내 인생의 OST 데이터 관찰
+        viewModel.myOst.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(null, 1)
             }
         })
 

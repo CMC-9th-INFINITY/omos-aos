@@ -4,5 +4,5 @@ import com.google.gson.annotations.SerializedName
 
 data class AllRecords(
     @SerializedName("title") val title: String,
-    @SerializedName("myRecord") var myRecord: List<MyRecord>
+    @SerializedName("myRecord") var myRecord: List<MyRecord>?
 )

@@ -13,7 +13,7 @@ import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
 
-class CategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>):
+class CategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>?):
     ListAdapter<MyRecord, CategoryListAdapter.ViewHolder>(
         CategoryDiffUtil
     ){
@@ -73,7 +73,7 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val record = record[position]
+        val record = record!![position]
         holder.bind(record)
     }
 
@@ -91,13 +91,16 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
         }
     }
 
-    internal fun setRecords(record: List<MyRecord>) {
+    internal fun setRecords(record: List<MyRecord>?) {
         this.record = record
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return record.size
+        return if (record != null){
+            record!!.size
+        } else
+            super.getItemCount()
     }
 
     companion object CategoryDiffUtil: DiffUtil.ItemCallback<MyRecord>(){
