@@ -2,10 +2,10 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -35,6 +35,45 @@ class MyRecordListAdapter internal constructor(context: Context):
         this.itemClickListener = onItemClickListener
     }
 
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        val binding = ListMyrecordItemBinding.inflate(inflater,parent,false)
+
+        // 앨범커버 반 가릴 수 있도록 커스텀
+        // 일부 아이템 적용 안되는 문제 해결 (onPreDraw)
+        binding.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
+            override fun onPreDraw(): Boolean {
+                var imgWidth = binding.imgAlbumCover.width
+                var layoutWidth = binding.linear.width
+
+                val params = binding.linear.layoutParams
+                params.apply {
+                    width = layoutWidth - imgWidth/2
+                }
+                binding.linear.apply {
+                    layoutParams = params
+                }
+
+                val params2 = binding.constraint.layoutParams
+                params2.apply {
+                    width = layoutWidth - imgWidth
+                }
+                binding.constraint.apply {
+                    layoutParams = params2
+                }
+
+                binding.constraint.viewTreeObserver.removeOnPreDrawListener(this)
+                return true
+            }
+        })
+
+        return ViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        val record = getItem(position)
+        holder.bind(record)
+    }
+
     inner class ViewHolder(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: MyRecord) {
             binding.record = record
@@ -49,16 +88,6 @@ class MyRecordListAdapter internal constructor(context: Context):
                 }
             }
         }
-    }
-
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListMyrecordItemBinding.inflate(inflater,parent,false)
-        return ViewHolder(binding)
-    }
-
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val record = getItem(position)
-        holder.bind(record)
     }
 
     override fun getItemCount(): Int {

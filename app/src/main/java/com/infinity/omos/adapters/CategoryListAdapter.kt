@@ -1,19 +1,17 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.Toast
-import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
-import kotlinx.android.synthetic.main.list_category_item.view.*
+import com.infinity.omos.databinding.ListMyrecordItemBinding
 
 class CategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>):
     ListAdapter<MyRecord, CategoryListAdapter.ViewHolder>(

@@ -8,61 +8,93 @@
             type="com.infinity.omos.data.MyRecord" />
     </data>
 
-    <FrameLayout
+    <LinearLayout
+        android:id="@+id/linear"
         android:layout_width="match_parent"
-        android:layout_height="148dp"
-        android:background="@color/deep_dark">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="14dp"
-            android:layout_gravity="center_vertical"
-            app:imageUrl="@{record.album_cover_path}"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="148dp"
+            android:background="@color/deep_dark">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_gravity="right"
-            android:background="#DE212121"
-            android:padding="14dp">
-
-            <TextView
-                android:id="@+id/tv_music_title"
+            <ImageView
+                android:id="@+id/img_album_cover"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@{record.title}"
-                android:textSize="12sp"
-                android:textColor="@color/gray_01"
-                android:singleLine="true"
-                android:background="@drawable/bg_rounded_rectangle"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+                android:padding="14dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_album_cover"/>
 
-            <TextView
-                android:id="@+id/tv_record_title"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="6dp"
-                android:text="@{record.contents}"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/tv_nick"/>
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/constraint"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:background="#DE212121">
 
-            <TextView
-                android:id="@+id/tv_nick"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{record.category}"
-                android:textSize="12sp"
-                android:textColor="@color/white"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                <View
+                    android:layout_width="8px"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="right"
+                    android:background="@color/orange"
+                    app:layout_constraintStart_toStartOf="parent"/>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="14dp">
 
-    </FrameLayout>
+                    <TextView
+                        android:id="@+id/tv_music_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingHorizontal="10dp"
+                        android:paddingVertical="5dp"
+                        android:text="@{record.title}"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_01"
+                        android:singleLine="true"
+                        android:background="@drawable/bg_rounded_rectangle"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_record_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="bottom"
+                        android:layout_marginBottom="6dp"
+                        android:text="@{record.category}"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"
+                        android:maxLength="30"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/tv_nick"/>
+
+                    <TextView
+                        android:id="@+id/tv_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{record.contents}"
+                        android:textSize="12sp"
+                        android:textColor="@color/white"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="14dp"
+            android:background="@color/divide2"/>
+
+    </LinearLayout>
 
 </layout>
