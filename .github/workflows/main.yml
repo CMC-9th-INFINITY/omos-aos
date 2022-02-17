@@ -33,6 +33,11 @@ jobs:
         KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
       run: echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
 
+    - name: Decode KAKAO OAUTH KEY
+      env:
+        KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
+      run: echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
+
     - name: Change gradlew permissions
       run: chmod +x ./gradlew
 

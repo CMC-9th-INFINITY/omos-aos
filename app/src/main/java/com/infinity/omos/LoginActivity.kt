@@ -127,7 +127,8 @@ class LoginActivity : AppCompatActivity() {
         // 카카오 소셜 로그인 페이지 이동
         btn_kakao_login.setOnClickListener {
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
-                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+//                UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
+                UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }else{
                 UserApiClient.instance.loginWithKakaoAccount(this, callback = callback)
             }
