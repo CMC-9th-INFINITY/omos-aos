@@ -5,12 +5,17 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.daimajia.androidanimations.library.Techniques
+import com.daimajia.androidanimations.library.YoYo
 import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.viewmodels.LoginViewModel
 import com.kakao.sdk.auth.model.OAuthToken
@@ -60,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
-        // 소셜 로그인
+        // 소셜 로그인 콜백
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {
@@ -103,9 +108,20 @@ class LoginActivity : AppCompatActivity() {
 
         // 로그인 완료
         btn_login.setOnClickListener {
-            var intent = Intent(this, MainActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            if (viewModel.checkLogin(et_id.text.toString(), et_pw.text.toString())){
+                var intent = Intent(this, MainActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
+            } else{
+                et_id.background = ResourcesCompat.getDrawable(resources, R.drawable.rectangle_stroke_box, null)
+                tv_error_id.visibility = View.VISIBLE
+
+                // 흔들림 효과
+                YoYo.with(Techniques.Shake)
+                    .duration(100)
+                    .repeat(1)
+                    .playOn(linear_id)
+            }
         }
 
         // 카카오 소셜 로그인 페이지 이동

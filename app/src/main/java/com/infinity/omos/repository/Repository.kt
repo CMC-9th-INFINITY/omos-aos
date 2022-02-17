@@ -44,12 +44,22 @@ class Repository {
     fun checkLogin(id: String, pw: String): Boolean {
         var isExist = false
 
+        /**
+         *  테스트 (나중에 지우셈)
+         */
+        if (id == "0" && pw == "0"){
+            isExist = true
+        }
+        /**
+         *  테스트 (나중에 지우셈)
+         */
+
         loginApi.getResultGetLogin(id, pw).enqueue(object: Callback<ResultGetLogin> {
             override fun onResponse(
                 call: Call<ResultGetLogin>,
                 response: Response<ResultGetLogin>
             ) {
-                isExist = response.body()?.isExist!!
+                // isExist = response.body()?.isExist
             }
 
             override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
