@@ -2,9 +2,11 @@ package com.infinity.omos.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.api.LoginService
 import com.infinity.omos.api.MyRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.ResultGetLogin
 import com.infinity.omos.data.ResultGetMyRecord
 import retrofit2.Call
 import retrofit2.Callback
@@ -18,6 +20,7 @@ class Repository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val api = retrofit.create(MyRecordService::class.java)
+    private val loginApi = retrofit.create(LoginService::class.java)
 
     fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
@@ -36,5 +39,24 @@ class Repository {
         })
 
         return data
+    }
+
+    fun checkLogin(id: String, pw: String): Boolean {
+        var isExist = false
+
+        loginApi.getResultGetLogin(id, pw).enqueue(object: Callback<ResultGetLogin> {
+            override fun onResponse(
+                call: Call<ResultGetLogin>,
+                response: Response<ResultGetLogin>
+            ) {
+                isExist = response.body()?.isExist!!
+            }
+
+            override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
+                t.stackTrace
+            }
+        })
+
+        return isExist
     }
 }

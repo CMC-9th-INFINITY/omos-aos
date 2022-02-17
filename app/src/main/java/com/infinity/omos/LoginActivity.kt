@@ -1,12 +1,14 @@
 package com.infinity.omos
 
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.infinity.omos.databinding.ActivityLoginBinding
@@ -15,6 +17,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -42,6 +45,22 @@ class LoginActivity : AppCompatActivity() {
             }
         })
 
+        // 로그인 버튼 활성화
+        viewModel.stateInput.observe(this, Observer { state ->
+            state?.let {
+                if (it){
+                    btn_login.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange))
+                    btn_login.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    btn_login.isEnabled = true
+                } else{
+                    btn_login.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.light_gray))
+                    btn_login.setTextColor(ContextCompat.getColor(this, R.color.dark_gray))
+                    btn_login.isEnabled = false
+                }
+            }
+        })
+
+        // 소셜 로그인
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 when {

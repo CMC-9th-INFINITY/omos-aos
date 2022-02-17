@@ -73,6 +73,7 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <EditText
+                android:id="@+id/et_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
@@ -82,7 +83,8 @@
                 android:textSize="16sp"
                 android:textColor="@color/gray_02"
                 android:textColorHint="@color/dark_gray"
-                android:background="@drawable/rectangle_stroke_box"/>
+                android:background="@drawable/rectangle_stroke_box"
+                android:afterTextChanged="@{()->vm.checkInput(etId, etPw)}"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -130,6 +132,7 @@
                     android:textColorHint="@color/dark_gray"
                     android:singleLine="true"
                     android:background="@drawable/rectangle_box"
+                    android:afterTextChanged="@{()->vm.checkInput(etId, etPw)}"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintHorizontal_bias="0.0"
@@ -213,7 +216,8 @@
                 android:textSize="16sp"
                 android:textColor="@color/dark_gray"
                 android:background="@drawable/rectangle_box"
-                android:backgroundTint="@color/light_gray"/>
+                android:backgroundTint="@color/light_gray"
+                android:enabled="false"/>
 
             <FrameLayout
                 android:layout_width="match_parent"

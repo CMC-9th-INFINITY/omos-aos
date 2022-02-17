@@ -45,16 +45,37 @@ class AllRecordFragment : Fragment() {
         }
 
         // 한 줄 감상 데이터 관찰
-        viewModel.oneLine.observe(this, Observer { record ->
+        viewModel.oneLineRecord.observe(this, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 0)
             }
         })
 
         // 내 인생의 OST 데이터 관찰
-        viewModel.myOst.observe(this, Observer { record ->
+        viewModel.myOstRecord.observe(this, Observer { record ->
             record?.let {
-                mAdapter.updateCategory(null, 1)
+                mAdapter.updateCategory(it, 1)
+            }
+        })
+
+        // 노래 속 나의 이야기 데이터 관찰
+        viewModel.myStoryRecord.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(it, 2)
+            }
+        })
+
+        // 나만의 가사해석 데이터 관찰
+        viewModel.interpretRecord.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(it, 3)
+            }
+        })
+
+        // 자유 공간 데이터 관찰
+        viewModel.freeRecord.observe(this, Observer { record ->
+            record?.let {
+                mAdapter.updateCategory(it, 4)
             }
         })
 
@@ -63,11 +84,11 @@ class AllRecordFragment : Fragment() {
 
     private fun addCategory(): List<AllRecords> {
         return listOf(
-            AllRecords(resources.getString(R.string.category1), listOf(MyRecord("one", "hi", "hi", "hi"))),
-            AllRecords(resources.getString(R.string.category2), listOf(MyRecord("two", "hi", "hi", "hi"))),
-            AllRecords(resources.getString(R.string.category3), listOf(MyRecord("three", "hi", "hi", "hi"))),
-            AllRecords(resources.getString(R.string.category4), listOf(MyRecord("four", "hi", "hi", "hi"))),
-            AllRecords(resources.getString(R.string.category5), listOf(MyRecord("five", "hi", "hi", "hi")))
+            AllRecords(resources.getString(R.string.category1), null),
+            AllRecords(resources.getString(R.string.category2), null),
+            AllRecords(resources.getString(R.string.category3), null),
+            AllRecords(resources.getString(R.string.category4), null),
+            AllRecords(resources.getString(R.string.category5), null)
         )
     }
 }

@@ -15,8 +15,11 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
     val myRecord = repository.getMyRecordData(1)
-    var oneLine = repository.getMyRecordData(2)
-    var myOst = repository.getMyRecordData(3)
+    var oneLineRecord = repository.getMyRecordData(2)
+    var myOstRecord = repository.getMyRecordData(3)
+    var myStoryRecord = repository.getMyRecordData(4)
+    var interpretRecord = repository.getMyRecordData(-1)
+    var freeRecord = repository.getMyRecordData(5)
 
     var isEmpty = MutableLiveData<Boolean>()
 
