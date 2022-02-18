@@ -39,6 +39,10 @@ class RecordDetailActivity : AppCompatActivity() {
                 Toast.makeText(this, "Instargram", Toast.LENGTH_SHORT).show()
                 true
             }
+            android.R.id.home -> {
+                finish()
+                true
+            }
             else -> super.onOptionsItemSelected(item)
         }
     }
