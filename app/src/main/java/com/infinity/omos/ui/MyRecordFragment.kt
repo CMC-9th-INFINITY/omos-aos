@@ -35,14 +35,14 @@ class MyRecordFragment : Fragment() {
             binding.lifecycleOwner = this
         }
 
-        val mAdapter = MyRecordListAdapter(context!!)
+        val mAdapter = MyRecordListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
         // 레코드가 비었을 때 확인,
-        viewModel.isEmpty.observe(this, Observer { state ->
+        viewModel.isEmpty.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 if (it){
                     binding.lnNorecord.visibility = View.VISIBLE

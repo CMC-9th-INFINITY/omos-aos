@@ -47,6 +47,7 @@ class AllRecordFragment : Fragment() {
         // 한 줄 감상 데이터 관찰
         viewModel.oneLineRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
+                oneLineRecord = it // Category Activity 에서 사용하기 위함
                 mAdapter.updateCategory(it, 0)
             }
         })
@@ -54,6 +55,7 @@ class AllRecordFragment : Fragment() {
         // 내 인생의 OST 데이터 관찰
         viewModel.myOstRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
+                myOstRecord = it
                 mAdapter.updateCategory(it, 1)
             }
         })
@@ -61,6 +63,7 @@ class AllRecordFragment : Fragment() {
         // 노래 속 나의 이야기 데이터 관찰
         viewModel.myStoryRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
+                myStoryRecord = it
                 mAdapter.updateCategory(it, 2)
             }
         })
@@ -68,6 +71,7 @@ class AllRecordFragment : Fragment() {
         // 나만의 가사해석 데이터 관찰
         viewModel.interpretRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
+                interpretRecord = it
                 mAdapter.updateCategory(it, 3)
             }
         })
@@ -75,6 +79,7 @@ class AllRecordFragment : Fragment() {
         // 자유 공간 데이터 관찰
         viewModel.freeRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
+                freeRecord = it
                 mAdapter.updateCategory(it, 4)
             }
         })
@@ -90,5 +95,13 @@ class AllRecordFragment : Fragment() {
             AllRecords(resources.getString(R.string.category4), null),
             AllRecords(resources.getString(R.string.category5), null)
         )
+    }
+
+    companion object{
+        var oneLineRecord = emptyList<MyRecord>()
+        var myOstRecord = emptyList<MyRecord>()
+        var myStoryRecord = emptyList<MyRecord>()
+        var interpretRecord = emptyList<MyRecord>()
+        var freeRecord = emptyList<MyRecord>()
     }
 }
