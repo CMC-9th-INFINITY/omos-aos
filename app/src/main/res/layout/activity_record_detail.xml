@@ -123,71 +123,84 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <TextView
-        android:id="@+id/record_contents"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="40dp"
-        android:paddingVertical="58dp"
-        android:text="한줄감상이나옵니다글자수는50자이내여야합니다한줄감상이나옵니다글자수는50자이내여야합니다한줄감상"
-        android:textSize="24sp"
-        android:textColor="@color/gray_02"
-        android:fontFamily="@font/cafe24oneprettynight"
-        android:maxLength="50"
-        android:background="@color/deep_dark"/>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingVertical="10dp"
-        android:paddingHorizontal="20dp">
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:background="@color/deep_dark">
 
-        <LinearLayout
-            android:id="@+id/linear1"
+        <TextView
+            android:id="@+id/record_contents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginRight="32dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/linear2">
+            android:paddingHorizontal="40dp"
+            android:paddingVertical="58dp"
+            android:text="한줄감상이나옵니다글자수는50자이내여야합니다한줄감상이나옵니다글자수는50자이내여야합니다한줄감상"
+            android:textSize="24sp"
+            android:textColor="@color/gray_02"
+            android:fontFamily="@font/cafe24oneprettynight"
+            android:maxLength="50"/>
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_heart"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_gravity="center"
+            android:background="@color/divide"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="000"
-                android:textSize="12sp"
-                android:textColor="@color/orange"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@id/linear2"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp">
 
-            <ImageView
+            <LinearLayout
+                android:id="@+id/linear1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/ic_star"/>
+                android:orientation="vertical"
+                android:layout_marginRight="32dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/linear2">
 
-            <TextView
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_heart"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="000"
+                    android:textSize="12sp"
+                    android:textColor="@color/orange"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@id/linear2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="000"
-                android:textSize="12sp"
-                android:textColor="@color/gray_03"/>
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_star"/>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="000"
+                    android:textSize="12sp"
+                    android:textColor="@color/gray_03"/>
 
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </LinearLayout>
 
 </LinearLayout>

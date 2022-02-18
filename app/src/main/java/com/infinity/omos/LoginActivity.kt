@@ -24,6 +24,7 @@ import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.viewmodels.LoginViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
+import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -33,6 +34,9 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        val keyHash = Utility.getKeyHash(this)
+        Log.d("Hash", keyHash)
 
         context = this
 
