@@ -5,7 +5,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.activity_record_detail.*
 import kotlinx.android.synthetic.main.activity_record_detail.toolbar
 import kotlinx.android.synthetic.main.activity_register.*
@@ -29,7 +28,7 @@ class RecordDetailActivity : AppCompatActivity() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.appbar_action_myrecord, menu)
+        menuInflater.inflate(R.menu.appbar_action_record, menu)
         return true
     }
 
@@ -37,6 +36,10 @@ class RecordDetailActivity : AppCompatActivity() {
         return when(item.itemId){
             R.id.action_instar -> {
                 Toast.makeText(this, "Instargram", Toast.LENGTH_SHORT).show()
+                true
+            }
+            R.id.action_more -> {
+                Toast.makeText(this, "More", Toast.LENGTH_SHORT).show()
                 true
             }
             android.R.id.home -> {

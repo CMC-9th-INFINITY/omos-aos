@@ -8,4 +8,10 @@
         android:title="Instargram"
         app:showAsAction="always"/>
 
+    <item
+        android:id="@+id/action_more"
+        android:icon="@drawable/ic_more"
+        android:title="More"
+        app:showAsAction="always"/>
+
 </menu>
