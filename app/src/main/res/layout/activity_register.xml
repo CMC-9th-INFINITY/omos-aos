@@ -110,103 +110,155 @@
                     android:textSize="14sp"
                     android:textColor="@color/light_gray"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
-                    android:text="비밀번호"
-                    android:textSize="14sp"
-                    android:textColor="@color/ivory"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
-
-                <androidx.constraintlayout.widget.ConstraintLayout
+                <LinearLayout
+                    android:id="@+id/linear_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="16dp"
-                    android:background="@color/deep_dark">
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/et_pw"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="비밀번호를 입력해주세요."
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="14dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/gray_02"
-                        android:textColorHint="@color/dark_gray"
-                        android:singleLine="true"
-                        android:background="@drawable/rectangle_box"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        android:layout_marginTop="16dp"
+                        android:layout_marginBottom="8dp">
 
-                    <ImageView
-                        android:id="@+id/ic_eye1"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비밀번호"
+                            android:textSize="14sp"
+                            android:textColor="@color/ivory"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tv_error_pw"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비밀번호 에러 메시지"
+                            android:textSize="12sp"
+                            android:textColor="@color/orange"
+                            android:visibility="invisible"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="13dp"
-                        android:src="@drawable/ic_visible_eye"
-                        android:onClick="@{()->vm.eye1Click()}"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:layout_marginBottom="16dp"
+                        android:background="@color/deep_dark">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <EditText
+                            android:id="@+id/et_pw"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="비밀번호를 입력해주세요."
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="14dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/gray_02"
+                            android:textColorHint="@color/dark_gray"
+                            android:singleLine="true"
+                            android:background="@drawable/rectangle_box"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="8dp"
-                    android:text="비밀번호 재확인"
-                    android:textSize="14sp"
-                    android:textColor="@color/ivory"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                        <ImageView
+                            android:id="@+id/ic_eye1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="13dp"
+                            android:src="@drawable/ic_visible_eye"
+                            android:onClick="@{()->vm.eye1Click()}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
-                <androidx.constraintlayout.widget.ConstraintLayout
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_again_pw"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@color/deep_dark">
+                    android:orientation="vertical">
 
-                    <EditText
-                        android:id="@+id/et_again_pw"
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="비밀번호를 다시 입력해주세요."
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="14dp"
-                        android:textSize="16sp"
-                        android:textColor="@color/gray_02"
-                        android:textColorHint="@color/dark_gray"
-                        android:singleLine="true"
-                        android:background="@drawable/rectangle_box"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintHorizontal_bias="0.0"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintVertical_bias="0.0" />
+                        android:layout_marginBottom="8dp">
 
-                    <ImageView
-                        android:id="@+id/ic_eye2"
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비밀번호 재확인"
+                            android:textSize="14sp"
+                            android:textColor="@color/ivory"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                        <TextView
+                            android:id="@+id/tv_error_again_pw"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="비밀번호 재확인 에러 메시지"
+                            android:textSize="12sp"
+                            android:textColor="@color/orange"
+                            android:visibility="invisible"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:padding="13dp"
-                        android:src="@drawable/ic_visible_eye"
-                        android:onClick="@{()->vm.eye2Click()}"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        android:background="@color/deep_dark">
 
-                </androidx.constraintlayout.widget.ConstraintLayout>
+                        <EditText
+                            android:id="@+id/et_again_pw"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="비밀번호를 다시 입력해주세요."
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="14dp"
+                            android:textSize="16sp"
+                            android:textColor="@color/gray_02"
+                            android:textColorHint="@color/dark_gray"
+                            android:singleLine="true"
+                            android:background="@drawable/rectangle_box"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintHorizontal_bias="0.0"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintVertical_bias="0.0" />
+
+                        <ImageView
+                            android:id="@+id/ic_eye2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:padding="13dp"
+                            android:src="@drawable/ic_visible_eye"
+                            android:onClick="@{()->vm.eye2Click()}"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintEnd_toEndOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                </LinearLayout>
 
             </LinearLayout>
 

@@ -12,10 +12,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.infinity.omos.databinding.ActivityRegisterBinding
 import com.infinity.omos.viewmodels.RegisterViewModel
-import kotlinx.android.synthetic.main.activity_login.et_pw
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
+import kotlinx.android.synthetic.main.activity_register.tv_error_pw
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -59,6 +59,26 @@ class RegisterActivity : AppCompatActivity() {
                 }
             }
         })
+
+        et_pw.setOnFocusChangeListener { view, b ->
+            if (!b){
+                if (et_pw.length() < 8 || et_pw.length() > 16){
+                    LoginActivity.showErrorMsg(et_pw, tv_error_pw, "8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요.", linear_pw)
+                } else{
+                    LoginActivity.hideErrorMsg(et_pw, tv_error_pw)
+                }
+            }
+        }
+
+        et_again_pw.setOnFocusChangeListener { view, b ->
+            if (!b){
+                if (et_pw.text != et_again_pw.text){
+                    LoginActivity.showErrorMsg(et_again_pw, tv_error_again_pw, "8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요.", linear_again_pw)
+                } else{
+                    LoginActivity.hideErrorMsg(et_again_pw, tv_error_again_pw)
+                }
+            }
+        }
 
         // 닉네임 설정 페이지 이동
         btn_next.setOnClickListener {

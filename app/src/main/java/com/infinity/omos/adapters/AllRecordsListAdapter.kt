@@ -52,7 +52,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
         fun bind(content: AllRecords){
             binding.category = content
 
-            val mAdapter = CategoryListAdapter(context!!, content.myRecord)
+            val mAdapter = CategoryListAdapter(context, content.myRecord)
             mAdapter.setRecords(content.myRecord)
             binding.rvCategory.apply{
                 adapter = mAdapter

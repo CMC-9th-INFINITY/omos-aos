@@ -1,21 +1,19 @@
 package com.infinity.omos.viewmodels
 
 import android.app.Application
-import android.content.res.ColorStateList
-import android.widget.Button
 import android.widget.EditText
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.R
 import com.infinity.omos.repository.Repository
-import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class LoginViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
     var visibleEye = MutableLiveData<Boolean>()
     var stateInput = MutableLiveData<Boolean>()
+
+    lateinit var accessToken: String
+    var userId: Long = 0L
 
     init {
         visibleEye.value = false
@@ -32,5 +30,10 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
 
     fun checkLogin(id: String, pw: String): Boolean{
         return repository.checkLogin(id, pw)
+    }
+
+    fun addKakaoUser(token: String, id: Long?){
+        accessToken = token
+        userId = id!!
     }
 }
