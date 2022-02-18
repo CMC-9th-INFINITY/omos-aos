@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OMOS">
         <activity
+            android:name=".CategoryActivity"
+            android:exported="false" />
+        <activity
             android:name=".RegisterNickActivity"
             android:exported="false" />
         <activity
@@ -29,13 +32,14 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <!-- Redirect URI: "kakao{NATIVE_APP_KEY}://oauth" -->
                 <data
                     android:host="oauth"
-                    android:scheme="kakao${KAKAO_OAUTH_KEY}"/>
+                    android:scheme="kakao${KAKAO_OAUTH_KEY}" />
             </intent-filter>
         </activity>
         <activity

@@ -37,7 +37,7 @@ class AllRecordFragment : Fragment() {
             binding.lifecycleOwner = this
         }
 
-        val mAdapter = AllRecordsListAdapter(context!!)
+        val mAdapter = AllRecordsListAdapter(requireContext())
         mAdapter.setCategory(addCategory())
         binding.rvAllrecords.apply{
             adapter = mAdapter
@@ -45,35 +45,35 @@ class AllRecordFragment : Fragment() {
         }
 
         // 한 줄 감상 데이터 관찰
-        viewModel.oneLineRecord.observe(this, Observer { record ->
+        viewModel.oneLineRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 0)
             }
         })
 
         // 내 인생의 OST 데이터 관찰
-        viewModel.myOstRecord.observe(this, Observer { record ->
+        viewModel.myOstRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 1)
             }
         })
 
         // 노래 속 나의 이야기 데이터 관찰
-        viewModel.myStoryRecord.observe(this, Observer { record ->
+        viewModel.myStoryRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 2)
             }
         })
 
         // 나만의 가사해석 데이터 관찰
-        viewModel.interpretRecord.observe(this, Observer { record ->
+        viewModel.interpretRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 3)
             }
         })
 
         // 자유 공간 데이터 관찰
-        viewModel.freeRecord.observe(this, Observer { record ->
+        viewModel.freeRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.updateCategory(it, 4)
             }

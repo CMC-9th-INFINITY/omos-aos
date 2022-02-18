@@ -35,9 +35,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val keyHash = Utility.getKeyHash(this)
-        Log.d("Hash", keyHash)
-
         context = this
 
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
