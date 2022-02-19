@@ -1,12 +1,15 @@
 package com.infinity.omos
 
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import com.infinity.omos.LoginActivity.Companion.userToken
 import com.infinity.omos.ui.*
+import com.infinity.omos.viewmodels.LoginViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {

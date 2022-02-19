@@ -3,5 +3,7 @@ package com.infinity.omos.data
 import com.google.gson.annotations.SerializedName
 
 data class ResultGetLogin(
-    @SerializedName("results") val isExist: Boolean
+    @SerializedName("accessToken") val accessToken: String,
+    @SerializedName("refreshToken") val refreshToken: String,
+    @SerializedName("userId") val userId: String
 )

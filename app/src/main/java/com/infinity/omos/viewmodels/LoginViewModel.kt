@@ -1,9 +1,13 @@
 package com.infinity.omos.viewmodels
 
 import android.app.Application
+import android.util.Log
 import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.data.UserLogin
+import com.infinity.omos.data.UserToken
 import com.infinity.omos.repository.Repository
 
 class LoginViewModel(application: Application): AndroidViewModel(application) {
@@ -12,8 +16,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
     var visibleEye = MutableLiveData<Boolean>()
     var stateInput = MutableLiveData<Boolean>()
 
-    lateinit var accessToken: String
-    var userId: Long = 0L
+    var statusLogin = repository._status
 
     init {
         visibleEye.value = false
@@ -28,12 +31,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
         stateInput.value = id.length() > 0 && pw.length() > 0
     }
 
-    fun checkLogin(id: String, pw: String): Boolean{
-        return repository.checkLogin(id, pw)
-    }
-
-    fun addKakaoUser(token: String, id: Long?){
-        accessToken = token
-        userId = id!!
+    fun checkLogin(userLogin: UserLogin){
+        repository.checkLogin(userLogin)
     }
 }

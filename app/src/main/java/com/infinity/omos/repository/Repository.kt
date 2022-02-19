@@ -1,13 +1,13 @@
 package com.infinity.omos.repository
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.LoginActivity.Companion.userToken
 import com.infinity.omos.api.LoginService
 import com.infinity.omos.api.MyRecordService
 import com.infinity.omos.api.RetrofitAPI
-import com.infinity.omos.data.MyRecord
-import com.infinity.omos.data.ResultGetLogin
-import com.infinity.omos.data.ResultGetMyRecord
+import com.infinity.omos.data.*
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -18,9 +18,18 @@ import retrofit2.Retrofit
  */
 class Repository {
 
+    /**
+     *  추후 삭제 요망
+     */
+    private val testRetrofit: Retrofit = RetrofitAPI.getMovieInstnace()
+    private val api = testRetrofit.create(MyRecordService::class.java)
+
+    enum class LoginApiState{LOADING, ERROR, DONE}
+
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val api = retrofit.create(MyRecordService::class.java)
     private val loginApi = retrofit.create(LoginService::class.java)
+
+    var _status = MutableLiveData<LoginApiState>()
 
     fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
@@ -41,32 +50,29 @@ class Repository {
         return data
     }
 
-    fun checkLogin(id: String, pw: String): Boolean {
-        var isExist = false
-
-        /**
-         *  테스트 (나중에 지우셈)
-         */
-        if (id == "0" && pw == "0"){
-            isExist = true
-        }
-        /**
-         *  테스트 (나중에 지우셈)
-         */
-
-        loginApi.getResultGetLogin(id, pw).enqueue(object: Callback<ResultGetLogin> {
+    fun checkLogin(userLogin: UserLogin){
+        loginApi.getResultGetLogin(userLogin).enqueue(object: Callback<ResultGetLogin> {
             override fun onResponse(
                 call: Call<ResultGetLogin>,
                 response: Response<ResultGetLogin>
             ) {
-                // isExist = response.body()?.isExist
+                Log.d("LoginAPI", response.body().toString())
+                if (response.body() != null){
+                    _status.value = LoginApiState.DONE
+                    userToken = UserToken(
+                        response.body()?.accessToken,
+                        response.body()?.refreshToken,
+                        response.body()?.userId?.toLong()
+                    )
+                } else{
+                    _status.value = LoginApiState.ERROR
+                }
             }
 
             override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
+                Log.d("LoginAPI", "Fail..")
                 t.stackTrace
             }
         })
-
-        return isExist
     }
 }

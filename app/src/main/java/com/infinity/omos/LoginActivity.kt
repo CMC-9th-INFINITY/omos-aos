@@ -20,11 +20,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.infinity.omos.data.UserLogin
+import com.infinity.omos.data.UserToken
 import com.infinity.omos.databinding.ActivityLoginBinding
+import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.LoginViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
-import com.kakao.sdk.common.util.Utility
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
 
@@ -106,12 +108,12 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (token != null) {
 
-                // 토큰, 사용자 정보 viewModel에 저장
+                // 토큰, 사용자 정보 저장
                 UserApiClient.instance.me { user, error ->
-                    viewModel.addKakaoUser(token.accessToken, user!!.id)
+                    // 서버 통신 후 값 할당
+                    userToken = UserToken(token.accessToken, token.refreshToken, user?.id)
                 }
 
-                Toast.makeText(this, "로그인에 성공하였습니다.", Toast.LENGTH_SHORT).show()
                 val intent = Intent(this, MainActivity::class.java)
                 startActivity(intent)
                 finish()
@@ -142,15 +144,22 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // 로그인 완료
-        btn_login.setOnClickListener {
-            if (viewModel.checkLogin(et_id.text.toString(), et_pw.text.toString())){
-                var intent = Intent(this, MainActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
-            } else{
-                showErrorMsg(et_id, tv_error_id, "입력하신 내용을 다시 확인해주세요.", linear_id)
+        // 로그인 상태
+        viewModel.statusLogin.observe(this, Observer { status ->
+            status?.let {
+                if (it == Repository.LoginApiState.DONE){
+                    var intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                    startActivity(intent)
+                } else{
+                    showErrorMsg(et_id, tv_error_id, "입력하신 내용을 다시 확인해주세요.", linear_id)
+                }
             }
+        })
+
+        // 로그인 API 호출
+        btn_login.setOnClickListener {
+            viewModel.checkLogin(UserLogin(et_id.text.toString(), et_pw.text.toString()))
         }
 
         // 카카오 소셜 로그인 페이지 이동
@@ -181,6 +190,8 @@ class LoginActivity : AppCompatActivity() {
 
     companion object{
         lateinit var context: Context
+
+        var userToken: UserToken? = null
 
         fun showErrorMsg(et: EditText, tvMsg: TextView, msg: String, shakeLayout: LinearLayout){
             et.background = ResourcesCompat.getDrawable(context.resources, R.drawable.rectangle_stroke_box, null)
