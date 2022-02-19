@@ -87,7 +87,7 @@ class Repository {
                 call: Call<ResultCheckEmail>,
                 response: Response<ResultCheckEmail>
             ) {
-                _stateDupEmail.value = response.body()?.state.toBoolean()
+                _stateDupEmail.value = response.body()?.state
             }
 
             override fun onFailure(call: Call<ResultCheckEmail>, t: Throwable) {
