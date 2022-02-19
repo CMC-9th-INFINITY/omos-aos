@@ -23,6 +23,6 @@
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        tools:listitem="@layout/list_detail_category_item"/>
+        tools:listitem="@layout/list_oneline_category_item"/>
 
 </LinearLayout>

@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.MyRecord
-import com.infinity.omos.databinding.ListDetailCategoryItemBinding
+import com.infinity.omos.databinding.ListOnelineCategoryItemBinding
 
 class DetailCategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>?):
     ListAdapter<MyRecord, DetailCategoryListAdapter.ViewHolder>(
@@ -19,7 +19,7 @@ class DetailCategoryListAdapter internal constructor(context: Context, myRecord:
     private var record = myRecord
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = ListDetailCategoryItemBinding.inflate(inflater, parent, false)
+        var binding = ListOnelineCategoryItemBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
@@ -29,7 +29,7 @@ class DetailCategoryListAdapter internal constructor(context: Context, myRecord:
         holder.bind(record)
     }
 
-    inner class ViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ListOnelineCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: MyRecord){
             binding.data = record
             binding.executePendingBindings()

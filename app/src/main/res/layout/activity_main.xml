@@ -74,6 +74,7 @@
                 android:textColor="@color/white"
                 android:background="#00FFFFFF"
                 android:hint="노래를 검색해주세요."
+                android:textColorHint="@color/dark_gray"
                 android:singleLine="true"
                 android:imeOptions="actionDone"/>
 
