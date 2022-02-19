@@ -153,6 +153,7 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                 } else{
                     showErrorMsg(et_id, tv_error_id, "입력하신 내용을 다시 확인해주세요.", linear_id)
+                    showErrorMsg(et_pw, tv_error_pw, "입력하신 내용을 다시 확인해주세요.", linear_pw)
                 }
             }
         })
