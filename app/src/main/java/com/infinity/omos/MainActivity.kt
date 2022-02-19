@@ -1,9 +1,12 @@
 package com.infinity.omos
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -27,6 +30,17 @@ class MainActivity : AppCompatActivity() {
 
         initToolBar()
         initNavigationBar()
+
+        // 검색뷰 취소 버튼 클릭 시
+        btn_cancel.setOnClickListener {
+            linear.visibility = View.VISIBLE
+            searchView.visibility = View.GONE
+            et_search.setText("")
+
+            // 키보드 내리기
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputMethodManager.hideSoftInputFromWindow(et_search.windowToken, 0)
+        }
     }
 
     private fun initToolBar(){
@@ -135,7 +149,15 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_write -> {
-                Toast.makeText(this, "Write", Toast.LENGTH_SHORT).show()
+                linear.visibility = View.GONE
+                searchView.visibility = View.VISIBLE
+
+                // editText 포커스 주기
+                et_search.isFocusableInTouchMode = true
+                et_search.requestFocus()
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.showSoftInput(et_search,0)
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
