@@ -83,7 +83,7 @@ class MyRecordListAdapter internal constructor(context: Context):
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, RecordDetailActivity::class.java)
-                    intent.putExtra("img_path", record.album_cover_path)
+                    intent.putExtra("title", record.title)
                     context.startActivity(intent)
                 }
             }

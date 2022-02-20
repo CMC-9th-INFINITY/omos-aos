@@ -1,6 +1,7 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,8 @@ import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.CategoryActivity
+import com.infinity.omos.RecordDetailActivity
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
@@ -85,7 +88,9 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    Toast.makeText(context, record.title, Toast.LENGTH_SHORT).show()
+                    val intent = Intent(context, RecordDetailActivity::class.java)
+                    intent.putExtra("title", record.title)
+                    context.startActivity(intent)
                 }
             }
         }

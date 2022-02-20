@@ -4,16 +4,31 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import com.infinity.omos.data.MyRecord
+import com.infinity.omos.databinding.ActivityLoginBinding
+import com.infinity.omos.databinding.ActivityRecordDetailBinding
+import com.infinity.omos.databinding.ActivityRecordOnelineBinding
+import com.infinity.omos.viewmodels.RecordDetailViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
 class RecordDetailActivity : AppCompatActivity() {
 
-    lateinit var path: String
+    private val viewModel: RecordDetailViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record_oneline)
+        setContentView(R.layout.activity_record_detail)
+
+        var title = intent.getStringExtra("title")
+
+        val binding = DataBindingUtil.setContentView<ActivityRecordDetailBinding>(this, R.layout.activity_record_detail)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
+
+        viewModel.record = MyRecord(title!!, "", "", "")
 
         initToolBar()
     }
