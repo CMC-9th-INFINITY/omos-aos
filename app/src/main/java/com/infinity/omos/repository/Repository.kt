@@ -81,12 +81,12 @@ class Repository {
     }
 
     fun checkDupEmail(email: String){
-        checkDupApi.checkDupEmail(email).execute()
         checkDupApi.checkDupEmail(email).enqueue(object: Callback<ResultCheckEmail>{
             override fun onResponse(
                 call: Call<ResultCheckEmail>,
                 response: Response<ResultCheckEmail>
             ) {
+                Log.d("emailAPI", response.body()?.state.toString())
                 _stateDupEmail.value = response.body()?.state
             }
 

@@ -3,5 +3,5 @@ package com.infinity.omos.data
 import com.google.gson.annotations.SerializedName
 
 data class ResultCheckEmail(
-    val state: Boolean
+    @SerializedName("state") val state: Boolean
 )

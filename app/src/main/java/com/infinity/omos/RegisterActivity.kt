@@ -76,12 +76,12 @@ class RegisterActivity : AppCompatActivity() {
                 if (!state){
                     LoginActivity.showErrorMsg(et_id, tv_success_msg, "이미 가입된 메일입니다.", linear_id)
                 } else{
+                    idState = true
                     tv_success_msg.text = "인증을 성공했어요."
                     tv_success_msg.setTextColor(ContextCompat.getColor(this, R.color.gray_05))
                     tv_success_msg.visibility = View.VISIBLE
                     btn_send_auth_mail.visibility = View.GONE
                     et_id.isEnabled = false
-                    idState = true
                 }
             }
         })
@@ -108,7 +108,9 @@ class RegisterActivity : AppCompatActivity() {
                 } else if (!et_id.text.contains("@")){
                     LoginActivity.showErrorMsg(et_id, tv_success_msg, "입력하신 내용을 다시 확인해주세요.", linear_id)
                 } else{
-                    LoginActivity.hideErrorMsg(et_id, tv_success_msg)
+                    if (!idState){
+                        LoginActivity.hideErrorMsg(et_id, tv_success_msg)
+                    }
                 }
             }
         }
