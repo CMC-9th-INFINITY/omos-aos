@@ -11,11 +11,19 @@ class PreferenceUtil(context: Context) {
         context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
 
     fun getString(key: String): String {
-        return prefs.getString(key, "no value").toString()
+        return prefs.getString(key, null).toString()
     }
 
-    fun setString(key: String, str: String) {
+    fun setString(key: String, str: String?) {
         prefs.edit().putString(key, str).apply()
+    }
+
+    fun getLong(key: String): Long {
+        return prefs.getLong(key, -1L)
+    }
+
+    fun setLong(key: String, value: Long) {
+        prefs.edit().putLong(key, value).apply()
     }
 
     fun getInt(key: String): Int {

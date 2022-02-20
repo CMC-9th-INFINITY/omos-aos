@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.*
-import com.infinity.omos.ui.onboarding.LoginActivity.Companion.userToken
 import com.infinity.omos.data.*
+import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -65,11 +65,9 @@ class Repository {
                 Log.d("LoginAPI", response.body().toString())
                 if (response.body() != null){
                     _status.value = LoginApiState.DONE
-                    userToken = UserToken(
-                        response.body()?.accessToken,
-                        response.body()?.refreshToken,
-                        response.body()?.userId
-                    )
+                    GlobalApplication.prefs.setString("accessToken", response.body()?.accessToken)
+                    GlobalApplication.prefs.setString("refreshToken", response.body()?.refreshToken)
+                    GlobalApplication.prefs.setLong("userId", response.body()?.userId!!)
                 } else{
                     _status.value = LoginApiState.ERROR
                 }
@@ -91,11 +89,9 @@ class Repository {
                 val body = response.body()
                 if (body != null && response.isSuccessful) {
                     Log.d("SnsLoginAPI Response", response.body().toString())
-                    userToken = UserToken(
-                        response.body()?.accessToken,
-                        response.body()?.refreshToken,
-                        response.body()?.userId
-                    )
+                    GlobalApplication.prefs.setString("accessToken", response.body()?.accessToken)
+                    GlobalApplication.prefs.setString("refreshToken", response.body()?.refreshToken)
+                    GlobalApplication.prefs.setLong("userId", response.body()?.userId!!)
                     _stateSns.value = LoginApiState.DONE
                 } else {
                     val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
@@ -127,11 +123,9 @@ class Repository {
                 val body = response.body()
                 if (body != null && response.isSuccessful) {
                     Log.d("signUpAPI Response", response.body().toString())
-                    userToken = UserToken(
-                        response.body()?.accessToken,
-                        response.body()?.refreshToken,
-                        response.body()?.userId
-                    )
+                    GlobalApplication.prefs.setString("accessToken", response.body()?.accessToken)
+                    GlobalApplication.prefs.setString("refreshToken", response.body()?.refreshToken)
+                    GlobalApplication.prefs.setLong("userId", response.body()?.userId!!)
                     _stateSnsSignUp.value = LoginApiState.DONE
                 } else {
                     val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)

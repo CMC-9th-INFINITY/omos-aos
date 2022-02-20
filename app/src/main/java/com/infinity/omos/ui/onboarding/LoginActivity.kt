@@ -24,7 +24,6 @@ import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.UserLogin
 import com.infinity.omos.data.UserSNSLogin
-import com.infinity.omos.data.UserToken
 import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.LoginViewModel
@@ -90,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                 if (it == Repository.LoginApiState.DONE){
                     Log.d("LoginActivity", "이미 가입된 회원입니다.")
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else{
                     Log.d("LoginActivity", "회원가입이 필요합니다.")
@@ -139,7 +139,7 @@ class LoginActivity : AppCompatActivity() {
 
                 // 소셜 로그인 인증 성공 시 이미 가입된 회원인지 확인
                 UserApiClient.instance.me { user, error ->
-                    userId = user?.id.toString()
+                    userId = user?.id.toString()+"@kakao.com"
                     viewModel.checkSnsLogin(UserSNSLogin(userId))
                 }
             }
@@ -216,8 +216,6 @@ class LoginActivity : AppCompatActivity() {
 
     companion object{
         lateinit var context: Context
-
-        var userToken: UserToken? = null
 
         fun showErrorMsg(et: EditText, tvMsg: TextView, msg: String, shakeLayout: LinearLayout){
             et.background = ResourcesCompat.getDrawable(

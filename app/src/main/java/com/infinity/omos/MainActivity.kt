@@ -11,7 +11,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.infinity.omos.ui.bottomnav.*
-import com.infinity.omos.ui.onboarding.LoginActivity.Companion.userToken
+import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d("MainActivity", "ID: ${userToken?.userId}")
+        Log.d("MainActivity", "ID: ${GlobalApplication.prefs.getLong("userId")}")
 
         initToolBar()
         initNavigationBar()

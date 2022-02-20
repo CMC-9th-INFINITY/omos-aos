@@ -9,6 +9,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.infinity.omos.data.UserSNSLogin
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.ui.onboarding.LoginActivity
+import com.infinity.omos.ui.onboarding.RegisterNickActivity
+import com.infinity.omos.utils.GlobalApplication
 import com.kakao.sdk.user.UserApiClient
 
 class SplashActivity : AppCompatActivity() {
@@ -33,8 +35,15 @@ class SplashActivity : AppCompatActivity() {
                 }
                 else if (tokenInfo != null) {
                     Log.d("SplashActivity", "토큰 불러오기 성공")
-                    val intent = Intent(this, MainActivity::class.java)
-                    startActivity(intent)
+                    if (GlobalApplication.prefs.getLong("userId") == -1L){
+                        val intent = Intent(this, RegisterNickActivity::class.java)
+                        intent.putExtra("sns", true)
+                        intent.putExtra("userId", tokenInfo.id.toString()+"@kakao.com")
+                        startActivity(intent)
+                    } else{
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
                     finish()
                 }
             }

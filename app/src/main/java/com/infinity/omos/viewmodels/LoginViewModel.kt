@@ -8,7 +8,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.UserLogin
 import com.infinity.omos.data.UserSNSLogin
-import com.infinity.omos.data.UserToken
 import com.infinity.omos.repository.Repository
 
 class LoginViewModel(application: Application): AndroidViewModel(application) {
