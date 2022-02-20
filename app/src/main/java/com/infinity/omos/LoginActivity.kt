@@ -124,9 +124,9 @@ class LoginActivity : AppCompatActivity() {
         et_id.setOnFocusChangeListener { view, b ->
             if (!b){
                 if (et_id.length() == 0){
-                    showErrorMsg(et_id, tv_error_id, "이메일을 입력해주세요.", linear_id)
+                    showErrorMsg(et_id, tv_error_id, resources.getString(R.string.error_input_email), linear_id)
                 } else if (!et_id.text.contains("@")){
-                    showErrorMsg(et_id, tv_error_id, "입력하신 내용을 다시 확인해주세요.", linear_id)
+                    showErrorMsg(et_id, tv_error_id, resources.getString(R.string.again_check), linear_id)
                 } else{
                     hideErrorMsg(et_id, tv_error_id)
                 }
@@ -137,7 +137,7 @@ class LoginActivity : AppCompatActivity() {
         et_pw.setOnFocusChangeListener { view, b ->
             if (!b){
                 if (et_pw.length() == 0){
-                    showErrorMsg(et_pw, tv_error_pw, "비밀번호를 입력해주세요.", linear_pw)
+                    showErrorMsg(et_pw, tv_error_pw, resources.getString(R.string.error_input_password), linear_pw)
                 } else{
                     hideErrorMsg(et_pw, tv_error_pw)
                 }
@@ -152,8 +152,8 @@ class LoginActivity : AppCompatActivity() {
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
                 } else{
-                    showErrorMsg(et_id, tv_error_id, "입력하신 내용을 다시 확인해주세요.", linear_id)
-                    showErrorMsg(et_pw, tv_error_pw, "입력하신 내용을 다시 확인해주세요.", linear_pw)
+                    showErrorMsg(et_id, tv_error_id, resources.getString(R.string.again_check), linear_id)
+                    showErrorMsg(et_pw, tv_error_pw, resources.getString(R.string.again_check), linear_pw)
                 }
             }
         })

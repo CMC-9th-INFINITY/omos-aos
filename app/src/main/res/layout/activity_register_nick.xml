@@ -97,6 +97,7 @@
                     android:textSize="16sp"
                     android:textColor="@color/gray_02"
                     android:textColorHint="@color/dark_gray"
+                    android:maxLength="12"
                     android:background="@drawable/rectangle_box"/>
 
                 <View

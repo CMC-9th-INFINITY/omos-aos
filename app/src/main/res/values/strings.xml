@@ -6,6 +6,13 @@
     <string name="mydj_title">MY DJ</string>
     <string name="mypage_title">MY 페이지</string>
 
+    <string name="error_input_email">이메일을 입력해주세요.</string>
+    <string name="error_input_password">비밀번호를 입력해주세요.</string>
+    <string name="again_check">입력하신 내용을 다시 확인해주세요.</string>
+    <string name="exist_email">이미 가입된 메일입니다.</string>
+    <string name="success_auth">인증을 성공했어요.</string>
+    <string name="condition_password">8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요.</string>
+    <string name="no_match_password">비밀번호가 일치하지 않아요.</string>
     <string name="send_auth_mail"><u>인증메일 보내기</u></string>
     <string name="look"><u>보기</u></string>
 
