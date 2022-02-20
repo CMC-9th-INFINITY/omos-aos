@@ -129,13 +129,12 @@
                 android:id="@+id/record_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingHorizontal="40dp"
-                android:paddingVertical="58dp"
-                android:text="한줄감상이나옵니다글자수는50자이내여야합니다한줄감상이나옵니다글자수는50자이내여야합니다한줄감상"
-                android:textSize="24sp"
+                android:padding="16dp"
+                android:layout_marginBottom="30dp"
+                android:text="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
+                android:textSize="16sp"
                 android:textColor="@color/gray_02"
-                android:fontFamily="@font/cafe24oneprettynight"
-                android:maxLength="50"/>
+                android:maxLength="794"/>
 
             <View
                 android:layout_width="match_parent"

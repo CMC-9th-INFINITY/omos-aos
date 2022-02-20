@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyRecordListAdapter
+import com.infinity.omos.adapters.OneLineCategoryListAdapter
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.ui.AllRecordFragment
 import com.infinity.omos.viewmodels.SharedViewModel
@@ -26,25 +27,44 @@ class CategoryActivity : AppCompatActivity() {
         when (category) {
             resources.getString(R.string.category1) -> {
                 record = AllRecordFragment.oneLineRecord
+                val mAdapter = OneLineCategoryListAdapter(this, record)
+                recyclerView.apply{
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(context)
+                }
             }
             resources.getString(R.string.category2) -> {
                 record = AllRecordFragment.myOstRecord
+                val mAdapter = DetailCategoryListAdapter(this, record)
+                recyclerView.apply{
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(context)
+                }
             }
             resources.getString(R.string.category3) -> {
                 record = AllRecordFragment.myStoryRecord
+                val mAdapter = DetailCategoryListAdapter(this, record)
+                recyclerView.apply{
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(context)
+                }
             }
             resources.getString(R.string.category4) -> {
                 record = AllRecordFragment.interpretRecord
+                val mAdapter = OneLineCategoryListAdapter(this, record)
+                recyclerView.apply{
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(context)
+                }
             }
             else -> {
                 record = AllRecordFragment.freeRecord
+                val mAdapter = DetailCategoryListAdapter(this, record)
+                recyclerView.apply{
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(context)
+                }
             }
-        }
-
-        val mAdapter = DetailCategoryListAdapter(this, record)
-        recyclerView.apply{
-            adapter = mAdapter
-            layoutManager = LinearLayoutManager(context)
         }
     }
 
