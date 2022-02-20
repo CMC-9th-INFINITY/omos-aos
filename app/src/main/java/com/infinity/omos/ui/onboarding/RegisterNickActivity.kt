@@ -21,6 +21,7 @@ import com.infinity.omos.data.UserSnsSignUp
 import com.infinity.omos.databinding.ActivityRegisterNickBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.RegisterNickViewModel
+import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
@@ -122,6 +123,14 @@ class RegisterNickActivity : AppCompatActivity() {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
+                } else if (it == Repository.LoginApiState.ERROR){
+                    // 이미 있는 닉네임일 때,
+                    LoginActivity.showErrorMsg(
+                        et_nick,
+                        tv_error_nick,
+                        resources.getString(R.string.exist_email),
+                        linear_nick
+                    )
                 } else{
                     Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
                 }

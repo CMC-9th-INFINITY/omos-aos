@@ -10,6 +10,7 @@
     <string name="error_input_password">비밀번호를 입력해주세요.</string>
     <string name="again_check">입력하신 내용을 다시 확인해주세요.</string>
     <string name="exist_email">이미 가입된 메일입니다.</string>
+    <string name="exist_nick">이미 있는 닉네임입니다.</string>
     <string name="success_auth">인증을 성공했어요.</string>
     <string name="condition_password">8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요.</string>
     <string name="no_match_password">비밀번호가 일치하지 않아요.</string>

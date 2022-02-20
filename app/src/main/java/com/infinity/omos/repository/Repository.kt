@@ -130,12 +130,15 @@ class Repository {
                 } else {
                     val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                     Log.d("signUpAPI Error", errorBody!!.message)
+
+                    if (errorBody.message == "이미 있는 닉네임입니다"){
+                        _stateSnsSignUp.value = LoginApiState.ERROR
+                    }
                 }
             }
 
             override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
                 Log.d("signUpAPI", t.message.toString())
-                _stateSnsSignUp.value = LoginApiState.ERROR
                 t.stackTrace
             }
         })
