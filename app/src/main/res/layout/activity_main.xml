@@ -27,6 +27,11 @@
             app:titleTextColor="@color/white"
             android:background="@color/dark"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/divide2"/>
+
         <FrameLayout
             android:id="@+id/framelayout"
             android:layout_width="match_parent"

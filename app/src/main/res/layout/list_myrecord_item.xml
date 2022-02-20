@@ -14,13 +14,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingHorizontal="16dp"
-        android:layout_marginBottom="14dp">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_marginBottom="14dp"
-            android:background="@color/divide2"/>
+        android:layout_marginTop="14dp">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -103,6 +97,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="14dp"
+            android:background="@color/divide2"/>
 
     </LinearLayout>
 
