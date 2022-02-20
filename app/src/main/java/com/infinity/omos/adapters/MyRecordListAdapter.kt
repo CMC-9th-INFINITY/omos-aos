@@ -43,22 +43,14 @@ class MyRecordListAdapter internal constructor(context: Context):
         binding.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
             override fun onPreDraw(): Boolean {
                 var imgWidth = binding.imgAlbumCover.width
-                var layoutWidth = binding.linear.width
+                var layoutWidth = binding.constraint.width
 
-                val params = binding.linear.layoutParams
+                val params = binding.constraint.layoutParams
                 params.apply {
-                    width = layoutWidth - imgWidth/2
-                }
-                binding.linear.apply {
-                    layoutParams = params
-                }
-
-                val params2 = binding.constraint.layoutParams
-                params2.apply {
-                    width = layoutWidth - imgWidth
+                    width = layoutWidth - imgWidth / 2
                 }
                 binding.constraint.apply {
-                    layoutParams = params2
+                    layoutParams = params
                 }
 
                 binding.constraint.viewTreeObserver.removeOnPreDrawListener(this)

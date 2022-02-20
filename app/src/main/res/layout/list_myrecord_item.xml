@@ -12,7 +12,15 @@
         android:id="@+id/linear"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:layout_marginBottom="14dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginBottom="14dp"
+            android:background="@color/divide2"/>
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -85,15 +93,16 @@
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_private"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </FrameLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_marginTop="14dp"
-            android:background="@color/divide2"/>
 
     </LinearLayout>
 
