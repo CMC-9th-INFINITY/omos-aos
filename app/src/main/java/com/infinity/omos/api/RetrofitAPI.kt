@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
  */
 object RetrofitAPI {
     private var movieInstance : Retrofit? = null
-    private var instance : Retrofit? = null
+    var instance : Retrofit? = null
 
     fun getMovieInstnace() : Retrofit {
         if(movieInstance == null){

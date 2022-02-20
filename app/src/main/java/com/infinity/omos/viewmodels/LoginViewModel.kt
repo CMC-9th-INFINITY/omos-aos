@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.UserLogin
+import com.infinity.omos.data.UserSNSLogin
 import com.infinity.omos.data.UserToken
 import com.infinity.omos.repository.Repository
 
@@ -17,6 +18,7 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
     var stateInput = MutableLiveData<Boolean>()
 
     var statusLogin = repository._status
+    var stateSns = repository._stateSns
 
     init {
         visibleEye.value = false
@@ -33,5 +35,9 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
 
     fun checkLogin(userLogin: UserLogin){
         repository.checkLogin(userLogin)
+    }
+
+    fun checkSnsLogin(userSNSLogin: UserSNSLogin){
+        repository.checkSnsLogin(userSNSLogin)
     }
 }

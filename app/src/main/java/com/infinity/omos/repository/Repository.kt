@@ -3,12 +3,10 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.LoginActivity.Companion.userToken
-import com.infinity.omos.api.DupEmailService
-import com.infinity.omos.api.LoginService
-import com.infinity.omos.api.MyRecordService
-import com.infinity.omos.api.RetrofitAPI
+import com.infinity.omos.api.*
+import com.infinity.omos.ui.onboarding.LoginActivity.Companion.userToken
 import com.infinity.omos.data.*
+import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,9 +28,13 @@ class Repository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val loginApi = retrofit.create(LoginService::class.java)
     private val checkDupApi = retrofit.create(DupEmailService::class.java)
+    private val snsLoginApi = retrofit.create(SnsLoginService::class.java)
+    private val snsSignUpApi = retrofit.create(SnsSignUpService::class.java)
 
     var _status = MutableLiveData<LoginApiState>()
     var _stateDupEmail = MutableLiveData<Boolean>()
+    var _stateSns = MutableLiveData<LoginApiState>()
+    var _stateSnsSignUp = MutableLiveData<LoginApiState>()
 
     fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
@@ -74,7 +76,72 @@ class Repository {
             }
 
             override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
-                Log.d("checkLoginAPI", t.message.toString())
+                Log.d("LoginAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    fun checkSnsLogin(id: UserSNSLogin){
+        snsLoginApi.getResultSnsLogin(id).enqueue(object: Callback<ResultGetLogin> {
+            override fun onResponse(
+                call: Call<ResultGetLogin>,
+                response: Response<ResultGetLogin>
+            ) {
+                val body = response.body()
+                if (body != null && response.isSuccessful) {
+                    Log.d("SnsLoginAPI Response", response.body().toString())
+                    userToken = UserToken(
+                        response.body()?.accessToken,
+                        response.body()?.refreshToken,
+                        response.body()?.userId
+                    )
+                    _stateSns.value = LoginApiState.DONE
+                } else {
+                    val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                    Log.d("SnsLoginAPI Error", errorBody!!.message)
+
+                    if (errorBody.message == "해당하는 유저가 존재하지 않습니다"){
+                        _stateSns.value = LoginApiState.ERROR
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
+                Log.d("SnsLoginAPI Failure", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    fun signUp(){
+
+    }
+
+    fun snsSignUp(userInfo: UserSnsSignUp){
+        snsSignUpApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<ResultGetLogin>{
+            override fun onResponse(
+                call: Call<ResultGetLogin>,
+                response: Response<ResultGetLogin>
+            ) {
+                val body = response.body()
+                if (body != null && response.isSuccessful) {
+                    Log.d("signUpAPI Response", response.body().toString())
+                    userToken = UserToken(
+                        response.body()?.accessToken,
+                        response.body()?.refreshToken,
+                        response.body()?.userId
+                    )
+                    _stateSnsSignUp.value = LoginApiState.DONE
+                } else {
+                    val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                    Log.d("signUpAPI Error", errorBody!!.message)
+                }
+            }
+
+            override fun onFailure(call: Call<ResultGetLogin>, t: Throwable) {
+                Log.d("signUpAPI", t.message.toString())
+                _stateSnsSignUp.value = LoginApiState.ERROR
                 t.stackTrace
             }
         })
@@ -86,7 +153,7 @@ class Repository {
                 call: Call<ResultCheckEmail>,
                 response: Response<ResultCheckEmail>
             ) {
-                Log.d("emailAPI", response.body()?.state.toString())
+                Log.d("checkDupEmailAPI", response.body()?.state.toString())
                 _stateDupEmail.value = response.body()?.state
             }
 

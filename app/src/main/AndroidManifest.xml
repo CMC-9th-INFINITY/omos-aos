@@ -17,10 +17,10 @@
             android:name=".CategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterNickActivity"
+            android:name=".ui.onboarding.RegisterNickActivity"
             android:exported="false" />
         <activity
-            android:name=".RegisterActivity"
+            android:name=".ui.onboarding.RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".RecordDetailActivity"
@@ -44,17 +44,18 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".ui.onboarding.LoginActivity"/>
+        <activity
+            android:name=".SplashActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-        <activity
-            android:name=".SplashActivity"
-            android:exported="false" />
     </application>
 
 </manifest>

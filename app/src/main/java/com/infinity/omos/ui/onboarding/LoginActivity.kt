@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.onboarding
 
 import android.content.Context
 import android.content.Intent
@@ -20,7 +20,10 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.daimajia.androidanimations.library.Techniques
 import com.daimajia.androidanimations.library.YoYo
+import com.infinity.omos.MainActivity
+import com.infinity.omos.R
 import com.infinity.omos.data.UserLogin
+import com.infinity.omos.data.UserSNSLogin
 import com.infinity.omos.data.UserToken
 import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.repository.Repository
@@ -34,12 +37,16 @@ class LoginActivity : AppCompatActivity() {
 
     private val viewModel: LoginViewModel by viewModels()
 
+    private var userId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         context = this
 
-        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this, R.layout.activity_login)
+        val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
+            R.layout.activity_login
+        )
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -62,13 +69,35 @@ class LoginActivity : AppCompatActivity() {
         viewModel.stateInput.observe(this, Observer { state ->
             state?.let {
                 if (it){
-                    btn_login.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.orange))
+                    btn_login.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this,
+                        R.color.orange
+                    ))
                     btn_login.setTextColor(ContextCompat.getColor(this, R.color.white))
                     btn_login.isEnabled = true
                 } else{
-                    btn_login.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.light_gray))
+                    btn_login.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this,
+                        R.color.light_gray
+                    ))
                     btn_login.setTextColor(ContextCompat.getColor(this, R.color.dark_gray))
                     btn_login.isEnabled = false
+                }
+            }
+        })
+
+        // 이미 가입된 회원인지 확인
+        viewModel.stateSns.observe(this, Observer { state ->
+            state?.let {
+                if (it == Repository.LoginApiState.DONE){
+                    Log.d("LoginActivity", "이미 가입된 회원입니다.")
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                } else{
+                    Log.d("LoginActivity", "회원가입이 필요합니다.")
+                    val intent = Intent(this, RegisterNickActivity::class.java)
+                    intent.putExtra("sns", true)
+                    intent.putExtra("userId", userId)
+                    startActivity(intent)
+                    finish()
                 }
             }
         })
@@ -108,15 +137,11 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (token != null) {
 
-                // 토큰, 사용자 정보 저장
+                // 소셜 로그인 인증 성공 시 이미 가입된 회원인지 확인
                 UserApiClient.instance.me { user, error ->
-                    // 서버 통신 후 값 할당
-                    userToken = UserToken(token.accessToken, token.refreshToken, user?.id)
+                    userId = user?.id.toString()
+                    viewModel.checkSnsLogin(UserSNSLogin(userId))
                 }
-
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-                finish()
             }
         }
 
@@ -195,7 +220,9 @@ class LoginActivity : AppCompatActivity() {
         var userToken: UserToken? = null
 
         fun showErrorMsg(et: EditText, tvMsg: TextView, msg: String, shakeLayout: LinearLayout){
-            et.background = ResourcesCompat.getDrawable(context.resources, R.drawable.rectangle_stroke_box, null)
+            et.background = ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.rectangle_stroke_box, null)
             tvMsg.visibility = View.VISIBLE
             tvMsg.text = msg
 
@@ -207,7 +234,9 @@ class LoginActivity : AppCompatActivity() {
         }
 
         fun hideErrorMsg(et: EditText, tvMsg: TextView){
-            et.background = ResourcesCompat.getDrawable(context.resources, R.drawable.rectangle_box, null)
+            et.background = ResourcesCompat.getDrawable(
+                context.resources,
+                R.drawable.rectangle_box, null)
             tvMsg.visibility = View.INVISIBLE
         }
     }

@@ -1,4 +1,4 @@
-package com.infinity.omos.ui
+package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
 import android.view.LayoutInflater

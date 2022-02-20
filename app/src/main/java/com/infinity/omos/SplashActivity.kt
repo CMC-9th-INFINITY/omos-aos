@@ -6,10 +6,14 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
+import com.infinity.omos.data.UserSNSLogin
+import com.infinity.omos.repository.Repository
+import com.infinity.omos.ui.onboarding.LoginActivity
 import com.kakao.sdk.user.UserApiClient
 
 class SplashActivity : AppCompatActivity() {
 
+    private val repository: Repository = Repository()
     private val SPLASH_TIME: Long = 3000 // (ms)초 간 Splash 화면 띄움
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,13 +26,13 @@ class SplashActivity : AppCompatActivity() {
             // 로그인 정보 확인
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error != null) {
-                    Log.d("LoginActivity", "토큰 불러오기 실패")
+                    Log.d("SplashActivity", "토큰 불러오기 실패")
                     val intent = Intent(this, LoginActivity::class.java)
                     startActivity(intent)
                     finish()
                 }
                 else if (tokenInfo != null) {
-                    Log.d("LoginActivity", "토큰 불러오기 성공")
+                    Log.d("SplashActivity", "토큰 불러오기 성공")
                     val intent = Intent(this, MainActivity::class.java)
                     startActivity(intent)
                     finish()

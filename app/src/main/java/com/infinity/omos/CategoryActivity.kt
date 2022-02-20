@@ -5,13 +5,10 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.adapters.DetailCategoryListAdapter
-import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.adapters.OneLineCategoryListAdapter
 import com.infinity.omos.data.MyRecord
-import com.infinity.omos.ui.AllRecordFragment
-import com.infinity.omos.viewmodels.SharedViewModel
+import com.infinity.omos.ui.bottomnav.AllRecordFragment
 import kotlinx.android.synthetic.main.activity_category.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
 
 class CategoryActivity : AppCompatActivity() {

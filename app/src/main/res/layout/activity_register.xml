@@ -28,7 +28,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:context=".RegisterActivity"
+            tools:context=".ui.onboarding.RegisterActivity"
             android:paddingHorizontal="16dp"
             android:background="@color/dark">
 

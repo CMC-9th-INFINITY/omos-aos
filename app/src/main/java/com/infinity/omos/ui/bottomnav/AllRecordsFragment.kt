@@ -1,4 +1,4 @@
-package com.infinity.omos.ui
+package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,6 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.viewmodels.SharedViewModel
-import kotlinx.android.synthetic.main.list_allrecords_item.view.*
 
 class AllRecordFragment : Fragment() {
 

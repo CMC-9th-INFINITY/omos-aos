@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".LoginActivity"
+        tools:context=".ui.onboarding.LoginActivity"
         android:padding="16dp"
         android:background="@color/dark">
 

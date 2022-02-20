@@ -10,9 +10,8 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.infinity.omos.LoginActivity.Companion.userToken
-import com.infinity.omos.ui.*
-import com.infinity.omos.viewmodels.LoginViewModel
+import com.infinity.omos.ui.bottomnav.*
+import com.infinity.omos.ui.onboarding.LoginActivity.Companion.userToken
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -27,6 +26,8 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        Log.d("MainActivity", "ID: ${userToken?.userId}")
 
         initToolBar()
         initNavigationBar()
