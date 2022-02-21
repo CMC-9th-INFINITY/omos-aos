@@ -20,6 +20,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.UserSignUp
 import com.infinity.omos.data.UserSnsSignUp
 import com.infinity.omos.databinding.ActivityRegisterNickBinding
+import com.infinity.omos.etc.CustomDialog
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.RegisterNickViewModel
 import kotlinx.android.synthetic.main.activity_register.*
@@ -173,12 +174,14 @@ class RegisterNickActivity : AppCompatActivity() {
 
         // 이용약관 보기
         btn_look_tos.setOnClickListener {
-            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
+            val dialog = CustomDialog(this)
+            dialog.showTosDialog()
         }
 
         // 개인정보 보호정책 보기
         btn_look_pp.setOnClickListener {
-            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
+            val dialog = CustomDialog(this)
+            dialog.showPPDialog()
         }
     }
 

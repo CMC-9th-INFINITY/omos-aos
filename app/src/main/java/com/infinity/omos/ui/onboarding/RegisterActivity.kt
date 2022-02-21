@@ -155,7 +155,7 @@ class RegisterActivity : AppCompatActivity() {
 
         et_again_pw.setOnFocusChangeListener { view, b ->
             if (!b){
-                if (et_pw.text != et_again_pw.text){
+                if (et_pw.text.toString() != et_again_pw.text.toString()){
                     LoginActivity.showErrorMsg(
                         et_again_pw,
                         tv_error_again_pw,
