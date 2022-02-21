@@ -69,6 +69,11 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+
+                        if (searchView.visibility == View.VISIBLE){
+                            searchView.visibility = View.GONE
+                            linear.visibility = View.VISIBLE
+                        }
                     }
                     R.id.menu_myrecord -> {
                         toolbar.title = "MY 레코드"
@@ -93,6 +98,11 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+
+                        if (searchView.visibility == View.VISIBLE){
+                            searchView.visibility = View.GONE
+                            linear.visibility = View.VISIBLE
+                        }
                     }
                     R.id.menu_mydj -> {
                         toolbar.title = "MY DJ"
@@ -105,6 +115,11 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+
+                        if (searchView.visibility == View.VISIBLE){
+                            searchView.visibility = View.GONE
+                            linear.visibility = View.VISIBLE
+                        }
                     }
                     R.id.menu_mypage -> {
                         toolbar.title = "MY 페이지"
@@ -117,6 +132,11 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
+
+                        if (searchView.visibility == View.VISIBLE){
+                            searchView.visibility = View.GONE
+                            linear.visibility = View.VISIBLE
+                        }
                     }
                 }
                 true
