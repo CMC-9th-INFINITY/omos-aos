@@ -6,7 +6,6 @@ import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import com.infinity.omos.data.UserSNSLogin
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.ui.onboarding.RegisterNickActivity

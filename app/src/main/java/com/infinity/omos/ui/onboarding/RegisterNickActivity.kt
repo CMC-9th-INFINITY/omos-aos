@@ -17,6 +17,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
+import com.infinity.omos.data.UserSignUp
 import com.infinity.omos.data.UserSnsSignUp
 import com.infinity.omos.databinding.ActivityRegisterNickBinding
 import com.infinity.omos.repository.Repository
@@ -40,6 +41,7 @@ class RegisterNickActivity : AppCompatActivity() {
 
         var isSNS = intent.getBooleanExtra("sns", false)
         var userId = intent.getStringExtra("userId")
+        var userPw = intent.getStringExtra("userPw")
 
         initToolBar()
 
@@ -117,6 +119,27 @@ class RegisterNickActivity : AppCompatActivity() {
         })
 
         // 회원가입 완료
+        viewModel.stateSignUp.observe(this, Observer { state ->
+            state?.let {
+                if (it == Repository.LoginApiState.DONE){
+                    val intent = Intent(this, LoginActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                } else if (it == Repository.LoginApiState.ERROR){
+                    // 이미 있는 닉네임일 때,
+                    LoginActivity.showErrorMsg(
+                        et_nick,
+                        tv_error_nick,
+                        resources.getString(R.string.exist_email),
+                        linear_nick
+                    )
+                } else{
+                    Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
+        // 회원가입 완료
         viewModel.stateSnsSignUp.observe(this, Observer { state ->
             state?.let {
                 if (it == Repository.LoginApiState.DONE){
@@ -143,10 +166,7 @@ class RegisterNickActivity : AppCompatActivity() {
                 // 소셜 회원가입
                 viewModel.snsSignUp(UserSnsSignUp(userId!!, et_nick.text.toString()))
             } else{
-                // 이메일 회원가입
-                var intent = Intent(this, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+                viewModel.signUp(UserSignUp(userId!!, et_nick.text.toString(), userPw!!))
             }
         }
 

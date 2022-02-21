@@ -23,7 +23,7 @@ import com.daimajia.androidanimations.library.YoYo
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.UserLogin
-import com.infinity.omos.data.UserSNSLogin
+import com.infinity.omos.data.UserSnsLogin
 import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.LoginViewModel
@@ -84,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
         // 이미 가입된 회원인지 확인
-        viewModel.stateSns.observe(this, Observer { state ->
+        viewModel.stateSnsLogin.observe(this, Observer { state ->
             state?.let {
                 if (it == Repository.LoginApiState.DONE){
                     Log.d("LoginActivity", "이미 가입된 회원입니다.")
@@ -140,7 +140,7 @@ class LoginActivity : AppCompatActivity() {
                 // 소셜 로그인 인증 성공 시 이미 가입된 회원인지 확인
                 UserApiClient.instance.me { user, error ->
                     userId = user?.id.toString()+"@kakao.com"
-                    viewModel.checkSnsLogin(UserSNSLogin(userId))
+                    viewModel.checkSnsLogin(UserSnsLogin(userId))
                 }
             }
         }

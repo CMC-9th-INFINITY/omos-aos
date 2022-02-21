@@ -1,8 +1,7 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.ResultGetLogin
-import com.infinity.omos.data.UserLogin
-import com.infinity.omos.data.UserSNSLogin
+import com.infinity.omos.data.ResultUserInfo
+import com.infinity.omos.data.UserSnsLogin
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -10,6 +9,6 @@ import retrofit2.http.POST
 interface SnsLoginService {
     @POST("api/auth/sns-login")
     fun getResultSnsLogin(
-        @Body params: UserSNSLogin
-    ): Call<ResultGetLogin>
+        @Body params: UserSnsLogin
+    ): Call<ResultUserInfo>
 }

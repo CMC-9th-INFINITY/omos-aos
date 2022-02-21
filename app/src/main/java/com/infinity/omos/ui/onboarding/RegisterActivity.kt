@@ -182,7 +182,7 @@ class RegisterActivity : AppCompatActivity() {
                     resources.getString(R.string.condition_password),
                     linear_pw
                 )
-            }else if (et_pw.text != et_again_pw.text){
+            }else if (et_pw.text.toString() != et_again_pw.text.toString()){
                 LoginActivity.showErrorMsg(
                     et_again_pw,
                     tv_error_again_pw,
@@ -191,6 +191,9 @@ class RegisterActivity : AppCompatActivity() {
                 )
             } else{
                 val intent = Intent(this, RegisterNickActivity::class.java)
+                intent.putExtra("sns", false)
+                intent.putExtra("userId", et_id.text.toString())
+                intent.putExtra("userPw", et_pw.text.toString())
                 startActivity(intent)
             }
         }
