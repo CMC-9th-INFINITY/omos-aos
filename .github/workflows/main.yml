@@ -31,7 +31,7 @@ jobs:
     - name: Decode BASE URL
       env:
         BASE_URL: ${{secrets.BASE_URL}}
-      run: echo base_url="BASE_URL" >> ./local.properties
+      run: echo base_url="$BASE_URL" >> ./local.properties
 
     - name: Decode KAKAO NATIVE APP KEY
       env:
