@@ -27,19 +27,29 @@ class SplashActivity : AppCompatActivity() {
             // 로그인 정보 확인
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error != null) {
-                    Log.d("SplashActivity", "토큰 불러오기 실패")
-                    val intent = Intent(this, LoginActivity::class.java)
-                    startActivity(intent)
-                    finish()
+                    // 이메일 로그인 상태 확인
+                    if (GlobalApplication.prefs.getLong("userId") == -1L){
+                        Log.d("SplashActivity", "토큰 불러오기 실패")
+                        val intent = Intent(this, LoginActivity::class.java)
+                        startActivity(intent)
+                        finish()
+                    } else{
+                        Log.d("SplashActivity", "토큰 불러오기 성공")
+                        val intent = Intent(this, MainActivity::class.java)
+                        startActivity(intent)
+                    }
                 }
                 else if (tokenInfo != null) {
-                    Log.d("SplashActivity", "토큰 불러오기 성공")
+                    // 소셜 로그인 상태 확인
                     if (GlobalApplication.prefs.getLong("userId") == -1L){
+                        // 소셜 로그인하고 닉네임 입력 안한 상황
+                        Log.d("SplashActivity", "토큰 불러오기 실패")
                         val intent = Intent(this, RegisterNickActivity::class.java)
                         intent.putExtra("sns", true)
                         intent.putExtra("userId", tokenInfo.id.toString()+"@kakao.com")
                         startActivity(intent)
                     } else{
+                        Log.d("SplashActivity", "토큰 불러오기 성공")
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }

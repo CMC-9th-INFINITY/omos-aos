@@ -2,6 +2,7 @@ package com.infinity.omos.utils
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.infinity.omos.data.UserToken
 
 /**
  *  SharedPreference Util
@@ -9,6 +10,25 @@ import android.content.SharedPreferences
 class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
+
+    fun getUserToken(): UserToken?{
+        var accessToken = getString("accessToken")
+        var refreshToken = getString("refreshToken")
+        var userId = getLong("userId")
+
+        var userToken: UserToken? = null
+        if (userId != -1L){
+            userToken = UserToken(accessToken, refreshToken, userId)
+        }
+
+        return userToken
+    }
+
+    fun setUserToken(accessToken: String?, refreshToken: String?, userId: Long){
+        setString("accessToken", accessToken)
+        setString("refreshToken", refreshToken)
+        setLong("userId", userId)
+    }
 
     fun getString(key: String): String {
         return prefs.getString(key, null).toString()

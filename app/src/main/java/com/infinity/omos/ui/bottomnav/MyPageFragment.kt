@@ -2,6 +2,7 @@ package com.infinity.omos.ui.bottomnav
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -32,16 +33,16 @@ class MyPageFragment : Fragment() {
         btn_logout.setOnClickListener {
             UserApiClient.instance.logout { error ->
                 if (error != null){
-                    Toast.makeText(context, "로그아웃 실패 $error", Toast.LENGTH_SHORT).show()
+                    Log.d("MyPage", "이메일 로그아웃")
                 } else{
-                    Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-                    GlobalApplication.prefs.setString("accessToken", null)
-                    GlobalApplication.prefs.setString("refreshToken", null)
-                    GlobalApplication.prefs.setLong("userId", -1L)
-                    val intent = Intent(context, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    Log.d("MyPage", "카카오 로그아웃")
                 }
+
+                Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+                GlobalApplication.prefs.setUserToken(null, null, -1L)
+                val intent = Intent(context, LoginActivity::class.java)
+                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                startActivity(intent)
             }
         }
     }
