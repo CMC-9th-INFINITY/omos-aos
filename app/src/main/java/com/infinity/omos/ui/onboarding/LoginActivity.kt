@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
+import android.util.Patterns
 import android.view.View
 import android.widget.EditText
 import android.widget.LinearLayout
@@ -31,6 +32,7 @@ import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_login.*
+import java.util.regex.Pattern
 
 class LoginActivity : AppCompatActivity() {
 
@@ -148,9 +150,11 @@ class LoginActivity : AppCompatActivity() {
         // Id 입력란 포커스 잃었을 때,
         et_id.setOnFocusChangeListener { view, b ->
             if (!b){
+                val pattern: Pattern = Patterns.EMAIL_ADDRESS
+
                 if (et_id.length() == 0){
                     showErrorMsg(et_id, tv_error_id, resources.getString(R.string.error_input_email), linear_id)
-                } else if (!et_id.text.contains("@")){
+                } else if (!pattern.matcher(et_id.text).matches()){
                     showErrorMsg(et_id, tv_error_id, resources.getString(R.string.again_check), linear_id)
                 } else{
                     hideErrorMsg(et_id, tv_error_id)

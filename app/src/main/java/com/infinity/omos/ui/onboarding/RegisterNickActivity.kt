@@ -122,6 +122,7 @@ class RegisterNickActivity : AppCompatActivity() {
         viewModel.stateSignUp.observe(this, Observer { state ->
             state?.let {
                 if (it == Repository.LoginApiState.DONE){
+                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
                     val intent = Intent(this, LoginActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)

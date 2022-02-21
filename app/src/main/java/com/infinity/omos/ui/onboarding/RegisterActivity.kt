@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
@@ -24,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_register.linear_id
 import kotlinx.android.synthetic.main.activity_register.linear_pw
 import kotlinx.android.synthetic.main.activity_register.toolbar
 import kotlinx.android.synthetic.main.activity_register.tv_error_pw
+import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -200,6 +202,8 @@ class RegisterActivity : AppCompatActivity() {
 
         // 인증메일 전송
         btn_send_auth_mail.setOnClickListener {
+            val pattern: Pattern = Patterns.EMAIL_ADDRESS
+
             if (et_id.length() == 0){
                 LoginActivity.showErrorMsg(
                     et_id,
@@ -207,7 +211,7 @@ class RegisterActivity : AppCompatActivity() {
                     resources.getString(R.string.error_input_email),
                     linear_id
                 )
-            } else if (!et_id.text.contains("@")){
+            } else if (!pattern.matcher(et_id.text).matches()){
                 LoginActivity.showErrorMsg(
                     et_id,
                     tv_success_msg,

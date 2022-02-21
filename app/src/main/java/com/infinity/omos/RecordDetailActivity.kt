@@ -45,6 +45,8 @@ class RecordDetailActivity : AppCompatActivity() {
 
         viewModel.record = MyRecord(title!!, "", "", "")
 
+        record_contents.text = "\"${record_contents.text}\""
+
         initToolBar()
     }
 
