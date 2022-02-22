@@ -17,19 +17,16 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.data.MyRecord
-import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.databinding.ActivityRecordDetailBinding
-import com.infinity.omos.databinding.ActivityRecordOnelineBinding
 import com.infinity.omos.viewmodels.RecordDetailViewModel
 import kotlinx.android.synthetic.main.activity_record_detail.*
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
-class RecordDetailActivity : AppCompatActivity() {
+class MyRecordDetailActivity : AppCompatActivity() {
 
     private val viewModel: RecordDetailViewModel by viewModels()
 

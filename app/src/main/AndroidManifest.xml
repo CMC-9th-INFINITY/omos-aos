@@ -16,7 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OMOS">
         <activity
-            android:name=".CategoryActivity"
+            android:name=".AllRecordDetailActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onboarding.RegisterNickActivity"
@@ -25,7 +25,7 @@
             android:name=".ui.onboarding.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".RecordDetailActivity"
+            android:name=".MyRecordDetailActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

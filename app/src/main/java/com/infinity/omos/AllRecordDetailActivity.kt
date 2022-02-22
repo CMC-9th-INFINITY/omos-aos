@@ -11,7 +11,7 @@ import com.infinity.omos.ui.bottomnav.AllRecordFragment
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
 
-class CategoryActivity : AppCompatActivity() {
+class AllRecordDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_category)

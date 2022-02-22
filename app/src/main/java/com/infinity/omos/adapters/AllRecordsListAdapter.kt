@@ -6,15 +6,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.CategoryActivity
+import com.infinity.omos.AllRecordDetailActivity
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
-import kotlinx.android.synthetic.main.list_category_item.view.*
 import kotlinx.android.synthetic.main.list_category_item.view.constraint
 import kotlinx.android.synthetic.main.list_category_item.view.img_album_cover
 
@@ -71,7 +69,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.btn_category.setOnClickListener {
-                    var intent = Intent(context, CategoryActivity::class.java)
+                    var intent = Intent(context, AllRecordDetailActivity::class.java)
                     intent.putExtra("category", content.title)
                     context.startActivity(intent)
                 }

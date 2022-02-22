@@ -6,15 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.CategoryActivity
-import com.infinity.omos.RecordDetailActivity
+import com.infinity.omos.MyRecordDetailActivity
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
-import com.infinity.omos.databinding.ListMyrecordItemBinding
 
 class CategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>?):
     ListAdapter<MyRecord, CategoryListAdapter.ViewHolder>(
@@ -86,7 +83,7 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    val intent = Intent(context, RecordDetailActivity::class.java)
+                    val intent = Intent(context, MyRecordDetailActivity::class.java)
                     intent.putExtra("title", record.title)
                     context.startActivity(intent)
                 }

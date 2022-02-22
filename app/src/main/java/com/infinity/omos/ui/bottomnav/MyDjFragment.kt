@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -24,6 +25,8 @@ class MyDjFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+
+        Toast.makeText(context, "페이지 안뜨면 전체레코드 페이지 갔다와보세요. (해당 페이지 API 연동 미완료)",Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateView(
