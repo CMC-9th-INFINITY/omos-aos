@@ -22,6 +22,7 @@ class Repository {
      */
     private val testRetrofit: Retrofit = RetrofitAPI.getMovieInstnace()
     private val api = testRetrofit.create(MyRecordService::class.java)
+    private val myDjApi = testRetrofit.create(MyDjService::class.java)
 
     enum class LoginApiState{LOADING, ERROR, DONE}
 
@@ -69,6 +70,26 @@ class Repository {
             }
 
             override fun onFailure(call: Call<ResultGetMyRecord>, t: Throwable) {
+                Log.d("Repository", t.message.toString())
+                t.stackTrace
+            }
+        })
+
+        return data
+    }
+
+    fun getMyDjData(page: Int): LiveData<List<MyDj>>{
+        val data = MutableLiveData<List<MyDj>>()
+
+        myDjApi.getResultMyDj(page).enqueue(object: Callback<ResultGetMyDj> {
+            override fun onResponse(
+                call: Call<ResultGetMyDj>,
+                response: Response<ResultGetMyDj>
+            ) {
+                data.value = response.body()?.myDjList
+            }
+
+            override fun onFailure(call: Call<ResultGetMyDj>, t: Throwable) {
                 Log.d("Repository", t.message.toString())
                 t.stackTrace
             }

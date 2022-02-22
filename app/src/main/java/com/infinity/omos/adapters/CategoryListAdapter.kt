@@ -25,8 +25,6 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
     private val context = context
     private var record = myRecord
 
-    private var test = 0
-
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{

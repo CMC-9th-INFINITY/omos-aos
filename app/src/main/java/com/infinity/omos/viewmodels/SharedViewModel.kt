@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.data.MyDj
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.repository.Repository
 
@@ -21,15 +22,22 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     var interpretRecord = repository.getMyRecordData(-1)
     var freeRecord = repository.getMyRecordData(5)
 
+    var myDj = repository.getMyDjData(6)
+
     var isEmpty = MutableLiveData<Boolean>()
 
     init {
         isEmpty.value = false
     }
 
-    // xml 연결 (listData)
+    // xml 연결 (myRecordListData)
     fun getMyRecordData(): LiveData<List<MyRecord>> {
         isEmpty.value = myRecord.value == null
         return myRecord
+    }
+
+    // xml 연결 (myDjListData)
+    fun getMyDjData(): LiveData<List<MyDj>> {
+        return myDj
     }
 }
