@@ -32,7 +32,6 @@ class SplashActivity : AppCompatActivity() {
                         Log.d("SplashActivity", "토큰 불러오기 실패")
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
-                        finish()
                     } else{
                         Log.d("SplashActivity", "토큰 불러오기 성공")
                         val intent = Intent(this, MainActivity::class.java)
@@ -53,8 +52,8 @@ class SplashActivity : AppCompatActivity() {
                         val intent = Intent(this, MainActivity::class.java)
                         startActivity(intent)
                     }
-                    finish()
                 }
+                finish()
             }
         }, SPLASH_TIME)
     }
