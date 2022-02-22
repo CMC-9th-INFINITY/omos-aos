@@ -12,10 +12,12 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
+
     </style>
 
     <style name="ToolbarColoredBackArrow" parent="Theme.OMOS">
         <item name="android:textColorSecondary">@color/gray_03</item>
+        <item name="actionMenuTextColor">@color/gray_03</item> <!--액션 메뉴의 텍스트 색상-->
     </style>
 
 </resources>

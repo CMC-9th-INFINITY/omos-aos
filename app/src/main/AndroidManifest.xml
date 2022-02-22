@@ -7,14 +7,17 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:usesCleartextTraffic="true"
         android:name=".utils.GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_omos"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_omos_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OMOS">
+        android:theme="@style/Theme.OMOS"
+        android:usesCleartextTraffic="true">
+        <activity
+            android:name=".SelectCategoryActivity"
+            android:exported="false" />
         <activity
             android:name=".AllRecordDetailActivity"
             android:exported="false" />
@@ -45,21 +48,16 @@
                     android:scheme="kakao${KAKAO_OAUTH_KEY}" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.onboarding.LoginActivity"/>
+        <activity android:name=".ui.onboarding.LoginActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-        </activity>
-
-        <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
+        </activity> <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.infinity.omos.fileprovider"
@@ -67,11 +65,8 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path">
-
-            </meta-data>
+                android:resource="@xml/path"></meta-data>
         </provider>
-
     </application>
 
 </manifest>
