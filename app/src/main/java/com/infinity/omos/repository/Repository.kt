@@ -31,12 +31,31 @@ class Repository {
     private val signUpApi = retrofit.create(SignUpService::class.java)
     private val snsLoginApi = retrofit.create(SnsLoginService::class.java)
     private val snsSignUpApi = retrofit.create(SnsSignUpService::class.java)
+    private val reissueApi = retrofit.create(ReissueService::class.java)
 
     var _stateDupEmail = MutableLiveData<Boolean>()
     var _stateLogin = MutableLiveData<LoginApiState>()
     var _stateSignUp = MutableLiveData<LoginApiState>()
     var _stateSnsLogin = MutableLiveData<LoginApiState>()
     var _stateSnsSignUp = MutableLiveData<LoginApiState>()
+
+    fun getUserToken(userInfo: UserToken){
+        reissueApi.getToken(userInfo).enqueue(object: Callback<UserToken>{
+            override fun onResponse(
+                call: Call<UserToken>,
+                response: Response<UserToken>
+            ) {
+                GlobalApplication.prefs.setUserToken(
+                    response.body()?.accessToken,
+                    response.body()?.refreshToken,
+                    response.body()?.userId!!)
+            }
+
+            override fun onFailure(call: Call<UserToken>, t: Throwable) {
+                t.stackTrace
+            }
+        })
+    }
 
     fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
@@ -59,10 +78,10 @@ class Repository {
     }
 
     fun checkLogin(userLogin: UserLogin){
-        loginApi.getResultLogin(userLogin).enqueue(object: Callback<ResultUserInfo> {
+        loginApi.getResultLogin(userLogin).enqueue(object: Callback<UserToken> {
             override fun onResponse(
-                call: Call<ResultUserInfo>,
-                response: Response<ResultUserInfo>
+                call: Call<UserToken>,
+                response: Response<UserToken>
             ) {
                 Log.d("LoginAPI", response.body().toString())
                 if (response.body() != null){
@@ -76,7 +95,7 @@ class Repository {
                 }
             }
 
-            override fun onFailure(call: Call<ResultUserInfo>, t: Throwable) {
+            override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("LoginAPI", t.message.toString())
                 t.stackTrace
             }
@@ -88,10 +107,10 @@ class Repository {
     }
 
     fun checkSnsLogin(id: UserSnsLogin){
-        snsLoginApi.getResultSnsLogin(id).enqueue(object: Callback<ResultUserInfo> {
+        snsLoginApi.getResultSnsLogin(id).enqueue(object: Callback<UserToken> {
             override fun onResponse(
-                call: Call<ResultUserInfo>,
-                response: Response<ResultUserInfo>
+                call: Call<UserToken>,
+                response: Response<UserToken>
             ) {
                 val body = response.body()
                 if (body != null && response.isSuccessful) {
@@ -111,7 +130,7 @@ class Repository {
                 }
             }
 
-            override fun onFailure(call: Call<ResultUserInfo>, t: Throwable) {
+            override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("SnsLoginAPI Failure", t.message.toString())
                 t.stackTrace
             }
@@ -147,10 +166,10 @@ class Repository {
     }
 
     fun snsSignUp(userInfo: UserSnsSignUp){
-        snsSignUpApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<ResultUserInfo>{
+        snsSignUpApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<UserToken>{
             override fun onResponse(
-                call: Call<ResultUserInfo>,
-                response: Response<ResultUserInfo>
+                call: Call<UserToken>,
+                response: Response<UserToken>
             ) {
                 val body = response.body()
                 if (body != null && response.isSuccessful) {
@@ -170,7 +189,7 @@ class Repository {
                 }
             }
 
-            override fun onFailure(call: Call<ResultUserInfo>, t: Throwable) {
+            override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("signUpAPI", t.message.toString())
                 t.stackTrace
             }

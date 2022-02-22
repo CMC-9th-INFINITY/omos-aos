@@ -133,7 +133,7 @@ class LoginActivity : AppCompatActivity() {
                         Toast.makeText(this, "앱이 요청 권한이 없음", Toast.LENGTH_SHORT).show()
                     }
                     else -> { // Unknown
-                        Toast.makeText(this, "기타 에러", Toast.LENGTH_SHORT).show()
+                        Log.d("LoginActivity", "기타 에러")
                     }
                 }
             }

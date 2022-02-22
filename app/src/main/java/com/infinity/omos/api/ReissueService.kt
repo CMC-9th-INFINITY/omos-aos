@@ -1,14 +1,13 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.UserToken
-import com.infinity.omos.data.UserSnsSignUp
 import retrofit2.Call
 import retrofit2.http.Body
 import retrofit2.http.POST
 
-interface SnsSignUpService {
-    @POST("api/auth/sns-signup")
-    fun getResultSnsSignUp(
-        @Body params: UserSnsSignUp
+interface ReissueService {
+    @POST("api/auth/reissue")
+    fun getToken(
+        @Body params: UserToken
     ): Call<UserToken>
 }
