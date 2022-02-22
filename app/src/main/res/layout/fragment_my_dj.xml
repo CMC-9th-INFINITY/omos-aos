@@ -15,17 +15,25 @@
         android:layout_height="match_parent"
         tools:context=".ui.bottomnav.MyDjFragment">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_mydj"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:myDjListData="@{vm.myDjData}"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_record"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_detail_category_item"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_mydj"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:myDjListData="@{vm.myDjData}"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/list_detail_category_item"/>
+
+
+        </LinearLayout>
 
     </FrameLayout>
 

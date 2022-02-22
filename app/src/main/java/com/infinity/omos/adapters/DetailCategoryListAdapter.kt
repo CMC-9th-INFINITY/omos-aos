@@ -1,6 +1,7 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -34,6 +35,11 @@ class DetailCategoryListAdapter internal constructor(context: Context, myRecord:
             binding.data = record
             binding.executePendingBindings()
         }
+    }
+
+    internal fun updateCategory(record: List<MyRecord>?) {
+        this.record = record
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

@@ -9,9 +9,12 @@ import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyDj
+import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListMydjItemBinding
 
 class MyDjListAdapter internal constructor(context: Context):
@@ -25,7 +28,7 @@ class MyDjListAdapter internal constructor(context: Context):
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{
-        fun onClick(v: View, position: Int)
+        fun onClick(v: View, position: Int, records: List<MyRecord>?)
     }
 
     interface OnItemLongClickListener{
@@ -54,7 +57,8 @@ class MyDjListAdapter internal constructor(context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-
+                    Toast.makeText(context, "클릭", Toast.LENGTH_SHORT).show()
+                    itemClickListener.onClick(itemView, pos, dj.records)
                 }
             }
         }

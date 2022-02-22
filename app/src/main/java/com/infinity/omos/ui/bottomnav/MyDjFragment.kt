@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
+import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
+import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.viewmodels.SharedViewModel
 
@@ -39,6 +42,27 @@ class MyDjFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         }
+
+        val rAdapter = DetailCategoryListAdapter(requireContext(), AllRecordFragment.oneLineRecord)
+        binding.rvRecord.apply {
+            adapter = rAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+        mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int, records: List<MyRecord>?) {
+                // TODO: 수정 필요
+                if (position == 0){
+                    rAdapter.updateCategory(AllRecordFragment.oneLineRecord)
+                }else if (position == 1){
+                    rAdapter.updateCategory(AllRecordFragment.myOstRecord)
+                } else if (position == 2){
+                    rAdapter.updateCategory(AllRecordFragment.myStoryRecord)
+                } else{
+                    rAdapter.updateCategory(AllRecordFragment.freeRecord)
+                }
+            }
+        })
 
         return binding.root
     }
