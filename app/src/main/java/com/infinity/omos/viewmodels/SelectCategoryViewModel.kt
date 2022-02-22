@@ -12,23 +12,23 @@ import com.infinity.omos.R
 
 class SelectCategoryViewModel(application: Application): AndroidViewModel(application) {
 
-    var state = MutableLiveData<Int>()
+    var state = MutableLiveData<String>()
 
     init {
-        state.value = 0
+        state.value = ""
     }
 
     fun clickBox(category: TextView){
         if (category.text.toString() == "한 줄 감상"){
-            state.value = 1
+            state.value = "한 줄 감상"
         } else if (category.text.toString() == "내 인생의 OST"){
-            state.value = 2
+            state.value = "내 인생의 OST"
         } else if (category.text.toString() == "노래 속 나의 이야기"){
-            state.value = 3
+            state.value = "노래 속 나의 이야기"
         } else if (category.text.toString() == "나만의 가사해석"){
-            state.value = 4
+            state.value = "나만의 가사해석"
         } else if (category.text.toString() == "자유 공간"){
-            state.value = 5
+            state.value = "자유 공간"
         }
     }
 }

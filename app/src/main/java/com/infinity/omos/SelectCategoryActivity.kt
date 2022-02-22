@@ -32,15 +32,15 @@ class SelectCategoryActivity : AppCompatActivity() {
 
         viewModel.state.observe(this, Observer { state ->
             state?.let {
-                if (it == 1){
+                if (it == resources.getString(R.string.category1)){
                     changeState(btn_oneline)
-                } else if (it == 2){
+                } else if (it == resources.getString(R.string.category2)){
                     changeState(btn_myost)
-                } else if (it == 3){
+                } else if (it == resources.getString(R.string.category3)){
                     changeState(btn_mystory)
-                } else if (it == 4){
+                } else if (it == resources.getString(R.string.category4)){
                     changeState(btn_interpret)
-                } else if (it == 5){
+                } else if (it == resources.getString(R.string.category5)){
                     changeState(btn_free)
                 }
             }
@@ -78,10 +78,10 @@ class SelectCategoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
-                if (viewModel.state.value == 0){
+                if (viewModel.state.value == ""){
                     Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
                 } else{
-                    Toast.makeText(this, "다음${viewModel.state.value}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, viewModel.state.value, Toast.LENGTH_SHORT).show()
                 }
                 true
             }
