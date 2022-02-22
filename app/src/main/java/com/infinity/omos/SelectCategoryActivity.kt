@@ -1,5 +1,6 @@
 package com.infinity.omos
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -78,9 +79,13 @@ class SelectCategoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
-                if (viewModel.state.value == ""){
+                var category = viewModel.state.value
+                if (category == ""){
                     Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
                 } else{
+                    val intent = Intent(this, WriteRecordActivity::class.java)
+                    intent.putExtra("category", category)
+                    startActivity(intent)
                     Toast.makeText(this, viewModel.state.value, Toast.LENGTH_SHORT).show()
                 }
                 true

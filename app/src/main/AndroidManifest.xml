@@ -16,6 +16,9 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".WriteRecordActivity"
+            android:exported="false" />
+        <activity
             android:name=".SelectCategoryActivity"
             android:exported="false" />
         <activity
@@ -65,7 +68,7 @@
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/path"></meta-data>
+                android:resource="@xml/path" />
         </provider>
     </application>
 
