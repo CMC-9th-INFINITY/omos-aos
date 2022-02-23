@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -24,6 +25,8 @@ import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
 import com.infinity.omos.viewmodels.WriteRecordViewModel
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
@@ -32,6 +35,7 @@ import kotlinx.android.synthetic.main.activity_write_record.*
 class WriteRecordActivity : AppCompatActivity() {
 
     private lateinit var result: ActivityResultLauncher<Intent>
+    private lateinit var cropResult: ActivityResultLauncher<Intent>
     private val viewModel: WriteRecordViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,33 +77,63 @@ class WriteRecordActivity : AppCompatActivity() {
 
         // 콜백
         result = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
-            if (it.resultCode == RESULT_OK){
-                var currentImageUri = it.data?.data
-                try {
-                    currentImageUri?.let {
+            when(it.resultCode){
+                RESULT_OK -> {
+                    cropImage(it.data?.data)
+                }
+
+                RESULT_CANCELED ->{
+                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+                }
+
+                else -> {
+                    Log.d("WriteRecord","error")
+                }
+            }
+        }
+
+        cropResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            when(it.resultCode){
+                RESULT_OK -> {
+                    CropImage.getActivityResult(it.data)?.let { cropResult ->
                         if(Build.VERSION.SDK_INT < 28) {
                             val bitmap = MediaStore.Images.Media.getBitmap(
                                 this.contentResolver,
-                                currentImageUri
+                                cropResult.uri
                             )
                             val bd = BitmapDrawable(resources, bitmap)
                             img_record_title.setImageDrawable(bd)
                         } else {
-                            val source = ImageDecoder.createSource(this.contentResolver, currentImageUri)
+                            val source = ImageDecoder.createSource(this.contentResolver, cropResult.uri)
                             val bitmap = ImageDecoder.decodeBitmap(source)
                             val bd = BitmapDrawable(resources, bitmap)
                             img_record_title.setImageDrawable(bd)
                         }
                     }
-                }catch(e:Exception) {
-                    e.printStackTrace()
                 }
-            } else if(it.resultCode == RESULT_CANCELED){
-                Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
-            } else{
-                Log.d("WriteRecord","error")
+
+                RESULT_CANCELED ->{
+                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+                }
+
+                else -> {
+                    Log.d("WriteRecord","error")
+                }
             }
         }
+    }
+
+    private fun cropImage(uri: Uri?){
+        var width = img_record_title.measuredWidth
+        var height = img_record_title.measuredHeight
+        val intent = CropImage
+            .activity(uri)
+            .setCropShape(CropImageView.CropShape.RECTANGLE)
+            .setMinCropResultSize(width, height)
+            .setMaxCropResultSize(width, height)
+            .getIntent(this)
+
+        cropResult.launch(intent)
     }
 
     private fun initToolBar(){

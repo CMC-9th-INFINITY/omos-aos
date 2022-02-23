@@ -93,4 +93,7 @@ dependencies {
 
     // Read More TextView
     implementation 'kr.co.prnd:readmore-textview:1.0.0'
+
+    // Image Cropper
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
 }

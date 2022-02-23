@@ -60,7 +60,9 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
+        </activity>
+
+        <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.infinity.omos.fileprovider"
@@ -70,6 +72,9 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/path" />
         </provider>
+
+        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat"/>
     </application>
 
 </manifest>
