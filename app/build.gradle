@@ -90,4 +90,7 @@ dependencies {
     // View Shaker
     implementation 'com.daimajia.easing:library:2.0@aar'
     implementation 'com.daimajia.androidanimations:library:2.3@aar'
+
+    // Read More TextView
+    implementation 'kr.co.prnd:readmore-textview:1.0.0'
 }

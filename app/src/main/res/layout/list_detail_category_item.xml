@@ -125,7 +125,7 @@
             android:paddingHorizontal="16dp"
             android:background="@color/deep_dark">
 
-            <TextView
+            <kr.co.prnd.readmore.ReadMoreTextView
                 android:id="@+id/record_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -134,7 +134,10 @@
                 android:text="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
                 android:textSize="16sp"
                 android:textColor="@color/gray_02"
-                android:maxLength="794"/>
+                android:maxLength="794"
+                app:readMoreColor="@color/gray_05"
+                app:readMoreMaxLine="4"
+                app:readMoreText="…더보기" />
 
             <View
                 android:layout_width="match_parent"
