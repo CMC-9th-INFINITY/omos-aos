@@ -11,6 +11,7 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -23,6 +24,7 @@ import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
 import com.infinity.omos.viewmodels.WriteRecordViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 import kotlinx.android.synthetic.main.activity_write_record.*
@@ -38,6 +40,12 @@ class WriteRecordActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityWriteRecordBinding>(this, R.layout.activity_write_record)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        viewModel.category.value = intent.getStringExtra("category")
+        if (viewModel.category.value == resources.getString(R.string.category1)){
+            record_contents.visibility = View.GONE
+            oneline_contents.visibility = View.VISIBLE
+        }
 
         initToolBar()
 

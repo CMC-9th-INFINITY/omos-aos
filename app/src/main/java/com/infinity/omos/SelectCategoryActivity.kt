@@ -86,7 +86,6 @@ class SelectCategoryActivity : AppCompatActivity() {
                     val intent = Intent(this, WriteRecordActivity::class.java)
                     intent.putExtra("category", category)
                     startActivity(intent)
-                    Toast.makeText(this, viewModel.state.value, Toast.LENGTH_SHORT).show()
                 }
                 true
             }

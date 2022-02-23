@@ -154,7 +154,7 @@
                         android:id="@+id/tv_category"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="한 줄 감상"
+                        android:text="@{vm.category}"
                         android:textSize="12sp"
                         android:textColor="@color/gray_01"/>
 
@@ -209,15 +209,16 @@
                     android:id="@+id/oneline_contents"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingHorizontal="40dp"
-                    android:paddingVertical="58dp"
-                    android:hint="레코드 내용을 입력해주세요."
+                    android:gravity="center"
+                    android:padding="16dp"
+                    android:hint="&quot;레코드 내용을 입력해주세요.&quot;"
                     android:textColorHint="@color/dark_gray"
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:fontFamily="@font/cafe24oneprettynight"
                     android:maxLength="52"
                     android:onTextChanged="@{()->vm.countContents(recordContents)}"
+                    android:background="#00FFFFFF"
                     android:visibility="gone"/>
 
             </LinearLayout>
