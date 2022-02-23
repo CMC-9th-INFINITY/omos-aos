@@ -23,7 +23,9 @@
     <color name="gray_01">#E5E5EA</color>
     <color name="gray_02">#D1D1D7</color>
     <color name="gray_03">#C7C7CC</color>
+    <color name="gray_04">#AEAEB2</color>
     <color name="gray_05">#8E8E93</color>
+    <color name="gray_06">#8E8E93</color>
 
     <color name="black_02">#2C2C2E</color>
 </resources>

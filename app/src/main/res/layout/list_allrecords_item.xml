@@ -96,12 +96,13 @@
 
             </FrameLayout>
 
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="2px"
-                android:layout_marginTop="14dp"
-                android:background="@color/divide2"/>
-
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2px"
+            android:layout_marginTop="14dp"
+            android:background="@color/divide2"/>
+
     </LinearLayout>
 </layout>

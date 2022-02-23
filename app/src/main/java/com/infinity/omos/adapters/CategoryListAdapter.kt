@@ -38,35 +38,6 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var binding = ListCategoryItemBinding.inflate(inflater,parent,false)
-
-        // 앨범커버 반 가릴 수 있도록 커스텀
-        // 일부 아이템 적용 안되는 문제 해결 (onPreDraw)
-        binding.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
-            override fun onPreDraw(): Boolean {
-                var imgWidth = binding.imgAlbumCover.width
-                var layoutWidth = binding.linear.width
-
-                val params = binding.linear.layoutParams
-                params.apply {
-                    width = layoutWidth - imgWidth/2
-                }
-                binding.linear.apply {
-                    layoutParams = params
-                }
-
-                val params2 = binding.constraint.layoutParams
-                params2.apply {
-                    width = layoutWidth - imgWidth
-                }
-                binding.constraint.apply {
-                    layoutParams = params2
-                }
-
-                binding.constraint.viewTreeObserver.removeOnPreDrawListener(this)
-                return true
-            }
-        })
-
         return ViewHolder(binding)
     }
 
