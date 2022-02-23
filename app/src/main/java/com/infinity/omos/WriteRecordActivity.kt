@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
@@ -40,12 +41,29 @@ class WriteRecordActivity : AppCompatActivity() {
 
         initToolBar()
 
+        // 공개/비공개 설정
+        viewModel.isPrivate.observe(this, Observer { state ->
+            state?.let {
+                if (it){
+                    btn_private.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                } else{
+                    btn_private.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                }
+            }
+        })
+
+        btn_sticker.setOnClickListener {
+            Toast.makeText(this, "스티커", Toast.LENGTH_SHORT).show()
+        }
+
+        // 이미지 넣기
         btn_gallery.setOnClickListener {
             val intent = Intent(Intent.ACTION_GET_CONTENT)
             intent.type = "image/*"
             result.launch(intent)
         }
 
+        // 콜백
         result = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
             if (it.resultCode == RESULT_OK){
                 var currentImageUri = it.data?.data

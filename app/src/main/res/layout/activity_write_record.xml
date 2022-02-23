@@ -107,7 +107,7 @@
                     app:layout_constraintEnd_toEndOf="parent"/>
 
                 <EditText
-                    android:id="@+id/tv_record_title"
+                    android:id="@+id/et_record_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="70dp"
@@ -117,9 +117,11 @@
                     android:textColor="@color/white"
                     android:textSize="22sp"
                     android:maxLines="2"
+                    android:maxLength="36"
                     android:background="#00FFFFFF"
-                    android:beforeTextChanged="@{()->vm.setPrevText(tvRecordTitle)}"
-                    android:afterTextChanged="@{()->vm.limitText(tvRecordTitle)}"
+                    android:beforeTextChanged="@{()->vm.setPrevText(etRecordTitle)}"
+                    android:afterTextChanged="@{()->vm.limitText(etRecordTitle)}"
+                    android:onTextChanged="@{()->vm.countTitle(etRecordTitle)}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/linear"/>
@@ -159,10 +161,12 @@
                 </LinearLayout>
 
                 <ImageView
+                    android:id="@+id/btn_private"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/ic_private"
-                    app:layout_constraintTop_toBottomOf="@id/tv_record_title"
+                    android:src="@drawable/ic_public"
+                    android:onClick="@{()->vm.changePrivate()}"
+                    app:layout_constraintTop_toBottomOf="@id/et_record_title"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -198,6 +202,7 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:maxLength="794"
+                    android:onTextChanged="@{()->vm.countContents(recordContents)}"
                     android:background="#00FFFFFF"/>
 
                 <EditText
@@ -212,6 +217,7 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/cafe24oneprettynight"
                     android:maxLength="52"
+                    android:onTextChanged="@{()->vm.countContents(recordContents)}"
                     android:visibility="gone"/>
 
             </LinearLayout>
@@ -254,12 +260,26 @@
                         android:textColor="@color/dark_gray"
                         android:textSize="14sp"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0/36자"
-                        android:textSize="12sp"
-                        android:textColor="@color/light_gray"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.titleLength.toString()}"
+                            android:textSize="12sp"
+                            android:textColor="@color/light_gray"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/36자"
+                            android:textSize="12sp"
+                            android:textColor="@color/light_gray"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -280,17 +300,31 @@
                         android:textColor="@color/dark_gray"
                         android:textSize="14sp"/>
 
-                    <TextView
+                    <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="0/794자"
-                        android:textSize="12sp"
-                        android:textColor="@color/light_gray"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{vm.contentsLength.toString()}"
+                            android:textSize="12sp"
+                            android:textColor="@color/light_gray"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="/794자"
+                            android:textSize="12sp"
+                            android:textColor="@color/light_gray"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@id/linear2"
+                    android:id="@+id/btn_sticker"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
