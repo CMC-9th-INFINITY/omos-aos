@@ -15,6 +15,11 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
+        <receiver
+            android:name=".utils.MyReceiver"
+            android:enabled="true"
+            android:exported="true"></receiver>
+
         <activity
             android:name=".WriteRecordActivity"
             android:exported="false" />
@@ -60,9 +65,7 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
+        </activity> <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.infinity.omos.fileprovider"
@@ -73,8 +76,9 @@
                 android:resource="@xml/path" />
         </provider>
 
-        <activity android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
-            android:theme="@style/Base.Theme.AppCompat"/>
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:theme="@style/Base.Theme.AppCompat" />
     </application>
 
 </manifest>
