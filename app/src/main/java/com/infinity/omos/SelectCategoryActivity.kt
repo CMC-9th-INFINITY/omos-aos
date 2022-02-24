@@ -21,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_select_category.*
 class SelectCategoryActivity : AppCompatActivity() {
 
     private val viewModel: SelectCategoryViewModel by viewModels()
+    private var prevLayout: LinearLayout? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,19 +50,15 @@ class SelectCategoryActivity : AppCompatActivity() {
     }
 
     private fun changeState(layout: LinearLayout){
-        btn_oneline.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
-        btn_oneline.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
-        btn_myost.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
-        btn_myost.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
-        btn_mystory.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
-        btn_mystory.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
-        btn_interpret.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
-        btn_interpret.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
-        btn_free.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
-        btn_free.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
+        if (prevLayout != null){
+            prevLayout!!.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
+            prevLayout!!.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
+        }
 
         layout.background = ContextCompat.getDrawable(this, R.drawable.rectangle_stroke_box2)
         layout.backgroundTintList = null
+
+        prevLayout = layout
     }
 
     private fun initToolBar(){

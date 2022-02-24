@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.AllRecordDetailActivity
@@ -49,9 +50,13 @@ class AllRecordsListAdapter internal constructor(context: Context)
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.btn_category.setOnClickListener {
-                    var intent = Intent(context, AllRecordDetailActivity::class.java)
-                    intent.putExtra("category", content.title)
-                    context.startActivity(intent)
+                    if (content.myRecord == null){
+                        Toast.makeText(context, "레코드가 없습니다.", Toast.LENGTH_SHORT).show()
+                    } else {
+                        var intent = Intent(context, AllRecordDetailActivity::class.java)
+                        intent.putExtra("category", content.title)
+                        context.startActivity(intent)
+                    }
                 }
             }
 
