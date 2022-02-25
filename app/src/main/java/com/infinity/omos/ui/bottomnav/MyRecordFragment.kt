@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,7 +17,7 @@ import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyRecordFragment : Fragment() {
 
-    private lateinit var viewModel: SharedViewModel
+    private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyRecordBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,6 @@ class MyRecordFragment : Fragment() {
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_record, container, false)
         activity?.let{
-            viewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
             binding.vm = viewModel
             binding.lifecycleOwner = this
         }

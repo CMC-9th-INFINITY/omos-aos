@@ -13,6 +13,13 @@ object RecyclerViewBindingAdapter {
         adapter.submitList(records)
     }
 
+    @BindingAdapter("djRecordListData")
+    @JvmStatic
+    fun djRecordBindData(recyclerView: RecyclerView, records: List<MyRecord>?){
+        val adapter = recyclerView.adapter as MyRecordListAdapter
+        adapter.submitList(records)
+    }
+
     @BindingAdapter("myDjListData")
     @JvmStatic
     fun myDjBindData(recyclerView: RecyclerView, dj: List<MyDj>?){

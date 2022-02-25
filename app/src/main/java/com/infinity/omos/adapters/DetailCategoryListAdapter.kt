@@ -50,11 +50,6 @@ class DetailCategoryListAdapter internal constructor(context: Context, myRecord:
         }
     }
 
-    internal fun setCategory(record: List<MyRecord>?) {
-        this.record = record
-        notifyDataSetChanged()
-    }
-
     internal fun updateCategory(record: List<MyRecord>?) {
         this.record = record
         notifyDataSetChanged()
