@@ -1,15 +1,19 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.DjActivity
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import com.infinity.omos.databinding.ListOnelineCategoryItemBinding
+import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailCategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>?):
     ListAdapter<MyRecord, DetailCategoryListAdapter.ViewHolder>(
@@ -17,6 +21,7 @@ class DetailCategoryListAdapter internal constructor(context: Context, myRecord:
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private val context = context
     private var record = myRecord
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,6 +39,14 @@ class DetailCategoryListAdapter internal constructor(context: Context, myRecord:
         fun bind(record: MyRecord){
             binding.data = record
             binding.executePendingBindings()
+
+            val pos = adapterPosition
+            if (pos != RecyclerView.NO_POSITION){
+                itemView.btn_dj.setOnClickListener {
+                    val intent = Intent(context, DjActivity::class.java)
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 

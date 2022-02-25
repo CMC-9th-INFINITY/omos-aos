@@ -15,10 +15,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
+        <activity
+            android:name=".DjActivity"
+            android:exported="false" />
+
         <receiver
             android:name=".utils.MyReceiver"
             android:enabled="true"
-            android:exported="true"></receiver>
+            android:exported="true" />
 
         <activity
             android:name=".WriteRecordActivity"

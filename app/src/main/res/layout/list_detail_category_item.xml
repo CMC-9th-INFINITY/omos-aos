@@ -152,6 +152,7 @@
                 android:paddingRight="20dp">
 
                 <TextView
+                    android:id="@+id/btn_dj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="DJ 닉네임열두자까지만허용임"
