@@ -1,18 +1,23 @@
 package com.infinity.omos
 
+import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityDjBinding
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.viewmodels.DjViewModel
+import kotlinx.android.synthetic.main.activity_dj.*
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.toolbar
 
 class DjActivity : AppCompatActivity() {
 
@@ -32,6 +37,16 @@ class DjActivity : AppCompatActivity() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
         }
+
+        viewModel.follow.observe(this, Observer { state ->
+            state?.let {
+                if (it == "팔로우"){
+                    btn_follow.setTextColor(ContextCompat.getColor(this, R.color.orange))
+                } else{
+                    btn_follow.setTextColor(ContextCompat.getColor(this, R.color.gray_04))
+                }
+            }
+        })
     }
 
     private fun initToolBar(){

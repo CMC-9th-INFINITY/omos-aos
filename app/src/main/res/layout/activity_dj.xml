@@ -61,9 +61,10 @@
                     android:id="@+id/btn_follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="팔로우"
+                    android:text="@{vm.follow}"
                     android:textSize="14sp"
-                    android:textColor="@color/orange"/>
+                    android:textColor="@color/orange"
+                    android:onClick="@{()->vm.changeFollow()}"/>
 
             </LinearLayout>
 
