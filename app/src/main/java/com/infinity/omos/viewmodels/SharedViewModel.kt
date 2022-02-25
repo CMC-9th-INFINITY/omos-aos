@@ -22,11 +22,13 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     var interpretRecord = repository.getMyRecordData(-1)
     var freeRecord = repository.getMyRecordData(5)
 
+    var myDjRecord = repository._djRecord
     var myDj = repository.getMyDjData(6)
 
     var isEmpty = MutableLiveData<Boolean>()
 
     init {
+        repository.getMyDjRecordData(1)
         isEmpty.value = false
     }
 
@@ -39,5 +41,9 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     // xml 연결 (myDjListData)
     fun getMyDjData(): LiveData<List<MyDj>> {
         return myDj
+    }
+
+    fun updateDjRecord(pos: Int){
+        repository.getMyDjRecordData(pos)
     }
 }

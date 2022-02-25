@@ -40,6 +40,8 @@ class Repository {
     var _stateSnsLogin = MutableLiveData<LoginApiState>()
     var _stateSnsSignUp = MutableLiveData<LoginApiState>()
 
+    var _djRecord = MutableLiveData<List<MyRecord>>()
+
     fun getUserToken(userInfo: UserToken){
         reissueApi.getToken(userInfo).enqueue(object: Callback<UserToken>{
             override fun onResponse(
@@ -76,6 +78,22 @@ class Repository {
         })
 
         return data
+    }
+
+    fun getMyDjRecordData(page: Int){
+        api.getResultGetMyRecord(page).enqueue(object: Callback<ResultGetMyRecord> {
+            override fun onResponse(
+                call: Call<ResultGetMyRecord>,
+                response: Response<ResultGetMyRecord>
+            ) {
+                _djRecord.value = response.body()?.myRecordList
+            }
+
+            override fun onFailure(call: Call<ResultGetMyRecord>, t: Throwable) {
+                Log.d("Repository", t.message.toString())
+                t.stackTrace
+            }
+        })
     }
 
     fun getMyDjData(page: Int): LiveData<List<MyDj>>{

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
@@ -24,9 +25,6 @@ class MyDjFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-        Toast.makeText(context, "페이지 안뜨면 전체레코드 페이지 갔다와보세요. (해당 페이지 API 연동 미완료)",Toast.LENGTH_LONG).show()
     }
 
     override fun onCreateView(
@@ -46,24 +44,22 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         }
 
-        val rAdapter = DetailCategoryListAdapter(requireContext(), AllRecordFragment.oneLineRecord)
+        val rAdapter = DetailCategoryListAdapter(requireContext(), null)
         binding.rvRecord.apply {
             adapter = rAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
+        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
+            record?.let {
+                rAdapter.updateCategory(it)
+            }
+        })
+
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, records: List<MyRecord>?) {
                 // TODO: 수정 필요
-                if (position == 0){
-                    rAdapter.updateCategory(AllRecordFragment.oneLineRecord)
-                }else if (position == 1){
-                    rAdapter.updateCategory(AllRecordFragment.myOstRecord)
-                } else if (position == 2){
-                    rAdapter.updateCategory(AllRecordFragment.myStoryRecord)
-                } else{
-                    rAdapter.updateCategory(AllRecordFragment.freeRecord)
-                }
+                viewModel.updateDjRecord(position+1)
             }
         })
 
