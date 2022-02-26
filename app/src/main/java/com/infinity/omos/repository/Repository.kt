@@ -41,6 +41,7 @@ class Repository {
     var _stateSnsLogin = MutableLiveData<LoginApiState>()
     var _stateSnsSignUp = MutableLiveData<LoginApiState>()
 
+    var _myRecord = MutableLiveData<List<MyRecord>>()
     var _stateMyRecord = MutableLiveData<ApiState>()
 
     var _djRecord = MutableLiveData<List<MyRecord>>()
@@ -83,8 +84,7 @@ class Repository {
         return data
     }
 
-    fun getMyRecordData(page: Int): MutableLiveData<List<MyRecord>>{
-        val data = MutableLiveData<List<MyRecord>>()
+    fun getMyRecordData(page: Int){
         _stateMyRecord.value = ApiState.LOADING
 
         api.getResultGetMyRecord(page).enqueue(object: Callback<ResultGetMyRecord> {
@@ -92,7 +92,7 @@ class Repository {
                 call: Call<ResultGetMyRecord>,
                 response: Response<ResultGetMyRecord>
             ) {
-                data.value = response.body()?.myRecordList
+                _myRecord.value = response.body()?.myRecordList
                 _stateMyRecord.value = ApiState.DONE
             }
 
@@ -102,8 +102,6 @@ class Repository {
                 t.stackTrace
             }
         })
-
-        return data
     }
 
     fun getMyDjRecordData(page: Int){

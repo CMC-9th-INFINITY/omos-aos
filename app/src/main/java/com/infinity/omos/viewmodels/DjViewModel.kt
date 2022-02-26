@@ -12,7 +12,7 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
     private val repository: Repository = Repository()
     var follow = MutableLiveData<String>()
 
-    val djRecord = repository.getMyRecordData(1)
+    val djRecord = repository.getTestData(1)
 
     init {
         follow.value = "팔로우"

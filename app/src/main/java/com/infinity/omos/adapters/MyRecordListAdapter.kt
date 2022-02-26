@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -102,9 +103,9 @@ class MyRecordListAdapter internal constructor(context: Context):
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
-    internal fun setRecord(record: List<MyRecord>) {
-        this.record.addAll(record)
-        this.record.add(null)
+    internal fun setRecord(rec: List<MyRecord>) {
+        record.addAll(rec)
+        record.add(null)
     }
 
     internal fun deleteLoading(){

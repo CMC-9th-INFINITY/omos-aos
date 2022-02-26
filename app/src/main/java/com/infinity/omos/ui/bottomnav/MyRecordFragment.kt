@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -45,6 +46,7 @@ class MyRecordFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        viewModel.loadMoreMyRecord(page)
         viewModel.myRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.setRecord(it)
@@ -62,7 +64,7 @@ class MyRecordFragment : Fragment() {
 
                 // 스크롤이 끝에 도달했는지 확인
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
-                    //mAdapter.deleteLoading()
+                    mAdapter.deleteLoading()
                     viewModel.loadMoreMyRecord(++page)
                 }
             }

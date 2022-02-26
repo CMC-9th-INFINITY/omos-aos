@@ -22,7 +22,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     var freeRecord = repository.getTestData(5)
 
     // MyRecord
-    private val _myRecord = repository.getMyRecordData(1)
+    private val _myRecord = repository._myRecord
     val myRecord = _myRecord
     val stateMyRecord = repository._stateMyRecord
 
