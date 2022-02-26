@@ -25,6 +25,7 @@ class Repository {
     private val myDjApi = testRetrofit.create(MyDjService::class.java)
 
     enum class LoginApiState{LOADING, ERROR, DONE}
+    enum class ApiState{LOADING, ERROR, DONE}
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val checkDupApi = retrofit.create(DupEmailService::class.java)
@@ -39,6 +40,8 @@ class Repository {
     var _stateSignUp = MutableLiveData<LoginApiState>()
     var _stateSnsLogin = MutableLiveData<LoginApiState>()
     var _stateSnsSignUp = MutableLiveData<LoginApiState>()
+
+    var _stateMyRecord = MutableLiveData<ApiState>()
 
     var _djRecord = MutableLiveData<List<MyRecord>>()
 
@@ -60,7 +63,7 @@ class Repository {
         })
     }
 
-    fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
+    fun getTestData(page: Int): LiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
 
         api.getResultGetMyRecord(page).enqueue(object: Callback<ResultGetMyRecord> {
@@ -73,6 +76,29 @@ class Repository {
 
             override fun onFailure(call: Call<ResultGetMyRecord>, t: Throwable) {
                 Log.d("Repository", t.message.toString())
+                t.stackTrace
+            }
+        })
+
+        return data
+    }
+
+    fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
+        val data = MutableLiveData<List<MyRecord>>()
+        _stateMyRecord.value = ApiState.LOADING
+
+        api.getResultGetMyRecord(page).enqueue(object: Callback<ResultGetMyRecord> {
+            override fun onResponse(
+                call: Call<ResultGetMyRecord>,
+                response: Response<ResultGetMyRecord>
+            ) {
+                data.value = response.body()?.myRecordList
+                _stateMyRecord.value = ApiState.DONE
+            }
+
+            override fun onFailure(call: Call<ResultGetMyRecord>, t: Throwable) {
+                Log.d("Repository", t.message.toString())
+                _stateMyRecord.value = ApiState.ERROR
                 t.stackTrace
             }
         })

@@ -15,26 +15,26 @@ import com.infinity.omos.repository.Repository
 class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
-    val myRecord = repository.getMyRecordData(1)
-    var oneLineRecord = repository.getMyRecordData(2)
-    var myOstRecord = repository.getMyRecordData(3)
-    var myStoryRecord = repository.getMyRecordData(4)
-    var interpretRecord = repository.getMyRecordData(-1)
-    var freeRecord = repository.getMyRecordData(5)
+    var oneLineRecord = repository.getTestData(2)
+    var myOstRecord = repository.getTestData(3)
+    var myStoryRecord = repository.getTestData(4)
+    var interpretRecord = repository.getTestData(-1)
+    var freeRecord = repository.getTestData(5)
 
+    // MyRecord
+    val myRecord = repository.getMyRecordData(1)
+    val stateMyRecord = repository._stateMyRecord
+
+    // MyDJ
     var myDjRecord = repository._djRecord
     var myDj = repository.getMyDjData(6)
 
-    var isEmpty = MutableLiveData<Boolean>()
-
     init {
         repository.getMyDjRecordData(1)
-        isEmpty.value = false
     }
 
     // xml 연결 (myRecordListData)
     fun getMyRecordData(): LiveData<List<MyRecord>> {
-        isEmpty.value = myRecord.value == null
         return myRecord
     }
 

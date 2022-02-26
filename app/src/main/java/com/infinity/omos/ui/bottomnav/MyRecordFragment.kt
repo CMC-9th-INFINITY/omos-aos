@@ -13,7 +13,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
+import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.SharedViewModel
+import kotlinx.android.synthetic.main.fragment_my_record.*
 
 class MyRecordFragment : Fragment() {
 
@@ -40,13 +42,25 @@ class MyRecordFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        // 레코드가 비었을 때 확인,
-        viewModel.isEmpty.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.stateMyRecord.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
-                if (it){
-                    binding.lnNorecord.visibility = View.VISIBLE
-                } else{
-                    binding.lnNorecord.visibility = View.GONE
+                when(it){
+                    Repository.ApiState.LOADING -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.lnNorecord.visibility = View.GONE
+                    }
+
+                    Repository.ApiState.DONE -> {
+                        binding.progressBar.visibility = View.GONE
+
+                        if (viewModel.myRecord.value == null){
+                            binding.lnNorecord.visibility = View.VISIBLE
+                        }
+                    }
+
+                    Repository.ApiState.ERROR -> {
+
+                    }
                 }
             }
         })
