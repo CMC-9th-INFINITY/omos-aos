@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import com.infinity.omos.AlbumActivity
 import com.infinity.omos.R
 import com.infinity.omos.SelectCategoryActivity
 import com.infinity.omos.utils.MyReceiver
@@ -34,7 +35,7 @@ class TodayFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         btn_select.setOnClickListener {
-            val intent = Intent(context, SelectCategoryActivity::class.java)
+            val intent = Intent(context, AlbumActivity::class.java)
             startActivity(intent)
         }
     }

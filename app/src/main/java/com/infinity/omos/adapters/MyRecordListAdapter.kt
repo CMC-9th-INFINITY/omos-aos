@@ -47,7 +47,7 @@ class MyRecordListAdapter internal constructor(context: Context):
 
                 val params = binding.constraint.layoutParams
                 params.apply {
-                    width = layoutWidth - imgWidth / 2
+                    width = layoutWidth - imgWidth * 9 / 16
                 }
                 binding.constraint.apply {
                     layoutParams = params
