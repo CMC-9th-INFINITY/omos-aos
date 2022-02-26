@@ -22,7 +22,8 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     var freeRecord = repository.getTestData(5)
 
     // MyRecord
-    val myRecord = repository.getMyRecordData(1)
+    private val _myRecord = repository.getMyRecordData(1)
+    val myRecord = _myRecord
     val stateMyRecord = repository._stateMyRecord
 
     // MyDJ
@@ -36,6 +37,10 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     // xml 연결 (myRecordListData)
     fun getMyRecordData(): LiveData<List<MyRecord>> {
         return myRecord
+    }
+
+    fun loadMoreMyRecord(page: Int){
+        repository.getMyRecordData(page)
     }
 
     // xml 연결 (myDjListData)

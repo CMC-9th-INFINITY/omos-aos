@@ -18,7 +18,7 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:myRecordListData="@{vm.myRecordData}"/>
+            tools:listitem="@layout/list_myrecord_item"/>
 
         <LinearLayout
             android:id="@+id/ln_norecord"

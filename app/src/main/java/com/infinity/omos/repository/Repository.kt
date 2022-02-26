@@ -83,7 +83,7 @@ class Repository {
         return data
     }
 
-    fun getMyRecordData(page: Int): LiveData<List<MyRecord>>{
+    fun getMyRecordData(page: Int): MutableLiveData<List<MyRecord>>{
         val data = MutableLiveData<List<MyRecord>>()
         _stateMyRecord.value = ApiState.LOADING
 

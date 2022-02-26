@@ -10,16 +10,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
+import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyRecord
+import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
 
 class MyRecordListAdapter internal constructor(context: Context):
-    ListAdapter<MyRecord, MyRecordListAdapter.ViewHolder>(
+    ListAdapter<MyRecord, RecyclerView.ViewHolder>(
         MyRecordDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
+    private var record = ArrayList<MyRecord?>()
+
+    private val VIEW_TYPE_ITEM = 0
+    private val VIEW_TYPE_LOADING = 1
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -35,38 +41,50 @@ class MyRecordListAdapter internal constructor(context: Context):
         this.itemClickListener = onItemClickListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ListMyrecordItemBinding.inflate(inflater,parent,false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
 
-        // 앨범커버 반 가릴 수 있도록 커스텀
-        // 일부 아이템 적용 안되는 문제 해결 (onPreDraw)
-        binding.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
-            override fun onPreDraw(): Boolean {
-                var imgWidth = binding.imgAlbumCover.width
-                var layoutWidth = binding.constraint.width
+        return when(viewType){
+            VIEW_TYPE_ITEM -> {
+                val binding = ListMyrecordItemBinding.inflate(inflater,parent,false)
 
-                val params = binding.constraint.layoutParams
-                params.apply {
-                    width = layoutWidth - imgWidth * 9 / 16
-                }
-                binding.constraint.apply {
-                    layoutParams = params
-                }
+                // 앨범커버 반 가릴 수 있도록 커스텀
+                // 일부 아이템 적용 안되는 문제 해결 (onPreDraw)
+                binding.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
+                    override fun onPreDraw(): Boolean {
+                        var imgWidth = binding.imgAlbumCover.width
+                        var layoutWidth = binding.constraint.width
 
-                binding.constraint.viewTreeObserver.removeOnPreDrawListener(this)
-                return true
+                        val params = binding.constraint.layoutParams
+                        params.apply {
+                            width = layoutWidth - imgWidth * 9 / 16
+                        }
+                        binding.constraint.apply {
+                            layoutParams = params
+                        }
+
+                        binding.constraint.viewTreeObserver.removeOnPreDrawListener(this)
+                        return true
+                    }
+                })
+
+                RecordViewHoler(binding)
             }
-        })
 
-        return ViewHolder(binding)
+            else -> {
+                val binding = ListLoadingItemBinding.inflate(inflater,parent,false)
+                LoadingViewHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val record = getItem(position)
-        holder.bind(record)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is RecordViewHoler){
+            val record = record[position]
+            holder.bind(record!!)
+        }
     }
 
-    inner class ViewHolder(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class RecordViewHoler(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: MyRecord) {
             binding.record = record
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
@@ -82,8 +100,27 @@ class MyRecordListAdapter internal constructor(context: Context):
         }
     }
 
+    inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
+
+    internal fun setRecord(record: List<MyRecord>) {
+        this.record.addAll(record)
+        this.record.add(null)
+    }
+
+    internal fun deleteLoading(){
+        record.removeAt(record.lastIndex) // 로딩이 완료되면 프로그레스바를 지움
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (record[position] == null){
+            VIEW_TYPE_LOADING
+        } else{
+            VIEW_TYPE_ITEM
+        }
+    }
+
     override fun getItemCount(): Int {
-        return super.getItemCount()
+        return record.size
     }
 
     companion object MyRecordDiffUtil: DiffUtil.ItemCallback<MyRecord>(){
