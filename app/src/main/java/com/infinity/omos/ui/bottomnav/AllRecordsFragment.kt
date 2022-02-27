@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AllRecordsListAdapter
 import com.infinity.omos.data.AllRecords
+import com.infinity.omos.data.Category
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.viewmodels.SharedViewModel
@@ -38,62 +39,28 @@ class AllRecordFragment : Fragment() {
         }
 
         val mAdapter = AllRecordsListAdapter(requireContext())
-        mAdapter.setCategory(addCategory())
         binding.rvAllrecords.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
-        // 한 줄 감상 데이터 관찰
-        viewModel.oneLineRecord.observe(viewLifecycleOwner, Observer { record ->
-            record?.let {
-                oneLineRecord = it // Category Activity 에서 사용하기 위함
-                mAdapter.updateCategory(it, 0)
-            }
-        })
-
-        // 내 인생의 OST 데이터 관찰
-        viewModel.myOstRecord.observe(viewLifecycleOwner, Observer { record ->
-            record?.let {
-                myOstRecord = it
-                mAdapter.updateCategory(it, 1)
-            }
-        })
-
-        // 노래 속 나의 이야기 데이터 관찰
-        viewModel.myStoryRecord.observe(viewLifecycleOwner, Observer { record ->
-            record?.let {
-                myStoryRecord = it
-                mAdapter.updateCategory(it, 2)
-            }
-        })
-
-        // 나만의 가사해석 데이터 관찰
-        viewModel.interpretRecord.observe(viewLifecycleOwner, Observer { record ->
-            record?.let {
-                interpretRecord = it
-                mAdapter.updateCategory(it, 3)
-            }
-        })
-
-        // 자유 공간 데이터 관찰
-        viewModel.freeRecord.observe(viewLifecycleOwner, Observer { record ->
-            record?.let {
-                freeRecord = it
-                mAdapter.updateCategory(it, 4)
+        viewModel.setAllRecords()
+        viewModel.allRecords.observe(viewLifecycleOwner, Observer { records ->
+            records?.let {
+                mAdapter.setCategory(addCategory(it))
             }
         })
 
         return binding.root
     }
 
-    private fun addCategory(): List<AllRecords> {
+    private fun addCategory(category: Category): List<AllRecords> {
         return listOf(
-            AllRecords(resources.getString(R.string.category1), null),
-            AllRecords(resources.getString(R.string.category2), null),
-            AllRecords(resources.getString(R.string.category3), null),
-            AllRecords(resources.getString(R.string.category4), null),
-            AllRecords(resources.getString(R.string.category5), null)
+            AllRecords(resources.getString(R.string.category1), category.a_line),
+            AllRecords(resources.getString(R.string.category2), category.ost),
+            AllRecords(resources.getString(R.string.category3), category.story),
+            AllRecords(resources.getString(R.string.category4), category.lyrics),
+            AllRecords(resources.getString(R.string.category5), category.free)
         )
     }
 

@@ -28,23 +28,42 @@ class Repository {
     enum class ApiState{LOADING, ERROR, DONE}
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val checkDupApi = retrofit.create(DupEmailService::class.java)
+
+    // 온보딩
     private val loginApi = retrofit.create(LoginService::class.java)
     private val signUpApi = retrofit.create(SignUpService::class.java)
     private val snsLoginApi = retrofit.create(SnsLoginService::class.java)
     private val snsSignUpApi = retrofit.create(SnsSignUpService::class.java)
+    private val checkDupApi = retrofit.create(DupEmailService::class.java)
     private val reissueApi = retrofit.create(ReissueService::class.java)
-
-    var _stateDupEmail = MutableLiveData<Boolean>()
     var _stateLogin = MutableLiveData<LoginApiState>()
     var _stateSignUp = MutableLiveData<LoginApiState>()
     var _stateSnsLogin = MutableLiveData<LoginApiState>()
     var _stateSnsSignUp = MutableLiveData<LoginApiState>()
+    var _stateDupEmail = MutableLiveData<Boolean>()
 
+    // My 레코드
     var _myRecord = MutableLiveData<List<MyRecord>>()
     var _stateMyRecord = MutableLiveData<ApiState>()
 
+    // 전체 레코드
+    private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
+    var _allRecords = MutableLiveData<Category>()
+
+    // My DJ
     var _djRecord = MutableLiveData<List<MyRecord>>()
+
+    fun getCategoryRecord(){
+        allRecordsApi.getAllRecords().enqueue(object: Callback<Category>{
+            override fun onResponse(call: Call<Category>, response: Response<Category>) {
+                _allRecords.value = response.body()
+            }
+
+            override fun onFailure(call: Call<Category>, t: Throwable) {
+
+            }
+        })
+    }
 
     fun getUserToken(userInfo: UserToken){
         reissueApi.getToken(userInfo).enqueue(object: Callback<UserToken>{

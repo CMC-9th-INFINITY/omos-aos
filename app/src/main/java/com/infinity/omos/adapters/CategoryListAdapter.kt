@@ -10,17 +10,17 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.databinding.ListCategoryItemBinding
 
-class CategoryListAdapter internal constructor(context: Context, myRecord: List<MyRecord>?):
-    ListAdapter<MyRecord, CategoryListAdapter.ViewHolder>(
+class CategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
+    ListAdapter<DetailCategory, CategoryListAdapter.ViewHolder>(
         CategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
-    private var record = myRecord
+    private var record = category
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -47,7 +47,7 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
     }
 
     inner class ViewHolder(private val binding: ListCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(record: MyRecord) {
+        fun bind(record: DetailCategory) {
             binding.record = record
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
@@ -55,14 +55,14 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, MyRecordDetailActivity::class.java)
-                    intent.putExtra("title", record.title)
+                    intent.putExtra("title", record.musicTitle)
                     context.startActivity(intent)
                 }
             }
         }
     }
 
-    internal fun setRecords(record: List<MyRecord>?) {
+    internal fun setRecords(record: List<DetailCategory>?) {
         this.record = record
         notifyDataSetChanged()
     }
@@ -74,13 +74,13 @@ class CategoryListAdapter internal constructor(context: Context, myRecord: List<
             super.getItemCount()
     }
 
-    companion object CategoryDiffUtil: DiffUtil.ItemCallback<MyRecord>(){
-        override fun areItemsTheSame(oldItem: MyRecord, newItem: MyRecord): Boolean {
+    companion object CategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){
+        override fun areItemsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: MyRecord, newItem: MyRecord): Boolean {
+        override fun areContentsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
             return oldItem==newItem
         }
     }

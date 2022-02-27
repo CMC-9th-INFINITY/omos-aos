@@ -21,12 +21,16 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     var interpretRecord = repository.getTestData(-1)
     var freeRecord = repository.getTestData(5)
 
-    // MyRecord
+    // My 레코드
     private val _myRecord = repository._myRecord
     val myRecord = _myRecord
     val stateMyRecord = repository._stateMyRecord
 
-    // MyDJ
+    // 전체 레코드
+    private val _allRecords = repository._allRecords
+    val allRecords = _allRecords
+
+    // My DJ
     var myDjRecord = repository._djRecord
     var myDj = repository.getMyDjData(6)
 
@@ -46,6 +50,10 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     // xml 연결 (myDjListData)
     fun getMyDjData(): LiveData<List<MyDj>> {
         return myDj
+    }
+
+    fun setAllRecords(){
+        repository.getCategoryRecord()
     }
 
     fun updateDjRecord(pos: Int){

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.AllRecordDetailActivity
 import com.infinity.omos.data.AllRecords
+import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
@@ -50,7 +51,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.btn_category.setOnClickListener {
-                    if (content.myRecord == null){
+                    if (content.category == null){
                         Toast.makeText(context, "레코드가 없습니다.", Toast.LENGTH_SHORT).show()
                     } else {
                         var intent = Intent(context, AllRecordDetailActivity::class.java)
@@ -60,15 +61,15 @@ class AllRecordsListAdapter internal constructor(context: Context)
                 }
             }
 
-            val mAdapter = CategoryListAdapter(context, content.myRecord)
-            mAdapter.setRecords(content.myRecord)
+            val mAdapter = CategoryListAdapter(context, content.category)
+            mAdapter.setRecords(content.category)
             binding.rvCategory.apply{
                 adapter = mAdapter
                 layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
             }
 
             // 레코드가 없을 때,
-            if (content.myRecord == null){
+            if (content.category == null){
                 binding.lnNorecord.visibility = View.VISIBLE
             } else{
                 binding.lnNorecord.visibility = View.GONE
@@ -81,8 +82,8 @@ class AllRecordsListAdapter internal constructor(context: Context)
         notifyDataSetChanged()
     }
 
-    internal fun updateCategory(record: List<MyRecord>?, pos: Int) {
-        this.category[pos].myRecord = record
+    internal fun updateCategory(record: List<DetailCategory>?, pos: Int) {
+        this.category[pos].category = record
         notifyDataSetChanged()
     }
 

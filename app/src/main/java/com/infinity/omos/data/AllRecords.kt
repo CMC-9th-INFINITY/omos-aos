@@ -5,5 +5,5 @@ import java.io.Serializable
 
 data class AllRecords(
     @SerializedName("title") val title: String,
-    @SerializedName("myRecord") var myRecord: List<MyRecord>?
+    @SerializedName("category") var category: List<DetailCategory>?
 )

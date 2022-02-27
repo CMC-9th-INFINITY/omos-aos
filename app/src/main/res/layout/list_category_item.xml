@@ -5,7 +5,7 @@
     <data>
         <variable
             name="record"
-            type="com.infinity.omos.data.MyRecord" />
+            type="com.infinity.omos.data.DetailCategory" />
     </data>
 
     <LinearLayout
@@ -49,7 +49,7 @@
                         android:id="@+id/tv_music_title"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@{record.title}"
+                        android:text="@{record.musicTitle}"
                         android:textSize="14sp"
                         android:textColor="@color/white"
                         android:singleLine="true"/>
@@ -73,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="38dp"
                 android:layout_marginBottom="6dp"
-                android:text="@{record.category}"
+                android:text="@{record.recordTitle}"
                 android:textSize="16sp"
                 android:textColor="@color/white"
                 android:maxLines="2"
@@ -86,7 +86,7 @@
                 android:id="@+id/tv_nick"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="by. 닉네임열두자까지만허용임"
+                android:text="@{record.nickname}"
                 android:textSize="12sp"
                 android:textColor="@color/white"
                 android:maxLength="16"
