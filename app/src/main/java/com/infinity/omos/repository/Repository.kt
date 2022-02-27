@@ -25,7 +25,7 @@ class Repository {
     private val myDjApi = testRetrofit.create(MyDjService::class.java)
 
     enum class LoginApiState{LOADING, ERROR, DONE}
-    enum class ApiState{LOADING, ERROR, DONE}
+    enum class ApiState{LOADING, ERROR, DONE, TOKEN}
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
 
@@ -75,13 +75,14 @@ class Repository {
 
                     if (errorBody.message == "Refresh Token이 유효하지 않습니다."){
                         getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        _stateCategory.value = ApiState.ERROR
+                        _stateCategory.value = ApiState.TOKEN
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<DetailCategory>?>, t: Throwable) {
                 Log.d("CategoryAPI Failure", t.message.toString())
+                _stateCategory.value = ApiState.ERROR
                 t.stackTrace
             }
         })
@@ -102,13 +103,14 @@ class Repository {
 
                     if (errorBody.message == "Refresh Token이 유효하지 않습니다."){
                         getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        _stateAllRecords.value = ApiState.ERROR
+                        _stateAllRecords.value = ApiState.TOKEN
                     }
                 }
             }
 
             override fun onFailure(call: Call<Category>, t: Throwable) {
                 Log.d("AllRecordsAPI Failure", t.message.toString())
+                _stateAllRecords.value = ApiState.ERROR
                 t.stackTrace
             }
         })

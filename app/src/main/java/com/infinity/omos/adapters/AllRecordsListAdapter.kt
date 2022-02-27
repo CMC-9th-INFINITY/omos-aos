@@ -47,12 +47,12 @@ class AllRecordsListAdapter internal constructor(context: Context)
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.btn_category.setOnClickListener {
-                    if (content.category == null){
-                        Toast.makeText(context, "레코드가 없습니다.", Toast.LENGTH_SHORT).show()
-                    } else {
+                    if (content.category!!.isNotEmpty()){
                         var intent = Intent(context, CategoryActivity::class.java)
                         intent.putExtra("category", content.title)
                         context.startActivity(intent)
+                    } else {
+                        Toast.makeText(context, "레코드가 없습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

@@ -38,6 +38,14 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
     inner class ViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(category: DetailCategory){
             binding.data = category
+
+            var str = ""
+            for (s in category.artists){
+                str += s.artistName + ","
+            }
+            str.substring(0, str.length - 2)
+            binding.tvArtist.text = str
+
             binding.executePendingBindings()
 
             val pos = adapterPosition
@@ -50,7 +58,7 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
         }
     }
 
-    internal fun updateCategory(record: List<DetailCategory>?) {
+    internal fun updateCategory(category: List<DetailCategory>?) {
         this.category = category
         notifyDataSetChanged()
     }

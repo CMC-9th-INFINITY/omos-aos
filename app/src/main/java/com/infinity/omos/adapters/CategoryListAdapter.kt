@@ -49,6 +49,15 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
     inner class ViewHolder(private val binding: ListCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: DetailCategory) {
             binding.record = record
+            binding.tvNick.text = "by. ${record.nickname}"
+
+            var str = ""
+            for (s in record.artists){
+                str += s.artistName + ","
+            }
+            str.substring(0, str.length - 2)
+            binding.tvArtist.text = str
+
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition

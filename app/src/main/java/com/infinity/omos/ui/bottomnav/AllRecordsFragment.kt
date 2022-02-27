@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -58,6 +59,7 @@ class AllRecordFragment : Fragment() {
             state?.let {
                 when(it){
                     Repository.ApiState.LOADING -> {
+                        Log.d("test", "test")
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
@@ -65,9 +67,13 @@ class AllRecordFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Repository.ApiState.TOKEN -> {
                         binding.progressBar.visibility = View.GONE
                         viewModel.setAllRecords()
+                    }
+
+                    else -> {
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
             }

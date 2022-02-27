@@ -44,7 +44,6 @@
                     android:id="@+id/tv_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="가수 이름이 들어갑니다. 앨범 제목이 들어갑니다."
                     android:textSize="12sp"
                     android:textColor="@color/gray_01"/>
 
@@ -65,7 +64,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
                 android:layout_marginBottom="10dp"
-                android:text="레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다"
+                android:text="@{data.recordTitle}"
                 android:textSize="22sp"
                 android:textColor="@color/white"
                 android:maxLines="2"
@@ -131,7 +130,7 @@
                 android:layout_height="wrap_content"
                 android:padding="16dp"
                 android:layout_marginBottom="30dp"
-                android:text="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
+                android:text="@{data.recordContents}"
                 android:textSize="16sp"
                 android:textColor="@color/gray_02"
                 android:maxLength="794"
