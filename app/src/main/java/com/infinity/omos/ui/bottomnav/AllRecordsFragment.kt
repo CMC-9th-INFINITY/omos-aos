@@ -16,6 +16,7 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
+import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class AllRecordFragment : Fragment() {
@@ -44,10 +45,31 @@ class AllRecordFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        // 카테고리 리스트 초기화
         viewModel.setAllRecords()
         viewModel.allRecords.observe(viewLifecycleOwner, Observer { records ->
             records?.let {
                 mAdapter.setCategory(addCategory(it))
+            }
+        })
+
+        // 빈 카테고리 및 토큰 만료 상태 확인
+        viewModel.stateAllRecords.observe(viewLifecycleOwner, Observer { state ->
+            state?.let {
+                when(it){
+                    Repository.ApiState.LOADING -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    Repository.ApiState.DONE -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Repository.ApiState.ERROR -> {
+                        binding.progressBar.visibility = View.GONE
+                        viewModel.setAllRecords()
+                    }
+                }
             }
         })
 
@@ -62,13 +84,5 @@ class AllRecordFragment : Fragment() {
             AllRecords(resources.getString(R.string.category4), category.lyrics),
             AllRecords(resources.getString(R.string.category5), category.free)
         )
-    }
-
-    companion object{
-        var oneLineRecord = emptyList<MyRecord>()
-        var myOstRecord = emptyList<MyRecord>()
-        var myStoryRecord = emptyList<MyRecord>()
-        var interpretRecord = emptyList<MyRecord>()
-        var freeRecord = emptyList<MyRecord>()
     }
 }

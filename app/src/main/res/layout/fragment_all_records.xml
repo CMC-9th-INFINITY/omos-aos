@@ -22,5 +22,12 @@
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_allrecords_item"/>
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:visibility="gone"/>
+
     </FrameLayout>
 </layout>

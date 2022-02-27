@@ -15,11 +15,6 @@ import com.infinity.omos.repository.Repository
 class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
-    var oneLineRecord = repository.getTestData(2)
-    var myOstRecord = repository.getTestData(3)
-    var myStoryRecord = repository.getTestData(4)
-    var interpretRecord = repository.getTestData(-1)
-    var freeRecord = repository.getTestData(5)
 
     // My 레코드
     private val _myRecord = repository._myRecord
@@ -29,6 +24,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     // 전체 레코드
     private val _allRecords = repository._allRecords
     val allRecords = _allRecords
+    val stateAllRecords = repository._stateAllRecords
 
     // My DJ
     var myDjRecord = repository._djRecord
@@ -53,7 +49,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun setAllRecords(){
-        repository.getCategoryRecord()
+        repository.setAllRecords()
     }
 
     fun updateDjRecord(pos: Int){

@@ -50,11 +50,11 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
-            record?.let {
-                rAdapter.updateCategory(it)
-            }
-        })
+//        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
+//            record?.let {
+//                rAdapter.updateCategory(it)
+//            }
+//        })
 
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, records: List<MyRecord>?) {

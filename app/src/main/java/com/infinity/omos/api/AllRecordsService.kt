@@ -8,5 +8,5 @@ import retrofit2.http.Headers
 
 interface AllRecordsService {
     @GET("api/records/select")
-    fun getAllRecords(): Call<Category>
+    fun setAllRecords(): Call<Category>
 }

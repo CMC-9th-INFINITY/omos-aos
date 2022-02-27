@@ -48,19 +48,68 @@ class Repository {
 
     // 전체 레코드
     private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
-    var _allRecords = MutableLiveData<Category>()
+    var _allRecords = MutableLiveData<Category?>()
+    var _stateAllRecords = MutableLiveData<ApiState>()
+    private val categoryApi = retrofit.create(CategoryService::class.java)
+    var _category = MutableLiveData<List<DetailCategory>?>()
+    var _stateCategory = MutableLiveData<ApiState>()
 
     // My DJ
     var _djRecord = MutableLiveData<List<MyRecord>>()
 
-    fun getCategoryRecord(){
-        allRecordsApi.getAllRecords().enqueue(object: Callback<Category>{
+    fun setCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
+        _stateCategory.value = ApiState.LOADING
+        categoryApi.setCategory(category, page, size, sort, userId).enqueue(object: Callback<List<DetailCategory>?>{
+            override fun onResponse(
+                call: Call<List<DetailCategory>?>,
+                response: Response<List<DetailCategory>?>
+            ) {
+                val body = response.body()
+                if (body != null && response.isSuccessful) {
+                    Log.d("CategoryAPI Response", response.body().toString())
+                    _category.value = body
+                    _stateCategory.value = ApiState.DONE
+                } else {
+                    val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                    Log.d("CategoryAPI Error", errorBody!!.message)
+
+                    if (errorBody.message == "Refresh Token이 유효하지 않습니다."){
+                        getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        _stateCategory.value = ApiState.ERROR
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<DetailCategory>?>, t: Throwable) {
+                Log.d("CategoryAPI Failure", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    fun setAllRecords(){
+        _stateAllRecords.value = ApiState.LOADING
+        allRecordsApi.setAllRecords().enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
-                _allRecords.value = response.body()
+                val body = response.body()
+                if (body != null && response.isSuccessful) {
+                    Log.d("AllRecordsAPI Response", response.body().toString())
+                    _allRecords.value = body
+                    _stateAllRecords.value = ApiState.DONE
+                } else {
+                    val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                    Log.d("AllRecordsAPI Error", errorBody!!.message)
+
+                    if (errorBody.message == "Refresh Token이 유효하지 않습니다."){
+                        getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        _stateAllRecords.value = ApiState.ERROR
+                    }
+                }
             }
 
             override fun onFailure(call: Call<Category>, t: Throwable) {
-
+                Log.d("AllRecordsAPI Failure", t.message.toString())
+                t.stackTrace
             }
         })
     }
@@ -198,9 +247,9 @@ class Repository {
                 if (body != null && response.isSuccessful) {
                     Log.d("SnsLoginAPI Response", response.body().toString())
                     GlobalApplication.prefs.setUserToken(
-                        response.body()?.accessToken,
-                        response.body()?.refreshToken,
-                        response.body()?.userId!!)
+                        body.accessToken,
+                        body.refreshToken,
+                        body.userId!!)
                     _stateSnsLogin.value = LoginApiState.DONE
                 } else {
                     val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)

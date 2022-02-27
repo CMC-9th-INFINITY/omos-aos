@@ -5,18 +5,14 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.AllRecordDetailActivity
+import com.infinity.omos.CategoryActivity
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.DetailCategory
-import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
-import kotlinx.android.synthetic.main.list_category_item.view.constraint
-import kotlinx.android.synthetic.main.list_category_item.view.img_album_cover
 
 class AllRecordsListAdapter internal constructor(context: Context)
     : RecyclerView.Adapter<AllRecordsListAdapter.AllRecordsViewHolder>(){
@@ -54,7 +50,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
                     if (content.category == null){
                         Toast.makeText(context, "레코드가 없습니다.", Toast.LENGTH_SHORT).show()
                     } else {
-                        var intent = Intent(context, AllRecordDetailActivity::class.java)
+                        var intent = Intent(context, CategoryActivity::class.java)
                         intent.putExtra("category", content.title)
                         context.startActivity(intent)
                     }
@@ -69,10 +65,10 @@ class AllRecordsListAdapter internal constructor(context: Context)
             }
 
             // 레코드가 없을 때,
-            if (content.category == null){
-                binding.lnNorecord.visibility = View.VISIBLE
-            } else{
+            if (content.category!!.isNotEmpty()){
                 binding.lnNorecord.visibility = View.GONE
+            } else{
+                binding.lnNorecord.visibility = View.VISIBLE
             }
         }
     }

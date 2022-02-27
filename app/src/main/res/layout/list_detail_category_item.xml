@@ -5,7 +5,7 @@
     <data>
         <variable
             name="data"
-            type="com.infinity.omos.data.MyRecord" />
+            type="com.infinity.omos.data.DetailCategory" />
     </data>
 
     <LinearLayout
@@ -36,7 +36,7 @@
                     android:id="@+id/tv_music_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{data.title}"
+                    android:text="@{data.musicTitle}"
                     android:textSize="14sp"
                     android:textColor="@color/white"/>
 

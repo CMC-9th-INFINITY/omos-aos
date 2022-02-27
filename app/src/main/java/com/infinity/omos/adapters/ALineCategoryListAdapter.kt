@@ -1,31 +1,24 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.DjActivity
 import com.infinity.omos.data.DetailCategory
-import com.infinity.omos.data.MyRecord
-import com.infinity.omos.databinding.ListDetailCategoryItemBinding
-import kotlinx.android.synthetic.main.list_detail_category_item.view.*
+import com.infinity.omos.databinding.ListAlineCategoryItemBinding
 
-class DetailCategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
-    ListAdapter<DetailCategory, DetailCategoryListAdapter.ViewHolder>(
-        DetailCategoryDiffUtil
+class ALineCategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
+    ListAdapter<DetailCategory, ALineCategoryListAdapter.ViewHolder>(
+        ALineCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val context = context
     private var category = category
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = ListDetailCategoryItemBinding.inflate(inflater, parent, false)
+        var binding = ListAlineCategoryItemBinding.inflate(inflater, parent, false)
 
         return ViewHolder(binding)
     }
@@ -35,24 +28,11 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
         holder.bind(category)
     }
 
-    inner class ViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ListAlineCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(category: DetailCategory){
             binding.data = category
             binding.executePendingBindings()
-
-            val pos = adapterPosition
-            if (pos != RecyclerView.NO_POSITION){
-                itemView.btn_dj.setOnClickListener {
-                    val intent = Intent(context, DjActivity::class.java)
-                    context.startActivity(intent)
-                }
-            }
         }
-    }
-
-    internal fun updateCategory(record: List<DetailCategory>?) {
-        this.category = category
-        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
@@ -62,7 +42,7 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
             super.getItemCount()
     }
 
-    companion object DetailCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){
+    companion object ALineCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){
         override fun areItemsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem

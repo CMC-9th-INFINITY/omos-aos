@@ -34,7 +34,7 @@
             android:name=".SelectCategoryActivity"
             android:exported="false" />
         <activity
-            android:name=".AllRecordDetailActivity"
+            android:name=".CategoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.onboarding.RegisterNickActivity"
