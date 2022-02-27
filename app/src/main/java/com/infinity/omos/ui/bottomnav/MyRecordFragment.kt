@@ -46,14 +46,17 @@ class MyRecordFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        // 스크롤 시 레코드 업데이트
         viewModel.loadMoreMyRecord(page)
         viewModel.myRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
                 mAdapter.setRecord(it)
-                mAdapter.notifyItemRangeInserted((page - 1) * 10, 10)
+                mAdapter.submitList(it)
+                //mAdapter.notifyItemRangeInserted((page - 1) * 10, 10)
             }
         })
 
+        // 무한 스크롤
         binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)

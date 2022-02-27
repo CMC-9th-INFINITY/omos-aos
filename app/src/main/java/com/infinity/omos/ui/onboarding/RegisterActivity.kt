@@ -32,6 +32,8 @@ class RegisterActivity : AppCompatActivity() {
     private val viewModel: RegisterViewModel by viewModels()
 
     private var idState = false
+    private val pwPattern =
+        "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{8,16}$" // 영문, 숫자, 특수문자 하나씩 포함, 8~16자
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -140,15 +142,15 @@ class RegisterActivity : AppCompatActivity() {
 
         et_pw.setOnFocusChangeListener { view, b ->
             if (!b){
-                if (et_pw.length() < 8 || et_pw.length() > 16){
+                if (Pattern.matches(pwPattern, et_pw.text.toString())){
+                    LoginActivity.hideErrorMsg(et_pw, tv_error_pw)
+                } else{
                     LoginActivity.showErrorMsg(
                         et_pw,
                         tv_error_pw,
                         resources.getString(R.string.condition_password),
                         linear_pw
                     )
-                } else{
-                    LoginActivity.hideErrorMsg(et_pw, tv_error_pw)
                 }
             }
         }
