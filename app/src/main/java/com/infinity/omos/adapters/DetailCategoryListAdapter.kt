@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DjActivity
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.data.MyRecord
+import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
@@ -39,12 +40,7 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
         fun bind(category: DetailCategory){
             binding.data = category
 
-            var str = ""
-            for (s in category.artists){
-                str += s.artistName + ","
-            }
-            str.substring(0, str.length - 2)
-            binding.tvArtist.text = str
+            setArtist(binding, category)
 
             binding.executePendingBindings()
 
@@ -68,6 +64,22 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
             category!!.size
         } else
             super.getItemCount()
+    }
+
+    private fun setArtist(binding: ListDetailCategoryItemBinding, record: DetailCategory){
+        var str = ""
+        for (s in record.music.artists){
+            str += s.artistName + ", "
+        }
+
+        if (str.length >= 2){
+            str = str.substring(0, str.length - 2)
+            str += " - " + record.music.albumTitle
+        } else{
+            str = "ERROR"
+        }
+
+        binding.tvArtist.text = str
     }
 
     companion object DetailCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){

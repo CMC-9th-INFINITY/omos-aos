@@ -93,17 +93,22 @@ class Repository {
         allRecordsApi.setAllRecords().enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val body = response.body()
-                if (body != null && response.isSuccessful) {
-                    Log.d("AllRecordsAPI Response", response.body().toString())
-                    _allRecords.value = body
-                    _stateAllRecords.value = ApiState.DONE
-                } else {
-                    val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
-                    Log.d("AllRecordsAPI Error", errorBody!!.message)
 
-                    if (errorBody.message == "Refresh Token이 유효하지 않습니다."){
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("AllRecordsAPI Response", response.body().toString())
+                        _allRecords.value = body
+                        _stateAllRecords.value = ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("Unauthorized", "reissue")
                         getUserToken(GlobalApplication.prefs.getUserToken()!!)
                         _stateAllRecords.value = ApiState.TOKEN
+                    }
+
+                    else -> {
+                        Log.d("Repository", code.toString())
                     }
                 }
             }
@@ -122,10 +127,25 @@ class Repository {
                 call: Call<UserToken>,
                 response: Response<UserToken>
             ) {
-                GlobalApplication.prefs.setUserToken(
-                    response.body()?.accessToken,
-                    response.body()?.refreshToken,
-                    response.body()?.userId!!)
+                val body = response.body()
+
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        GlobalApplication.prefs.setUserToken(
+                            body?.accessToken,
+                            body?.refreshToken,
+                            body?.userId!!)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("Reissue API", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("Repository", code.toString())
+                    }
+                }
             }
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {

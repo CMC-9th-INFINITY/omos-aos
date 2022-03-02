@@ -27,6 +27,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        Log.d("MainActivity", "aToken: ${GlobalApplication.prefs.getString("accessToken")}")
+        Log.d("MainActivity", "rToken: ${GlobalApplication.prefs.getString("refreshToken")}")
         Log.d("MainActivity", "ID: ${GlobalApplication.prefs.getLong("userId")}")
 
         initToolBar()

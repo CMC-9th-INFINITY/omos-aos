@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,13 +51,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
         fun bind(record: DetailCategory) {
             binding.record = record
             binding.tvNick.text = "by. ${record.nickname}"
-
-            var str = ""
-            for (s in record.artists){
-                str += s.artistName + ","
-            }
-            str.substring(0, str.length - 2)
-            binding.tvArtist.text = str
+            setArtist(binding, record)
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
@@ -64,7 +59,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, MyRecordDetailActivity::class.java)
-                    intent.putExtra("title", record.musicTitle)
+                    intent.putExtra("title", record.music.musicTitle)
                     context.startActivity(intent)
                 }
             }
@@ -81,6 +76,22 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             record!!.size
         } else
             super.getItemCount()
+    }
+
+    private fun setArtist(binding: ListCategoryItemBinding, record: DetailCategory){
+        var str = ""
+        for (s in record.music.artists){
+            str += s.artistName + ", "
+        }
+
+        if (str.length >= 2){
+            str = str.substring(0, str.length - 2)
+            str += " - " + record.music.albumTitle
+        } else{
+            str = "ERROR"
+        }
+
+        binding.tvArtist.text = str
     }
 
     companion object CategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){

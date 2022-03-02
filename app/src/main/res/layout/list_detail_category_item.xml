@@ -36,7 +36,7 @@
                     android:id="@+id/tv_music_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{data.musicTitle}"
+                    android:text="@{data.music.musicTitle}"
                     android:textSize="14sp"
                     android:textColor="@color/white"/>
 

@@ -59,7 +59,6 @@ class AllRecordFragment : Fragment() {
             state?.let {
                 when(it){
                     Repository.ApiState.LOADING -> {
-                        Log.d("test", "test")
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
