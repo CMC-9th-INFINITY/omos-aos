@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity() {
     private val fragmentMyPage by lazy { MyPageFragment() }
 
     private var stateWrite = false
+    private var prevTag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +66,7 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         stateWrite = false
                         invalidateOptionsMenu()
-                        changeFragment(fragmentToday)
+                        changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
@@ -82,7 +83,7 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = true
                         invalidateOptionsMenu()
-                        changeFragment(fragmentMyRecord)
+                        changeFragment("MyRecord", fragmentMyRecord)
                         item.setIcon(R.drawable.ic_selected_myrecord)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
@@ -94,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
                         invalidateOptionsMenu()
-                        changeFragment(fragmentAllRecords)
+                        changeFragment("AllRecords", fragmentAllRecords)
                         item.setIcon(R.drawable.ic_selected_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
@@ -111,7 +112,7 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
                         invalidateOptionsMenu()
-                        changeFragment(fragmentMyDj)
+                        changeFragment("MyDJ", fragmentMyDj)
                         item.setIcon(R.drawable.ic_selected_mydj)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
@@ -128,7 +129,7 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
                         invalidateOptionsMenu()
-                        changeFragment(fragmentMyPage)
+                        changeFragment("MyPage", fragmentMyPage)
                         item.setIcon(R.drawable.ic_selected_mypage)
                         bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
                         bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
@@ -147,11 +148,28 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun changeFragment(fragment: Fragment){
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.framelayout, fragment)
-            .commit()
+    private fun changeFragment(tag:String, fragment: Fragment){
+
+        if (supportFragmentManager.findFragmentByTag(tag) == null){
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.framelayout, fragment, tag)
+                .commit()
+        } else{
+            supportFragmentManager
+                .beginTransaction()
+                .show(supportFragmentManager.findFragmentByTag(tag)!!)
+                .commit()
+        }
+
+        if (prevTag != ""){
+            supportFragmentManager
+                .beginTransaction()
+                .hide(supportFragmentManager.findFragmentByTag(prevTag)!!)
+                .commit()
+        }
+
+        prevTag = tag
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

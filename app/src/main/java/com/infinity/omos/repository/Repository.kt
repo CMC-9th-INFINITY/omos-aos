@@ -48,14 +48,52 @@ class Repository {
 
     // 전체 레코드
     private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
-    var _allRecords = MutableLiveData<Category?>()
-    var _stateAllRecords = MutableLiveData<ApiState>()
     private val categoryApi = retrofit.create(CategoryService::class.java)
+    var _allRecords = MutableLiveData<Category?>()
     var _category = MutableLiveData<List<DetailCategory>?>()
+    var _stateAllRecords = MutableLiveData<ApiState>()
     var _stateCategory = MutableLiveData<ApiState>()
 
     // My DJ
     var _djRecord = MutableLiveData<List<MyRecord>>()
+
+    // 검색
+    private val albumApi = retrofit.create(SearchAlbumService::class.java)
+    var _album = MutableLiveData<Album?>()
+    var _stateAlbum = MutableLiveData<ApiState>()
+
+    fun getAlbum(keyword: String, limit: Int, offset: Int){
+        _stateAlbum.value = ApiState.LOADING
+        albumApi.getAlbum(keyword, limit, offset).enqueue(object: Callback<Album>{
+            override fun onResponse(call: Call<Album>, response: Response<Album>) {
+                val body = response.body()
+
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("AlbumAPI Response", response.body().toString())
+                        _album.value = body
+                        _stateAlbum.value = ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("Unauthorized", "reissue")
+                        getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        _stateAlbum.value = ApiState.TOKEN
+                    }
+
+                    else -> {
+                        Log.d("Code", code.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Album>, t: Throwable) {
+                Log.d("AlbumAPI Failure", t.message.toString())
+                _stateAlbum.value = ApiState.ERROR
+                t.stackTrace
+            }
+        })
+    }
 
     fun setCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
         _stateCategory.value = ApiState.LOADING

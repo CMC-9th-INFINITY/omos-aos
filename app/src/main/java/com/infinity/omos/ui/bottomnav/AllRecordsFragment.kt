@@ -27,6 +27,7 @@ class AllRecordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
     }
 
     override fun onCreateView(
@@ -39,6 +40,12 @@ class AllRecordFragment : Fragment() {
             binding.vm = viewModel
             binding.lifecycleOwner = this
         }
+
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val mAdapter = AllRecordsListAdapter(requireContext())
         binding.rvAllrecords.apply{
@@ -77,8 +84,6 @@ class AllRecordFragment : Fragment() {
                 }
             }
         })
-
-        return binding.root
     }
 
     private fun addCategory(category: Category): List<AllRecords> {
