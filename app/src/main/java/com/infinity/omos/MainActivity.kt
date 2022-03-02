@@ -1,7 +1,10 @@
 package com.infinity.omos
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -9,10 +12,14 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.toolbar
+import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class MainActivity : AppCompatActivity() {
     private val fragmentToday by lazy { TodayFragment() }
@@ -51,6 +58,21 @@ class MainActivity : AppCompatActivity() {
         btn_remove.setOnClickListener {
             et_search.setText("")
         }
+
+        // 검색 리스트 노출
+        et_search.addTextChangedListener(object: TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (et_search.length() > 0){
+                    ln_ranking.visibility = View.GONE
+                    rv_search.visibility = View.VISIBLE
+                } else{
+                    ln_ranking.visibility = View.VISIBLE
+                    rv_search.visibility = View.GONE
+                }
+            }
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+        })
     }
 
     private fun initToolBar(){
