@@ -54,7 +54,7 @@
         <LinearLayout
             android:id="@+id/ln_norecord"
             android:layout_width="match_parent"
-            android:layout_height="148dp"
+            android:layout_height="172dp"
             android:paddingVertical="14dp"
             android:paddingHorizontal="16dp"
             android:orientation="vertical"
