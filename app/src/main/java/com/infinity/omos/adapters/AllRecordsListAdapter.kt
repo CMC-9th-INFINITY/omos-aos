@@ -2,13 +2,19 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.CategoryActivity
+import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
@@ -69,8 +75,16 @@ class AllRecordsListAdapter internal constructor(context: Context)
                 binding.lnNorecord.visibility = View.GONE
             } else{
                 binding.lnNorecord.visibility = View.VISIBLE
+                binding.tvNorecord.text = "${content.title}의\n첫번째 주인공이 되어봐요!"
+                changeTextColor(binding.tvNorecord, 0, content.title.length, R.color.orange)
             }
         }
+    }
+
+    private fun changeTextColor(tv: TextView, start: Int, end: Int, color: Int){
+        var ssb = SpannableStringBuilder(tv.text)
+        ssb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, color)), start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
+        tv.text = ssb
     }
 
     internal fun setCategory(category: List<AllRecords>) {

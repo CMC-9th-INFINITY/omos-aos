@@ -25,6 +25,8 @@
     <string name="lyrics">나만의 가사해석</string>
     <string name="free">자유 공간</string>
 
+    <string name="no_record">%s의\n첫번째 주인공이 되어봐요!</string>
+
     <string name="tos">
         Omos 이용약관\n
 \n
