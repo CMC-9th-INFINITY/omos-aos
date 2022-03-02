@@ -10,20 +10,22 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DjActivity
+import com.infinity.omos.R
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
-class DetailCategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
+class DetailCategoryListAdapter internal constructor(
+    private val context: Context,
+    private var category: List<DetailCategory>?
+):
     ListAdapter<DetailCategory, DetailCategoryListAdapter.ViewHolder>(
         DetailCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private val context = context
-    private var category = category
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var binding = ListDetailCategoryItemBinding.inflate(inflater, parent, false)
@@ -39,14 +41,17 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
     inner class ViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(category: DetailCategory){
             binding.data = category
+            binding.tvDj.text = "DJ ${category.nickname}"
 
             setArtist(binding, category)
+            setDate(binding, category)
+            setCategoryText(binding, category)
 
             binding.executePendingBindings()
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
-                itemView.btn_dj.setOnClickListener {
+                itemView.tv_dj.setOnClickListener {
                     val intent = Intent(context, DjActivity::class.java)
                     context.startActivity(intent)
                 }
@@ -80,6 +85,38 @@ class DetailCategoryListAdapter internal constructor(context: Context, category:
         }
 
         binding.tvArtist.text = str
+    }
+
+    private fun setDate(binding: ListDetailCategoryItemBinding, record: DetailCategory){
+        var listDate = record.createdDate.split("T")
+        var date = listDate[0].replace("-", " ")
+        binding.tvDate.text = date
+    }
+
+    private fun setCategoryText(binding: ListDetailCategoryItemBinding, record: DetailCategory){
+        var ctg = ""
+        when(record.category){
+            "A_LINE" -> {
+                ctg = context.resources.getString(R.string.a_line)
+            }
+
+            "STORY" -> {
+                ctg = context.resources.getString(R.string.story)
+            }
+
+            "OST" -> {
+                ctg = context.resources.getString(R.string.ost)
+            }
+
+            "LYRICS" -> {
+                ctg = context.resources.getString(R.string.lyrics)
+            }
+
+            "FREE" -> {
+                ctg = context.resources.getString(R.string.free)
+            }
+        }
+        binding.tvCategory.text = ctg
     }
 
     companion object DetailCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){

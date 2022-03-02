@@ -9,11 +9,12 @@ data class DetailCategory(
     @SerializedName("nickname") val nickname: String,
     @SerializedName("recordId") val recordId: String,
 
-    @SerializedName("createdDate") val createdDate: String,
-    @SerializedName("likeCnt") val likeCnt: Int,
-    @SerializedName("liked") val liked: Boolean,
     @SerializedName("recordContents") val recordContents: String,
+    @SerializedName("createdDate") val createdDate: String,
+    @SerializedName("category") val category: String,
+    @SerializedName("viewsCnt") val viewsCnt: Int,
+    @SerializedName("likeCnt") val likeCnt: Int,
     @SerializedName("scrapCnt") val scrapCnt: Int,
-    @SerializedName("scraped") val scraped: Boolean,
-    @SerializedName("viewsCnt") val viewsCnt: Int
+    @SerializedName("isLiked") val liked: Boolean,
+    @SerializedName("isScraped") val scraped: Boolean,
 )

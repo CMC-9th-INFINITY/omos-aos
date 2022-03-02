@@ -6,16 +6,20 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.R
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.databinding.ListAlineCategoryItemBinding
+import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 
-class ALineCategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
+class ALineCategoryListAdapter internal constructor(
+    private val context: Context,
+    private var category: List<DetailCategory>?
+):
     ListAdapter<DetailCategory, ALineCategoryListAdapter.ViewHolder>(
         ALineCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var category = category
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var binding = ListAlineCategoryItemBinding.inflate(inflater, parent, false)
@@ -31,6 +35,12 @@ class ALineCategoryListAdapter internal constructor(context: Context, category: 
     inner class ViewHolder(private val binding: ListAlineCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(category: DetailCategory){
             binding.data = category
+            binding.tvDj.text = "DJ ${category.nickname}"
+
+            setArtist(binding, category)
+            setDate(binding, category)
+            setCategoryText(binding, category)
+
             binding.executePendingBindings()
         }
     }
@@ -40,6 +50,54 @@ class ALineCategoryListAdapter internal constructor(context: Context, category: 
             category!!.size
         } else
             super.getItemCount()
+    }
+
+    private fun setArtist(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+        var str = ""
+        for (s in record.music.artists){
+            str += s.artistName + ", "
+        }
+
+        if (str.length >= 2){
+            str = str.substring(0, str.length - 2)
+            str += " - " + record.music.albumTitle
+        } else{
+            str = "ERROR"
+        }
+
+        binding.tvArtist.text = str
+    }
+
+    private fun setDate(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+        var listDate = record.createdDate.split("T")
+        var date = listDate[0].replace("-", " ")
+        binding.tvDate.text = date
+    }
+
+    private fun setCategoryText(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+        var ctg = ""
+        when(record.category){
+            "A_LINE" -> {
+                ctg = context.resources.getString(R.string.a_line)
+            }
+
+            "STORY" -> {
+                ctg = context.resources.getString(R.string.story)
+            }
+
+            "OST" -> {
+                ctg = context.resources.getString(R.string.ost)
+            }
+
+            "LYRICS" -> {
+                ctg = context.resources.getString(R.string.lyrics)
+            }
+
+            "FREE" -> {
+                ctg = context.resources.getString(R.string.free)
+            }
+        }
+        binding.tvCategory.text = ctg
     }
 
     companion object ALineCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){

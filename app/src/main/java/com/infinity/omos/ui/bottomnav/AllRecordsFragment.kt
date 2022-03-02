@@ -83,11 +83,11 @@ class AllRecordFragment : Fragment() {
 
     private fun addCategory(category: Category): List<AllRecords> {
         return listOf(
-            AllRecords(resources.getString(R.string.category1), category.a_line),
-            AllRecords(resources.getString(R.string.category2), category.ost),
-            AllRecords(resources.getString(R.string.category3), category.story),
-            AllRecords(resources.getString(R.string.category4), category.lyrics),
-            AllRecords(resources.getString(R.string.category5), category.free)
+            AllRecords(resources.getString(R.string.a_line), category.a_line),
+            AllRecords(resources.getString(R.string.ost), category.ost),
+            AllRecords(resources.getString(R.string.story), category.story),
+            AllRecords(resources.getString(R.string.lyrics), category.lyrics),
+            AllRecords(resources.getString(R.string.free), category.free)
         )
     }
 }

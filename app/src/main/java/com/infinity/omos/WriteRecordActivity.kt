@@ -46,7 +46,7 @@ class WriteRecordActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         viewModel.category.value = intent.getStringExtra("category")
-        if (viewModel.category.value == resources.getString(R.string.category1)){
+        if (viewModel.category.value == resources.getString(R.string.a_line)){
             record_contents.visibility = View.GONE
             oneline_contents.visibility = View.VISIBLE
         }

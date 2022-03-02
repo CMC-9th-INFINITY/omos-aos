@@ -33,16 +33,16 @@ class CategoryActivity : AppCompatActivity() {
 
         // 카테고리 Record 가져오기
         when (category) {
-            resources.getString(R.string.category1) -> {
+            resources.getString(R.string.a_line) -> {
                 ctg = "A_LINE"
             }
-            resources.getString(R.string.category2) -> {
+            resources.getString(R.string.ost) -> {
                 ctg = "OST"
             }
-            resources.getString(R.string.category3) -> {
+            resources.getString(R.string.story) -> {
                 ctg = "STORY"
             }
-            resources.getString(R.string.category4) -> {
+            resources.getString(R.string.lyrics) -> {
                 ctg = "LYRICS"
             }
             else -> {

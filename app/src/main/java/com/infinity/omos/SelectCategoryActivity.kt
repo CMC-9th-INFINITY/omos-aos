@@ -34,15 +34,15 @@ class SelectCategoryActivity : AppCompatActivity() {
 
         viewModel.state.observe(this, Observer { state ->
             state?.let {
-                if (it == resources.getString(R.string.category1)){
+                if (it == resources.getString(R.string.a_line)){
                     changeState(btn_oneline)
-                } else if (it == resources.getString(R.string.category2)){
+                } else if (it == resources.getString(R.string.ost)){
                     changeState(btn_myost)
-                } else if (it == resources.getString(R.string.category3)){
+                } else if (it == resources.getString(R.string.story)){
                     changeState(btn_mystory)
-                } else if (it == resources.getString(R.string.category4)){
+                } else if (it == resources.getString(R.string.lyrics)){
                     changeState(btn_interpret)
-                } else if (it == resources.getString(R.string.category5)){
+                } else if (it == resources.getString(R.string.free)){
                     changeState(btn_free)
                 }
             }
