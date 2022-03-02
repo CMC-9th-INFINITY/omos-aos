@@ -155,20 +155,22 @@
                     app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <LinearLayout
-                    android:id="@+id/linear1"
+                    android:id="@+id/btn_heart"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:layout_marginRight="32dp"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/linear2">
+                    app:layout_constraintEnd_toStartOf="@id/btn_star">
 
                     <ImageView
+                        android:id="@+id/img_heart"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_unchecked_heart"/>
 
                     <TextView
+                        android:id="@+id/tv_heart_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -179,7 +181,7 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@id/linear2"
+                    android:id="@+id/btn_star"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -187,11 +189,13 @@
                     app:layout_constraintEnd_toEndOf="parent">
 
                     <ImageView
+                        android:id="@+id/img_star"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@drawable/ic_unchecked_star"/>
 
                     <TextView
+                        android:id="@+id/tv_star_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"

@@ -2,8 +2,10 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -23,6 +25,9 @@ class ALineCategoryListAdapter internal constructor(
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+    private var stateHeart = false
+    private var stateStar = false
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         var binding = ListAlineCategoryItemBinding.inflate(inflater, parent, false)
@@ -44,6 +49,7 @@ class ALineCategoryListAdapter internal constructor(
             setArtist(binding, category)
             setDate(binding, category)
             setCategoryText(binding, category)
+            setHeartStar(binding, category)
 
             binding.executePendingBindings()
 
@@ -52,6 +58,34 @@ class ALineCategoryListAdapter internal constructor(
                 itemView.tv_dj.setOnClickListener {
                     val intent = Intent(context, DjActivity::class.java)
                     context.startActivity(intent)
+                }
+
+                itemView.btn_heart.setOnClickListener {
+                    stateHeart = if (stateHeart){
+                        itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
+                        itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+                        binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) - 1).toString()
+                        false
+                    } else{
+                        itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
+                        itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+                        binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) + 1).toString()
+                        true
+                    }
+                }
+
+                itemView.btn_star.setOnClickListener {
+                    stateStar = if (stateStar){
+                        itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
+                        itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+                        binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) - 1).toString()
+                        false
+                    } else{
+                        itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
+                        itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+                        binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) + 1).toString()
+                        true
+                    }
                 }
             }
         }
@@ -62,6 +96,20 @@ class ALineCategoryListAdapter internal constructor(
             category!!.size
         } else
             super.getItemCount()
+    }
+
+    private fun setHeartStar(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+        if (record.isLiked){
+            binding.imgHeart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
+            binding.tvHeartCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
+            stateHeart = true
+        }
+
+        if (record.isScraped){
+            binding.imgStar.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
+            binding.tvStarCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
+            stateStar = true
+        }
     }
 
     private fun setArtist(binding: ListAlineCategoryItemBinding, record: DetailCategory){

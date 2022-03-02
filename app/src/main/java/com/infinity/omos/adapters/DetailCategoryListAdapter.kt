@@ -61,10 +61,12 @@ class DetailCategoryListAdapter internal constructor(
                     stateHeart = if (stateHeart){
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+                        binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) - 1).toString()
                         false
                     } else{
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+                        binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) + 1).toString()
                         true
                     }
                 }
@@ -73,10 +75,12 @@ class DetailCategoryListAdapter internal constructor(
                     stateStar = if (stateStar){
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+                        binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) - 1).toString()
                         false
                     } else{
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+                        binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) + 1).toString()
                         true
                     }
                 }
