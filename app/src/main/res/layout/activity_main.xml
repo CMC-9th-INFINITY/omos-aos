@@ -64,7 +64,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -82,7 +81,7 @@
                 android:layout_weight="1"
                 android:background="@color/deep_dark"
                 android:orientation="horizontal"
-                android:paddingHorizontal="16dp"
+                android:paddingHorizontal="10dp"
                 android:paddingVertical="10dp">
 
                 <ImageView
@@ -94,8 +93,9 @@
 
                 <EditText
                     android:id="@+id/et_search"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:background="#00FFFFFF"
                     android:hint="노래를 검색해주세요."
                     android:imeOptions="actionDone"
@@ -103,6 +103,13 @@
                     android:textColor="@color/white"
                     android:textColorHint="@color/dark_gray"
                     android:textSize="16sp" />
+
+                <ImageView
+                    android:id="@+id/btn_remove"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_cancel"/>
 
             </LinearLayout>
 

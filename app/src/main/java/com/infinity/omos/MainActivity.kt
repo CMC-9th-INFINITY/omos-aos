@@ -46,6 +46,11 @@ class MainActivity : AppCompatActivity() {
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputMethodManager.hideSoftInputFromWindow(et_search.windowToken, 0)
         }
+
+        // EditText 초기화
+        btn_remove.setOnClickListener {
+            et_search.setText("")
+        }
     }
 
     private fun initToolBar(){
