@@ -40,6 +40,12 @@ class MyRecordFragment : Fragment() {
             binding.lifecycleOwner = this
         }
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         val mAdapter = MyRecordListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
@@ -98,7 +104,5 @@ class MyRecordFragment : Fragment() {
                 }
             }
         })
-
-        return binding.root
     }
 }
