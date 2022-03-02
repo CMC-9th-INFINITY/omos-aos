@@ -15,6 +15,6 @@ data class DetailCategory(
     @SerializedName("viewsCnt") val viewsCnt: Int,
     @SerializedName("likeCnt") val likeCnt: Int,
     @SerializedName("scrapCnt") val scrapCnt: Int,
-    @SerializedName("isLiked") val liked: Boolean,
-    @SerializedName("isScraped") val scraped: Boolean,
+    @SerializedName("isLiked") val isLiked: Boolean,
+    @SerializedName("isScraped") val isScraped: Boolean,
 )
