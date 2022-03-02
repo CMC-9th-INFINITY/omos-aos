@@ -145,8 +145,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:paddingRight="20dp">
+                android:paddingVertical="10dp">
 
                 <TextView
                     android:id="@+id/tv_dj"

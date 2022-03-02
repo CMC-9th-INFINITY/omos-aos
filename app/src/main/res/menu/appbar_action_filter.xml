@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_sort"
+        android:icon="@drawable/ic_filter"
+        android:title="정렬"
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item
+                android:id="@+id/sort_new"
+                android:title="최신순"/>
+            <item
+                android:id="@+id/sort_scrap"
+                android:title="공감순"/>
+            <item
+                android:id="@+id/sort_view"
+                android:title="조회순"/>
+
+        </menu>
+
+    </item>
+
+</menu>

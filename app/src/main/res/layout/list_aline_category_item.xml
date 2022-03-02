@@ -123,12 +123,11 @@
             android:background="@color/deep_dark">
 
             <TextView
-                android:id="@+id/record_contents"
+                android:id="@+id/tv_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="228dp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="@{data.recordContents}"
                 android:textSize="24sp"
                 android:textColor="@color/gray_02"
                 android:fontFamily="@font/cafe24oneprettynight"
@@ -143,8 +142,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="10dp"
-                android:paddingRight="20dp">
+                android:paddingVertical="10dp">
 
                 <TextView
                     android:id="@+id/tv_dj"

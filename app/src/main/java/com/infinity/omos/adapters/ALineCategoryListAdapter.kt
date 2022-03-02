@@ -1,15 +1,18 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.databinding.ListAlineCategoryItemBinding
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
+import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class ALineCategoryListAdapter internal constructor(
     private val context: Context,
@@ -36,12 +39,21 @@ class ALineCategoryListAdapter internal constructor(
         fun bind(category: DetailCategory){
             binding.data = category
             binding.tvDj.text = "DJ ${category.nickname}"
+            binding.tvContents.text = "\" ${category.recordContents} \""
 
             setArtist(binding, category)
             setDate(binding, category)
             setCategoryText(binding, category)
 
             binding.executePendingBindings()
+
+            val pos = adapterPosition
+            if (pos != RecyclerView.NO_POSITION){
+                itemView.tv_dj.setOnClickListener {
+                    val intent = Intent(context, DjActivity::class.java)
+                    context.startActivity(intent)
+                }
+            }
         }
     }
 
