@@ -7,10 +7,10 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface SearchAlbumService {
-    @GET("api/search/album")
+    @GET("api/search/ablum")
     fun getAlbum(
         @Query("keyword") keyword: String,
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
-    ): Call<Album>
+    ): Call<List<Album>>
 }

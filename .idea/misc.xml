@@ -16,7 +16,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_category.xml" value="0.234375" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_dj.xml" value="0.176" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_login.xml" value="0.16875" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_main.xml" value="0.136" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_record_detail.xml" value="0.11875" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_record_oneline.xml" value="0.536" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_register.xml" value="0.16" />
@@ -25,6 +25,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_write_record.xml" value="0.152" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/dialog_pp.xml" value="0.165625" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/dialog_tos.xml" value="0.24850299401197604" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_album.xml" value="0.125" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_all.xml" value="0.17708333333333334" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_all_record.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_all_records.xml" value="0.12604166666666666" />

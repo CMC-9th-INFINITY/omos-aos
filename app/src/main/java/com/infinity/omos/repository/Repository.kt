@@ -59,13 +59,13 @@ class Repository {
 
     // 검색
     private val albumApi = retrofit.create(SearchAlbumService::class.java)
-    var _album = MutableLiveData<Album?>()
+    var _album = MutableLiveData<List<Album>?>()
     var _stateAlbum = MutableLiveData<ApiState>()
 
     fun getAlbum(keyword: String, limit: Int, offset: Int){
         _stateAlbum.value = ApiState.LOADING
-        albumApi.getAlbum(keyword, limit, offset).enqueue(object: Callback<Album>{
-            override fun onResponse(call: Call<Album>, response: Response<Album>) {
+        albumApi.getAlbum(keyword, limit, offset).enqueue(object: Callback<List<Album>>{
+            override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
                 val body = response.body()
 
                 when(val code = response.code()){
@@ -78,7 +78,7 @@ class Repository {
                     401 -> {
                         Log.d("Unauthorized", "reissue")
                         getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        _stateAlbum.value = ApiState.TOKEN
+                        getAlbum(keyword, limit, offset)
                     }
 
                     else -> {
@@ -87,7 +87,7 @@ class Repository {
                 }
             }
 
-            override fun onFailure(call: Call<Album>, t: Throwable) {
+            override fun onFailure(call: Call<List<Album>>, t: Throwable) {
                 Log.d("AlbumAPI Failure", t.message.toString())
                 _stateAlbum.value = ApiState.ERROR
                 t.stackTrace

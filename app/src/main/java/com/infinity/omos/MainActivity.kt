@@ -6,29 +6,38 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.infinity.omos.adapters.ViewPagerAdapter
+import com.infinity.omos.databinding.ActivityMainBinding
+import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.searchtab.AlbumFragment
 import com.infinity.omos.ui.searchtab.AllFragment
 import com.infinity.omos.ui.searchtab.ArtistFragment
 import com.infinity.omos.ui.searchtab.MusicFragment
 import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class MainActivity : AppCompatActivity() {
+
+    private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding: ActivityMainBinding
 
     // Bottom Navigation
     private val fragmentToday by lazy { TodayFragment() }
@@ -43,7 +52,10 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+
+        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding.vm = viewModel
+        binding.lifecycleOwner = this
 
         Log.d("MainActivity", "aToken: ${GlobalApplication.prefs.getString("accessToken")}")
         Log.d("MainActivity", "rToken: ${GlobalApplication.prefs.getString("refreshToken")}")
@@ -57,6 +69,7 @@ class MainActivity : AppCompatActivity() {
         btn_cancel.setOnClickListener {
             linear.visibility = View.VISIBLE
             searchView.visibility = View.GONE
+            searchTab.visibility = View.GONE
             et_search.setText("")
 
             // 키보드 내리기
@@ -72,7 +85,7 @@ class MainActivity : AppCompatActivity() {
         // 검색 리스트 노출
         et_search.addTextChangedListener(object: TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (et_search.length() > 0){
+                if (et_search.length() > 0 || searchTab.visibility == View.VISIBLE){
                     ln_ranking.visibility = View.GONE
                     rv_search.visibility = View.VISIBLE
                 } else{
@@ -83,6 +96,26 @@ class MainActivity : AppCompatActivity() {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
             override fun afterTextChanged(p0: Editable?) {}
         })
+
+        // 검색 완료
+        et_search.setOnKeyListener { view, i, keyEvent ->
+            when(i){
+                KeyEvent.KEYCODE_ENTER -> {
+                    if (et_search.length() > 0){
+                        keyword = et_search.text.toString()
+                        rv_search.visibility = View.GONE
+                        searchTab.visibility = View.VISIBLE
+                    } else{
+                        Toast.makeText(this, "텍스트를 입력하세요.",Toast.LENGTH_SHORT).show()
+                    }
+                    true
+                }
+
+                else -> {
+                    false
+                }
+            }
+        }
     }
 
     private fun initToolBar(){
@@ -255,5 +288,9 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    companion object {
+        var keyword = ""
     }
 }
