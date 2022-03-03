@@ -13,7 +13,7 @@
         android:layout_height="match_parent"
         tools:context=".ui.searchtab.AllFragment">
 
-        <ScrollView
+        <androidx.core.widget.NestedScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -56,7 +56,8 @@
                     android:id="@+id/rv_music"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_music_item"/>
+                    tools:listitem="@layout/list_music_item"
+                    android:nestedScrollingEnabled="false"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -90,7 +91,8 @@
                     android:id="@+id/rv_album"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_album_item"/>
+                    tools:listitem="@layout/list_album_item"
+                    android:nestedScrollingEnabled="false"/>
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -124,11 +126,12 @@
                     android:id="@+id/rv_artist"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_artist_item"/>
+                    tools:listitem="@layout/list_artist_item"
+                    android:nestedScrollingEnabled="false"/>
 
             </LinearLayout>
 
-        </ScrollView>
+        </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
             android:id="@+id/progressBar"

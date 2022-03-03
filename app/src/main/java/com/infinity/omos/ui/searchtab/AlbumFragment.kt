@@ -35,7 +35,6 @@ class AlbumFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("test", "AlbumFragment")
         initializeBroadcastReceiver()
     }
 
@@ -46,7 +45,7 @@ class AlbumFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_album, container, false)
         activity?.let{
             binding.vm = viewModel
-            binding.lifecycleOwner = this
+            binding.lifecycleOwner = viewLifecycleOwner
         }
 
         return binding.root

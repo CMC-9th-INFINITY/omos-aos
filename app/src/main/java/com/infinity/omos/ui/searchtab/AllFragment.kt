@@ -34,7 +34,6 @@ class AllFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("test", "AllFragment")
         initializeBroadcastReceiver()
     }
 
@@ -45,7 +44,7 @@ class AllFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all, container, false)
         activity?.let{
             binding.vm = viewModel
-            binding.lifecycleOwner = this
+            binding.lifecycleOwner = viewLifecycleOwner
         }
 
         return binding.root

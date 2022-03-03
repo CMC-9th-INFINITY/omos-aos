@@ -34,7 +34,6 @@ class MusicFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("test", "MusicFragment")
         initializeBroadcastReceiver()
     }
 
@@ -45,7 +44,7 @@ class MusicFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_music, container, false)
         activity?.let{
             binding.vm = viewModel
-            binding.lifecycleOwner = this
+            binding.lifecycleOwner = viewLifecycleOwner
         }
 
         return binding.root

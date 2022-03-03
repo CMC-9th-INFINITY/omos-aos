@@ -94,7 +94,7 @@ class Repository {
             }
 
             override fun onFailure(call: Call<List<Artists>>, t: Throwable) {
-                Log.d("ArtistAPI Failure", t.message.toString())
+                Log.d("ArtistAPI Failure", t.localizedMessage.toString())
                 _stateArtist.value = ApiState.ERROR
                 t.stackTrace
             }
