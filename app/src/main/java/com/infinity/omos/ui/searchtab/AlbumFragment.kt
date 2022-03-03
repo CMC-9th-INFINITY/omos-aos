@@ -35,7 +35,7 @@ class AlbumFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.d("test", "AlbumFragment")
         initializeBroadcastReceiver()
     }
 

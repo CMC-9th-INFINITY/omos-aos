@@ -24,14 +24,17 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     val stateArtist = repository._stateArtist
 
     fun loadMoreAlbum(keyword: String, limit: Int, offset: Int){
+        Log.d("test", "Album")
         repository.getAlbum(keyword, limit, offset)
     }
 
     fun loadMoreMusic(keyword: String, limit: Int, offset: Int){
+        Log.d("test", "Music")
         repository.getMusic(keyword, limit, offset)
     }
 
     fun loadMoreArtist(keyword: String, limit: Int, offset: Int){
+        Log.d("test", "Artist")
         repository.getArtist(keyword, limit, offset)
     }
 }

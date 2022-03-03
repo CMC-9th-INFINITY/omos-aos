@@ -34,7 +34,7 @@ class AllFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        Log.d("test", "AllFragment")
         initializeBroadcastReceiver()
     }
 
@@ -73,7 +73,6 @@ class AllFragment : Fragment() {
         }
 
         // 노래 초기화
-        viewModel.loadMoreMusic(keyword, 5, 0)
         viewModel.music.observe(viewLifecycleOwner, Observer { music ->
             music?.let {
                 mAdapter.clearRecord() // 기존 리스트 삭제
@@ -84,7 +83,6 @@ class AllFragment : Fragment() {
         })
 
         // 앨범 초기화
-        viewModel.loadMoreAlbum(keyword, 5, 0)
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 aAdapter.clearRecord() // 기존 리스트 삭제
@@ -95,7 +93,6 @@ class AllFragment : Fragment() {
         })
 
         // 아티스트 초기화
-        viewModel.loadMoreArtist(keyword, 5, 0)
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
                 tAdapter.clearRecord() // 기존 리스트 삭제
@@ -131,7 +128,9 @@ class AllFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var keyword = intent?.getStringExtra("keyword")!!
+                viewModel.loadMoreMusic(keyword, 5, 0)
                 viewModel.loadMoreAlbum(keyword, 5, 0)
+                viewModel.loadMoreArtist(keyword, 5, 0)
             }
         }
 

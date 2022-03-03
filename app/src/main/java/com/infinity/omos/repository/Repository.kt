@@ -84,7 +84,7 @@ class Repository {
                     401 -> {
                         Log.d("Unauthorized", "reissue")
                         getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        getAlbum(keyword, limit, offset)
+                        getArtist(keyword, limit, offset)
                     }
 
                     else -> {
@@ -117,7 +117,7 @@ class Repository {
                     401 -> {
                         Log.d("Unauthorized", "reissue")
                         getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        getAlbum(keyword, limit, offset)
+                        getMusic(keyword, limit, offset)
                     }
 
                     else -> {

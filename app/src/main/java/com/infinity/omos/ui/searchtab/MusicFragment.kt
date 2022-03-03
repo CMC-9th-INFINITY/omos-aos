@@ -1,60 +1,166 @@
 package com.infinity.omos.ui.searchtab
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MainActivity
 import com.infinity.omos.R
+import com.infinity.omos.adapters.MusicListAdapter
+import com.infinity.omos.databinding.FragmentMusicBinding
+import com.infinity.omos.repository.Repository
+import com.infinity.omos.viewmodels.MainViewModel
+import kotlinx.android.synthetic.main.fragment_music.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [MusicFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class MusicFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+
+    private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding: FragmentMusicBinding
+
+    lateinit var broadcastReceiver: BroadcastReceiver
+
+    private var page = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
+        Log.d("test", "MusicFragment")
+        initializeBroadcastReceiver()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_music, container, false)
-    }
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_music, container, false)
+        activity?.let{
+            binding.vm = viewModel
+            binding.lifecycleOwner = this
+        }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment MusicFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            MusicFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+        return binding.root
+    }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val mAdapter = MusicListAdapter(requireContext())
+        binding.recyclerView.apply{
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+        // 스크롤 시 앨범 업데이트
+        viewModel.loadMoreMusic(MainActivity.keyword, 20, 0)
+        viewModel.music.observe(viewLifecycleOwner, Observer { music ->
+            music?.let {
+                // 새로 검색 시 기존 리스트 삭제
+                if (page == 0){
+                    mAdapter.clearRecord()
+                }
+
+                mAdapter.setRecord(it)
+                mAdapter.submitList(it)
+            }
+        })
+
+        // 로딩화면
+        viewModel.stateMusic.observe(viewLifecycleOwner, Observer { state ->
+            state?.let {
+                when(it){
+                    Repository.ApiState.LOADING -> {
+                        if (page == 0){
+                            binding.recyclerView.visibility = View.GONE
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                    }
+
+                    Repository.ApiState.DONE -> {
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Repository.ApiState.ERROR -> {
+
+                    }
                 }
             }
+        })
+
+        // 무한 스크롤
+        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter!!.itemCount-1
+
+                // 스크롤이 끝에 도달했는지 확인
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                    mAdapter.deleteLoading()
+                    viewModel.loadMoreMusic(MainActivity.keyword, 20, ++page*20)
+                }
+            }
+        })
+
+        // 검색 후 맨 아래로 이동하는 현상 해결
+        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+        })
+    }
+
+    fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                page = 0
+
+                var keyword = intent?.getStringExtra("keyword")!!
+                viewModel.loadMoreMusic(keyword, 20, 0)
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("SEARCH_UPDATE")
+        )
     }
 }
