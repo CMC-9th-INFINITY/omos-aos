@@ -15,13 +15,22 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
+import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
+import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.ui.bottomnav.*
+import com.infinity.omos.ui.searchtab.AlbumFragment
+import com.infinity.omos.ui.searchtab.AllFragment
+import com.infinity.omos.ui.searchtab.ArtistFragment
+import com.infinity.omos.ui.searchtab.MusicFragment
 import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class MainActivity : AppCompatActivity() {
+
+    // Bottom Navigation
     private val fragmentToday by lazy { TodayFragment() }
     private val fragmentMyRecord by lazy { MyRecordFragment() }
     private val fragmentAllRecords by lazy { AllRecordFragment() }
@@ -42,6 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         initToolBar()
         initNavigationBar()
+        initTabLayout()
 
         // 검색뷰 취소 버튼 클릭 시
         btn_cancel.setOnClickListener {
@@ -82,6 +92,13 @@ class MainActivity : AppCompatActivity() {
         // OMOS 텍스트 이미지 추가
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         supportActionBar?.setHomeAsUpIndicator(R.drawable.omos_title)
+    }
+
+    private fun initTabLayout(){
+        val viewpagerFragmentAdapter = ViewPagerAdapter(this)
+        viewPager.adapter = viewpagerFragmentAdapter
+        val tabTitles = listOf("전체", "노래", "앨범", "아티스트")
+        TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
     }
 
     private fun initNavigationBar(){

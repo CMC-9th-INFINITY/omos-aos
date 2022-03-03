@@ -20,4 +20,8 @@
         <item name="actionMenuTextColor">@color/gray_03</item> <!--액션 메뉴의 텍스트 색상-->
     </style>
 
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">16sp</item>
+    </style>
+
 </resources>
