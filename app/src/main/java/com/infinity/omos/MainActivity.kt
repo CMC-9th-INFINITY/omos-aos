@@ -1,6 +1,7 @@
 package com.infinity.omos
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
@@ -103,6 +104,10 @@ class MainActivity : AppCompatActivity() {
                 KeyEvent.KEYCODE_ENTER -> {
                     if (et_search.length() > 0){
                         keyword = et_search.text.toString()
+                        var intent = Intent("SEARCH_UPDATE")
+                        intent.putExtra("keyword", keyword)
+                        sendBroadcast(intent)
+
                         rv_search.visibility = View.GONE
                         searchTab.visibility = View.VISIBLE
                     } else{

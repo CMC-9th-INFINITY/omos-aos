@@ -10,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.databinding.FragmentAlbumBinding
@@ -50,6 +51,7 @@ class AlbumFragment : Fragment() {
         }
 
         // 스크롤 시 앨범 업데이트
+        //viewModel.loadMoreAlbum(MainActivity.keyword, 5, 0)
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 mAdapter.setRecord(it)
