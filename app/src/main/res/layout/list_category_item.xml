@@ -32,12 +32,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent">
 
-                <ImageView
+                <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_album_cover"
                     android:layout_width="36dp"
                     android:layout_height="36dp"
                     android:layout_marginEnd="10dp"
-                    android:scaleType="centerCrop"
                     app:imageUrl="@{record.music.albumImageUrl}"/>
 
                 <LinearLayout
