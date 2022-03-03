@@ -16,7 +16,7 @@
         android:paddingVertical="7dp"
         android:background="@color/dark">
 
-        <ImageView
+        <com.infinity.omos.utils.RoundImageView
             android:id="@+id/img_album_cover"
             android:layout_width="70dp"
             android:layout_height="70dp"
