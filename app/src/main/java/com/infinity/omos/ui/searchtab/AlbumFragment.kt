@@ -31,7 +31,7 @@ class AlbumFragment : Fragment() {
 
     lateinit var broadcastReceiver: BroadcastReceiver
 
-    private var page = 1
+    private var page = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,33 +66,12 @@ class AlbumFragment : Fragment() {
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 // 새로 검색 시 기존 리스트 삭제
-                if (it.size == 20){
+                if (page == 0){
                     mAdapter.clearRecord()
                 }
+
                 mAdapter.setRecord(it)
                 mAdapter.submitList(it)
-            }
-        })
-
-        // 검색 후 맨아래로 이동하는 현상 해결
-        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                recyclerView.scrollToPosition(0)
-            }
-            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                recyclerView.scrollToPosition(0)
-            }
-            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-                recyclerView.scrollToPosition(0)
-            }
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                recyclerView.scrollToPosition(0)
-            }
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                recyclerView.scrollToPosition(0)
-            }
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                recyclerView.scrollToPosition(0)
             }
         })
 
@@ -101,8 +80,10 @@ class AlbumFragment : Fragment() {
             state?.let {
                 when(it){
                     Repository.ApiState.LOADING -> {
-                        binding.recyclerView.visibility = View.GONE
-                        binding.progressBar.visibility = View.VISIBLE
+                        if (page == 0){
+                            binding.recyclerView.visibility = View.GONE
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
                     }
 
                     Repository.ApiState.DONE -> {
@@ -116,12 +97,64 @@ class AlbumFragment : Fragment() {
                 }
             }
         })
+
+        // 무한 스크롤
+        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter!!.itemCount-1
+
+                // 스크롤이 끝에 도달했는지 확인
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                    mAdapter.deleteLoading()
+                    viewModel.loadMoreAlbum(keyword, 20, ++page*20)
+                }
+            }
+        })
+
+        // 검색 후 맨 아래로 이동하는 현상 해결
+        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                if (page == 0){
+                    recyclerView.scrollToPosition(0)
+                }
+            }
+        })
     }
 
     fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var keyword = intent?.getStringExtra("keyword")!!
+                page = 0
                 viewModel.loadMoreAlbum(keyword, 20, 0)
             }
         }
