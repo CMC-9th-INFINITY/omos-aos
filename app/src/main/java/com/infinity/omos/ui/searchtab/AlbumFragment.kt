@@ -153,8 +153,9 @@ class AlbumFragment : Fragment() {
     fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                var keyword = intent?.getStringExtra("keyword")!!
                 page = 0
+
+                var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreAlbum(keyword, 20, 0)
             }
         }

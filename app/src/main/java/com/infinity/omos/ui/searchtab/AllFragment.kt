@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
+import com.infinity.omos.adapters.ArtistListAdapter
+import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentAlbumBinding
 import com.infinity.omos.databinding.FragmentAllBinding
 import com.infinity.omos.repository.Repository
@@ -52,16 +54,28 @@ class AllFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = AlbumListAdapter(requireContext())
+        val aAdapter = AlbumListAdapter(requireContext())
         binding.rvAlbum.apply{
+            adapter = aAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+        val mAdapter = MusicListAdapter(requireContext())
+        binding.rvMusic.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
-        // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreAlbum(keyword, 5, 0)
-        viewModel.album.observe(viewLifecycleOwner, Observer { album ->
-            album?.let {
+        val tAdapter = ArtistListAdapter(requireContext())
+        binding.rvArtist.apply {
+            adapter = tAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+        // 노래 초기화
+        viewModel.loadMoreMusic(keyword, 5, 0)
+        viewModel.music.observe(viewLifecycleOwner, Observer { music ->
+            music?.let {
                 mAdapter.clearRecord() // 기존 리스트 삭제
                 mAdapter.setRecord(it) // 검색된 리스트 추가
                 mAdapter.deleteLoading() // 로딩 리스트 삭제
@@ -69,8 +83,30 @@ class AllFragment : Fragment() {
             }
         })
 
+        // 앨범 초기화
+        viewModel.loadMoreAlbum(keyword, 5, 0)
+        viewModel.album.observe(viewLifecycleOwner, Observer { album ->
+            album?.let {
+                aAdapter.clearRecord() // 기존 리스트 삭제
+                aAdapter.setRecord(it) // 검색된 리스트 추가
+                aAdapter.deleteLoading() // 로딩 리스트 삭제
+                aAdapter.submitList(it)
+            }
+        })
+
+        // 아티스트 초기화
+        viewModel.loadMoreArtist(keyword, 5, 0)
+        viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
+            artist?.let {
+                tAdapter.clearRecord() // 기존 리스트 삭제
+                tAdapter.setRecord(it) // 검색된 리스트 추가
+                tAdapter.deleteLoading() // 로딩 리스트 삭제
+                tAdapter.submitList(it)
+            }
+        })
+
         // 로딩화면
-        viewModel.stateAlbum.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.stateArtist.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Repository.ApiState.LOADING -> {

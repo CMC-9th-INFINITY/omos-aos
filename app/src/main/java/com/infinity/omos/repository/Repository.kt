@@ -58,9 +58,81 @@ class Repository {
     var _djRecord = MutableLiveData<List<MyRecord>>()
 
     // 검색
+    private val musicApi = retrofit.create(SearchMusicService::class.java)
     private val albumApi = retrofit.create(SearchAlbumService::class.java)
+    private val artistApi = retrofit.create(SearchArtistService::class.java)
     var _album = MutableLiveData<List<Album>?>()
+    var _music = MutableLiveData<List<Music>?>()
+    var _artist = MutableLiveData<List<Artists>?>()
     var _stateAlbum = MutableLiveData<ApiState>()
+    var _stateMusic = MutableLiveData<ApiState>()
+    var _stateArtist = MutableLiveData<ApiState>()
+
+    fun getArtist(keyword: String, limit: Int, offset: Int){
+        _stateArtist.value = ApiState.LOADING
+        artistApi.getArtist(keyword, limit, offset).enqueue(object: Callback<List<Artists>>{
+            override fun onResponse(call: Call<List<Artists>>, response: Response<List<Artists>>) {
+                val body = response.body()
+
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("ArtistAPI Response", response.body().toString())
+                        _artist.value = body
+                        _stateArtist.value = ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("Unauthorized", "reissue")
+                        getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getAlbum(keyword, limit, offset)
+                    }
+
+                    else -> {
+                        Log.d("Code", code.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Artists>>, t: Throwable) {
+                Log.d("ArtistAPI Failure", t.message.toString())
+                _stateArtist.value = ApiState.ERROR
+                t.stackTrace
+            }
+        })
+    }
+
+    fun getMusic(keyword: String, limit: Int, offset: Int){
+        _stateMusic.value = ApiState.LOADING
+        musicApi.getMusic(keyword, limit, offset).enqueue(object: Callback<List<Music>>{
+            override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
+                val body = response.body()
+
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("MusicAPI Response", response.body().toString())
+                        _music.value = body
+                        _stateMusic.value = ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("Unauthorized", "reissue")
+                        getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getAlbum(keyword, limit, offset)
+                    }
+
+                    else -> {
+                        Log.d("Code", code.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Music>>, t: Throwable) {
+                Log.d("MusicAPI Failure", t.message.toString())
+                _stateMusic.value = ApiState.ERROR
+                t.stackTrace
+            }
+        })
+    }
 
     fun getAlbum(keyword: String, limit: Int, offset: Int){
         _stateAlbum.value = ApiState.LOADING

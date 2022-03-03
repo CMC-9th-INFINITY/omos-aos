@@ -6,6 +6,7 @@ data class Music(
     @SerializedName("musicId") val musicId: String,
     @SerializedName("musicTitle") val musicTitle: String,
     @SerializedName("artists") val artists: List<Artists>,
+    @SerializedName("albumId") val albumId: String,
     @SerializedName("albumTitle") val albumTitle: String,
     @SerializedName("albumImageUrl") val albumImageUrl: String,
 )
