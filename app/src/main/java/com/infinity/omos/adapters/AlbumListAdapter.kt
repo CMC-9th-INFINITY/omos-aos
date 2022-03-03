@@ -80,9 +80,12 @@ class AlbumListAdapter internal constructor(private val context: Context):
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
     internal fun setRecord(ab: List<Album>) {
-        album.clear()
         album.addAll(ab)
         album.add(null)
+    }
+
+    internal fun clearRecord(){
+        album.clear()
     }
 
     internal fun deleteLoading(){

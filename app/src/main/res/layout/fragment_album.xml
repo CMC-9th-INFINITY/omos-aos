@@ -17,7 +17,8 @@
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:listitem="@layout/list_album_item"/>
+            tools:listitem="@layout/list_album_item"
+            android:visibility="gone"/>
 
         <ProgressBar
             android:id="@+id/progressBar"

@@ -62,8 +62,9 @@ class AllFragment : Fragment() {
         viewModel.loadMoreAlbum(keyword, 5, 0)
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
-                mAdapter.setRecord(it)
-                mAdapter.deleteLoading()
+                mAdapter.clearRecord() // 기존 리스트 삭제
+                mAdapter.setRecord(it) // 검색된 리스트 추가
+                mAdapter.deleteLoading() // 로딩 리스트 삭제
                 mAdapter.submitList(it)
             }
         })
