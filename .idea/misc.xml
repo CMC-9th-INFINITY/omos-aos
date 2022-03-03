@@ -33,11 +33,14 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_page.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_record.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_today.xml" value="0.12604166666666666" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_album_item.xml" value="0.4" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_aline_category_item.xml" value="0.1734375" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_allrecords_item.xml" value="0.234375" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_artist_item.xml" value="0.18297101449275363" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_category_item.xml" value="0.152" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_detail_category_item.xml" value="0.26666666666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_loading_item.xml" value="0.1082427536231884" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_music_item.xml" value="0.4" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_mydj_item.xml" value="0.536" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_myrecord_item.xml" value="0.26666666666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_oneline_category_item.xml" value="0.4" />
