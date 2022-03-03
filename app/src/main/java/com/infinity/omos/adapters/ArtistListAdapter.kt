@@ -63,6 +63,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
     inner class ArtistViewHoler(private val binding: ListArtistItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(artist: Artists) {
             binding.data = artist
+            binding.tvGenres.text = setGenres(artist.genres)
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
@@ -75,6 +76,21 @@ class ArtistListAdapter internal constructor(private val context: Context):
     }
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
+
+    private fun setGenres(genres: List<String>): String{
+        var str = ""
+        for (s in genres){
+            str += "$s & "
+        }
+
+        if (str.length >= 3){
+            str = str.substring(0, str.length - 3)
+        } else{
+            str = "ERROR"
+        }
+
+        return str
+    }
 
     internal fun setRecord(ab: List<Artists>) {
         artist.addAll(ab)

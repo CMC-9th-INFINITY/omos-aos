@@ -7,7 +7,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.data.Artists
+import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.data.Music
+import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMusicItemBinding
 
@@ -61,6 +64,7 @@ class MusicListAdapter internal constructor(private val context: Context):
     inner class MusicViewHoler(private val binding: ListMusicItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(music: Music) {
             binding.data = music
+            binding.tvArtist.text = setArtist(music.artists)
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
@@ -73,6 +77,21 @@ class MusicListAdapter internal constructor(private val context: Context):
     }
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
+
+    private fun setArtist(artists: List<Artists>): String{
+        var str = ""
+        for (s in artists){
+            str += s.artistName + " & "
+        }
+
+        if (str.length >= 3){
+            str = str.substring(0, str.length - 3)
+        } else{
+            str = "ERROR"
+        }
+
+        return str
+    }
 
     internal fun setRecord(ab: List<Music>) {
         music.addAll(ab)

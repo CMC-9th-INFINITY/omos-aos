@@ -1,5 +1,4 @@
 package com.infinity.omos.data
-
 import com.google.gson.annotations.SerializedName
 
 data class Music(
@@ -8,5 +7,5 @@ data class Music(
     @SerializedName("artists") val artists: List<Artists>,
     @SerializedName("albumId") val albumId: String,
     @SerializedName("albumTitle") val albumTitle: String,
-    @SerializedName("albumImageUrl") val albumImageUrl: String,
+    @SerializedName("albumImageUrl") val albumImageUrl: String
 )

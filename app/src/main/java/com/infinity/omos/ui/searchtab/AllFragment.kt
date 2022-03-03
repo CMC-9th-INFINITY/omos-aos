@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
@@ -24,6 +25,8 @@ import com.infinity.omos.databinding.FragmentAllBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.fragment_album.*
+import kotlinx.android.synthetic.main.fragment_all.*
 
 class AllFragment : Fragment() {
 
@@ -119,6 +122,28 @@ class AllFragment : Fragment() {
 
                     }
                 }
+            }
+        })
+
+        // 검색 후 스크롤 맨 위로 이동
+        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
+            override fun onChanged() {
+                scrollView.scrollTo(0, 0)
+            }
+            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
+                scrollView.scrollTo(0, 0)
+            }
+            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
+                scrollView.scrollTo(0, 0)
+            }
+            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
+                scrollView.scrollTo(0, 0)
+            }
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
+                scrollView.scrollTo(0, 0)
+            }
+            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
+                scrollView.scrollTo(0, 0)
             }
         })
     }

@@ -71,6 +71,7 @@ class MainActivity : AppCompatActivity() {
             linear.visibility = View.VISIBLE
             searchView.visibility = View.GONE
             searchTab.visibility = View.GONE
+            viewPager.currentItem = 0
             et_search.setText("")
 
             // 키보드 내리기

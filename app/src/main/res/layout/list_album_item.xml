@@ -18,9 +18,9 @@
 
         <ImageView
             android:id="@+id/img_album_cover"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_rectangle_record"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            imageUrl="@{data.albumImageUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -50,7 +50,6 @@
                 android:id="@+id/tv_artist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="가수이름이들어갑니다가수이름이들어갑니다가수이름이들어갑니다가수이름이들어갑니다"
                 android:textSize="12sp"
                 android:textColor="@color/gray_04"
                 android:maxLines="1"
@@ -60,7 +59,6 @@
                 android:id="@+id/tv_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="2000 00 00"
                 android:textSize="12sp"
                 android:textColor="@color/gray_04"/>
 

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
 import com.infinity.omos.data.Album
+import com.infinity.omos.data.Artists
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAlbumItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
@@ -66,6 +67,8 @@ class AlbumListAdapter internal constructor(private val context: Context):
     inner class AlbumViewHoler(private val binding: ListAlbumItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(album: Album) {
             binding.data = album
+            binding.tvArtist.text = setArtist(album.artists)
+            binding.tvDate.text = album.releaseDate.replace("-", " ")
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
@@ -78,6 +81,21 @@ class AlbumListAdapter internal constructor(private val context: Context):
     }
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
+
+    private fun setArtist(artists: List<Artists>): String{
+        var str = ""
+        for (s in artists){
+            str += s.artistName + " & "
+        }
+
+        if (str.length >= 3){
+            str = str.substring(0, str.length - 3)
+        } else{
+            str = "ERROR"
+        }
+
+        return str
+    }
 
     internal fun setRecord(ab: List<Album>) {
         album.addAll(ab)

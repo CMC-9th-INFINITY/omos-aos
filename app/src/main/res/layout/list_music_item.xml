@@ -20,7 +20,7 @@
             android:id="@+id/img_album_cover"
             android:layout_width="42dp"
             android:layout_height="42dp"
-            android:src="@drawable/ic_album_cover_small"
+            imageUrl="@{data.albumImageUrl}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"/>
@@ -45,9 +45,9 @@
                 android:textColor="@color/orange"/>
 
             <TextView
+                android:id="@+id/tv_artist"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="드로 (DRO)"
                 android:textSize="12sp"
                 android:textColor="@color/gray_04"/>
 
