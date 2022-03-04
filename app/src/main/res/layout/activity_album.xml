@@ -37,27 +37,48 @@
             app:layout_constraintEnd_toEndOf="parent">
 
             <TextView
+                android:id="@+id/tv_album_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="4dp"
-                android:text="앨범 제목이 들어갑니다"
                 android:textSize="20sp"
                 android:textColor="@color/white"/>
 
             <TextView
+                android:id="@+id/tv_artist_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="2dp"
-                android:text="가수이름이들어갑니다"
                 android:textSize="14sp"
                 android:textColor="@color/gray_03"/>
 
-            <TextView
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="발매일 | 2000 00 00"
-                android:textSize="14sp"
-                android:textColor="@color/gray_06"/>
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="발매일"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_06"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=" | "
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_06"/>
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
+                    android:textColor="@color/gray_06"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 
@@ -69,12 +90,12 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.infinity.omos.utils.RoundImageView
+                android:id="@+id/img_album_cover"
+                android:layout_width="176dp"
+                android:layout_height="176dp"
                 android:padding="20dp"
-                android:layout_gravity="center"
-                android:src="@drawable/img_album_cover"/>
+                android:layout_gravity="center"/>
 
             <ImageView
                 android:layout_width="74dp"
@@ -85,8 +106,20 @@
         </FrameLayout>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="17dp"
+            tools:listitem="@layout/list_album_detail_item"
+            app:layout_constraintTop_toBottomOf="@+id/frame1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintTop_toBottomOf="@+id/frame1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

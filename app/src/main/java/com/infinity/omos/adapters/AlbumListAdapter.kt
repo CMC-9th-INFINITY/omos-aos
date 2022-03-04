@@ -10,6 +10,7 @@ import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.AlbumActivity
 import com.infinity.omos.MainActivity
 import com.infinity.omos.MyRecordDetailActivity
 import com.infinity.omos.R
@@ -86,7 +87,13 @@ class AlbumListAdapter internal constructor(private val context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-
+                    val intent = Intent(context, AlbumActivity::class.java)
+                    intent.putExtra("albumTitle", album.albumTitle)
+                    intent.putExtra("artists", binding.tvArtist.text)
+                    intent.putExtra("releaseDate", binding.tvDate.text)
+                    intent.putExtra("albumImageUrl", album.albumImageUrl)
+                    intent.putExtra("albumId", album.albumId)
+                    context.startActivity(intent)
                 }
             }
         }

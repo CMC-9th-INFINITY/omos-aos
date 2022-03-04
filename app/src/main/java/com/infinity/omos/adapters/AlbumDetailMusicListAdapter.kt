@@ -12,13 +12,14 @@ import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Music
+import com.infinity.omos.databinding.ListAlbumDetailItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMusicItemBinding
 import com.infinity.omos.etc.GlobalFunction
 
-class MusicListAdapter internal constructor(private val context: Context):
+class AlbumDetailMusicListAdapter internal constructor(private val context: Context):
     ListAdapter<Music, RecyclerView.ViewHolder>(
-        MusicDiffUtil
+        AlbumDetailMusicDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
@@ -45,7 +46,7 @@ class MusicListAdapter internal constructor(private val context: Context):
 
         return when(viewType){
             VIEW_TYPE_ITEM -> {
-                val binding = ListMusicItemBinding.inflate(inflater,parent,false)
+                val binding = ListAlbumDetailItemBinding.inflate(inflater,parent,false)
                 MusicViewHoler(binding)
             }
 
@@ -63,21 +64,15 @@ class MusicListAdapter internal constructor(private val context: Context):
         }
     }
 
-    inner class MusicViewHoler(private val binding: ListMusicItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class MusicViewHoler(private val binding: ListAlbumDetailItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(music: Music) {
             binding.data = music
             binding.tvArtist.text = setArtist(music.artists)
             binding.tvMusicTitle.text = music.musicTitle
-
-            // keyword 색상 변경
-            var start = music.musicTitle.lowercase().indexOf(keyword.lowercase())
-            if (start != -1){
-                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + keyword.length, R.color.orange)
-            }
-
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
+            binding.tvCount.text = String.format("%02d", pos+1)
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
 
@@ -128,7 +123,7 @@ class MusicListAdapter internal constructor(private val context: Context):
         return music.size
     }
 
-    companion object MusicDiffUtil: DiffUtil.ItemCallback<Music>(){
+    companion object AlbumDetailMusicDiffUtil: DiffUtil.ItemCallback<Music>(){
         override fun areItemsTheSame(oldItem: Music, newItem: Music): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem

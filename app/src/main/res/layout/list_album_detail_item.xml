@@ -6,39 +6,41 @@
     <data>
         <variable
             name="data"
-            type="com.infinity.omos.data.Artists" />
+            type="com.infinity.omos.data.Music" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingHorizontal="16dp"
         android:paddingVertical="7dp"
+        android:paddingHorizontal="16dp"
         android:background="@color/dark">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_album_cover"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            imageUrl="@{data.artistImageUrl}"
+        <TextView
+            android:id="@+id/tv_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="01"
+            android:textSize="16sp"
+            android:textColor="@color/white"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent"/>
 
         <LinearLayout
             android:id="@+id/linear"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
+            android:layout_gravity="center"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_album_cover"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/tv_count"
+            app:layout_constraintEnd_toStartOf="@+id/btn_write"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <TextView
-                android:id="@+id/tv_artist_name"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_music_title"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="16sp"
                 android:textColor="@color/white"
@@ -46,8 +48,8 @@
                 android:ellipsize="end"/>
 
             <TextView
-                android:id="@+id/tv_genres"
-                android:layout_width="wrap_content"
+                android:id="@+id/tv_artist"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:textColor="@color/gray_04"
@@ -55,6 +57,17 @@
                 android:ellipsize="end"/>
 
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/btn_write"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/ic_write_item"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/linear"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

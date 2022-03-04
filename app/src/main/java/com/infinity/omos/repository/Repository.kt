@@ -61,12 +61,48 @@ class Repository {
     private val musicApi = retrofit.create(SearchMusicService::class.java)
     private val albumApi = retrofit.create(SearchAlbumService::class.java)
     private val artistApi = retrofit.create(SearchArtistService::class.java)
+    private val albumDetailApi = retrofit.create(AlbumDetailService::class.java)
     var _album = MutableLiveData<List<Album>?>()
     var _music = MutableLiveData<List<Music>?>()
     var _artist = MutableLiveData<List<Artists>?>()
+    var _albumDetail = MutableLiveData<List<Music>?>()
     var _stateAlbum = MutableLiveData<ApiState>()
     var _stateMusic = MutableLiveData<ApiState>()
     var _stateArtist = MutableLiveData<ApiState>()
+    var _stateAlbumDetail = MutableLiveData<ApiState>()
+
+    fun getAlbumDetail(albumId: String){
+        _stateAlbumDetail.value = ApiState.LOADING
+        albumDetailApi.getAlbumDetail(albumId).enqueue(object: Callback<List<Music>>{
+            override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
+                val body = response.body()
+
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("AlbumDetailAPI Response", response.body().toString())
+                        _albumDetail.value = body
+                        _stateAlbumDetail.value = ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("Unauthorized", "reissue")
+                        getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getAlbumDetail(albumId)
+                    }
+
+                    else -> {
+                        Log.d("Code", code.toString())
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Music>>, t: Throwable) {
+                Log.d("AlbumDetailAPI Failure", t.message.toString())
+                _stateAlbumDetail.value = ApiState.ERROR
+                t.stackTrace
+            }
+        })
+    }
 
     fun getArtist(keyword: String, limit: Int, offset: Int){
         _stateArtist.value = ApiState.LOADING
@@ -94,7 +130,7 @@ class Repository {
             }
 
             override fun onFailure(call: Call<List<Artists>>, t: Throwable) {
-                Log.d("ArtistAPI Failure", t.localizedMessage.toString())
+                Log.d("ArtistAPI Failure", t.message.toString())
                 _stateArtist.value = ApiState.ERROR
                 t.stackTrace
             }
