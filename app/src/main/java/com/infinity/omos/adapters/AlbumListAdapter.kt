@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +10,16 @@ import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MainActivity
 import com.infinity.omos.MyRecordDetailActivity
+import com.infinity.omos.R
 import com.infinity.omos.data.Album
 import com.infinity.omos.data.Artists
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAlbumItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
+import com.infinity.omos.etc.GlobalFunction
 
 class AlbumListAdapter internal constructor(private val context: Context):
     ListAdapter<Album, RecyclerView.ViewHolder>(
@@ -69,6 +73,14 @@ class AlbumListAdapter internal constructor(private val context: Context):
             binding.data = album
             binding.tvArtist.text = setArtist(album.artists)
             binding.tvDate.text = album.releaseDate.replace("-", " ")
+            binding.tvAlbumTitle.text = album.albumTitle
+
+            // keyword 색상 변경
+            var start = album.albumTitle.lowercase().indexOf(MainActivity.keyword.lowercase())
+            if (start != -1){
+                GlobalFunction.changeTextColor(context, binding.tvAlbumTitle, start, start + MainActivity.keyword.length, R.color.orange)
+            }
+
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition

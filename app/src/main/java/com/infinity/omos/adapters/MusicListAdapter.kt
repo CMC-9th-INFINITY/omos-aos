@@ -1,18 +1,20 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MainActivity.Companion.keyword
+import com.infinity.omos.R
 import com.infinity.omos.data.Artists
-import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.data.Music
-import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMusicItemBinding
+import com.infinity.omos.etc.GlobalFunction
 
 class MusicListAdapter internal constructor(private val context: Context):
     ListAdapter<Music, RecyclerView.ViewHolder>(
@@ -65,6 +67,16 @@ class MusicListAdapter internal constructor(private val context: Context):
         fun bind(music: Music) {
             binding.data = music
             binding.tvArtist.text = setArtist(music.artists)
+            binding.tvMusicTitle.text = music.musicTitle
+
+            // keyword 색상 변경
+            var start = music.musicTitle.lowercase().indexOf(keyword.lowercase())
+            Log.d("test", start.toString())
+            Log.d("test", music.musicTitle)
+            if (start != -1){
+                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + keyword.length, R.color.orange)
+            }
+
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition

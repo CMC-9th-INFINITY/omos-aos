@@ -4,11 +4,8 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
-import android.text.SpannableStringBuilder
 import android.text.TextWatcher
-import android.text.style.ForegroundColorSpan
 import android.view.MenuItem
-import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -21,9 +18,9 @@ import com.infinity.omos.data.UserSignUp
 import com.infinity.omos.data.UserSnsSignUp
 import com.infinity.omos.databinding.ActivityRegisterNickBinding
 import com.infinity.omos.etc.CustomDialog
+import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.RegisterNickViewModel
-import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
@@ -47,8 +44,8 @@ class RegisterNickActivity : AppCompatActivity() {
         initToolBar()
 
         // 텍스트 색상 변경
-        changeTextColor(tv_tos, 4, 9, R.color.orange)
-        changeTextColor(tv_pp, 4, 14, R.color.orange)
+        changeTextColor(this, tv_tos, 4, 9, R.color.orange)
+        changeTextColor(this, tv_pp, 4, 14, R.color.orange)
 
         // 이용약관 체크박스 클릭 시
         viewModel.checkBoxTos.observe(this, Observer { state ->
@@ -183,12 +180,6 @@ class RegisterNickActivity : AppCompatActivity() {
             val dialog = CustomDialog(this)
             dialog.showPPDialog()
         }
-    }
-
-    private fun changeTextColor(tv: TextView, start: Int, end: Int, color: Int){
-        var ssb = SpannableStringBuilder(tv.text)
-        ssb.setSpan(ForegroundColorSpan(ContextCompat.getColor(this, color)), start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
-        tv.text = ssb
     }
 
     private fun initToolBar(){
