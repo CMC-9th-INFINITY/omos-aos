@@ -15,10 +15,12 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.AlbumActivity
 import com.infinity.omos.MainActivity
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
+import com.infinity.omos.data.Album
 import com.infinity.omos.databinding.FragmentAlbumBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
@@ -59,6 +61,24 @@ class AlbumFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        mAdapter.setItemClickListener(object: AlbumListAdapter.OnItemClickListener{
+            override fun onClick(
+                v: View,
+                position: Int,
+                album: Album,
+                tvArtist: String,
+                tvDate: String
+            ) {
+                val intent = Intent(context, AlbumActivity::class.java)
+                intent.putExtra("albumTitle", album.albumTitle)
+                intent.putExtra("artists", tvArtist)
+                intent.putExtra("releaseDate", tvDate)
+                intent.putExtra("albumImageUrl", album.albumImageUrl)
+                intent.putExtra("albumId", album.albumId)
+                startActivity(intent)
+            }
+        })
 
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreAlbum(keyword, 20, 0)

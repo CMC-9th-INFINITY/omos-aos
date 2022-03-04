@@ -60,7 +60,7 @@ class MyPageFragment : Fragment() {
         val intent = Intent(context, MyReceiver::class.java)
         val pendingIntent = PendingIntent.getBroadcast(
             context, NOTI_ID, intent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_IMMUTABLE
         )
 
         val state = GlobalApplication.prefs.getString("alarm")

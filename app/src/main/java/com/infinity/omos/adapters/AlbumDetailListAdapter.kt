@@ -16,8 +16,9 @@ import com.infinity.omos.databinding.ListAlbumDetailItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMusicItemBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 
-class AlbumDetailMusicListAdapter internal constructor(private val context: Context):
+class AlbumDetailListAdapter internal constructor(private val context: Context):
     ListAdapter<Music, RecyclerView.ViewHolder>(
         AlbumDetailMusicDiffUtil
     ){
@@ -82,21 +83,6 @@ class AlbumDetailMusicListAdapter internal constructor(private val context: Cont
     }
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
-
-    private fun setArtist(artists: List<Artists>): String{
-        var str = ""
-        for (s in artists){
-            str += s.artistName + " & "
-        }
-
-        if (str.length >= 3){
-            str = str.substring(0, str.length - 3)
-        } else{
-            str = "ERROR"
-        }
-
-        return str
-    }
 
     internal fun setRecord(ab: List<Music>) {
         music.addAll(ab)

@@ -13,6 +13,7 @@ import com.infinity.omos.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
+import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailCategoryListAdapter internal constructor(
@@ -42,8 +43,8 @@ class DetailCategoryListAdapter internal constructor(
         fun bind(category: DetailCategory){
             binding.data = category
             binding.tvDj.text = "DJ ${category.nickname}"
+            binding.tvArtist.text = setArtist(category.music.artists) + " - " + category.music.albumTitle
 
-            setArtist(binding, category)
             setDate(binding, category)
             setCategoryText(binding, category)
             setHeartStar(binding, category)
@@ -112,22 +113,6 @@ class DetailCategoryListAdapter internal constructor(
             binding.tvStarCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
             stateStar = true
         }
-    }
-
-    private fun setArtist(binding: ListDetailCategoryItemBinding, record: DetailCategory){
-        var str = ""
-        for (s in record.music.artists){
-            str += s.artistName + ", "
-        }
-
-        if (str.length >= 2){
-            str = str.substring(0, str.length - 2)
-            str += " - " + record.music.albumTitle
-        } else{
-            str = "ERROR"
-        }
-
-        binding.tvArtist.text = str
     }
 
     private fun setDate(binding: ListDetailCategoryItemBinding, record: DetailCategory){

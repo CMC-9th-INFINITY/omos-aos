@@ -31,7 +31,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{
-        fun onClick(v: View, position: Int)
+        fun onClick(v: View, position: Int, artist: Artists, tvGenres: String)
     }
 
     interface OnItemLongClickListener{
@@ -81,7 +81,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-
+                    itemClickListener.onClick(itemView, pos, artist, binding.tvGenres.text.toString())
                 }
             }
         }
@@ -98,7 +98,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
         if (str.length >= 3){
             str = str.substring(0, str.length - 3)
         } else{
-            str = "ERROR"
+            str = "No Genres"
         }
 
         return str

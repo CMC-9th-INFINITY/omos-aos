@@ -2,20 +2,15 @@ package com.infinity.omos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.infinity.omos.adapters.AlbumDetailMusicListAdapter
-import com.infinity.omos.adapters.MusicListAdapter
-import com.infinity.omos.data.Album
+import com.infinity.omos.adapters.AlbumDetailListAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
-import com.infinity.omos.databinding.ActivityCategoryBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.AlbumViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
@@ -24,8 +19,6 @@ class AlbumActivity : AppCompatActivity() {
 
     private val viewModel: AlbumViewModel by viewModels()
     private lateinit var binding: ActivityAlbumBinding
-
-    private var page = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,7 +38,7 @@ class AlbumActivity : AppCompatActivity() {
         binding.tvDate.text = releaseDate
         Glide.with(binding.imgAlbumCover.context).load(albumImageUrl).error(R.drawable.ic_launcher_background).into(binding.imgAlbumCover)
 
-        val mAdapter = AlbumDetailMusicListAdapter(this)
+        val mAdapter = AlbumDetailListAdapter(this)
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
@@ -66,10 +59,8 @@ class AlbumActivity : AppCompatActivity() {
             state?.let {
                 when(it){
                     Repository.ApiState.LOADING -> {
-                        if (page == 0){
-                            binding.recyclerView.visibility = View.GONE
-                            binding.progressBar.visibility = View.VISIBLE
-                        }
+                        binding.recyclerView.visibility = View.GONE
+                        binding.progressBar.visibility = View.VISIBLE
                     }
 
                     Repository.ApiState.DONE -> {

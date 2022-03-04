@@ -15,9 +15,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.ArtistActivity
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.ArtistListAdapter
+import com.infinity.omos.data.Artists
 import com.infinity.omos.databinding.FragmentArtistBinding
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
@@ -58,6 +60,16 @@ class ArtistFragment : Fragment() {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
+
+        mAdapter.setItemClickListener(object: ArtistListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int, artist: Artists, tvGenres: String) {
+                val intent = Intent(context, ArtistActivity::class.java)
+                intent.putExtra("artistName", artist.artistName)
+                intent.putExtra("artistImageUrl", artist.artistImageUrl)
+                intent.putExtra("artistGenres", tvGenres)
+                startActivity(intent)
+            }
+        })
 
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreArtist(MainActivity.keyword, 20, 0)

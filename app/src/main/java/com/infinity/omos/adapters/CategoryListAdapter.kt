@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
 import com.infinity.omos.data.DetailCategory
 import com.infinity.omos.databinding.ListCategoryItemBinding
+import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 
 class CategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
     ListAdapter<DetailCategory, CategoryListAdapter.ViewHolder>(
@@ -51,7 +52,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
         fun bind(record: DetailCategory) {
             binding.record = record
             binding.tvNick.text = "by. ${record.nickname}"
-            setArtist(binding, record)
+            binding.tvArtist.text = setArtist(record.music.artists) + " - " + record.music.albumTitle
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
@@ -76,22 +77,6 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             record!!.size
         } else
             super.getItemCount()
-    }
-
-    private fun setArtist(binding: ListCategoryItemBinding, record: DetailCategory){
-        var str = ""
-        for (s in record.music.artists){
-            str += s.artistName + ", "
-        }
-
-        if (str.length >= 2){
-            str = str.substring(0, str.length - 2)
-            str += " - " + record.music.albumTitle
-        } else{
-            str = "ERROR"
-        }
-
-        binding.tvArtist.text = str
     }
 
     companion object CategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){

@@ -21,6 +21,7 @@ import com.infinity.omos.databinding.ListAlbumItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 
 class AlbumListAdapter internal constructor(private val context: Context):
     ListAdapter<Album, RecyclerView.ViewHolder>(
@@ -36,7 +37,7 @@ class AlbumListAdapter internal constructor(private val context: Context):
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{
-        fun onClick(v: View, position: Int)
+        fun onClick(v: View, position: Int, album: Album, tvArtist: String, tvDate: String)
     }
 
     interface OnItemLongClickListener{
@@ -87,34 +88,13 @@ class AlbumListAdapter internal constructor(private val context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    val intent = Intent(context, AlbumActivity::class.java)
-                    intent.putExtra("albumTitle", album.albumTitle)
-                    intent.putExtra("artists", binding.tvArtist.text)
-                    intent.putExtra("releaseDate", binding.tvDate.text)
-                    intent.putExtra("albumImageUrl", album.albumImageUrl)
-                    intent.putExtra("albumId", album.albumId)
-                    context.startActivity(intent)
+                    itemClickListener.onClick(itemView, pos, album, binding.tvArtist.text.toString(), binding.tvDate.text.toString())
                 }
             }
         }
     }
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
-
-    private fun setArtist(artists: List<Artists>): String{
-        var str = ""
-        for (s in artists){
-            str += s.artistName + " & "
-        }
-
-        if (str.length >= 3){
-            str = str.substring(0, str.length - 3)
-        } else{
-            str = "ERROR"
-        }
-
-        return str
-    }
 
     internal fun setRecord(ab: List<Album>) {
         album.addAll(ab)

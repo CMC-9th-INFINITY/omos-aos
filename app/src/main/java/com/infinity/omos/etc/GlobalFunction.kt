@@ -5,6 +5,7 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
+import com.infinity.omos.data.Artists
 
 class GlobalFunction {
     companion object{
@@ -12,6 +13,21 @@ class GlobalFunction {
             var ssb = SpannableStringBuilder(tv.text)
             ssb.setSpan(ForegroundColorSpan(ContextCompat.getColor(context, color)), start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE)
             tv.text = ssb
+        }
+
+        fun setArtist(artists: List<Artists>): String{
+            var str = ""
+            for (s in artists){
+                str += s.artistName + " & "
+            }
+
+            if (str.length >= 3){
+                str = str.substring(0, str.length - 3)
+            } else{
+                str = "-"
+            }
+
+            return str
         }
     }
 }
