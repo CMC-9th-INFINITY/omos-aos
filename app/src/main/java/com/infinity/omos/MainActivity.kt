@@ -136,6 +136,7 @@ class MainActivity : AppCompatActivity() {
     private fun initTabLayout(){
         val viewpagerFragmentAdapter = ViewPagerAdapter(this)
         viewPager.adapter = viewpagerFragmentAdapter
+        viewPager.isUserInputEnabled = false
         val tabTitles = listOf("전체", "노래", "앨범", "아티스트")
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
     }

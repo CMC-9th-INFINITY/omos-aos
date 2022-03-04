@@ -74,6 +74,10 @@ class AllFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        viewModel.loadMoreMusic(keyword, 5, 0)
+        viewModel.loadMoreAlbum(keyword, 5, 0)
+        viewModel.loadMoreArtist(keyword, 5, 0)
+
         // 노래 초기화
         viewModel.music.observe(viewLifecycleOwner, Observer { music ->
             music?.let {

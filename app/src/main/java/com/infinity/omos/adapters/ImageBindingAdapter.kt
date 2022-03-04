@@ -11,7 +11,9 @@ import com.infinity.omos.R
 object ImageBindingAdapter {
     @BindingAdapter("imageUrl")
     @JvmStatic
-    fun loadImage(imageView: ImageView, url: String){
-        Glide.with(imageView.context).load(url).error(R.drawable.ic_launcher_background).into(imageView)
+    fun loadImage(imageView: ImageView, url: String?){
+        if (url != null){
+            Glide.with(imageView.context).load(url).error(R.drawable.ic_launcher_background).into(imageView)
+        }
     }
 }

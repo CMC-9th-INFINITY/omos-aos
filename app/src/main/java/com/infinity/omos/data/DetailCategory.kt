@@ -8,6 +8,7 @@ data class DetailCategory(
     @SerializedName("userId") val userId: Int,
     @SerializedName("nickname") val nickname: String,
     @SerializedName("recordId") val recordId: String,
+    @SerializedName("recordImageUrl") val recordImageUrl: String?,
 
     @SerializedName("recordContents") val recordContents: String,
     @SerializedName("createdDate") val createdDate: String,
