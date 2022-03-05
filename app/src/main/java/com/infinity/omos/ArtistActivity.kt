@@ -6,10 +6,14 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.google.android.material.tabs.TabLayoutMediator
+import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
 import com.infinity.omos.databinding.ActivityArtistBinding
 import com.infinity.omos.viewmodels.ArtistViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
+import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class ArtistActivity : AppCompatActivity() {
 
@@ -24,6 +28,7 @@ class ArtistActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         initToolBar()
+        initTabLayout()
 
         var name = intent.getStringExtra("artistName")
         var url = intent.getStringExtra("artistImageUrl")
@@ -32,6 +37,14 @@ class ArtistActivity : AppCompatActivity() {
         binding.tvArtistName.text = name
         binding.tvArtistGenres.text = genres
         Glide.with(binding.imgProfile.context).load(url).error(R.drawable.ic_launcher_background).into(binding.imgProfile)
+    }
+
+    private fun initTabLayout(){
+        val viewpagerFragmentAdapter = ViewPagerAdapter(this)
+        viewPager.adapter = viewpagerFragmentAdapter
+        viewPager.isUserInputEnabled = false
+        val tabTitles = listOf("", "노래", "앨범", "")
+        TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
     }
 
     private fun initToolBar(){
