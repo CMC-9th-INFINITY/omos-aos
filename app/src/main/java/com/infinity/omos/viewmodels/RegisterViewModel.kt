@@ -4,11 +4,12 @@ import android.app.Application
 import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.repository.OnBoardingRepository
 import com.infinity.omos.repository.Repository
 
 class RegisterViewModel(application: Application): AndroidViewModel(application)  {
 
-    private val repository: Repository = Repository()
+    private val repository: OnBoardingRepository = OnBoardingRepository()
 
     var stateInput = MutableLiveData<Boolean>()
     var stateDupEmail = repository._stateDupEmail

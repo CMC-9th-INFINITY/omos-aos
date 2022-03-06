@@ -5,11 +5,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.UserSignUp
 import com.infinity.omos.data.UserSnsSignUp
+import com.infinity.omos.repository.OnBoardingRepository
 import com.infinity.omos.repository.Repository
 
 class RegisterNickViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: Repository = Repository()
+    private val repository: OnBoardingRepository = OnBoardingRepository()
 
     var checkBoxTos = MutableLiveData<Boolean>()
     var checkBoxPP = MutableLiveData<Boolean>()

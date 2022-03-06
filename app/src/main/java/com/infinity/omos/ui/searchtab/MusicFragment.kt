@@ -20,6 +20,7 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentMusicBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_music.*
@@ -83,19 +84,19 @@ class MusicFragment : Fragment() {
         viewModel.stateMusic.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         if (page == 0){
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
                         }
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Constant.ApiState.ERROR -> {
 
                     }
                 }

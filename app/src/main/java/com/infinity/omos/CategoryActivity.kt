@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.ALineCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.CategoryViewModel
@@ -81,15 +82,15 @@ class CategoryActivity : AppCompatActivity() {
         viewModel.stateCategory.observe(this, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.TOKEN -> {
+                    Constant.ApiState.TOKEN -> {
                         binding.progressBar.visibility = View.GONE
                         viewModel.setCategory(ctg, 0, 5, null,
                             GlobalApplication.prefs.getLong("userId").toInt())

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.infinity.omos.adapters.AlbumDetailListAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.AlbumViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
@@ -58,17 +59,17 @@ class AlbumActivity : AppCompatActivity() {
         viewModel.stateAlbumDetail.observe(this, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         binding.recyclerView.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Constant.ApiState.ERROR -> {
 
                     }
                 }

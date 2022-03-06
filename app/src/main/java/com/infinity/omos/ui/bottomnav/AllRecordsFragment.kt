@@ -17,6 +17,7 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
 import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.SharedViewModel
 
@@ -65,15 +66,15 @@ class AllRecordFragment : Fragment() {
         viewModel.stateAllRecords.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.TOKEN -> {
+                    Constant.ApiState.TOKEN -> {
                         binding.progressBar.visibility = View.GONE
                         viewModel.setAllRecords()
                     }

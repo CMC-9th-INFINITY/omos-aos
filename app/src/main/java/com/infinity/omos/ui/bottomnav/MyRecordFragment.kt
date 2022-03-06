@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.fragment_my_record.*
@@ -83,14 +84,14 @@ class MyRecordFragment : Fragment() {
         viewModel.stateMyRecord.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         if (page == 1){
                             binding.progressBar.visibility = View.VISIBLE
                             binding.lnNorecord.visibility = View.GONE
                         }
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.progressBar.visibility = View.GONE
 
                         if (viewModel.myRecord.value == null){
@@ -98,7 +99,7 @@ class MyRecordFragment : Fragment() {
                         }
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Constant.ApiState.ERROR -> {
 
                     }
                 }

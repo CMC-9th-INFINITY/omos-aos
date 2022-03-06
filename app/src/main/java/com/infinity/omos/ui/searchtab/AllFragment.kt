@@ -22,6 +22,7 @@ import com.infinity.omos.adapters.ArtistListAdapter
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentAlbumBinding
 import com.infinity.omos.databinding.FragmentAllBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -118,17 +119,17 @@ class AllFragment : Fragment() {
         viewModel.stateArtist.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         binding.scrollView.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.scrollView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Constant.ApiState.ERROR -> {
 
                     }
                 }

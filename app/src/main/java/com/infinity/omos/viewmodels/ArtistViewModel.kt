@@ -3,10 +3,11 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.infinity.omos.repository.Repository
+import com.infinity.omos.repository.SearchRepository
 
 class ArtistViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: Repository = Repository()
+    private val repository: SearchRepository = SearchRepository()
 
     private val _album = repository._album
     private val _music = repository._music

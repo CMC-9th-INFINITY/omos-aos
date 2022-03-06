@@ -6,11 +6,12 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.UserLogin
 import com.infinity.omos.data.UserSnsLogin
+import com.infinity.omos.repository.OnBoardingRepository
 import com.infinity.omos.repository.Repository
 
 class LoginViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: Repository = Repository()
+    private val repository: OnBoardingRepository = OnBoardingRepository()
     var visibleEye = MutableLiveData<Boolean>()
     var stateInput = MutableLiveData<Boolean>()
 

@@ -26,6 +26,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.UserLogin
 import com.infinity.omos.data.UserSnsLogin
 import com.infinity.omos.databinding.ActivityLoginBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.LoginViewModel
 import com.kakao.sdk.auth.model.OAuthToken
@@ -89,7 +90,7 @@ class LoginActivity : AppCompatActivity() {
         // 이미 가입된 회원인지 확인
         viewModel.stateSnsLogin.observe(this, Observer { state ->
             state?.let {
-                if (it == Repository.LoginApiState.DONE){
+                if (it == Constant.ApiState.DONE){
                     Log.d("LoginActivity", "이미 가입된 회원입니다.")
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -177,7 +178,7 @@ class LoginActivity : AppCompatActivity() {
         // 로그인 상태
         viewModel.statusLogin.observe(this, Observer { status ->
             status?.let {
-                if (it == Repository.LoginApiState.DONE){
+                if (it == Constant.ApiState.DONE){
                     var intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)

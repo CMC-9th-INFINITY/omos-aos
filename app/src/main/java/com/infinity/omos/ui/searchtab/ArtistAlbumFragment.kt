@@ -16,6 +16,7 @@ import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentArtistAlbumBinding
 import com.infinity.omos.databinding.FragmentArtistMusicBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.ArtistViewModel
 
@@ -70,19 +71,19 @@ class ArtistAlbumFragment : Fragment() {
         viewModel.stateAlbum.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         if (page == 0){
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
                         }
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Constant.ApiState.ERROR -> {
 
                     }
                 }

@@ -23,6 +23,7 @@ import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.adapters.ArtistListAdapter
 import com.infinity.omos.data.Album
 import com.infinity.omos.databinding.FragmentAlbumBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_album.*
@@ -105,19 +106,19 @@ class AlbumFragment : Fragment() {
         viewModel.stateAlbum.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
-                    Repository.ApiState.LOADING -> {
+                    Constant.ApiState.LOADING -> {
                         if (page == 0){
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
                         }
                     }
 
-                    Repository.ApiState.DONE -> {
+                    Constant.ApiState.DONE -> {
                         binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Repository.ApiState.ERROR -> {
+                    Constant.ApiState.ERROR -> {
 
                     }
                 }
