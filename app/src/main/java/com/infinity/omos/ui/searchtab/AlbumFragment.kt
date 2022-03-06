@@ -34,6 +34,7 @@ class AlbumFragment : Fragment() {
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private var page = 0
+    private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +92,7 @@ class AlbumFragment : Fragment() {
 
                 mAdapter.setRecord(it)
                 mAdapter.submitList(it)
+                isLoading = false
             }
         })
 
@@ -127,7 +129,8 @@ class AlbumFragment : Fragment() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount-1
 
                 // 스크롤이 끝에 도달했는지 확인
-                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
+                    isLoading = true
                     mAdapter.deleteLoading()
                     viewModel.loadMoreAlbum(keyword, 20, ++page*20)
                 }

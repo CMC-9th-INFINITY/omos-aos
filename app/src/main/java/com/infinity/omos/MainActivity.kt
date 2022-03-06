@@ -34,6 +34,7 @@ import com.infinity.omos.ui.searchtab.ArtistFragment
 import com.infinity.omos.ui.searchtab.MusicFragment
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.MainViewModel
+import com.kakao.sdk.common.util.Utility
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
 import kotlinx.android.synthetic.main.activity_register_nick.*
