@@ -96,7 +96,7 @@ class AlbumFragment : Fragment() {
                     mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
                     true
                 } else {
-                    mAdapter.submitList(it)
+                    mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }
             }
@@ -182,11 +182,7 @@ class AlbumFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
-                mAdapter = AlbumListAdapter(requireContext())
-                binding.recyclerView.apply {
-                    adapter = mAdapter
-                    layoutManager = LinearLayoutManager(activity)
-                }
+                mAdapter.clearRecord()
 
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreAlbum(keyword, pageSize, 0)

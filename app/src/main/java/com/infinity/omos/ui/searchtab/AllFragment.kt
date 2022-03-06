@@ -107,10 +107,10 @@ class AllFragment : Fragment() {
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
                 if (it.isNotEmpty()){
-                    tAdapter.clearRecord() // 기존 리스트 삭제
-                    tAdapter.setRecord(it) // 검색된 리스트 추가
-                    tAdapter.deleteLoading() // 로딩 리스트 삭제
-                    tAdapter.submitList(it)
+//                    tAdapter.clearRecord() // 기존 리스트 삭제
+//                    tAdapter.setRecord(it) // 검색된 리스트 추가
+//                    tAdapter.deleteLoading() // 로딩 리스트 삭제
+//                    tAdapter.submitList(it)
                 }
             }
         })

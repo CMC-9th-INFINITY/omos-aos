@@ -110,6 +110,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
 
     internal fun clearRecord(){
         artist.clear()
+        notifyDataSetChanged()
     }
 
     internal fun deleteLoading(){

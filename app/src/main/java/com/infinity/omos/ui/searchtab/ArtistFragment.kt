@@ -86,7 +86,7 @@ class ArtistFragment : Fragment() {
                     mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
                     true
                 } else {
-                    mAdapter.submitList(it)
+                    mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }
             }
@@ -130,7 +130,6 @@ class ArtistFragment : Fragment() {
                     isLoading = true
                     mAdapter.deleteLoading()
                     viewModel.loadMoreArtist(MainActivity.keyword, pageSize, ++page * pageSize)
-                    Log.d("testScroll", isLoading.toString())
                 }
             }
         })
@@ -179,11 +178,7 @@ class ArtistFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
-                mAdapter = ArtistListAdapter(requireContext())
-                binding.recyclerView.apply {
-                    adapter = mAdapter
-                    layoutManager = LinearLayoutManager(activity)
-                }
+                mAdapter.clearRecord()
 
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreArtist(keyword, pageSize, 0)

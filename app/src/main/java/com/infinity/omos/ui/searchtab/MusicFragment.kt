@@ -74,7 +74,7 @@ class MusicFragment : Fragment() {
                     mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
                     true
                 } else {
-                    mAdapter.submitList(it)
+                    mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }
             }
@@ -160,11 +160,7 @@ class MusicFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
-                mAdapter = MusicListAdapter(requireContext())
-                binding.recyclerView.apply {
-                    adapter = mAdapter
-                    layoutManager = LinearLayoutManager(activity)
-                }
+                mAdapter.clearRecord()
 
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreMusic(keyword, pageSize, 0)

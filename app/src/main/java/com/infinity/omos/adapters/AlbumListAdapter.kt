@@ -103,6 +103,7 @@ class AlbumListAdapter internal constructor(private val context: Context):
 
     internal fun clearRecord(){
         album.clear()
+        notifyDataSetChanged()
     }
 
     internal fun deleteLoading(){

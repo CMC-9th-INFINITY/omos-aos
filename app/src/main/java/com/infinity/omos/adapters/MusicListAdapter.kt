@@ -96,6 +96,7 @@ class MusicListAdapter internal constructor(private val context: Context):
 
     internal fun clearRecord(){
         music.clear()
+        notifyDataSetChanged()
     }
 
     internal fun deleteLoading(){
