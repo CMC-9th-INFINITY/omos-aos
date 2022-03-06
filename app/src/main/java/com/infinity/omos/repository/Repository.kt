@@ -42,6 +42,9 @@ class Repository {
     var _stateSnsSignUp = MutableLiveData<LoginApiState>()
     var _stateDupEmail = MutableLiveData<Boolean>()
 
+    // MainActivity
+    var _stateToken = MutableLiveData<ApiState>()
+
     // My 레코드
     var _myRecord = MutableLiveData<List<MyRecord>>()
     var _stateMyRecord = MutableLiveData<ApiState>()
@@ -286,6 +289,9 @@ class Repository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("Reissue API", errorBody!!.message)
+                        if (errorBody.message == "토큰의 유저 정보가 일치하지 않습니다."){
+                            _stateToken.value = ApiState.ERROR
+                        }
                     }
 
                     else -> {

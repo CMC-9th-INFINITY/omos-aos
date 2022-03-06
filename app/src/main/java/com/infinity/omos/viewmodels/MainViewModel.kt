@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.Album
 import com.infinity.omos.repository.Repository
+import com.infinity.omos.utils.GlobalApplication
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 
@@ -23,6 +24,8 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     val stateAlbum = repository._stateAlbum
     val stateArtist = repository._stateArtist
 
+    val stateToken = repository._stateToken
+
     fun loadMoreAlbum(keyword: String, limit: Int, offset: Int){
         repository.getAlbum(keyword, limit, offset)
     }
@@ -33,5 +36,10 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
 
     fun loadMoreArtist(keyword: String, limit: Int, offset: Int){
         repository.getArtist(keyword, limit, offset)
+    }
+
+    fun getUserToken(){
+        val token = GlobalApplication.prefs.getUserToken()
+        repository.getUserToken(token!!)
     }
 }

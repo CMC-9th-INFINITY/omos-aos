@@ -19,12 +19,15 @@ import androidx.core.content.ContextCompat
 import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
+import com.infinity.omos.repository.Repository
 import com.infinity.omos.ui.bottomnav.*
+import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.ui.searchtab.AlbumFragment
 import com.infinity.omos.ui.searchtab.AllFragment
 import com.infinity.omos.ui.searchtab.ArtistFragment
@@ -65,6 +68,16 @@ class MainActivity : AppCompatActivity() {
         initToolBar()
         initNavigationBar()
         initTabLayout()
+
+        viewModel.getUserToken()
+        viewModel.stateToken.observe(this, Observer { state ->
+            state?.let {
+                if (it == Repository.ApiState.ERROR){
+                    val intent = Intent(this, LoginActivity::class.java)
+                    startActivity(intent)
+                }
+            }
+        })
 
         // 검색뷰 취소 버튼 클릭 시
         btn_cancel.setOnClickListener {

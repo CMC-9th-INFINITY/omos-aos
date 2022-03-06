@@ -14,7 +14,6 @@ import com.kakao.sdk.user.UserApiClient
 
 class SplashActivity : AppCompatActivity() {
 
-    private val repository: Repository = Repository()
     private val SPLASH_TIME: Long = 3000 // (ms)초 간 Splash 화면 띄움
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,6 +26,7 @@ class SplashActivity : AppCompatActivity() {
             // 로그인 정보 확인
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error != null) {
+
                     // 이메일 로그인 상태 확인
                     if (GlobalApplication.prefs.getLong("userId") == -1L){
                         Log.d("SplashActivity", "토큰 불러오기 실패")
