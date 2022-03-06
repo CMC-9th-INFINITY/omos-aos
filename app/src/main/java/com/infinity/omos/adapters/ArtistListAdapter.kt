@@ -106,8 +106,12 @@ class ArtistListAdapter internal constructor(private val context: Context):
 
     internal fun setRecord(ab: List<Artists>) {
         artist.addAll(ab)
+    }
+
+    internal fun addLoading() {
         artist.add(null)
     }
+
 
     internal fun clearRecord(){
         artist.clear()

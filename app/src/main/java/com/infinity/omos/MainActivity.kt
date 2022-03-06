@@ -117,16 +117,18 @@ class MainActivity : AppCompatActivity() {
         et_search.setOnKeyListener { view, i, keyEvent ->
             when(i){
                 KeyEvent.KEYCODE_ENTER -> {
-                    if (et_search.length() > 0){
-                        keyword = et_search.text.toString()
-                        var intent = Intent("SEARCH_UPDATE")
-                        intent.putExtra("keyword", keyword)
-                        sendBroadcast(intent)
+                    if (keyEvent.action != KeyEvent.ACTION_DOWN){
+                        if (et_search.length() > 0){
+                            keyword = et_search.text.toString()
+                            var intent = Intent("SEARCH_UPDATE")
+                            intent.putExtra("keyword", keyword)
+                            sendBroadcast(intent)
 
-                        rv_search.visibility = View.GONE
-                        searchTab.visibility = View.VISIBLE
-                    } else{
-                        Toast.makeText(this, "텍스트를 입력하세요.",Toast.LENGTH_SHORT).show()
+                            rv_search.visibility = View.GONE
+                            searchTab.visibility = View.VISIBLE
+                        } else{
+                            Toast.makeText(this, "텍스트를 입력하세요.",Toast.LENGTH_SHORT).show()
+                        }
                     }
                     true
                 }

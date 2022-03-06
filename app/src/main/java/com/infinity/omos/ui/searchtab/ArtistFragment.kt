@@ -33,6 +33,7 @@ class ArtistFragment : Fragment() {
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private var page = 0
+    private val pageSize = 20
     private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -73,7 +74,7 @@ class ArtistFragment : Fragment() {
         })
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreArtist(MainActivity.keyword, 20, 0)
+        viewModel.loadMoreArtist(MainActivity.keyword, pageSize, 0)
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
                 // 새로 검색 시 기존 리스트 삭제
@@ -82,8 +83,18 @@ class ArtistFragment : Fragment() {
                 }
 
                 mAdapter.setRecord(it)
-                mAdapter.submitList(it)
-                isLoading = false
+                isLoading = if (it.size == pageSize){
+                    mAdapter.addLoading()
+                    false
+                } else{
+                    true
+                }
+
+                if (it.isEmpty()){
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                } else {
+                    mAdapter.submitList(it)
+                }
             }
         })
 
@@ -95,6 +106,7 @@ class ArtistFragment : Fragment() {
                         if (page == 0){
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
+
                         }
                     }
 
@@ -123,7 +135,7 @@ class ArtistFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreArtist(MainActivity.keyword, 20, ++page*20)
+                    viewModel.loadMoreArtist(MainActivity.keyword, pageSize, ++page*pageSize)
                 }
             }
         })
@@ -163,13 +175,12 @@ class ArtistFragment : Fragment() {
         })
     }
 
-    fun initializeBroadcastReceiver() {
+    private fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
-
                 var keyword = intent?.getStringExtra("keyword")!!
-                viewModel.loadMoreArtist(keyword, 20, 0)
+                viewModel.loadMoreArtist(keyword, pageSize, 0)
             }
         }
 

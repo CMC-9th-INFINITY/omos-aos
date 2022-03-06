@@ -31,6 +31,7 @@ class MusicFragment : Fragment() {
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private var page = 0
+    private val pageSize = 20
     private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -60,7 +61,7 @@ class MusicFragment : Fragment() {
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreMusic(MainActivity.keyword, 20, 0)
+        viewModel.loadMoreMusic(MainActivity.keyword, pageSize, 0)
         viewModel.music.observe(viewLifecycleOwner, Observer { music ->
             music?.let {
                 // 새로 검색 시 기존 리스트 삭제
@@ -110,7 +111,7 @@ class MusicFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreMusic(MainActivity.keyword, 20, ++page*20)
+                    viewModel.loadMoreMusic(MainActivity.keyword, pageSize, ++page*pageSize)
                 }
             }
         })
@@ -156,7 +157,7 @@ class MusicFragment : Fragment() {
                 page = 0
 
                 var keyword = intent?.getStringExtra("keyword")!!
-                viewModel.loadMoreMusic(keyword, 20, 0)
+                viewModel.loadMoreMusic(keyword, pageSize, 0)
             }
         }
 

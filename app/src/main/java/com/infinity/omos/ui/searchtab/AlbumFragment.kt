@@ -34,6 +34,7 @@ class AlbumFragment : Fragment() {
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private var page = 0
+    private val pageSize = 20
     private var isLoading = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -82,7 +83,7 @@ class AlbumFragment : Fragment() {
         })
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreAlbum(keyword, 20, 0)
+        viewModel.loadMoreAlbum(keyword, pageSize, 0)
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 // 새로 검색 시 기존 리스트 삭제
@@ -132,7 +133,7 @@ class AlbumFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreAlbum(keyword, 20, ++page*20)
+                    viewModel.loadMoreAlbum(keyword, pageSize, ++page*pageSize)
                 }
             }
         })
@@ -178,7 +179,7 @@ class AlbumFragment : Fragment() {
                 page = 0
 
                 var keyword = intent?.getStringExtra("keyword")!!
-                viewModel.loadMoreAlbum(keyword, 20, 0)
+                viewModel.loadMoreAlbum(keyword, pageSize, 0)
             }
         }
 
