@@ -20,6 +20,7 @@ import com.infinity.omos.MainActivity
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
+import com.infinity.omos.adapters.ArtistListAdapter
 import com.infinity.omos.data.Album
 import com.infinity.omos.databinding.FragmentAlbumBinding
 import com.infinity.omos.repository.Repository
@@ -36,6 +37,8 @@ class AlbumFragment : Fragment() {
     private var page = 0
     private val pageSize = 20
     private var isLoading = false
+
+    private lateinit var mAdapter: AlbumListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +61,7 @@ class AlbumFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = AlbumListAdapter(requireContext())
+        mAdapter = AlbumListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -86,14 +89,15 @@ class AlbumFragment : Fragment() {
         viewModel.loadMoreAlbum(keyword, pageSize, 0)
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
-                // 새로 검색 시 기존 리스트 삭제
-                if (page == 0){
-                    mAdapter.clearRecord()
-                }
-
                 mAdapter.setRecord(it)
-                mAdapter.submitList(it)
-                isLoading = false
+                isLoading = if (it.isEmpty()) {
+                    mAdapter.deleteLoading()
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    true
+                } else {
+                    mAdapter.submitList(it)
+                    false
+                }
             }
         })
 
@@ -173,10 +177,15 @@ class AlbumFragment : Fragment() {
         })
     }
 
-    fun initializeBroadcastReceiver() {
+    private fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
+                mAdapter = AlbumListAdapter(requireContext())
+                binding.recyclerView.apply {
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(activity)
+                }
 
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreAlbum(keyword, pageSize, 0)

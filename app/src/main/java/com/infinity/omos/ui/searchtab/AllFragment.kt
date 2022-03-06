@@ -81,30 +81,36 @@ class AllFragment : Fragment() {
         // 노래 초기화
         viewModel.music.observe(viewLifecycleOwner, Observer { music ->
             music?.let {
-                mAdapter.clearRecord() // 기존 리스트 삭제
-                mAdapter.setRecord(it) // 검색된 리스트 추가
-                mAdapter.deleteLoading() // 로딩 리스트 삭제
-                mAdapter.submitList(it)
+                if (it.isNotEmpty()){
+                    mAdapter.clearRecord() // 기존 리스트 삭제
+                    mAdapter.setRecord(it) // 검색된 리스트 추가
+                    mAdapter.deleteLoading() // 로딩 리스트 삭제
+                    mAdapter.submitList(it)
+                }
             }
         })
 
         // 앨범 초기화
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
-                aAdapter.clearRecord() // 기존 리스트 삭제
-                aAdapter.setRecord(it) // 검색된 리스트 추가
-                aAdapter.deleteLoading() // 로딩 리스트 삭제
-                aAdapter.submitList(it)
+                if (it.isNotEmpty()){
+                    aAdapter.clearRecord() // 기존 리스트 삭제
+                    aAdapter.setRecord(it) // 검색된 리스트 추가
+                    aAdapter.deleteLoading() // 로딩 리스트 삭제
+                    aAdapter.submitList(it)
+                }
             }
         })
 
         // 아티스트 초기화
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
-                tAdapter.clearRecord() // 기존 리스트 삭제
-                tAdapter.setRecord(it) // 검색된 리스트 추가
-                tAdapter.deleteLoading() // 로딩 리스트 삭제
-                tAdapter.submitList(it)
+                if (it.isNotEmpty()){
+                    tAdapter.clearRecord() // 기존 리스트 삭제
+                    tAdapter.setRecord(it) // 검색된 리스트 추가
+                    tAdapter.deleteLoading() // 로딩 리스트 삭제
+                    tAdapter.submitList(it)
+                }
             }
         })
 

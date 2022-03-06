@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
+import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentMusicBinding
 import com.infinity.omos.repository.Repository
@@ -33,6 +34,8 @@ class MusicFragment : Fragment() {
     private var page = 0
     private val pageSize = 20
     private var isLoading = false
+
+    private lateinit var mAdapter: MusicListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +57,7 @@ class MusicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = MusicListAdapter(requireContext())
+        mAdapter = MusicListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -64,14 +67,15 @@ class MusicFragment : Fragment() {
         viewModel.loadMoreMusic(MainActivity.keyword, pageSize, 0)
         viewModel.music.observe(viewLifecycleOwner, Observer { music ->
             music?.let {
-                // 새로 검색 시 기존 리스트 삭제
-                if (page == 0){
-                    mAdapter.clearRecord()
-                }
-
                 mAdapter.setRecord(it)
-                mAdapter.submitList(it)
-                isLoading = false
+                isLoading = if (it.isEmpty()) {
+                    mAdapter.deleteLoading()
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    true
+                } else {
+                    mAdapter.submitList(it)
+                    false
+                }
             }
         })
 
@@ -151,10 +155,15 @@ class MusicFragment : Fragment() {
         })
     }
 
-    fun initializeBroadcastReceiver() {
+    private fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
+                mAdapter = MusicListAdapter(requireContext())
+                binding.recyclerView.apply {
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(activity)
+                }
 
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreMusic(keyword, pageSize, 0)

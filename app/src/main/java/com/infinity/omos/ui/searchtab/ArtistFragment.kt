@@ -36,6 +36,8 @@ class ArtistFragment : Fragment() {
     private val pageSize = 20
     private var isLoading = false
 
+    private lateinit var mAdapter: ArtistListAdapter
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBroadcastReceiver()
@@ -46,7 +48,7 @@ class ArtistFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist, container, false)
-        activity?.let{
+        activity?.let {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
         }
@@ -57,13 +59,13 @@ class ArtistFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = ArtistListAdapter(requireContext())
-        binding.recyclerView.apply{
+        mAdapter = ArtistListAdapter(requireContext())
+        binding.recyclerView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
-        mAdapter.setItemClickListener(object: ArtistListAdapter.OnItemClickListener{
+        mAdapter.setItemClickListener(object : ArtistListAdapter.OnItemClickListener {
             override fun onClick(v: View, position: Int, artist: Artists, tvGenres: String) {
                 val intent = Intent(context, ArtistActivity::class.java)
                 intent.putExtra("artistName", artist.artistName)
@@ -77,23 +79,14 @@ class ArtistFragment : Fragment() {
         viewModel.loadMoreArtist(MainActivity.keyword, pageSize, 0)
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
-                // 새로 검색 시 기존 리스트 삭제
-                if (page == 0){
-                    mAdapter.clearRecord()
-                }
-
                 mAdapter.setRecord(it)
-                isLoading = if (it.size == pageSize){
-                    mAdapter.addLoading()
-                    false
-                } else{
-                    true
-                }
-
-                if (it.isEmpty()){
+                isLoading = if (it.isEmpty()) {
+                    mAdapter.deleteLoading()
                     mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    true
                 } else {
                     mAdapter.submitList(it)
+                    false
                 }
             }
         })
@@ -101,9 +94,9 @@ class ArtistFragment : Fragment() {
         // 로딩화면
         viewModel.stateArtist.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
-                when(it){
+                when (it) {
                     Repository.ApiState.LOADING -> {
-                        if (page == 0){
+                        if (page == 0) {
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
 
@@ -123,52 +116,58 @@ class ArtistFragment : Fragment() {
         })
 
         // 무한 스크롤
-        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        binding.recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
                 val lastVisibleItemPosition =
                     (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
-                val itemTotalCount = recyclerView.adapter!!.itemCount-1
+                val itemTotalCount = recyclerView.adapter!!.itemCount - 1
 
                 // 스크롤이 끝에 도달했는지 확인
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreArtist(MainActivity.keyword, pageSize, ++page*pageSize)
+                    viewModel.loadMoreArtist(MainActivity.keyword, pageSize, ++page * pageSize)
+                    Log.d("testScroll", isLoading.toString())
                 }
             }
         })
 
         // 검색 후 맨 아래로 이동하는 현상 해결
-        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
+        mAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
-                if (page == 0){
+                if (page == 0) {
                     recyclerView.scrollToPosition(0)
                 }
             }
+
             override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                if (page == 0){
+                if (page == 0) {
                     recyclerView.scrollToPosition(0)
                 }
             }
+
             override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-                if (page == 0){
+                if (page == 0) {
                     recyclerView.scrollToPosition(0)
                 }
             }
+
             override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (page == 0){
+                if (page == 0) {
                     recyclerView.scrollToPosition(0)
                 }
             }
+
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                if (page == 0){
+                if (page == 0) {
                     recyclerView.scrollToPosition(0)
                 }
             }
+
             override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                if (page == 0){
+                if (page == 0) {
                     recyclerView.scrollToPosition(0)
                 }
             }
@@ -179,6 +178,12 @@ class ArtistFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
+                mAdapter = ArtistListAdapter(requireContext())
+                binding.recyclerView.apply {
+                    adapter = mAdapter
+                    layoutManager = LinearLayoutManager(activity)
+                }
+
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreArtist(keyword, pageSize, 0)
             }

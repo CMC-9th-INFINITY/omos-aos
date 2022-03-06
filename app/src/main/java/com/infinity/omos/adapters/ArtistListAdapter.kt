@@ -43,7 +43,6 @@ class ArtistListAdapter internal constructor(private val context: Context):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
-
         return when(viewType){
             VIEW_TYPE_ITEM -> {
                 val binding = ListArtistItemBinding.inflate(inflater,parent,false)
@@ -106,12 +105,8 @@ class ArtistListAdapter internal constructor(private val context: Context):
 
     internal fun setRecord(ab: List<Artists>) {
         artist.addAll(ab)
-    }
-
-    internal fun addLoading() {
         artist.add(null)
     }
-
 
     internal fun clearRecord(){
         artist.clear()
