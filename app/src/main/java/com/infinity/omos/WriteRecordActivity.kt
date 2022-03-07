@@ -31,6 +31,8 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 import kotlinx.android.synthetic.main.activity_write_record.*
+import java.text.SimpleDateFormat
+import java.util.*
 
 class WriteRecordActivity : AppCompatActivity() {
 
@@ -45,6 +47,13 @@ class WriteRecordActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
+        viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
+        viewModel.artists.value = intent.getStringExtra("artists")
+        viewModel.albumImageUrl.value = intent.getStringExtra("albumImageUrl")
+
+        var currentTime = System.currentTimeMillis()
+        val dateFormat = SimpleDateFormat("yyyy MM dd", Locale.getDefault())
+        viewModel.createdDate.value = dateFormat.format(currentTime)
         viewModel.category.value = intent.getStringExtra("category")
         if (viewModel.category.value == resources.getString(R.string.a_line)){
             record_contents.visibility = View.GONE

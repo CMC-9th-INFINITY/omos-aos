@@ -13,6 +13,10 @@ class WriteRecordViewModel(application: Application): AndroidViewModel(applicati
     var prevText = ""
     var isPrivate = MutableLiveData<Boolean>()
 
+    var musicTitle = MutableLiveData<String>()
+    var artists = MutableLiveData<String>()
+    var albumImageUrl = MutableLiveData<String>()
+    var createdDate = MutableLiveData<String>()
     var category = MutableLiveData<String>()
     var titleLength = MutableLiveData<Int>()
     var contentsLength = MutableLiveData<Int>()

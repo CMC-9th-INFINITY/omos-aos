@@ -51,7 +51,7 @@
                     android:id="@+id/tv_music_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.record.title}"
+                    android:text="레코드 제목"
                     android:textSize="14sp"
                     android:textColor="@color/white"/>
 

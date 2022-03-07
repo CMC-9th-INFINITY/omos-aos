@@ -40,7 +40,7 @@ class MyRecordDetailActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        viewModel.record = MyRecord(title!!, "", "", "")
+        //viewModel.record = MyRecord(title!!, "", "", "")
 
         record_contents.text = "\"${record_contents.text}\""
 

@@ -1,6 +1,7 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
+import com.infinity.omos.SelectCategoryActivity
 import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Music
 import com.infinity.omos.databinding.ListLoadingItemBinding
@@ -81,7 +83,12 @@ class MusicListAdapter internal constructor(private val context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-
+                    val intent = Intent(context, SelectCategoryActivity::class.java)
+                    intent.putExtra("musicId", music.musicId)
+                    intent.putExtra("musicTitle", music.musicTitle)
+                    intent.putExtra("artists", binding.tvArtist.text.toString())
+                    intent.putExtra("albumImageUrl", music.albumImageUrl)
+                    context.startActivity(intent)
                 }
             }
         }

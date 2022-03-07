@@ -33,10 +33,5 @@ class TodayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        btn_select.setOnClickListener {
-            val intent = Intent(context, AlbumActivity::class.java)
-            startActivity(intent)
-        }
     }
 }

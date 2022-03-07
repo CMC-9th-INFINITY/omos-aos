@@ -23,6 +23,11 @@ class SelectCategoryActivity : AppCompatActivity() {
     private val viewModel: SelectCategoryViewModel by viewModels()
     private var prevLayout: LinearLayout? = null
 
+    private var musicId = ""
+    private var musicTitle = ""
+    private var artists = ""
+    private var albumImageUrl = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -31,6 +36,11 @@ class SelectCategoryActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         initToolBar()
+
+        musicId = intent.getStringExtra("musicId")!!
+        musicTitle = intent.getStringExtra("musicTitle")!!
+        artists = intent.getStringExtra("artists")!!
+        albumImageUrl = intent.getStringExtra("albumImageUrl")!!
 
         viewModel.state.observe(this, Observer { state ->
             state?.let {
@@ -81,6 +91,10 @@ class SelectCategoryActivity : AppCompatActivity() {
                     Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
                 } else{
                     val intent = Intent(this, WriteRecordActivity::class.java)
+                    intent.putExtra("musicId", musicId)
+                    intent.putExtra("musicTitle", musicTitle)
+                    intent.putExtra("artists", artists)
+                    intent.putExtra("albumImageUrl", albumImageUrl)
                     intent.putExtra("category", category)
                     startActivity(intent)
                 }

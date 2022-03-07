@@ -93,9 +93,9 @@ class MyRecordListAdapter internal constructor(context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    val intent = Intent(context, MyRecordDetailActivity::class.java)
-                    intent.putExtra("title", record.title)
-                    context.startActivity(intent)
+//                    val intent = Intent(context, MyRecordDetailActivity::class.java)
+//                    intent.putExtra("title", record.title)
+//                    context.startActivity(intent)
                 }
             }
         }
