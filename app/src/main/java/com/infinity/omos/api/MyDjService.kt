@@ -2,7 +2,6 @@ package com.infinity.omos.api
 
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.data.ResultGetMyDj
-import com.infinity.omos.data.ResultGetMyRecord
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Query

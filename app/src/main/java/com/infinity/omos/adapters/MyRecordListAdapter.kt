@@ -68,7 +68,7 @@ class MyRecordListAdapter internal constructor(context: Context):
                     }
                 })
 
-                RecordViewHoler(binding)
+                RecordViewHolder(binding)
             }
 
             else -> {
@@ -79,13 +79,13 @@ class MyRecordListAdapter internal constructor(context: Context):
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is RecordViewHoler){
+        if (holder is RecordViewHolder){
             val record = record[position]
             holder.bind(record!!)
         }
     }
 
-    inner class RecordViewHoler(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class RecordViewHolder(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: MyRecord) {
             binding.record = record
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
@@ -104,6 +104,11 @@ class MyRecordListAdapter internal constructor(context: Context):
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
     internal fun setRecord(rec: List<MyRecord>) {
+        record.addAll(rec)
+        notifyDataSetChanged()
+    }
+
+    internal fun addRecord(rec: List<MyRecord>) {
         record.addAll(rec)
         record.add(null)
     }

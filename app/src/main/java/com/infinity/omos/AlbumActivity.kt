@@ -12,7 +12,6 @@ import com.bumptech.glide.Glide
 import com.infinity.omos.adapters.AlbumDetailListAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.AlbumViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
 

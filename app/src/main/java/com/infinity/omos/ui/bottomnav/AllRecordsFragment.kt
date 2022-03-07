@@ -1,11 +1,9 @@
 package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -15,10 +13,8 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.AllRecordsListAdapter
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
-import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class AllRecordFragment : Fragment() {

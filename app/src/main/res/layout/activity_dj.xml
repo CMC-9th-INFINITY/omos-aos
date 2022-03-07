@@ -170,7 +170,6 @@
             android:id="@+id/rv_record"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:djRecordListData="@{vm.djRecordData}"
             app:layout_constraintTop_toBottomOf="@+id/linear"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

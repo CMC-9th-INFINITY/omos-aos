@@ -13,11 +13,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
-import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentArtistAlbumBinding
-import com.infinity.omos.databinding.FragmentArtistMusicBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.ArtistViewModel
 
 class ArtistAlbumFragment : Fragment() {

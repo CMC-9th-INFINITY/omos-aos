@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.ui.onboarding.RegisterNickActivity
 import com.infinity.omos.utils.GlobalApplication

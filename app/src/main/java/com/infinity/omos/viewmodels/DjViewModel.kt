@@ -5,14 +5,14 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.MyRecord
-import com.infinity.omos.repository.Repository
+import com.infinity.omos.repository.MyDjRepository
 
 class DjViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: Repository = Repository()
+    private val repository: MyDjRepository = MyDjRepository()
     var follow = MutableLiveData<String>()
 
-    val djRecord = repository.getTestData(1)
+    //val djRecord = repository.getMyDjRecordData(1)
 
     init {
         follow.value = "팔로우"
@@ -26,8 +26,8 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
         }
     }
 
-    // xml 연결 (djRecordListData)
-    fun getDjRecordData(): LiveData<List<MyRecord>> {
-        return djRecord
-    }
+//    // xml 연결 (djRecordListData)
+//    fun getDjRecordData(): LiveData<List<MyRecord>> {
+//        return djRecord
+//    }
 }

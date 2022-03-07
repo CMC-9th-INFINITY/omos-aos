@@ -20,7 +20,6 @@ import com.infinity.omos.databinding.ActivityRegisterNickBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.CustomDialog
 import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.RegisterNickViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar

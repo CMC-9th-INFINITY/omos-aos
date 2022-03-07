@@ -1,15 +1,8 @@
 package com.infinity.omos.viewmodels
 
 import android.app.Application
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.data.Album
-import com.infinity.omos.repository.OnBoardingRepository
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.repository.SearchRepository
-import com.infinity.omos.utils.GlobalApplication
 
 class MainViewModel(application: Application): AndroidViewModel(application) {
 

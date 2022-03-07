@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,11 +16,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
-import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentMusicBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_music.*
 

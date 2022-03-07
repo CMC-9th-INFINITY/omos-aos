@@ -2,7 +2,6 @@ package com.infinity.omos
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,30 +14,16 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
-import androidx.core.widget.addTextChangedListener
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
-import com.infinity.omos.databinding.ActivitySelectCategoryBinding
-import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.ui.bottomnav.*
-import com.infinity.omos.ui.onboarding.LoginActivity
-import com.infinity.omos.ui.searchtab.AlbumFragment
-import com.infinity.omos.ui.searchtab.AllFragment
-import com.infinity.omos.ui.searchtab.ArtistFragment
-import com.infinity.omos.ui.searchtab.MusicFragment
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.MainViewModel
-import com.kakao.sdk.common.util.Utility
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
-import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class MainActivity : AppCompatActivity() {
 

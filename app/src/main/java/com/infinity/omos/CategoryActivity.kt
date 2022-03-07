@@ -1,13 +1,10 @@
 package com.infinity.omos
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -17,11 +14,9 @@ import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.ALineCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.Repository
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
 
 class CategoryActivity : AppCompatActivity() {
