@@ -47,7 +47,7 @@ class MusicListAdapter internal constructor(private val context: Context):
         return when(viewType){
             VIEW_TYPE_ITEM -> {
                 val binding = ListMusicItemBinding.inflate(inflater,parent,false)
-                MusicViewHoler(binding)
+                MusicViewHolder(binding)
             }
 
             else -> {
@@ -58,13 +58,13 @@ class MusicListAdapter internal constructor(private val context: Context):
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is MusicViewHoler){
+        if (holder is MusicViewHolder){
             val music = music[position]
             holder.bind(music!!)
         }
     }
 
-    inner class MusicViewHoler(private val binding: ListMusicItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class MusicViewHolder(private val binding: ListMusicItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(music: Music) {
             binding.data = music
             binding.tvArtist.text = setArtist(music.artists)
