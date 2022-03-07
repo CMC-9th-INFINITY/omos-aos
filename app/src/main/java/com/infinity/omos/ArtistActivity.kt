@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
 import com.google.android.material.tabs.TabLayoutMediator
+import com.infinity.omos.adapters.ArtistViewPagerAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
 import com.infinity.omos.databinding.ActivityArtistBinding
@@ -40,11 +41,17 @@ class ArtistActivity : AppCompatActivity() {
     }
 
     private fun initTabLayout(){
-        val viewpagerFragmentAdapter = ViewPagerAdapter(this)
+        val viewpagerFragmentAdapter = ArtistViewPagerAdapter(this)
         viewPager.adapter = viewpagerFragmentAdapter
         viewPager.isUserInputEnabled = false
+        viewPager.currentItem = 1
         val tabTitles = listOf("", "노래", "앨범", "")
-        TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
+        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+            tab.text = tabTitles[position]
+            if (position == 0 || position == 3){
+                tab.view.isClickable = false
+            }
+        }.attach()
     }
 
     private fun initToolBar(){

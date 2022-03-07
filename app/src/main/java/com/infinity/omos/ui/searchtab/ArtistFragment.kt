@@ -66,16 +66,6 @@ class ArtistFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        mAdapter.setItemClickListener(object : ArtistListAdapter.OnItemClickListener {
-            override fun onClick(v: View, position: Int, artist: Artists, tvGenres: String) {
-                val intent = Intent(context, ArtistActivity::class.java)
-                intent.putExtra("artistName", artist.artistName)
-                intent.putExtra("artistImageUrl", artist.artistImageUrl)
-                intent.putExtra("artistGenres", tvGenres)
-                startActivity(intent)
-            }
-        })
-
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreArtist(MainActivity.keyword, pageSize, 0)
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->

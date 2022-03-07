@@ -68,24 +68,6 @@ class AlbumFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        mAdapter.setItemClickListener(object: AlbumListAdapter.OnItemClickListener{
-            override fun onClick(
-                v: View,
-                position: Int,
-                album: Album,
-                tvArtist: String,
-                tvDate: String
-            ) {
-                val intent = Intent(context, AlbumActivity::class.java)
-                intent.putExtra("albumTitle", album.albumTitle)
-                intent.putExtra("artists", tvArtist)
-                intent.putExtra("releaseDate", tvDate)
-                intent.putExtra("albumImageUrl", album.albumImageUrl)
-                intent.putExtra("albumId", album.albumId)
-                startActivity(intent)
-            }
-        })
-
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreAlbum(keyword, pageSize, 0)
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->

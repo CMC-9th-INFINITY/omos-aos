@@ -53,7 +53,7 @@ class AlbumListAdapter internal constructor(private val context: Context):
         return when(viewType){
             VIEW_TYPE_ITEM -> {
                 val binding = ListAlbumItemBinding.inflate(inflater,parent,false)
-                AlbumViewHoler(binding)
+                AlbumViewHolder(binding)
             }
 
             else -> {
@@ -64,13 +64,13 @@ class AlbumListAdapter internal constructor(private val context: Context):
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is AlbumViewHoler){
+        if (holder is AlbumViewHolder){
             val album = album[position]
             holder.bind(album!!)
         }
     }
 
-    inner class AlbumViewHoler(private val binding: ListAlbumItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class AlbumViewHolder(private val binding: ListAlbumItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(album: Album) {
             binding.data = album
             binding.tvArtist.text = setArtist(album.artists)
@@ -88,7 +88,13 @@ class AlbumListAdapter internal constructor(private val context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    itemClickListener.onClick(itemView, pos, album, binding.tvArtist.text.toString(), binding.tvDate.text.toString())
+                    val intent = Intent(context, AlbumActivity::class.java)
+                    intent.putExtra("albumTitle", album.albumTitle)
+                    intent.putExtra("artists", binding.tvArtist.text.toString())
+                    intent.putExtra("releaseDate", binding.tvDate.text.toString())
+                    intent.putExtra("albumImageUrl", album.albumImageUrl)
+                    intent.putExtra("albumId", album.albumId)
+                    context.startActivity(intent)
                 }
             }
         }

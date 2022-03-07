@@ -8,7 +8,7 @@ import com.infinity.omos.ui.searchtab.*
 class ArtistViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {
 
-    private val fragmentList = listOf(AllFragment(), ArtistMusicFragment(), ArtistAlbumFragment(), ArtistFragment())
+    private val fragmentList = listOf(AllFragment(), MusicFragment(), AlbumFragment(), ArtistFragment())
 
     override fun getItemCount(): Int {
         return fragmentList.size
