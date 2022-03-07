@@ -23,10 +23,10 @@ class SelectCategoryActivity : AppCompatActivity() {
     private val viewModel: SelectCategoryViewModel by viewModels()
     private var prevLayout: LinearLayout? = null
 
-    private var musicId = ""
-    private var musicTitle = ""
-    private var artists = ""
-    private var albumImageUrl = ""
+    private var musicId: String? = ""
+    private var musicTitle: String? = ""
+    private var artists: String? = ""
+    private var albumImageUrl: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,10 +37,10 @@ class SelectCategoryActivity : AppCompatActivity() {
 
         initToolBar()
 
-        musicId = intent.getStringExtra("musicId")!!
-        musicTitle = intent.getStringExtra("musicTitle")!!
-        artists = intent.getStringExtra("artists")!!
-        albumImageUrl = intent.getStringExtra("albumImageUrl")!!
+        musicId = intent.getStringExtra("musicId")
+        musicTitle = intent.getStringExtra("musicTitle")
+        artists = intent.getStringExtra("artists")
+        albumImageUrl = intent.getStringExtra("albumImageUrl")
 
         viewModel.state.observe(this, Observer { state ->
             state?.let {

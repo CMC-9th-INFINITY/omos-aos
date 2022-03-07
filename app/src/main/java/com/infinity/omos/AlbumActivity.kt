@@ -40,6 +40,7 @@ class AlbumActivity : AppCompatActivity() {
         Glide.with(binding.imgAlbumCover.context).load(albumImageUrl).error(R.drawable.ic_launcher_background).into(binding.imgAlbumCover)
 
         val mAdapter = AlbumDetailListAdapter(this)
+        mAdapter.setImageUrl(albumImageUrl)
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
