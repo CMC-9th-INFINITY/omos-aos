@@ -90,12 +90,6 @@ class CategoryActivity : AppCompatActivity() {
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Constant.ApiState.TOKEN -> {
-                        binding.progressBar.visibility = View.GONE
-                        viewModel.setCategory(ctg, 0, 5, null,
-                            GlobalApplication.prefs.getLong("userId").toInt())
-                    }
-
                     else -> {
                         binding.progressBar.visibility = View.GONE
                     }

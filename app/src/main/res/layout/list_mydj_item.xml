@@ -20,7 +20,7 @@
             android:layout_width="66dp"
             android:layout_height="66dp"
             android:layout_marginBottom="6dp"
-            android:src="@drawable/ic_album_cover"/>
+            android:src="@drawable/ic_record"/>
 
         <TextView
             android:id="@+id/tv_nick"

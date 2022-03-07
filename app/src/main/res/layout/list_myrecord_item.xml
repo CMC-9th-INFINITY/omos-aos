@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="bottom"
-                android:src="@drawable/ic_album_cover_small"/>
+                android:src="@drawable/ic_record"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint"

@@ -1,7 +1,7 @@
 package com.infinity.omos.etc
 
 class Constant {
-    enum class ApiState{LOADING, ERROR, DONE, TOKEN}
+    enum class ApiState{LOADING, ERROR, DONE}
 
     companion object {
         // 푸시알림 ID

@@ -7,6 +7,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.MyDj
 import com.infinity.omos.data.MyRecord
+import com.infinity.omos.repository.AllRecordRepository
+import com.infinity.omos.repository.MyDjRepository
 import com.infinity.omos.repository.Repository
 
 /**
@@ -15,6 +17,8 @@ import com.infinity.omos.repository.Repository
 class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: Repository = Repository()
+    private val allRecordRepository: AllRecordRepository = AllRecordRepository()
+    private val myDjRepository: MyDjRepository = MyDjRepository()
 
     // My 레코드
     private val _myRecord = repository._myRecord
@@ -22,16 +26,16 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     val stateMyRecord = repository._stateMyRecord
 
     // 전체 레코드
-    private val _allRecords = repository._allRecords
+    private val _allRecords = allRecordRepository._allRecords
     val allRecords = _allRecords
-    val stateAllRecords = repository._stateAllRecords
+    val stateAllRecords = allRecordRepository._stateAllRecords
 
     // My DJ
-    var myDjRecord = repository._djRecord
-    var myDj = repository.getMyDjData(6)
+    var myDjRecord = myDjRepository._djRecord
+    var myDj = myDjRepository.getMyDjData(6)
 
     init {
-        repository.getMyDjRecordData(1)
+        myDjRepository.getMyDjRecordData(1)
     }
 
     // xml 연결 (myRecordListData)
@@ -49,10 +53,10 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun setAllRecords(){
-        repository.setAllRecords()
+        allRecordRepository.setAllRecords()
     }
 
     fun updateDjRecord(pos: Int){
-        repository.getMyDjRecordData(pos)
+        myDjRepository.getMyDjRecordData(pos)
     }
 }

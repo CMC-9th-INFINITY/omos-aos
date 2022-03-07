@@ -47,7 +47,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="12dp"
-                android:src="@drawable/ic_album_cover_detail"/>
+                android:src="@drawable/ic_record"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"

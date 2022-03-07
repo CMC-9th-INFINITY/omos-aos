@@ -74,11 +74,6 @@ class AllRecordFragment : Fragment() {
                         binding.progressBar.visibility = View.GONE
                     }
 
-                    Constant.ApiState.TOKEN -> {
-                        binding.progressBar.visibility = View.GONE
-                        viewModel.setAllRecords()
-                    }
-
                     else -> {
                         binding.progressBar.visibility = View.GONE
                     }

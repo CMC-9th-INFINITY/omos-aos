@@ -40,7 +40,7 @@
                 android:id="@+id/img_profile"
                 android:layout_width="92dp"
                 android:layout_height="92dp"
-                android:src="@drawable/ic_album_cover"/>
+                android:src="@drawable/ic_record"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
