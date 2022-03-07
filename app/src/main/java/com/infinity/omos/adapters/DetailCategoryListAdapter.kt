@@ -17,14 +17,15 @@ import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailCategoryListAdapter internal constructor(
-    private val context: Context,
-    private var category: List<DetailCategory>?
+    private val context: Context
 ):
     ListAdapter<DetailCategory, DetailCategoryListAdapter.ViewHolder>(
         DetailCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+
+    private var category = ArrayList<DetailCategory?>()
     private var stateHeart = false
     private var stateStar = false
 
@@ -36,7 +37,7 @@ class DetailCategoryListAdapter internal constructor(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val category = category!![position]
-        holder.bind(category)
+        holder.bind(category!!)
     }
 
     inner class ViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
@@ -89,16 +90,20 @@ class DetailCategoryListAdapter internal constructor(
         }
     }
 
-    internal fun updateCategory(category: List<DetailCategory>?) {
-        this.category = category
-        notifyDataSetChanged()
-    }
-
     override fun getItemCount(): Int {
         return if (category != null){
             category!!.size
         } else
             super.getItemCount()
+    }
+
+    internal fun addCategory(category: List<DetailCategory>){
+        this.category.addAll(category)
+        this.category.add(null)
+    }
+
+    internal fun deleteLoading(){
+        category.removeAt(category.lastIndex) // 로딩이 완료되면 프로그레스바를 지움
     }
 
     private fun setHeartStar(binding: ListDetailCategoryItemBinding, record: DetailCategory){

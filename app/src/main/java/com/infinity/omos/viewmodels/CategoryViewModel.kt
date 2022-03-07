@@ -12,7 +12,7 @@ class CategoryViewModel(application: Application): AndroidViewModel(application)
     val category = _category
     val stateCategory =repository._stateCategory
 
-    fun setCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
-        repository.setCategory(category, page, size, sort, userId)
+    fun loadMoreCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
+        repository.getCategory(category, page, size, sort, userId)
     }
 }

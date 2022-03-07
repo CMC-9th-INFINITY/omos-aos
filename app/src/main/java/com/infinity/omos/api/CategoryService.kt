@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface CategoryService {
     @GET("api/records/select/category/{category}")
-    fun setCategory(
+    fun getCategory(
         @Path("category") category: String,
         @Query("page") page: Int,
         @Query("size") size: Int,

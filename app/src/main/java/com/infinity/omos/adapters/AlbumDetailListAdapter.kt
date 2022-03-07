@@ -90,7 +90,7 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
         }
     }
 
-    inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
+    inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
 
     internal fun setImageUrl(url: String?) {
         albumImageUrl = url
@@ -99,10 +99,6 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
     internal fun setRecord(ab: List<Music>) {
         music.addAll(ab)
         music.add(null)
-    }
-
-    internal fun clearRecord(){
-        music.clear()
     }
 
     internal fun deleteLoading(){

@@ -12,37 +12,53 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.DetailCategory
+import com.infinity.omos.data.MyRecord
+import com.infinity.omos.databinding.ListAlbumItemBinding
 import com.infinity.omos.databinding.ListAlineCategoryItemBinding
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
+import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class ALineCategoryListAdapter internal constructor(
-    private val context: Context,
-    private var category: List<DetailCategory>?
+    private val context: Context
 ):
-    ListAdapter<DetailCategory, ALineCategoryListAdapter.ViewHolder>(
+    ListAdapter<DetailCategory, RecyclerView.ViewHolder>(
         ALineCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
+
+    private var category = ArrayList<DetailCategory?>()
     private var stateHeart = false
     private var stateStar = false
 
+    private val VIEW_TYPE_ITEM = 0
+    private val VIEW_TYPE_LOADING = 1
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = ListAlineCategoryItemBinding.inflate(inflater, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when(viewType){
+            VIEW_TYPE_ITEM -> {
+                var binding = ListAlineCategoryItemBinding.inflate(inflater, parent, false)
+                CategoryViewHolder(binding)
+            }
 
-        return ViewHolder(binding)
+            else -> {
+                val binding = ListLoadingItemBinding.inflate(inflater,parent,false)
+                LoadingViewHolder(binding)
+            }
+        }
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val category = category!![position]
-        holder.bind(category)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is CategoryViewHolder){
+            val category = category[position]
+            holder.bind(category!!)
+        }
     }
 
-    inner class ViewHolder(private val binding: ListAlineCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class CategoryViewHolder(private val binding: ListAlineCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(category: DetailCategory){
             binding.data = category
             binding.tvDj.text = "DJ ${category.nickname}"
@@ -93,11 +109,15 @@ class ALineCategoryListAdapter internal constructor(
         }
     }
 
-    override fun getItemCount(): Int {
-        return if (category != null){
-            category!!.size
-        } else
-            super.getItemCount()
+    inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
+
+    internal fun addCategory(category: List<DetailCategory>){
+        this.category.addAll(category)
+        this.category.add(null)
+    }
+
+    internal fun deleteLoading(){
+        category.removeAt(category.lastIndex) // 로딩이 완료되면 프로그레스바를 지움
     }
 
     private fun setHeartStar(binding: ListAlineCategoryItemBinding, record: DetailCategory){
@@ -144,6 +164,18 @@ class ALineCategoryListAdapter internal constructor(
             }
         }
         binding.tvCategory.text = ctg
+    }
+
+    override fun getItemCount(): Int {
+        return category.size
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (category[position] == null){
+            VIEW_TYPE_LOADING
+        } else{
+            VIEW_TYPE_ITEM
+        }
     }
 
     companion object ALineCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){

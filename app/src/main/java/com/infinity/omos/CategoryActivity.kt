@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.ALineCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
@@ -28,6 +29,12 @@ class CategoryActivity : AppCompatActivity() {
     private val viewModel: CategoryViewModel by viewModels()
 
     private var ctg = ""
+
+    private var page = 0
+    private val pageSize = 5
+    private var isLoading = false
+
+    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,22 +65,43 @@ class CategoryActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.setCategory(ctg, 0, 5, null,
-            GlobalApplication.prefs.getLong("userId").toInt())
+        val aAdapter = ALineCategoryListAdapter(this)
+        val dAdapter = DetailCategoryListAdapter(this)
 
+        if (ctg == "A_LINE"){
+            recyclerView.apply{
+                adapter = aAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
+        } else {
+            recyclerView.apply{
+                adapter = dAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
+        }
+
+        viewModel.loadMoreCategory(ctg, 0, pageSize, "createdDate,desc", userId)
         viewModel.category.observe(this, Observer { category ->
             category?.let {
                 if (ctg == "A_LINE"){
-                    val mAdapter = ALineCategoryListAdapter(this, it)
-                    recyclerView.apply{
-                        adapter = mAdapter
-                        layoutManager = LinearLayoutManager(context)
+                    aAdapter.addCategory(it)
+                    isLoading = if (it.isEmpty()) {
+                        aAdapter.deleteLoading()
+                        aAdapter.notifyItemRemoved(aAdapter.itemCount-1)
+                        true
+                    } else {
+                        aAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                        false
                     }
                 } else {
-                    val mAdapter = DetailCategoryListAdapter(this, it)
-                    recyclerView.apply{
-                        adapter = mAdapter
-                        layoutManager = LinearLayoutManager(context)
+                    dAdapter.addCategory(it)
+                    isLoading = if (it.isEmpty()) {
+                        dAdapter.deleteLoading()
+                        dAdapter.notifyItemRemoved(dAdapter.itemCount-1)
+                        true
+                    } else {
+                        dAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                        false
                     }
                 }
             }
@@ -83,16 +111,43 @@ class CategoryActivity : AppCompatActivity() {
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
-                        binding.progressBar.visibility = View.VISIBLE
+                        if (page == 0){
+                            binding.recyclerView.visibility = View.GONE
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
                     }
 
                     Constant.ApiState.DONE -> {
+                        binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
                     else -> {
-                        binding.progressBar.visibility = View.GONE
+
                     }
+                }
+            }
+        })
+
+        // 무한 스크롤
+        binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter!!.itemCount-1
+
+                // 스크롤이 끝에 도달했는지 확인
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
+                    isLoading = true
+                    if (ctg == "A_LINE"){
+                        aAdapter.deleteLoading()
+                    } else {
+                        dAdapter.deleteLoading()
+                    }
+
+                    viewModel.loadMoreCategory(ctg, ++page*pageSize, pageSize, "createdDate,desc", userId)
                 }
             }
         })

@@ -44,11 +44,11 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         }
 
-        val rAdapter = DetailCategoryListAdapter(requireContext(), null)
-        binding.rvRecord.apply {
-            adapter = rAdapter
-            layoutManager = LinearLayoutManager(activity)
-        }
+//        val rAdapter = DetailCategoryListAdapter(requireContext(), null)
+//        binding.rvRecord.apply {
+//            adapter = rAdapter
+//            layoutManager = LinearLayoutManager(activity)
+//        }
 
 //        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
 //            record?.let {

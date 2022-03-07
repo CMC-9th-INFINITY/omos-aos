@@ -18,4 +18,12 @@ object ImageBindingAdapter {
             .fallback(R.drawable.ic_record)
             .into(imageView)
     }
+
+    @BindingAdapter("categoryImageUrl")
+    @JvmStatic
+    fun loadCategoryImage(imageView: ImageView, url: String?){
+        Glide.with(imageView.context)
+            .load(url)
+            .into(imageView)
+    }
 }
