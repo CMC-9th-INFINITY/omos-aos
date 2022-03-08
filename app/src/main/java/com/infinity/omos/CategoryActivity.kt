@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.adapters.DetailCategoryListAdapter
-import com.infinity.omos.adapters.ALineCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication

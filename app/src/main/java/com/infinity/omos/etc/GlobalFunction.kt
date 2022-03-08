@@ -7,9 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.infinity.omos.R
 import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Record
-import com.infinity.omos.databinding.ListAlineCategoryItemBinding
-import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 
 class GlobalFunction {
     companion object{
