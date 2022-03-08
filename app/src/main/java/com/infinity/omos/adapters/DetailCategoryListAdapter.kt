@@ -6,6 +6,7 @@ import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.databinding.adapters.CalendarViewBindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +16,8 @@ import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
+import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
+import com.infinity.omos.etc.GlobalFunction.Companion.setDate
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailCategoryListAdapter internal constructor(
@@ -59,9 +62,8 @@ class DetailCategoryListAdapter internal constructor(
             binding.data = category
             binding.tvDj.text = "DJ ${category.nickname}"
             binding.tvArtist.text = setArtist(category.music.artists) + " - " + category.music.albumTitle
-
-            setDate(binding, category)
-            setCategoryText(binding, category)
+            binding.tvCategory.text = setCategoryText(context, category.category)
+            binding.tvDate.text = setDate(category.createdDate)
             setHeartStar(binding, category)
 
             binding.executePendingBindings()
@@ -127,38 +129,6 @@ class DetailCategoryListAdapter internal constructor(
             binding.tvStarCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
             stateStar = true
         }
-    }
-
-    private fun setDate(binding: ListDetailCategoryItemBinding, record: Record){
-        var listDate = record.createdDate.split("T")
-        var date = listDate[0].replace("-", " ")
-        binding.tvDate.text = date
-    }
-
-    private fun setCategoryText(binding: ListDetailCategoryItemBinding, record: Record){
-        var ctg = ""
-        when(record.category){
-            "A_LINE" -> {
-                ctg = context.resources.getString(R.string.a_line)
-            }
-
-            "STORY" -> {
-                ctg = context.resources.getString(R.string.story)
-            }
-
-            "OST" -> {
-                ctg = context.resources.getString(R.string.ost)
-            }
-
-            "LYRICS" -> {
-                ctg = context.resources.getString(R.string.lyrics)
-            }
-
-            "FREE" -> {
-                ctg = context.resources.getString(R.string.free)
-            }
-        }
-        binding.tvCategory.text = ctg
     }
 
     override fun getItemCount(): Int {

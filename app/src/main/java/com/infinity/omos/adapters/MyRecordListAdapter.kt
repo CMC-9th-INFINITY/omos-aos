@@ -1,16 +1,23 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewTreeObserver
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MyRecordDetailActivity
+import com.infinity.omos.R
 import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
+import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
+import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
+import com.infinity.omos.etc.GlobalFunction.Companion.setDate
 
 class MyRecordListAdapter internal constructor(context: Context):
     ListAdapter<Record, RecyclerView.ViewHolder>(
@@ -84,14 +91,37 @@ class MyRecordListAdapter internal constructor(context: Context):
     inner class RecordViewHolder(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: Record) {
             binding.data = record
+            binding.tvArtist.text = setArtist(record.music.artists)
+            binding.tvDate.text = setDate(record.createdDate)
+            binding.tvCategory.text = setCategoryText(context, record.category)
+
+            if (record.isPublic){
+                binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_public))
+            } else {
+                binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_private))
+            }
+
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-//                    val intent = Intent(context, MyRecordDetailActivity::class.java)
-//                    intent.putExtra("title", record.title)
-//                    context.startActivity(intent)
+                    val intent = Intent(context, MyRecordDetailActivity::class.java)
+                    intent.putExtra("musicTitle", record.music.musicTitle)
+                    intent.putExtra("artists", binding.tvArtist.text.toString())
+                    intent.putExtra("albumTitle", record.music.albumTitle)
+                    intent.putExtra("albumImageUrl", record.music.albumImageUrl)
+                    intent.putExtra("recordTitle", record.recordTitle)
+                    intent.putExtra("recordContents", record.recordContents)
+                    intent.putExtra("date", binding.tvDate.text.toString())
+                    intent.putExtra("category", binding.tvCategory.text.toString())
+                    intent.putExtra("isPublic", record.isPublic)
+                    intent.putExtra("isLiked", record.isLiked)
+                    intent.putExtra("isScraped", record.isScraped)
+                    intent.putExtra("likeCnt", record.likeCnt)
+                    intent.putExtra("scrapCnt", record.scrapCnt)
+                    intent.putExtra("nickname", record.nickname)
+                    context.startActivity(intent)
                 }
             }
         }

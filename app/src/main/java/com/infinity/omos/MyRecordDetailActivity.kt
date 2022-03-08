@@ -10,12 +10,16 @@ import android.os.Build
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
+import com.infinity.omos.data.Music
+import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ActivityRecordDetailBinding
 import com.infinity.omos.viewmodels.RecordDetailViewModel
 import kotlinx.android.synthetic.main.activity_record_detail.*
@@ -28,20 +32,61 @@ import java.io.IOException
 class MyRecordDetailActivity : AppCompatActivity() {
 
     private val viewModel: RecordDetailViewModel by viewModels()
+    private lateinit var binding: ActivityRecordDetailBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_record_detail)
 
-        var title = intent.getStringExtra("title")
+        var musicTitle = intent.getStringExtra("musicTitle")
+        var artists = intent.getStringExtra("artists")
+        var albumTitle = intent.getStringExtra("albumTitle")
+        var albumImageUrl = intent.getStringExtra("albumImageUrl")
+        var recordTitle = intent.getStringExtra("recordTitle")
+        var recordContents = intent.getStringExtra("recordContents")
+        var date = intent.getStringExtra("date")
+        var category = intent.getStringExtra("category")
+        var isPublic = intent.getBooleanExtra("isPublic", false)
+        var isLiked = intent.getBooleanExtra("isLiked", false)
+        var isScraped = intent.getBooleanExtra("isScraped", false)
+        var likeCnt = intent.getIntExtra("likeCnt", 0)
+        var scrapCnt = intent.getIntExtra("scrapCnt", 0)
+        var nickname = intent.getStringExtra("nickname")
 
-        val binding = DataBindingUtil.setContentView<ActivityRecordDetailBinding>(this, R.layout.activity_record_detail)
+        binding = DataBindingUtil.setContentView<ActivityRecordDetailBinding>(this, R.layout.activity_record_detail)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        //viewModel.record = MyRecord(title!!, "", "", "")
+        binding.tvMusicTitle.text = musicTitle
+        binding.tvArtist.text = "$artists - $albumTitle"
+        binding.tvRecordTitle.text = recordTitle
+        binding.tvDate.text = date
+        binding.tvCategory.text = category
+        binding.tvNickname.text = "DJ $nickname"
+        binding.tvLikeCnt.text = String.format("%03d", likeCnt)
+        binding.tvScrapCnt.text = String.format("%03d", scrapCnt)
 
-        record_contents.text = "\"${record_contents.text}\""
+        if (category == "한 줄 감상"){
+            binding.tvAlineContents.visibility = View.VISIBLE
+            binding.tvRecordContents.visibility = View.GONE
+            binding.tvAlineContents.text = "\"${recordContents}\""
+        } else {
+            binding.tvRecordContents.visibility = View.VISIBLE
+            binding.tvAlineContents.visibility = View.GONE
+            binding.tvRecordContents.text = recordContents
+        }
+
+        Glide.with(binding.imgAlbumCover.context)
+            .load(albumImageUrl)
+            .error(R.drawable.ic_launcher_background)
+            .fallback(R.drawable.ic_record)
+            .into(binding.imgAlbumCover)
+
+        if (isPublic){
+            binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+        } else{
+            binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+        }
 
         initToolBar()
     }
@@ -150,9 +195,8 @@ class MyRecordDetailActivity : AppCompatActivity() {
     }
 
     private fun drawViewBitmap(): Bitmap {
-        // TODO: 재설정 필요
-        val imageView = img_record
-        val textView = tv_music_title
+        val imageView = binding.imgAlbumCover
+        val textView = binding.tvRecordTitle
 
         val margin = resources.displayMetrics.density * 20
 

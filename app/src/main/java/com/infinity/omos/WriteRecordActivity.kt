@@ -67,9 +67,9 @@ class WriteRecordActivity : AppCompatActivity() {
         viewModel.isPrivate.observe(this, Observer { state ->
             state?.let {
                 if (it){
-                    btn_private.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
                 } else{
-                    btn_private.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
                 }
             }
         })

@@ -36,7 +36,11 @@ class AlbumActivity : AppCompatActivity() {
         binding.tvAlbumTitle.text = albumTitle
         binding.tvArtistName.text = artists
         binding.tvDate.text = releaseDate
-        Glide.with(binding.imgAlbumCover.context).load(albumImageUrl).error(R.drawable.ic_launcher_background).into(binding.imgAlbumCover)
+        Glide.with(binding.imgAlbumCover.context)
+            .load(albumImageUrl)
+            .error(R.drawable.ic_launcher_background)
+            .fallback(R.drawable.ic_record)
+            .into(binding.imgAlbumCover)
 
         val mAdapter = AlbumDetailListAdapter(this)
         mAdapter.setImageUrl(albumImageUrl)

@@ -36,11 +36,10 @@
             android:paddingHorizontal="17dp">
 
             <ImageView
-                android:id="@+id/img_record"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="12dp"
-                android:src="@drawable/ic_record"/>
+                android:id="@+id/img_album_cover"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginRight="12dp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -51,7 +50,6 @@
                     android:id="@+id/tv_music_title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="레코드 제목"
                     android:textSize="14sp"
                     android:textColor="@color/white"/>
 
@@ -59,7 +57,6 @@
                     android:id="@+id/tv_artist"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="가수 이름이 들어갑니다. 앨범 제목이 들어갑니다."
                     android:textSize="12sp"
                     android:textColor="@color/gray_01"/>
 
@@ -76,11 +73,10 @@
 
             <TextView
                 android:id="@+id/tv_record_title"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="70dp"
                 android:layout_marginBottom="10dp"
-                android:text="레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다"
                 android:textSize="22sp"
                 android:textColor="@color/white"
                 android:maxLines="2"
@@ -102,7 +98,6 @@
                     android:id="@+id/tv_date"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2022 00 00"
                     android:textSize="12sp"
                     android:textColor="@color/gray_01"/>
 
@@ -117,13 +112,13 @@
                     android:id="@+id/tv_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="한 줄 감상"
                     android:textSize="12sp"
                     android:textColor="@color/gray_01"/>
 
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/btn_public"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_private"
@@ -141,28 +136,26 @@
             android:background="@color/deep_dark">
 
             <TextView
-                android:id="@+id/record_contents"
+                android:id="@+id/tv_record_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
+                android:paddingVertical="16dp"
                 android:layout_marginBottom="30dp"
-                android:text="내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용내용"
                 android:textSize="16sp"
                 android:textColor="@color/gray_02"
                 android:maxLength="794"/>
 
             <TextView
-                android:id="@+id/oneline_contents"
+                android:id="@+id/tv_aline_contents"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="40dp"
-                android:paddingVertical="58dp"
-                android:text="한줄감상이나옵니다글자수는50자이내여야합니다한줄감상이나옵니다글자수는50자이내여야합니다한줄감"
+                android:layout_height="228dp"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="하이욤 안녕하세용"
                 android:textSize="24sp"
                 android:textColor="@color/gray_02"
                 android:fontFamily="@font/cafe24oneprettynight"
-                android:maxLength="52"
-                android:visibility="gone"/>
+                android:maxLength="52"/>
 
             <View
                 android:layout_width="match_parent"
@@ -177,9 +170,9 @@
                 android:paddingRight="20dp">
 
                 <TextView
+                    android:id="@+id/tv_nickname"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="DJ 닉네임열두자까지만허용임"
                     android:textColor="@color/gray_03"
                     android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
@@ -201,11 +194,11 @@
                         android:src="@drawable/ic_unchecked_heart"/>
 
                     <TextView
+                        android:id="@+id/tv_like_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="000"
                         android:textSize="12sp"
-                        android:textColor="@color/orange"/>
+                        android:textColor="@color/gray_03"/>
 
                 </LinearLayout>
 
@@ -223,9 +216,9 @@
                         android:src="@drawable/ic_unchecked_star"/>
 
                     <TextView
+                        android:id="@+id/tv_scrap_cnt"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="000"
                         android:textSize="12sp"
                         android:textColor="@color/gray_03"/>
 

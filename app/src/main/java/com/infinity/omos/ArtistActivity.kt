@@ -37,7 +37,11 @@ class ArtistActivity : AppCompatActivity() {
 
         binding.tvArtistName.text = name
         binding.tvArtistGenres.text = genres
-        Glide.with(binding.imgProfile.context).load(url).error(R.drawable.ic_launcher_background).into(binding.imgProfile)
+        Glide.with(binding.imgProfile.context)
+            .load(url).error(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_launcher_background)
+            .fallback(R.drawable.ic_record)
+            .into(binding.imgProfile)
     }
 
     private fun initTabLayout(){

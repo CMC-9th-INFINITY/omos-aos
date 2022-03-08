@@ -40,19 +40,36 @@
                     android:layout_height="match_parent"
                     android:paddingHorizontal="14dp">
 
-                    <TextView
-                        android:id="@+id/tv_music_title"
+                    <LinearLayout
+                        android:id="@+id/ln_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:orientation="horizontal"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:text="@{data.music.musicTitle}"
-                        android:textSize="12sp"
-                        android:textColor="@color/gray_01"
-                        android:singleLine="true"
                         android:background="@drawable/bg_rounded_rectangle"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"/>
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_music_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{data.music.musicTitle}"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray_01"
+                            android:singleLine="true"/>
+
+                        <TextView
+                            android:id="@+id/tv_artist"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="4dp"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray_04"
+                            android:singleLine="true"/>
+
+                    </LinearLayout>
 
                     <TextView
                         android:id="@+id/tv_record_title"
@@ -62,7 +79,7 @@
                         android:textColor="@color/gray_04"
                         android:textSize="16sp"
                         android:maxLength="30"
-                        app:layout_constraintTop_toBottomOf="@+id/tv_music_title"
+                        app:layout_constraintTop_toBottomOf="@+id/ln_title"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@id/tv_record_contents"/>
 
@@ -70,6 +87,7 @@
                         android:id="@+id/tv_record_contents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="4dp"
                         android:text="@{data.recordContents}"
                         android:textSize="12sp"
                         android:textColor="@color/gray_04"
@@ -85,9 +103,9 @@
                         app:layout_constraintStart_toStartOf="parent">
 
                         <TextView
+                            android:id="@+id/tv_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{data.createdDate}"
                             android:textSize="12sp"
                             android:textColor="@color/gray_04"/>
 
@@ -99,9 +117,9 @@
                             android:textColor="@color/gray_04"/>
 
                         <TextView
+                            android:id="@+id/tv_category"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{data.category}"
                             android:textSize="12sp"
                             android:textColor="@color/gray_04"/>
 
@@ -110,6 +128,7 @@
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <ImageView
+                    android:id="@+id/btn_public"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:src="@drawable/ic_private"
