@@ -16,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
-import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ActivityRecordDetailBinding
 import com.infinity.omos.viewmodels.RecordDetailViewModel
 import kotlinx.android.synthetic.main.activity_record_detail.*

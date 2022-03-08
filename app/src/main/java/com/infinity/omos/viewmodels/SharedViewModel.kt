@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.infinity.omos.data.MyDj
-import com.infinity.omos.data.MyRecord
 import com.infinity.omos.repository.AllRecordRepository
 import com.infinity.omos.repository.MyDjRepository
 import com.infinity.omos.repository.MyRecordRepository

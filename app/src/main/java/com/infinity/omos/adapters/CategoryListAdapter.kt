@@ -2,21 +2,19 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
-import com.infinity.omos.data.DetailCategory
+import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 
-class CategoryListAdapter internal constructor(context: Context, category: List<DetailCategory>?):
-    ListAdapter<DetailCategory, CategoryListAdapter.ViewHolder>(
+class CategoryListAdapter internal constructor(context: Context, category: List<Record>?):
+    ListAdapter<Record, CategoryListAdapter.ViewHolder>(
         CategoryDiffUtil
     ){
 
@@ -49,7 +47,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
     }
 
     inner class ViewHolder(private val binding: ListCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(record: DetailCategory) {
+        fun bind(record: Record) {
             binding.record = record
             binding.tvNick.text = "by. ${record.nickname}"
             binding.tvArtist.text = setArtist(record.music.artists) + " - " + record.music.albumTitle
@@ -67,7 +65,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
         }
     }
 
-    internal fun setRecords(record: List<DetailCategory>?) {
+    internal fun setRecords(record: List<Record>?) {
         this.record = record
         notifyDataSetChanged()
     }
@@ -79,13 +77,13 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             super.getItemCount()
     }
 
-    companion object CategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){
-        override fun areItemsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
+    companion object CategoryDiffUtil: DiffUtil.ItemCallback<Record>(){
+        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
+        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
             return oldItem==newItem
         }
     }

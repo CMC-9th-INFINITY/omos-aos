@@ -11,26 +11,22 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DjActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.DetailCategory
-import com.infinity.omos.data.MyRecord
-import com.infinity.omos.databinding.ListAlbumItemBinding
+import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListAlineCategoryItemBinding
-import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
-import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class ALineCategoryListAdapter internal constructor(
     private val context: Context
 ):
-    ListAdapter<DetailCategory, RecyclerView.ViewHolder>(
+    ListAdapter<Record, RecyclerView.ViewHolder>(
         ALineCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
-    private var category = ArrayList<DetailCategory?>()
+    private var category = ArrayList<Record?>()
     private var stateHeart = false
     private var stateStar = false
 
@@ -59,7 +55,7 @@ class ALineCategoryListAdapter internal constructor(
     }
 
     inner class CategoryViewHolder(private val binding: ListAlineCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(category: DetailCategory){
+        fun bind(category: Record){
             binding.data = category
             binding.tvDj.text = "DJ ${category.nickname}"
             binding.tvContents.text = "\" ${category.recordContents} \""
@@ -111,7 +107,7 @@ class ALineCategoryListAdapter internal constructor(
 
     inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
 
-    internal fun addCategory(category: List<DetailCategory>){
+    internal fun addCategory(category: List<Record>){
         this.category.addAll(category)
         this.category.add(null)
     }
@@ -120,7 +116,7 @@ class ALineCategoryListAdapter internal constructor(
         category.removeAt(category.lastIndex) // 로딩이 완료되면 프로그레스바를 지움
     }
 
-    private fun setHeartStar(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+    private fun setHeartStar(binding: ListAlineCategoryItemBinding, record: Record){
         if (record.isLiked){
             binding.imgHeart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
             binding.tvHeartCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
@@ -134,13 +130,13 @@ class ALineCategoryListAdapter internal constructor(
         }
     }
 
-    private fun setDate(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+    private fun setDate(binding: ListAlineCategoryItemBinding, record: Record){
         var listDate = record.createdDate.split("T")
         var date = listDate[0].replace("-", " ")
         binding.tvDate.text = date
     }
 
-    private fun setCategoryText(binding: ListAlineCategoryItemBinding, record: DetailCategory){
+    private fun setCategoryText(binding: ListAlineCategoryItemBinding, record: Record){
         var ctg = ""
         when(record.category){
             "A_LINE" -> {
@@ -178,13 +174,13 @@ class ALineCategoryListAdapter internal constructor(
         }
     }
 
-    companion object ALineCategoryDiffUtil: DiffUtil.ItemCallback<DetailCategory>(){
-        override fun areItemsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
+    companion object ALineCategoryDiffUtil: DiffUtil.ItemCallback<Record>(){
+        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: DetailCategory, newItem: DetailCategory): Boolean {
+        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
             return oldItem==newItem
         }
     }

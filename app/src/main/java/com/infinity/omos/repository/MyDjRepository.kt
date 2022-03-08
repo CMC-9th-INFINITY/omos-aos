@@ -1,17 +1,10 @@
 package com.infinity.omos.repository
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.MyDjService
-import com.infinity.omos.api.MyRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.MyDj
-import com.infinity.omos.data.MyRecord
-import com.infinity.omos.data.ResultGetMyDj
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import com.infinity.omos.data.SaveRecord
 import retrofit2.Retrofit
 
 class MyDjRepository {
@@ -19,7 +12,7 @@ class MyDjRepository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val onBoardingRepository = OnBoardingRepository()
 
-    var _djRecord = MutableLiveData<List<MyRecord>>()
+    var _djRecord = MutableLiveData<List<SaveRecord>>()
 
     fun getMyDjRecordData(page: Int){
 //        api.getResultGetMyRecord(page).enqueue(object: Callback<ResultGetMyRecord> {

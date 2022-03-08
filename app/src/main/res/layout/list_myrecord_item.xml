@@ -4,8 +4,8 @@
 
     <data>
         <variable
-            name="record"
-            type="com.infinity.omos.data.MyRecord" />
+            name="data"
+            type="com.infinity.omos.data.Record" />
     </data>
 
     <LinearLayout
@@ -21,24 +21,24 @@
             android:layout_height="115dp"
             android:background="@color/deep_dark">
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/img_album_cover"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="72dp"
+                android:layout_height="72dp"
                 android:layout_gravity="bottom"
-                android:src="@drawable/ic_record"/>
+                app:imageUrl="@{data.music.albumImageUrl}"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/constraint"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_gravity="right"
+                android:layout_gravity="end"
                 android:background="@color/dark">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="14dp">
+                    android:paddingHorizontal="14dp">
 
                     <TextView
                         android:id="@+id/tv_music_title"
@@ -46,7 +46,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="10dp"
                         android:paddingVertical="5dp"
-                        android:text="노래제목"
+                        android:text="@{data.music.musicTitle}"
                         android:textSize="12sp"
                         android:textColor="@color/gray_01"
                         android:singleLine="true"
@@ -58,24 +58,54 @@
                         android:id="@+id/tv_record_title"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="bottom"
-                        android:layout_marginBottom="6dp"
-                        android:text="@{record.category}"
-                        android:textColor="@color/white"
+                        android:text="@{data.recordTitle}"
+                        android:textColor="@color/gray_04"
                         android:textSize="16sp"
                         android:maxLength="30"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_music_title"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toTopOf="@id/tv_nick"/>
+                        app:layout_constraintBottom_toTopOf="@id/tv_record_contents"/>
 
                     <TextView
-                        android:id="@+id/tv_nick"
+                        android:id="@+id/tv_record_contents"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="레코드내용"
+                        android:text="@{data.recordContents}"
                         android:textSize="12sp"
-                        android:textColor="@color/white"
+                        android:textColor="@color/gray_04"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
+                        app:layout_constraintBottom_toTopOf="@+id/ln_date"/>
+
+                    <LinearLayout
+                        android:id="@+id/ln_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{data.createdDate}"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray_04"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" | "
+                            android:textSize="12sp"
+                            android:textColor="@color/gray_04"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{data.category}"
+                            android:textSize="12sp"
+                            android:textColor="@color/gray_04"/>
+
+                    </LinearLayout>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,7 +5,7 @@
     <data>
         <variable
             name="record"
-            type="com.infinity.omos.data.DetailCategory" />
+            type="com.infinity.omos.data.Record" />
     </data>
 
     <LinearLayout

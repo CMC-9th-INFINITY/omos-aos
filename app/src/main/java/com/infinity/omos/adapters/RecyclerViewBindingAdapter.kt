@@ -3,19 +3,20 @@ package com.infinity.omos.adapters
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.MyDj
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.Record
+import com.infinity.omos.data.SaveRecord
 
 object RecyclerViewBindingAdapter {
     @BindingAdapter("myRecordListData")
     @JvmStatic
-    fun myRecordBindData(recyclerView: RecyclerView, records: List<MyRecord>?){
+    fun myRecordBindData(recyclerView: RecyclerView, records: List<Record>?){
         val adapter = recyclerView.adapter as MyRecordListAdapter
         adapter.submitList(records)
     }
 
     @BindingAdapter("djRecordListData")
     @JvmStatic
-    fun djRecordBindData(recyclerView: RecyclerView, records: List<MyRecord>?){
+    fun djRecordBindData(recyclerView: RecyclerView, records: List<Record>?){
         val adapter = recyclerView.adapter as MyRecordListAdapter
         adapter.submitList(records)
     }

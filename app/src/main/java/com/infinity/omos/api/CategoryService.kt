@@ -1,6 +1,6 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.DetailCategory
+import com.infinity.omos.data.Record
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -14,5 +14,5 @@ interface CategoryService {
         @Query("size") size: Int,
         @Query("sort") sort: String?,
         @Query("userid") userid: Int
-    ): Call<List<DetailCategory>?>
+    ): Call<List<Record>?>
 }

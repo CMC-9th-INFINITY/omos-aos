@@ -1,8 +1,6 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,20 +8,18 @@ import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.MyRecordDetailActivity
-import com.infinity.omos.data.AllRecords
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
 
 class MyRecordListAdapter internal constructor(context: Context):
-    ListAdapter<MyRecord, RecyclerView.ViewHolder>(
+    ListAdapter<Record, RecyclerView.ViewHolder>(
         MyRecordDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
-    private var record = ArrayList<MyRecord?>()
+    private var record = ArrayList<Record?>()
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -86,8 +82,8 @@ class MyRecordListAdapter internal constructor(context: Context):
     }
 
     inner class RecordViewHolder(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(record: MyRecord) {
-            binding.record = record
+        fun bind(record: Record) {
+            binding.data = record
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
@@ -103,12 +99,12 @@ class MyRecordListAdapter internal constructor(context: Context):
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
-    internal fun setRecord(rec: List<MyRecord>) {
+    internal fun setRecord(rec: List<Record>) {
         record.addAll(rec)
         notifyDataSetChanged()
     }
 
-    internal fun addRecord(rec: List<MyRecord>) {
+    internal fun addRecord(rec: List<Record>) {
         record.addAll(rec)
         record.add(null)
     }
@@ -129,13 +125,13 @@ class MyRecordListAdapter internal constructor(context: Context):
         return record.size
     }
 
-    companion object MyRecordDiffUtil: DiffUtil.ItemCallback<MyRecord>(){
-        override fun areItemsTheSame(oldItem: MyRecord, newItem: MyRecord): Boolean {
+    companion object MyRecordDiffUtil: DiffUtil.ItemCallback<Record>(){
+        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: MyRecord, newItem: MyRecord): Boolean {
+        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
             return oldItem==newItem
         }
     }

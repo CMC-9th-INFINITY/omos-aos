@@ -1,6 +1,7 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.Record
+import com.infinity.omos.data.SaveRecord
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -12,5 +13,5 @@ interface MyRecordService {
     @GET("api/records/{userId}")
     fun getMyRecord(
         @Path("userId") userId: Int
-    ): Call<List<MyRecord>>
+    ): Call<List<Record>>
 }

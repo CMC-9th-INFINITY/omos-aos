@@ -2,9 +2,7 @@ package com.infinity.omos.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.data.MyRecord
 import com.infinity.omos.repository.MyDjRepository
 
 class DjViewModel(application: Application): AndroidViewModel(application) {

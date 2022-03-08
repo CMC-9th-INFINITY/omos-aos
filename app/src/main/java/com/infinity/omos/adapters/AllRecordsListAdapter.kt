@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.CategoryActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
-import com.infinity.omos.data.DetailCategory
+import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
@@ -82,7 +82,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
         notifyDataSetChanged()
     }
 
-    internal fun updateCategory(record: List<DetailCategory>?, pos: Int) {
+    internal fun updateCategory(record: List<Record>?, pos: Int) {
         this.category[pos].category = record
         notifyDataSetChanged()
     }

@@ -1,20 +1,16 @@
 package com.infinity.omos.ui.bottomnav
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
-import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.viewmodels.SharedViewModel
 
@@ -57,7 +53,7 @@ class MyDjFragment : Fragment() {
 //        })
 
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int, records: List<MyRecord>?) {
+            override fun onClick(v: View, position: Int, records: List<SaveRecord>?) {
                 // TODO: 수정 필요
                 viewModel.updateDjRecord(position+1)
             }

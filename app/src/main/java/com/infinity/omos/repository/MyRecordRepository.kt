@@ -4,8 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.MyRecordService
 import com.infinity.omos.api.RetrofitAPI
-import com.infinity.omos.api.SearchMusicService
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.Record
+import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -21,16 +21,16 @@ class MyRecordRepository {
 
     private val myRecordApi = retrofit.create(MyRecordService::class.java)
 
-    var _myRecord = MutableLiveData<List<MyRecord>?>()
+    var _myRecord = MutableLiveData<List<Record>?>()
     var _stateMyRecord = MutableLiveData<Constant.ApiState>()
 
     fun getMyRecord(userId: Int){
         _stateMyRecord.value = Constant.ApiState.LOADING
 
-        myRecordApi.getMyRecord(userId).enqueue(object: Callback<List<MyRecord>> {
+        myRecordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
-                call: Call<List<MyRecord>>,
-                response: Response<List<MyRecord>>
+                call: Call<List<Record>>,
+                response: Response<List<Record>>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -58,7 +58,7 @@ class MyRecordRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<MyRecord>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
                 Log.d("MyRecordAPI", t.message.toString())
                 t.stackTrace
             }

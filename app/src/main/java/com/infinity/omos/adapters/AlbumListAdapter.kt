@@ -2,24 +2,18 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.AlbumActivity
 import com.infinity.omos.MainActivity
-import com.infinity.omos.MyRecordDetailActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Album
-import com.infinity.omos.data.Artists
-import com.infinity.omos.data.MyRecord
 import com.infinity.omos.databinding.ListAlbumItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
-import com.infinity.omos.databinding.ListMyrecordItemBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 

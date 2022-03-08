@@ -1,20 +1,15 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.MyDj
-import com.infinity.omos.data.MyRecord
+import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.ListMydjItemBinding
 
 class MyDjListAdapter internal constructor(context: Context):
@@ -28,7 +23,7 @@ class MyDjListAdapter internal constructor(context: Context):
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{
-        fun onClick(v: View, position: Int, records: List<MyRecord>?)
+        fun onClick(v: View, position: Int, records: List<SaveRecord>?)
     }
 
     interface OnItemLongClickListener{

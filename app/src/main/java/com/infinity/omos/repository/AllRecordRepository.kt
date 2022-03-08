@@ -6,7 +6,7 @@ import com.infinity.omos.api.AllRecordsService
 import com.infinity.omos.api.CategoryService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.Category
-import com.infinity.omos.data.DetailCategory
+import com.infinity.omos.data.Record
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -23,7 +23,7 @@ class AllRecordRepository {
     private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
     private val categoryApi = retrofit.create(CategoryService::class.java)
     var _allRecords = MutableLiveData<Category?>()
-    var _category = MutableLiveData<List<DetailCategory>?>()
+    var _category = MutableLiveData<List<Record>?>()
     var _stateAllRecords = MutableLiveData<Constant.ApiState>()
     var _stateCategory = MutableLiveData<Constant.ApiState>()
 
@@ -67,10 +67,10 @@ class AllRecordRepository {
     fun getCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
         _stateCategory.value = Constant.ApiState.LOADING
         categoryApi.getCategory(category, page, size, sort, userId).enqueue(object:
-            Callback<List<DetailCategory>?> {
+            Callback<List<Record>?> {
             override fun onResponse(
-                call: Call<List<DetailCategory>?>,
-                response: Response<List<DetailCategory>?>
+                call: Call<List<Record>?>,
+                response: Response<List<Record>?>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -98,7 +98,7 @@ class AllRecordRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<DetailCategory>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Record>?>, t: Throwable) {
                 Log.d("CategoryAPI", t.message.toString())
                 t.stackTrace
             }
