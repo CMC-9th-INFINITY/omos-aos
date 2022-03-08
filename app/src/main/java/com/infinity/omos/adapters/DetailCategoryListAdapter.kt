@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.databinding.adapters.CalendarViewBindingAdapter
@@ -65,6 +66,16 @@ class DetailCategoryListAdapter internal constructor(
             binding.tvCategory.text = setCategoryText(context, category.category)
             binding.tvDate.text = setDate(category.createdDate)
             setHeartStar(binding, category)
+
+            if (category.category == "A_LINE"){
+                binding.tvAlineContents.visibility = View.VISIBLE
+                binding.tvRecordContents.visibility = View.GONE
+                binding.tvAlineContents.text = "\"${category.recordContents}\""
+            } else {
+                binding.tvAlineContents.visibility = View.GONE
+                binding.tvRecordContents.visibility = View.VISIBLE
+                binding.tvRecordContents.text = category.recordContents
+            }
 
             binding.executePendingBindings()
 

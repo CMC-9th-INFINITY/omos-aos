@@ -60,44 +60,23 @@ class CategoryActivity : AppCompatActivity() {
             }
         }
 
-        val aAdapter = ALineCategoryListAdapter(this)
-        val dAdapter = DetailCategoryListAdapter(this)
-
-        if (ctg == "A_LINE"){
-            recyclerView.apply{
-                adapter = aAdapter
-                layoutManager = LinearLayoutManager(context)
-            }
-        } else {
-            recyclerView.apply{
-                adapter = dAdapter
-                layoutManager = LinearLayoutManager(context)
-            }
+        val mAdapter = DetailCategoryListAdapter(this)
+        recyclerView.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(context)
         }
 
         viewModel.loadMoreCategory(ctg, 0, pageSize, "createdDate,desc", userId)
         viewModel.category.observe(this, Observer { category ->
             category?.let {
-                if (ctg == "A_LINE"){
-                    aAdapter.addCategory(it)
-                    isLoading = if (it.isEmpty()) {
-                        aAdapter.deleteLoading()
-                        aAdapter.notifyItemRemoved(aAdapter.itemCount-1)
-                        true
-                    } else {
-                        aAdapter.notifyItemRangeInserted(page * pageSize, it.size)
-                        false
-                    }
+                mAdapter.addCategory(it)
+                isLoading = if (it.isEmpty()) {
+                    mAdapter.deleteLoading()
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    true
                 } else {
-                    dAdapter.addCategory(it)
-                    isLoading = if (it.isEmpty()) {
-                        dAdapter.deleteLoading()
-                        dAdapter.notifyItemRemoved(dAdapter.itemCount-1)
-                        true
-                    } else {
-                        dAdapter.notifyItemRangeInserted(page * pageSize, it.size)
-                        false
-                    }
+                    mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                    false
                 }
             }
         })
@@ -136,12 +115,7 @@ class CategoryActivity : AppCompatActivity() {
                 // 스크롤이 끝에 도달했는지 확인
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
-                    if (ctg == "A_LINE"){
-                        aAdapter.deleteLoading()
-                    } else {
-                        dAdapter.deleteLoading()
-                    }
-
+                    mAdapter.deleteLoading()
                     viewModel.loadMoreCategory(ctg, ++page*pageSize, pageSize, "createdDate,desc", userId)
                 }
             }
