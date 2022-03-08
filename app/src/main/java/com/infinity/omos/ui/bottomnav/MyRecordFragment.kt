@@ -37,7 +37,7 @@ class MyRecordFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_record, container, false)
         activity?.let{
             binding.vm = viewModel
-            binding.lifecycleOwner = this
+            binding.lifecycleOwner = viewLifecycleOwner
         }
 
         return binding.root

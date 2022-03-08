@@ -58,6 +58,7 @@ class WriteRecordActivity : AppCompatActivity() {
         if (viewModel.category.value == resources.getString(R.string.a_line)){
             record_contents.visibility = View.GONE
             oneline_contents.visibility = View.VISIBLE
+            binding.tvLimitContents.text = "/50"
         }
 
         initToolBar()
@@ -154,13 +155,19 @@ class WriteRecordActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action_next, menu)
+        var actionNext = menu.findItem(R.id.action_next)
+        actionNext.title = "완료"
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
-                Toast.makeText(this, "다음", Toast.LENGTH_SHORT).show()
+
+
+
+
+                Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                 true
             }
             android.R.id.home -> {

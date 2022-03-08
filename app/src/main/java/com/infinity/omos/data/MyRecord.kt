@@ -10,5 +10,9 @@ data class MyRecord(
     @SerializedName("recordContents") val recordContents: String,
     @SerializedName("recordId") val recordId: Int,
     @SerializedName("recordImageUrl") val recordImageUrl: String,
-    @SerializedName("recordTitle") val recordTitle: String
+    @SerializedName("recordTitle") val recordTitle: String,
+
+    @SerializedName("imageUrl") val imageUrl: String,
+    @SerializedName("musicId") val musicId: String,
+    @SerializedName("userId") val userId: Int
 )

@@ -217,7 +217,7 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/cafe24oneprettynight"
                     android:maxLength="52"
-                    android:onTextChanged="@{()->vm.countContents(recordContents)}"
+                    android:onTextChanged="@{()->vm.countContents(onelineContents)}"
                     android:background="#00FFFFFF"
                     android:visibility="gone"/>
 
@@ -314,6 +314,7 @@
                             android:textColor="@color/light_gray"/>
 
                         <TextView
+                            android:id="@+id/tv_limit_contents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="/794자"

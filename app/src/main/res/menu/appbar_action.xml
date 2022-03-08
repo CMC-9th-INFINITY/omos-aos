@@ -14,10 +14,4 @@
         android:title="Search"
         app:showAsAction="always"/>
 
-    <item
-        android:id="@+id/action_noti"
-        android:icon="@drawable/ic_noti"
-        android:title="Notification"
-        app:showAsAction="always"/>
-
 </menu>

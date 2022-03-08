@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
     private var stateWrite = false
     private var stateNoti = false
+    private var stateSearch = false
     private var prevTag = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -122,7 +123,7 @@ class MainActivity : AppCompatActivity() {
 
         // OMOS 텍스트 이미지 추가
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.omos_title)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_title_logo)
     }
 
     private fun initTabLayout(){
@@ -142,7 +143,8 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = ""
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         stateWrite = false
-                        stateNoti = true
+                        stateSearch = false
+                        binding.lnToolbar.visibility = View.GONE
                         invalidateOptionsMenu()
                         changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
@@ -160,7 +162,8 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = true
-                        stateNoti = false
+                        stateSearch = true
+                        binding.lnToolbar.visibility = View.VISIBLE
                         invalidateOptionsMenu()
                         changeFragment("MyRecord", fragmentMyRecord)
                         item.setIcon(R.drawable.ic_selected_myrecord)
@@ -173,7 +176,8 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "전체 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
-                        stateNoti = false
+                        stateSearch = true
+                        binding.lnToolbar.visibility = View.VISIBLE
                         invalidateOptionsMenu()
                         changeFragment("AllRecords", fragmentAllRecords)
                         item.setIcon(R.drawable.ic_selected_allrecords)
@@ -191,7 +195,8 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY DJ"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
-                        stateNoti = false
+                        stateSearch = true
+                        binding.lnToolbar.visibility = View.VISIBLE
                         invalidateOptionsMenu()
                         changeFragment("MyDJ", fragmentMyDj)
                         item.setIcon(R.drawable.ic_selected_mydj)
@@ -209,7 +214,8 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY 페이지"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
-                        stateNoti = false
+                        stateSearch = false
+                        binding.lnToolbar.visibility = View.VISIBLE
                         invalidateOptionsMenu()
                         changeFragment("MyPage", fragmentMyPage)
                         item.setIcon(R.drawable.ic_selected_mypage)
@@ -257,18 +263,14 @@ class MainActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action, menu)
         var actionWrite = menu.findItem(R.id.action_write)
-        var actionNoti = menu.findItem(R.id.action_noti)
+        var actionSearch = menu.findItem(R.id.action_search)
         actionWrite.isVisible = stateWrite
-        actionNoti.isVisible = stateNoti
+        actionSearch.isVisible = stateSearch
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.action_noti -> {
-                Toast.makeText(this, "Noti", Toast.LENGTH_SHORT).show()
-                true
-            }
             R.id.action_search -> {
                 Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show()
                 true
