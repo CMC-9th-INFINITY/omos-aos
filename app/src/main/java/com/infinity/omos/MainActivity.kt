@@ -272,10 +272,20 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_search -> {
-                Toast.makeText(this, "Search", Toast.LENGTH_SHORT).show()
+                isWrite = false
+                linear.visibility = View.GONE
+                searchView.visibility = View.VISIBLE
+
+                // editText 포커스 주기
+                et_search.isFocusableInTouchMode = true
+                et_search.requestFocus()
+                val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.showSoftInput(et_search,0)
+
                 true
             }
             R.id.action_write -> {
+                isWrite = true
                 linear.visibility = View.GONE
                 searchView.visibility = View.VISIBLE
 
@@ -293,5 +303,6 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var keyword = ""
+        var isWrite = false
     }
 }

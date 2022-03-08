@@ -3,10 +3,7 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.*
-import com.infinity.omos.data.Album
-import com.infinity.omos.data.ArtistMusic
-import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Music
+import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -26,18 +23,58 @@ class SearchRepository {
     private val albumDetailApi = retrofit.create(AlbumDetailService::class.java)
     private val artistMusicApi = retrofit.create(ArtistMusicService::class.java)
     private val artistAlbumApi = retrofit.create(ArtistAlbumService::class.java)
+    private val musicRecordApi = retrofit.create(MusicRecordService::class.java)
     var _album = MutableLiveData<List<Album>?>()
     var _music = MutableLiveData<List<Music>?>()
     var _artist = MutableLiveData<List<Artists>?>()
     var _albumDetail = MutableLiveData<List<Music>?>()
     var _artistMusic = MutableLiveData<List<ArtistMusic>?>()
     var _artistAlbum = MutableLiveData<List<Album>?>()
+    var _musicRecord = MutableLiveData<List<Record>?>()
     var _stateAlbum = MutableLiveData<Constant.ApiState>()
     var _stateMusic = MutableLiveData<Constant.ApiState>()
     var _stateArtist = MutableLiveData<Constant.ApiState>()
     var _stateAlbumDetail = MutableLiveData<Constant.ApiState>()
     var _stateArtistMusic = MutableLiveData<Constant.ApiState>()
     var _stateArtistAlbum = MutableLiveData<Constant.ApiState>()
+    var _stateMusicRecord = MutableLiveData<Constant.ApiState>()
+
+    fun getMusicRecord(musicId: String, postId: Int, size: Int, userId: Int){
+        _stateMusicRecord.value = Constant.ApiState.LOADING
+        musicRecordApi.getMusicRecord(musicId, postId, size, userId).enqueue(object: Callback<List<Record>> {
+            override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("MusicRecordAPI", "Success")
+                        _musicRecord.value = body
+                        _stateMusicRecord.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("MusicRecordAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getMusicRecord(musicId, postId, size, userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("MusicRecordAPI", errorBody!!.message)
+                        _stateMusicRecord.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("MusicRecordAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+                Log.d("MusicRecordAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 
     fun getArtistAlbum(artistId: String, limit: Int, offset: Int){
         _stateArtistAlbum.value = Constant.ApiState.LOADING
