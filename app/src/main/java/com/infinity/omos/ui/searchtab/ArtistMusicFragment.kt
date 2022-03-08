@@ -1,18 +1,21 @@
 package com.infinity.omos.ui.searchtab
 
-import android.content.BroadcastReceiver
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
+import com.infinity.omos.adapters.ArtistMusicListAdapter
+import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentArtistMusicBinding
-import com.infinity.omos.databinding.FragmentMusicBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.viewmodels.ArtistViewModel
-import com.infinity.omos.viewmodels.MainViewModel
 
 class ArtistMusicFragment : Fragment() {
 
@@ -20,6 +23,8 @@ class ArtistMusicFragment : Fragment() {
     private lateinit var binding: FragmentArtistMusicBinding
 
     private var page = 0
+
+    private var artistId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,10 +41,47 @@ class ArtistMusicFragment : Fragment() {
             binding.lifecycleOwner = viewLifecycleOwner
         }
 
+        var bundle = this.arguments
+        artistId = bundle?.getString("artistId")!!
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val mAdapter = ArtistMusicListAdapter(requireContext())
+        binding.recyclerView.apply {
+            adapter = mAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
+
+        viewModel.getArtistMusic(artistId)
+        viewModel.artistMusic.observe(viewLifecycleOwner, Observer { music ->
+            music?.let {
+                mAdapter.setRecord(it)
+            }
+        })
+
+        // 로딩화면
+        viewModel.stateArtistMusic.observe(viewLifecycleOwner, Observer { state ->
+            state?.let {
+                when(it){
+                    Constant.ApiState.LOADING -> {
+                        binding.recyclerView.visibility = View.GONE
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+
+                    }
+                }
+            }
+        })
     }
 }

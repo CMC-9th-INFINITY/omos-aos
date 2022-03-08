@@ -83,6 +83,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, ArtistActivity::class.java)
+                    intent.putExtra("artistId", artist.artistId)
                     intent.putExtra("artistName", artist.artistName)
                     intent.putExtra("artistImageUrl", artist.artistImageUrl)
                     intent.putExtra("artistGenres", binding.tvGenres.text.toString())

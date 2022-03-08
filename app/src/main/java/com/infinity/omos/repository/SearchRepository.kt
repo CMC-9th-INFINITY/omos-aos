@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.*
 import com.infinity.omos.data.Album
+import com.infinity.omos.data.ArtistMusic
 import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Music
 import com.infinity.omos.etc.Constant
@@ -23,14 +24,94 @@ class SearchRepository {
     private val albumApi = retrofit.create(SearchAlbumService::class.java)
     private val artistApi = retrofit.create(SearchArtistService::class.java)
     private val albumDetailApi = retrofit.create(AlbumDetailService::class.java)
+    private val artistMusicApi = retrofit.create(ArtistMusicService::class.java)
+    private val artistAlbumApi = retrofit.create(ArtistAlbumService::class.java)
     var _album = MutableLiveData<List<Album>?>()
     var _music = MutableLiveData<List<Music>?>()
     var _artist = MutableLiveData<List<Artists>?>()
     var _albumDetail = MutableLiveData<List<Music>?>()
+    var _artistMusic = MutableLiveData<List<ArtistMusic>?>()
+    var _artistAlbum = MutableLiveData<List<Album>?>()
     var _stateAlbum = MutableLiveData<Constant.ApiState>()
     var _stateMusic = MutableLiveData<Constant.ApiState>()
     var _stateArtist = MutableLiveData<Constant.ApiState>()
     var _stateAlbumDetail = MutableLiveData<Constant.ApiState>()
+    var _stateArtistMusic = MutableLiveData<Constant.ApiState>()
+    var _stateArtistAlbum = MutableLiveData<Constant.ApiState>()
+
+    fun getArtistAlbum(artistId: String, limit: Int, offset: Int){
+        _stateArtistAlbum.value = Constant.ApiState.LOADING
+        artistAlbumApi.getArtistAlbum(artistId, limit, offset).enqueue(object: Callback<List<Album>> {
+            override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("ArtistAlbumAPI", "Success")
+                        _artistAlbum.value = body
+                        _stateArtistAlbum.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("ArtistAlbumAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getArtistAlbum(artistId, limit, offset)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("ArtistAlbumAPI", errorBody!!.message)
+                        _stateArtistAlbum.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("ArtistAlbumAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Album>>, t: Throwable) {
+                Log.d("ArtistAlbumAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    fun getArtistMusic(artistId: String){
+        _stateArtistMusic.value = Constant.ApiState.LOADING
+        artistMusicApi.getArtistMusic(artistId).enqueue(object: Callback<List<ArtistMusic>> {
+            override fun onResponse(call: Call<List<ArtistMusic>>, response: Response<List<ArtistMusic>>) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("ArtistMusicAPI", "Success")
+                        _artistMusic.value = body
+                        _stateArtistMusic.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("ArtistMusicAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getArtistMusic(artistId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("ArtistMusicAPI", errorBody!!.message)
+                        _stateArtistMusic.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("ArtistMusicAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<ArtistMusic>>, t: Throwable) {
+                Log.d("ArtistMusicAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 
     fun getAlbumDetail(albumId: String){
         _stateAlbumDetail.value = Constant.ApiState.LOADING

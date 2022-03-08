@@ -12,23 +12,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.SelectCategoryActivity
+import com.infinity.omos.data.ArtistMusic
 import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Music
+import com.infinity.omos.databinding.ListArtistMusicItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMusicItemBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 
-class MusicListAdapter internal constructor(private val context: Context):
-    ListAdapter<Music, RecyclerView.ViewHolder>(
+class ArtistMusicListAdapter internal constructor(private val context: Context):
+    ListAdapter<ArtistMusic, ArtistMusicListAdapter.MusicViewHolder>(
         MusicDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var music = ArrayList<Music?>()
-
-    private val VIEW_TYPE_ITEM = 0
-    private val VIEW_TYPE_LOADING = 1
+    private var music = ArrayList<ArtistMusic?>()
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -44,39 +43,21 @@ class MusicListAdapter internal constructor(private val context: Context):
         this.itemClickListener = onItemClickListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder{
-
-        return when(viewType){
-            VIEW_TYPE_ITEM -> {
-                val binding = ListMusicItemBinding.inflate(inflater,parent,false)
-                MusicViewHolder(binding)
-            }
-
-            else -> {
-                val binding = ListLoadingItemBinding.inflate(inflater,parent,false)
-                LoadingViewHolder(binding)
-            }
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicViewHolder{
+        val binding = ListArtistMusicItemBinding.inflate(inflater,parent,false)
+        return MusicViewHolder(binding)
     }
 
-    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        if (holder is MusicViewHolder){
-            val music = music[position]
-            holder.bind(music!!)
-        }
+    override fun onBindViewHolder(holder: MusicViewHolder, position: Int) {
+        val music = music[position]
+        holder.bind(music!!)
     }
 
-    inner class MusicViewHolder(private val binding: ListMusicItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(music: Music) {
+    inner class MusicViewHolder(private val binding: ListArtistMusicItemBinding): RecyclerView.ViewHolder(binding.root){
+        fun bind(music: ArtistMusic) {
             binding.data = music
-            binding.tvArtist.text = setArtist(music.artists)
+            binding.tvArtist.text = setArtist(music.artistName)
             binding.tvMusicTitle.text = music.musicTitle
-
-            // keyword 색상 변경
-            var start = music.musicTitle.lowercase().indexOf(keyword.lowercase())
-            if (start != -1){
-                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + keyword.length, R.color.orange)
-            }
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
@@ -94,41 +75,37 @@ class MusicListAdapter internal constructor(private val context: Context):
         }
     }
 
-    inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
-
-    internal fun setRecord(ab: List<Music>) {
-        music.addAll(ab)
-        music.add(null)
-    }
-
-    internal fun clearRecord(){
-        music.clear()
-        notifyDataSetChanged()
-    }
-
-    internal fun deleteLoading(){
-        music.removeAt(music.lastIndex) // 로딩이 완료되면 프로그레스바를 지움
-    }
-
-    override fun getItemViewType(position: Int): Int {
-        return if (music[position] == null){
-            VIEW_TYPE_LOADING
-        } else{
-            VIEW_TYPE_ITEM
+    fun setArtist(artists: List<String>): String{
+        var str = ""
+        for (s in artists){
+            str += "$s & "
         }
+
+        if (str.length >= 3){
+            str = str.substring(0, str.length - 3)
+        } else{
+            str = "-"
+        }
+
+        return str
+    }
+
+    internal fun setRecord(ab: List<ArtistMusic>) {
+        music.addAll(ab)
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
         return music.size
     }
 
-    companion object MusicDiffUtil: DiffUtil.ItemCallback<Music>(){
-        override fun areItemsTheSame(oldItem: Music, newItem: Music): Boolean {
+    companion object MusicDiffUtil: DiffUtil.ItemCallback<ArtistMusic>(){
+        override fun areItemsTheSame(oldItem: ArtistMusic, newItem: ArtistMusic): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: Music, newItem: Music): Boolean {
+        override fun areContentsTheSame(oldItem: ArtistMusic, newItem: ArtistMusic): Boolean {
             return oldItem==newItem
         }
     }

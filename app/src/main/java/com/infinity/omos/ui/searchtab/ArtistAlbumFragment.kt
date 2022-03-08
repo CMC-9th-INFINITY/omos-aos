@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.searchtab
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +24,10 @@ class ArtistAlbumFragment : Fragment() {
     private lateinit var binding: FragmentArtistAlbumBinding
 
     private var page = 0
+    private val pageSize = 20
+    private var isLoading = false
+
+    private var artistId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +43,9 @@ class ArtistAlbumFragment : Fragment() {
             binding.lifecycleOwner = viewLifecycleOwner
         }
 
+        var bundle = this.arguments
+        artistId = bundle?.getString("artistId")!!
+
         return binding.root
     }
 
@@ -51,21 +59,23 @@ class ArtistAlbumFragment : Fragment() {
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreAlbum(MainActivity.keyword, 20, 0)
-        viewModel.album.observe(viewLifecycleOwner, Observer { album ->
+        viewModel.loadMoreAlbum(artistId, pageSize, 0)
+        viewModel.artistAlbum.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
-                // 새로 검색 시 기존 리스트 삭제
-                if (page == 0){
-                    mAdapter.clearRecord()
-                }
-
                 mAdapter.setRecord(it)
-                mAdapter.submitList(it)
+                isLoading = if (it.isEmpty()) {
+                    mAdapter.deleteLoading()
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    true
+                } else {
+                    mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                    false
+                }
             }
         })
 
         // 로딩화면
-        viewModel.stateAlbum.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.stateArtistAlbum.observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
@@ -97,9 +107,10 @@ class ArtistAlbumFragment : Fragment() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount-1
 
                 // 스크롤이 끝에 도달했는지 확인
-                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount) {
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
+                    isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreAlbum(MainActivity.keyword, 20, ++page*20)
+                    viewModel.loadMoreAlbum(artistId, pageSize, ++page*pageSize)
                 }
             }
         })

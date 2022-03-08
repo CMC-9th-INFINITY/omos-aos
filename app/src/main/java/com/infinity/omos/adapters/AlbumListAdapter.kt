@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.AlbumActivity
+import com.infinity.omos.ArtistActivity
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Album
@@ -73,7 +74,7 @@ class AlbumListAdapter internal constructor(private val context: Context):
 
             // keyword 색상 변경
             var start = album.albumTitle.lowercase().indexOf(MainActivity.keyword.lowercase())
-            if (start != -1){
+            if (start != -1 && context.javaClass != ArtistActivity::class.java){
                 GlobalFunction.changeTextColor(context, binding.tvAlbumTitle, start, start + MainActivity.keyword.length, R.color.orange)
             }
 

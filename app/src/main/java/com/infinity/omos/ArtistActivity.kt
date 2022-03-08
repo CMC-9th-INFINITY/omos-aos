@@ -21,6 +21,8 @@ class ArtistActivity : AppCompatActivity() {
     private val viewModel: ArtistViewModel by viewModels()
     private lateinit var binding: ActivityArtistBinding
 
+    private var artistId = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -28,12 +30,13 @@ class ArtistActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        initToolBar()
-        initTabLayout()
-
+        artistId = intent.getStringExtra("artistId")!!
         var name = intent.getStringExtra("artistName")
         var url = intent.getStringExtra("artistImageUrl")
         var genres = intent.getStringExtra("artistGenres")
+
+        initToolBar()
+        initTabLayout()
 
         binding.tvArtistName.text = name
         binding.tvArtistGenres.text = genres
@@ -45,7 +48,7 @@ class ArtistActivity : AppCompatActivity() {
     }
 
     private fun initTabLayout(){
-        val viewpagerFragmentAdapter = ArtistViewPagerAdapter(this)
+        val viewpagerFragmentAdapter = ArtistViewPagerAdapter(this, artistId)
         viewPager.adapter = viewpagerFragmentAdapter
         viewPager.isUserInputEnabled = false
         val tabTitles = listOf("노래", "앨범")
