@@ -44,13 +44,9 @@ class ArtistActivity : AppCompatActivity() {
         val viewpagerFragmentAdapter = ArtistViewPagerAdapter(this)
         viewPager.adapter = viewpagerFragmentAdapter
         viewPager.isUserInputEnabled = false
-        viewPager.currentItem = 1
-        val tabTitles = listOf("", "노래", "앨범", "")
+        val tabTitles = listOf("노래", "앨범")
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabTitles[position]
-            if (position == 0 || position == 3){
-                tab.view.isClickable = false
-            }
         }.attach()
     }
 
