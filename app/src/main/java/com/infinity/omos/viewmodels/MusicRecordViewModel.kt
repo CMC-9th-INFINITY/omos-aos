@@ -12,7 +12,7 @@ class MusicRecordViewModel(application: Application): AndroidViewModel(applicati
     val musicRecord = _musicRecord
     val stateMusicRecord =repository._stateMusicRecord
 
-    fun loadMoreRecord(musicId: String, postId: Int, size: Int, userId: Int){
+    fun loadMoreRecord(musicId: String, postId: Int?, size: Int, userId: Int){
         repository.getMusicRecord(musicId, postId, size, userId)
     }
 }

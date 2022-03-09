@@ -39,7 +39,7 @@ class SearchRepository {
     var _stateArtistAlbum = MutableLiveData<Constant.ApiState>()
     var _stateMusicRecord = MutableLiveData<Constant.ApiState>()
 
-    fun getMusicRecord(musicId: String, postId: Int, size: Int, userId: Int){
+    fun getMusicRecord(musicId: String, postId: Int?, size: Int, userId: Int){
         _stateMusicRecord.value = Constant.ApiState.LOADING
         musicRecordApi.getMusicRecord(musicId, postId, size, userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
@@ -60,6 +60,7 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("MusicRecordAPI", errorBody!!.message)
+                        _musicRecord.value = emptyList()
                         _stateMusicRecord.value = Constant.ApiState.ERROR
                     }
 

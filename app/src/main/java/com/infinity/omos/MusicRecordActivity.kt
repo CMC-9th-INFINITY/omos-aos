@@ -46,7 +46,7 @@ class MusicRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.loadMoreRecord(musicId!!, -1, pageSize, userId)
+        viewModel.loadMoreRecord(musicId!!, null, pageSize, userId)
         viewModel.musicRecord.observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
@@ -56,9 +56,9 @@ class MusicRecordActivity : AppCompatActivity() {
                     true
                 } else {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                    postId = it[it.lastIndex].recordId
                     false
                 }
-                postId = it[it.lastIndex].recordId
             }
         })
 
@@ -78,7 +78,8 @@ class MusicRecordActivity : AppCompatActivity() {
                     }
 
                     else -> {
-
+                        binding.recyclerView.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
             }
