@@ -3,10 +3,13 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.MyDj
+import com.infinity.omos.data.Profile
 import com.infinity.omos.repository.AllRecordRepository
 import com.infinity.omos.repository.MyDjRepository
 import com.infinity.omos.repository.MyRecordRepository
+import com.infinity.omos.utils.GlobalApplication
 
 /**
  *  수정 필요 ( Repository 인자 )
@@ -28,20 +31,11 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     val stateAllRecords = allRecordRepository._stateAllRecords
 
     // My DJ
-    var myDjRecord = myDjRepository._djRecord
-    var myDj = myDjRepository.getMyDjData(6)
-
-    init {
-        myDjRepository.getMyDjRecordData(1)
-    }
-
-//    // xml 연결 (myRecordListData)
-//    fun getMyRecordData(): LiveData<List<MyRecord>> {
-//        return myRecord
-//    }
+    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
+    private val myDj = myDjRepository.getMyDj(userId)
 
     // xml 연결 (myDjListData)
-    fun getMyDjData(): LiveData<List<MyDj>> {
+    fun getMyDjData(): LiveData<List<Profile>?> {
         return myDj
     }
 
@@ -51,9 +45,5 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     fun setAllRecords(){
         allRecordRepository.setAllRecords()
-    }
-
-    fun updateDjRecord(pos: Int){
-        myDjRepository.getMyDjRecordData(pos)
     }
 }

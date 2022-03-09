@@ -6,18 +6,23 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
+import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.FragmentMyDjBinding
+import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyDjFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentMyDjBinding
+
+    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,22 +45,16 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         }
 
-//        val rAdapter = DetailCategoryListAdapter(requireContext(), null)
-//        binding.rvRecord.apply {
-//            adapter = rAdapter
-//            layoutManager = LinearLayoutManager(activity)
-//        }
-
-//        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
-//            record?.let {
-//                rAdapter.updateCategory(it)
-//            }
-//        })
+        val rAdapter = DetailCategoryListAdapter(requireContext())
+        binding.rvRecord.apply {
+            adapter = rAdapter
+            layoutManager = LinearLayoutManager(activity)
+        }
 
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, records: List<SaveRecord>?) {
                 // TODO: 수정 필요
-                viewModel.updateDjRecord(position+1)
+                //viewModel.updateDjRecord(position+1)
             }
         })
 

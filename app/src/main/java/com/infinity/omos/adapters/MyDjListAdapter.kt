@@ -9,11 +9,12 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.MyDj
+import com.infinity.omos.data.Profile
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.ListMydjItemBinding
 
 class MyDjListAdapter internal constructor(context: Context):
-    ListAdapter<MyDj, MyDjListAdapter.ViewHolder>(
+    ListAdapter<Profile, MyDjListAdapter.ViewHolder>(
         MyDjListAdapter
     ){
 
@@ -45,15 +46,15 @@ class MyDjListAdapter internal constructor(context: Context):
     }
 
     inner class ViewHolder(private val binding: ListMydjItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(dj: MyDj) {
+        fun bind(dj: Profile) {
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    Toast.makeText(context, "클릭", Toast.LENGTH_SHORT).show()
-                    itemClickListener.onClick(itemView, pos, dj.records)
+//                    Toast.makeText(context, "클릭", Toast.LENGTH_SHORT).show()
+//                    itemClickListener.onClick(itemView, pos, dj.records)
                 }
             }
         }
@@ -63,13 +64,13 @@ class MyDjListAdapter internal constructor(context: Context):
         return super.getItemCount()
     }
 
-    companion object MyDjDiffUtil: DiffUtil.ItemCallback<MyDj>(){
-        override fun areItemsTheSame(oldItem: MyDj, newItem: MyDj): Boolean {
+    companion object MyDjDiffUtil: DiffUtil.ItemCallback<Profile>(){
+        override fun areItemsTheSame(oldItem: Profile, newItem: Profile): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: MyDj, newItem: MyDj): Boolean {
+        override fun areContentsTheSame(oldItem: Profile, newItem: Profile): Boolean {
             return oldItem==newItem
         }
     }
