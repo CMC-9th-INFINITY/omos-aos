@@ -7,8 +7,14 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.repository.MyRecordRepository
 
 class WriteRecordViewModel(application: Application): AndroidViewModel(application) {
+
+    private val myRecordRepository: MyRecordRepository = MyRecordRepository()
+    private val _stateSaveRecord = myRecordRepository._stateSaveRecord
+    val stateSaveRecord = _stateSaveRecord
 
     var prevText = ""
     var isPrivate = MutableLiveData<Boolean>()
@@ -25,6 +31,10 @@ class WriteRecordViewModel(application: Application): AndroidViewModel(applicati
         isPrivate.value = false
         titleLength.value = 0
         contentsLength.value = 0
+    }
+
+    fun saveRecord(record: SaveRecord){
+        myRecordRepository.saveRecord(record)
     }
 
     fun countTitle(et: EditText){

@@ -21,8 +21,11 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
+import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
 import com.infinity.omos.viewmodels.WriteRecordViewModel
 import com.theartofdev.edmodo.cropper.CropImage
@@ -39,13 +42,25 @@ class WriteRecordActivity : AppCompatActivity() {
     private lateinit var result: ActivityResultLauncher<Intent>
     private lateinit var cropResult: ActivityResultLauncher<Intent>
     private val viewModel: WriteRecordViewModel by viewModels()
+    private lateinit var binding: ActivityWriteRecordBinding
+
+    private var category = ""
+    private var isPublic = true
+    private var musicId = ""
+    private var recordContents = ""
+    private var recordImageUrl = ""
+    private var recordTitle = ""
+    private var userId = GlobalApplication.prefs.getLong("userId").toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityWriteRecordBinding>(this, R.layout.activity_write_record)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_write_record)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        category = intent.getStringExtra("category")!!
+        musicId = intent.getStringExtra("musicId")!!
 
         viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
         viewModel.artists.value = intent.getStringExtra("artists")
@@ -54,7 +69,8 @@ class WriteRecordActivity : AppCompatActivity() {
         var currentTime = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy MM dd", Locale.getDefault())
         viewModel.createdDate.value = dateFormat.format(currentTime)
-        viewModel.category.value = intent.getStringExtra("category")
+
+        viewModel.category.value = category
         if (viewModel.category.value == resources.getString(R.string.a_line)){
             record_contents.visibility = View.GONE
             oneline_contents.visibility = View.VISIBLE
@@ -66,10 +82,12 @@ class WriteRecordActivity : AppCompatActivity() {
         // 공개/비공개 설정
         viewModel.isPrivate.observe(this, Observer { state ->
             state?.let {
-                if (it){
+                isPublic = if (it){
                     binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                    false
                 } else{
                     binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                    true
                 }
             }
         })
@@ -131,6 +149,19 @@ class WriteRecordActivity : AppCompatActivity() {
                 }
             }
         }
+
+        viewModel.stateSaveRecord.observe(this, Observer { record ->
+            record?.let {
+                if (it.state){
+                    val intent = Intent(this, MainActivity::class.java)
+                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    startActivity(intent)
+                } else{
+                    Toast.makeText(this, "저장 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
+
     }
 
     private fun cropImage(uri: Uri?){
@@ -163,10 +194,14 @@ class WriteRecordActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
-
-
-
-
+                category = GlobalFunction.categoryKrToEng(this, category)
+                recordContents = if (category == "A_LINE"){
+                    binding.onelineContents.text.toString()
+                } else {
+                    binding.recordContents.text.toString()
+                }
+                recordTitle = binding.etRecordTitle.text.toString()
+                viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
                 Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                 true
             }
