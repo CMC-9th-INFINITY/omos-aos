@@ -20,6 +20,24 @@
             tools:listitem="@layout/list_album_item"
             android:visibility="gone"/>
 
+        <LinearLayout
+            android:id="@+id/ln_norecord"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="검색결과가 없습니다.\n다시 검색해주세요."
+                android:textSize="16sp"
+                android:textColor="@color/gray_03"/>
+
+        </LinearLayout>
+
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

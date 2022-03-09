@@ -31,6 +31,8 @@ class AllFragment : Fragment() {
 
     lateinit var broadcastReceiver: BroadcastReceiver
 
+    private var isEmpty = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBroadcastReceiver()
@@ -77,11 +79,19 @@ class AllFragment : Fragment() {
         // 노래 초기화
         viewModel.music.observe(viewLifecycleOwner, Observer { music ->
             music?.let {
-                if (it.isNotEmpty()){
-                    mAdapter.clearRecord() // 기존 리스트 삭제
-                    mAdapter.setRecord(it) // 검색된 리스트 추가
-                    mAdapter.deleteLoading() // 로딩 리스트 삭제
-                    mAdapter.submitList(it)
+                mAdapter.clearRecord() // 기존 리스트 삭제
+                mAdapter.setRecord(it) // 검색된 리스트 추가
+                mAdapter.deleteLoading() // 로딩 리스트 삭제
+                mAdapter.notifyDataSetChanged()
+
+                if (it.isEmpty()){
+                    isEmpty++
+                    if (isEmpty == 3){
+                        binding.lnNorecord.visibility = View.VISIBLE
+                        binding.scrollView.visibility = View.GONE
+                    }
+                } else{
+                    binding.scrollView.visibility = View.VISIBLE
                 }
             }
         })
@@ -89,11 +99,19 @@ class AllFragment : Fragment() {
         // 앨범 초기화
         viewModel.album.observe(viewLifecycleOwner, Observer { album ->
             album?.let {
-                if (it.isNotEmpty()){
-                    aAdapter.clearRecord() // 기존 리스트 삭제
-                    aAdapter.setRecord(it) // 검색된 리스트 추가
-                    aAdapter.deleteLoading() // 로딩 리스트 삭제
-                    aAdapter.submitList(it)
+                aAdapter.clearRecord() // 기존 리스트 삭제
+                aAdapter.setRecord(it) // 검색된 리스트 추가
+                aAdapter.deleteLoading() // 로딩 리스트 삭제
+                aAdapter.notifyDataSetChanged()
+
+                if (it.isEmpty()){
+                    isEmpty++
+                    if (isEmpty == 3){
+                        binding.lnNorecord.visibility = View.VISIBLE
+                        binding.scrollView.visibility = View.GONE
+                    }
+                } else{
+                    binding.scrollView.visibility = View.VISIBLE
                 }
             }
         })
@@ -101,11 +119,19 @@ class AllFragment : Fragment() {
         // 아티스트 초기화
         viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
-                if (it.isNotEmpty()){
-                    tAdapter.clearRecord() // 기존 리스트 삭제
-                    tAdapter.setRecord(it) // 검색된 리스트 추가
-                    tAdapter.deleteLoading() // 로딩 리스트 삭제
-                    tAdapter.submitList(it)
+                tAdapter.clearRecord() // 기존 리스트 삭제
+                tAdapter.setRecord(it) // 검색된 리스트 추가
+                tAdapter.deleteLoading() // 로딩 리스트 삭제
+                tAdapter.notifyDataSetChanged()
+
+                if (it.isEmpty()){
+                    isEmpty++
+                    if (isEmpty == 3){
+                        binding.lnNorecord.visibility = View.VISIBLE
+                        binding.scrollView.visibility = View.GONE
+                    }
+                } else{
+                    binding.scrollView.visibility = View.VISIBLE
                 }
             }
         })
@@ -117,10 +143,10 @@ class AllFragment : Fragment() {
                     Constant.ApiState.LOADING -> {
                         binding.scrollView.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
+                        binding.lnNorecord.visibility = View.GONE
                     }
 
                     Constant.ApiState.DONE -> {
-                        binding.scrollView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
@@ -158,6 +184,7 @@ class AllFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var keyword = intent?.getStringExtra("keyword")!!
+                isEmpty = 0
                 viewModel.loadMoreMusic(keyword, 5, 0)
                 viewModel.loadMoreAlbum(keyword, 5, 0)
                 viewModel.loadMoreArtist(keyword, 5, 0)

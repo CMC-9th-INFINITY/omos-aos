@@ -27,6 +27,8 @@ class MusicRecordActivity : AppCompatActivity() {
     private val pageSize = 5
     private var isLoading = false
 
+    private var postId = -1
+
     private val userId = GlobalApplication.prefs.getLong("userId").toInt()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +46,7 @@ class MusicRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        //viewModel.loadMoreRecord(musicId!!, 0, pageSize, userId)
+        viewModel.loadMoreRecord(musicId!!, -1, pageSize, userId)
         viewModel.musicRecord.observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
@@ -56,6 +58,7 @@ class MusicRecordActivity : AppCompatActivity() {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }
+                postId = it[it.lastIndex].recordId
             }
         })
 
@@ -94,7 +97,8 @@ class MusicRecordActivity : AppCompatActivity() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    //viewModel.loadMoreRecord(musicId, ++page*pageSize, pageSize, userId)
+                    page++
+                    viewModel.loadMoreRecord(musicId, postId, pageSize, userId)
                 }
             }
         })

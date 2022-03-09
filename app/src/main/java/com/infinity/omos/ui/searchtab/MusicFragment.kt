@@ -74,6 +74,11 @@ class MusicFragment : Fragment() {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }
+
+                // 작성한 레코드가 없을 때,
+                if (it.isEmpty() && page == 0){
+                    binding.lnNorecord.visibility = View.VISIBLE
+                }
             }
         })
 
@@ -85,6 +90,7 @@ class MusicFragment : Fragment() {
                         if (page == 0){
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
+                            binding.lnNorecord.visibility = View.GONE
                         }
                     }
 
