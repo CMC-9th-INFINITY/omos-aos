@@ -7,7 +7,7 @@ import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MusicRecordService {
-    @GET("api/records/select/{musicId}")
+    @GET("api/records/select/music/{musicId}")
     fun getMusicRecord(
         @Path("musicId") musicId: String,
         @Query("postId") postId: Int?,

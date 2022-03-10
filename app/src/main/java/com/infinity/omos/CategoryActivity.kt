@@ -28,6 +28,8 @@ class CategoryActivity : AppCompatActivity() {
     private val pageSize = 5
     private var isLoading = false
 
+    private var postId = -1
+
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +67,7 @@ class CategoryActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.loadMoreCategory(ctg, 0, pageSize, "createdDate,desc", userId)
+        viewModel.loadMoreCategory(ctg, null, pageSize, "random", userId)
         viewModel.category.observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
@@ -75,6 +77,7 @@ class CategoryActivity : AppCompatActivity() {
                     true
                 } else {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                    postId = it[it.lastIndex].recordId
                     false
                 }
             }
@@ -115,7 +118,8 @@ class CategoryActivity : AppCompatActivity() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreCategory(ctg, ++page*pageSize, pageSize, "createdDate,desc", userId)
+                    page ++
+                    viewModel.loadMoreCategory(ctg, postId, pageSize, "random", userId)
                 }
             }
         })

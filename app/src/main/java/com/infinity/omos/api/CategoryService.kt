@@ -10,9 +10,9 @@ interface CategoryService {
     @GET("api/records/select/category/{category}")
     fun getCategory(
         @Path("category") category: String,
-        @Query("page") page: Int,
+        @Query("postId") postId: Int?,
         @Query("size") size: Int,
-        @Query("sort") sort: String?,
+        @Query("sortType") sortType: String,
         @Query("userid") userid: Int
     ): Call<List<Record>?>
 }

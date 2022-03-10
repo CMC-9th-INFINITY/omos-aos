@@ -66,9 +66,9 @@ class AllRecordsRepository {
         return allRecords
     }
 
-    fun getCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
+    fun getCategory(category: String, postId: Int?, size: Int, sortType: String, userId: Int){
         _stateCategory.value = Constant.ApiState.LOADING
-        categoryApi.getCategory(category, page, size, sort, userId).enqueue(object:
+        categoryApi.getCategory(category, postId, size, sortType, userId).enqueue(object:
             Callback<List<Record>?> {
             override fun onResponse(
                 call: Call<List<Record>?>,
@@ -85,7 +85,7 @@ class AllRecordsRepository {
                     401 -> {
                         Log.d("CategoryAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        getCategory(category, page, size, sort, userId)
+                        getCategory(category, postId, size, sortType, userId)
                     }
 
                     500 -> {
