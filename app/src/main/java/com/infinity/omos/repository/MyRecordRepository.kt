@@ -24,9 +24,7 @@ class MyRecordRepository {
     private val myRecordApi = retrofit.create(MyRecordService::class.java)
     private val saveRecordApi = retrofit.create(SaveRecordService::class.java)
 
-    var _stateSaveRecord = MutableLiveData<ResultState?>()
-    var _stateMyRecord = MutableLiveData<Constant.ApiState>()
-
+    var stateSaveRecord = MutableLiveData<ResultState?>()
     fun saveRecord(record: SaveRecord){
         saveRecordApi.saveRecord(record).enqueue(object: Callback<ResultState> {
             override fun onResponse(
@@ -37,7 +35,7 @@ class MyRecordRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("SaveRecordAPI", "Success")
-                        _stateSaveRecord.value = body
+                        stateSaveRecord.value = body
                     }
 
                     401 -> {
@@ -64,8 +62,9 @@ class MyRecordRepository {
         })
     }
 
+    var stateMyRecord = MutableLiveData<Constant.ApiState>()
     fun getMyRecord(userId: Int): MutableLiveData<List<Record>>{
-        _stateMyRecord.value = Constant.ApiState.LOADING
+        stateMyRecord.value = Constant.ApiState.LOADING
         var myRecord = MutableLiveData<List<Record>>()
         myRecordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
@@ -77,7 +76,7 @@ class MyRecordRepository {
                     in 200..300 -> {
                         Log.d("MyRecordAPI", "Success")
                         myRecord.postValue(body!!)
-                        _stateMyRecord.value = Constant.ApiState.DONE
+                        stateMyRecord.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -89,7 +88,7 @@ class MyRecordRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("MyRecordAPI", errorBody!!.message)
-                        _stateMyRecord.value = Constant.ApiState.ERROR
+                        stateMyRecord.value = Constant.ApiState.ERROR
                     }
 
                     else -> {

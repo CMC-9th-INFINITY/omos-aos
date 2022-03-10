@@ -77,7 +77,7 @@ class RegisterActivity : AppCompatActivity() {
         })
 
         // 이메일 중복 확인
-        viewModel.stateDupEmail.observe(this, Observer { state ->
+        viewModel.getStateDupEmail().observe(this, Observer { state ->
             state?.let {
                 if (!state){
                     LoginActivity.showErrorMsg(

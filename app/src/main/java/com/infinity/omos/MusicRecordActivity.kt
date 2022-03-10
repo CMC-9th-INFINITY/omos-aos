@@ -46,8 +46,8 @@ class MusicRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.loadMoreRecord(musicId!!, null, pageSize, userId)
-        viewModel.musicRecord.observe(this, Observer { category ->
+        viewModel.setMusicRecord(musicId!!, null, pageSize, userId)
+        viewModel.getMusicRecord().observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
@@ -62,7 +62,7 @@ class MusicRecordActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.stateMusicRecord.observe(this, Observer { state ->
+        viewModel.getStateMusicRecord().observe(this, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
@@ -99,7 +99,7 @@ class MusicRecordActivity : AppCompatActivity() {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page++
-                    viewModel.loadMoreRecord(musicId, postId, pageSize, userId)
+                    viewModel.setMusicRecord(musicId, postId, pageSize, userId)
                 }
             }
         })

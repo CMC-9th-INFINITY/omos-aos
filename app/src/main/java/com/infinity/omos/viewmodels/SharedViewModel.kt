@@ -40,7 +40,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
         return allRecords
     }
     fun getStateAllRecords(): LiveData<Constant.ApiState>{
-        return allRecordsRepository._stateAllRecords
+        return allRecordsRepository.stateAllRecords
     }
 
     // My DJ

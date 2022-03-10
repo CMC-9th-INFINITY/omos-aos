@@ -2,9 +2,11 @@ package com.infinity.omos.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.UserSignUp
 import com.infinity.omos.data.UserSnsSignUp
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
 
 class RegisterNickViewModel(application: Application): AndroidViewModel(application) {
@@ -15,8 +17,12 @@ class RegisterNickViewModel(application: Application): AndroidViewModel(applicat
     var checkBoxPP = MutableLiveData<Boolean>()
     var allState = MutableLiveData<Boolean>()
 
-    var stateSnsSignUp = repository._stateSnsSignUp
-    var stateSignUp = repository._stateSignUp
+    fun getStateSignUp(): LiveData<Constant.ApiState> {
+        return repository.stateSignUp
+    }
+    fun getStateSnsSignUp(): LiveData<Constant.ApiState> {
+        return repository.stateSnsSignUp
+    }
 
     init {
         checkBoxTos.value = false

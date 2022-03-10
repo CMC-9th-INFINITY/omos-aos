@@ -3,6 +3,7 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.repository.OnBoardingRepository
 
@@ -11,7 +12,10 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     private val repository: OnBoardingRepository = OnBoardingRepository()
 
     var stateInput = MutableLiveData<Boolean>()
-    var stateDupEmail = repository._stateDupEmail
+
+    fun getStateDupEmail(): LiveData<Boolean>{
+        return repository.stateDupEmail
+    }
 
     var visibleEye1 = MutableLiveData<Boolean>()
     var visibleEye2 = MutableLiveData<Boolean>()

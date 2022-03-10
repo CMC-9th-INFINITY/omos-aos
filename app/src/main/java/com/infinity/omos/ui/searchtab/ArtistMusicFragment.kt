@@ -56,15 +56,15 @@ class ArtistMusicFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        viewModel.getArtistMusic(artistId)
-        viewModel.artistMusic.observe(viewLifecycleOwner, Observer { music ->
+        viewModel.setArtistMusic(artistId)
+        viewModel.getArtistMusic().observe(viewLifecycleOwner, Observer { music ->
             music?.let {
                 mAdapter.setRecord(it)
             }
         })
 
         // 로딩화면
-        viewModel.stateArtistMusic.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateArtistMusic().observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {

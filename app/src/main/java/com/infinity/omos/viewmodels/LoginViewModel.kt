@@ -3,9 +3,11 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.UserLogin
 import com.infinity.omos.data.UserSnsLogin
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
 
 class LoginViewModel(application: Application): AndroidViewModel(application) {
@@ -14,8 +16,12 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
     var visibleEye = MutableLiveData<Boolean>()
     var stateInput = MutableLiveData<Boolean>()
 
-    var statusLogin = repository._stateLogin
-    var stateSnsLogin = repository._stateSnsLogin
+    fun getStateLogin(): LiveData<Constant.ApiState>{
+        return repository.stateLogin
+    }
+    fun getStateSnsLogin(): LiveData<Constant.ApiState>{
+        return repository.stateSnsLogin
+    }
 
     init {
         visibleEye.value = false

@@ -22,12 +22,10 @@ class AllRecordsRepository {
 
     private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
     private val categoryApi = retrofit.create(CategoryService::class.java)
-    var _category = MutableLiveData<List<Record>?>()
-    var _stateAllRecords = MutableLiveData<Constant.ApiState>()
-    var _stateCategory = MutableLiveData<Constant.ApiState>()
 
+    var stateAllRecords = MutableLiveData<Constant.ApiState>()
     fun setAllRecords(): MutableLiveData<Category>{
-        _stateAllRecords.value = Constant.ApiState.LOADING
+        stateAllRecords.value = Constant.ApiState.LOADING
         var allRecords = MutableLiveData<Category>()
         allRecordsApi.setAllRecords().enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
@@ -36,7 +34,7 @@ class AllRecordsRepository {
                     in 200..300 -> {
                         Log.d("AllRecordsAPI", "Success")
                         allRecords.postValue(body!!)
-                        _stateAllRecords.value = Constant.ApiState.DONE
+                        stateAllRecords.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -48,7 +46,7 @@ class AllRecordsRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("AllRecordsAPI", errorBody!!.message)
-                        _stateAllRecords.value = Constant.ApiState.ERROR
+                        stateAllRecords.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -66,20 +64,22 @@ class AllRecordsRepository {
         return allRecords
     }
 
+    var _category = MutableLiveData<List<Record>>()
+    var stateCategory = MutableLiveData<Constant.ApiState>()
     fun getCategory(category: String, postId: Int?, size: Int, sortType: String, userId: Int){
-        _stateCategory.value = Constant.ApiState.LOADING
+        stateCategory.value = Constant.ApiState.LOADING
         categoryApi.getCategory(category, postId, size, sortType, userId).enqueue(object:
-            Callback<List<Record>?> {
+            Callback<List<Record>> {
             override fun onResponse(
-                call: Call<List<Record>?>,
-                response: Response<List<Record>?>
+                call: Call<List<Record>>,
+                response: Response<List<Record>>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("CategoryAPI", "Success")
-                        _category.value = body
-                        _stateCategory.value = Constant.ApiState.DONE
+                        _category.postValue(body!!)
+                        stateCategory.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -91,7 +91,7 @@ class AllRecordsRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("CategoryAPI", errorBody!!.message)
-                        _stateCategory.value = Constant.ApiState.ERROR
+                        stateCategory.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -100,7 +100,7 @@ class AllRecordsRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>?>, t: Throwable) {
+            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
                 Log.d("CategoryAPI", t.message.toString())
                 t.stackTrace
             }

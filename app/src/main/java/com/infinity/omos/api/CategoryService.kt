@@ -14,5 +14,5 @@ interface CategoryService {
         @Query("size") size: Int,
         @Query("sortType") sortType: String,
         @Query("userid") userid: Int
-    ): Call<List<Record>?>
+    ): Call<List<Record>>
 }

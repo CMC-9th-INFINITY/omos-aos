@@ -67,8 +67,8 @@ class CategoryActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.loadMoreCategory(ctg, null, pageSize, "random", userId)
-        viewModel.category.observe(this, Observer { category ->
+        viewModel.setCategoryRecord(ctg, null, pageSize, "random", userId)
+        viewModel.getCategoryRecord().observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
@@ -83,7 +83,7 @@ class CategoryActivity : AppCompatActivity() {
             }
         })
 
-        viewModel.stateCategory.observe(this, Observer { state ->
+        viewModel.getStateCategory().observe(this, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
@@ -119,7 +119,7 @@ class CategoryActivity : AppCompatActivity() {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page ++
-                    viewModel.loadMoreCategory(ctg, postId, pageSize, "random", userId)
+                    viewModel.setCategoryRecord(ctg, postId, pageSize, "random", userId)
                 }
             }
         })
@@ -149,5 +149,11 @@ class CategoryActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        // TODO: 좋아요, 스크랩 API
     }
 }

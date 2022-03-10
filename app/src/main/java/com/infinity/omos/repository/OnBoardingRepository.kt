@@ -22,15 +22,10 @@ class OnBoardingRepository {
     private val snsSignUpApi = retrofit.create(SnsSignUpService::class.java)
     private val checkDupApi = retrofit.create(DupEmailService::class.java)
     private val reissueApi = retrofit.create(ReissueService::class.java)
-    var _stateLogin = MutableLiveData<Constant.ApiState>()
-    var _stateSignUp = MutableLiveData<Constant.ApiState>()
-    var _stateSnsLogin = MutableLiveData<Constant.ApiState>()
-    var _stateSnsSignUp = MutableLiveData<Constant.ApiState>()
-    var _stateDupEmail = MutableLiveData<Boolean>()
-    var _stateToken = MutableLiveData<Constant.ApiState>()
 
+    var stateToken = MutableLiveData<Constant.ApiState>()
     fun getUserToken(userInfo: UserToken){
-        _stateToken.value = Constant.ApiState.LOADING
+        stateToken.value = Constant.ApiState.LOADING
         reissueApi.getToken(userInfo).enqueue(object: Callback<UserToken> {
             override fun onResponse(
                 call: Call<UserToken>,
@@ -45,7 +40,7 @@ class OnBoardingRepository {
                             body?.refreshToken,
                             body?.userId!!)
 
-                        _stateToken.value = Constant.ApiState.DONE
+                        stateToken.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -55,7 +50,7 @@ class OnBoardingRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("ReissueAPI", errorBody!!.message)
-                        _stateToken.value = Constant.ApiState.ERROR
+                        stateToken.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -66,12 +61,13 @@ class OnBoardingRepository {
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("ReissueAPI", t.message.toString())
-                _stateToken.value = Constant.ApiState.ERROR
+                stateToken.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })
     }
 
+    var stateLogin = MutableLiveData<Constant.ApiState>()
     fun checkLogin(userLogin: UserLogin){
         loginApi.getResultLogin(userLogin).enqueue(object: Callback<UserToken> {
             override fun onResponse(
@@ -87,7 +83,7 @@ class OnBoardingRepository {
                             body?.refreshToken,
                             body?.userId!!)
 
-                        _stateLogin.value = Constant.ApiState.DONE
+                        stateLogin.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -97,7 +93,7 @@ class OnBoardingRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("LoginAPI", errorBody!!.message)
-                        _stateLogin.value = Constant.ApiState.ERROR
+                        stateLogin.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -113,6 +109,7 @@ class OnBoardingRepository {
         })
     }
 
+    var stateSnsLogin = MutableLiveData<Constant.ApiState>()
     fun checkSnsLogin(id: UserSnsLogin){
         snsLoginApi.getResultSnsLogin(id).enqueue(object: Callback<UserToken> {
             override fun onResponse(
@@ -128,7 +125,7 @@ class OnBoardingRepository {
                             body?.refreshToken,
                             body?.userId!!)
 
-                        _stateSnsLogin.value = Constant.ApiState.DONE
+                        stateSnsLogin.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -139,7 +136,7 @@ class OnBoardingRepository {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("SnsLoginAPI", errorBody!!.message)
                         if (errorBody.message == "해당하는 유저가 존재하지 않습니다"){
-                            _stateSnsLogin.value = Constant.ApiState.ERROR
+                            stateSnsLogin.value = Constant.ApiState.ERROR
                         }
                     }
 
@@ -156,6 +153,7 @@ class OnBoardingRepository {
         })
     }
 
+    var stateSignUp = MutableLiveData<Constant.ApiState>()
     fun signUp(userInfo: UserSignUp){
         signUpApi.getResultSignUp(userInfo).enqueue(object: Callback<ResultState>{
             override fun onResponse(call: Call<ResultState>, response: Response<ResultState>) {
@@ -164,9 +162,9 @@ class OnBoardingRepository {
                     in 200..300 -> {
                         Log.d("signUpAPI", "Success SignUp")
                         if(body?.state == true){
-                            _stateSignUp.value = Constant.ApiState.DONE
+                            stateSignUp.value = Constant.ApiState.DONE
                         } else{
-                            _stateSignUp.value = Constant.ApiState.ERROR
+                            stateSignUp.value = Constant.ApiState.ERROR
                         }
                     }
 
@@ -178,7 +176,7 @@ class OnBoardingRepository {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("signUpAPI", errorBody!!.message)
                         if (errorBody.message == "이미 있는 닉네임입니다"){
-                            _stateSignUp.value = Constant.ApiState.ERROR
+                            stateSignUp.value = Constant.ApiState.ERROR
                         }
                     }
 
@@ -195,6 +193,7 @@ class OnBoardingRepository {
         })
     }
 
+    var stateSnsSignUp = MutableLiveData<Constant.ApiState>()
     fun snsSignUp(userInfo: UserSnsSignUp){
         snsSignUpApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<UserToken>{
             override fun onResponse(
@@ -209,7 +208,7 @@ class OnBoardingRepository {
                             body?.accessToken,
                             body?.refreshToken,
                             body?.userId!!)
-                        _stateSnsSignUp.value = Constant.ApiState.DONE
+                        stateSnsSignUp.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -220,7 +219,7 @@ class OnBoardingRepository {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("signUpAPI", errorBody!!.message)
                         if (errorBody.message == "이미 있는 닉네임입니다"){
-                            _stateSnsSignUp.value = Constant.ApiState.ERROR
+                            stateSnsSignUp.value = Constant.ApiState.ERROR
                         }
                     }
 
@@ -237,6 +236,7 @@ class OnBoardingRepository {
         })
     }
 
+    var stateDupEmail = MutableLiveData<Boolean>()
     fun checkDupEmail(email: String){
         checkDupApi.checkDupEmail(email).enqueue(object: Callback<ResultState>{
             override fun onResponse(
@@ -246,7 +246,7 @@ class OnBoardingRepository {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
-                        _stateDupEmail.value = body?.state
+                        stateDupEmail.postValue(body?.state)
                     }
 
                     401 -> {

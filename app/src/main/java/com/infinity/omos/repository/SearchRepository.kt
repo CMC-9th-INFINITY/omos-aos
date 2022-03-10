@@ -24,27 +24,19 @@ class SearchRepository {
     private val artistMusicApi = retrofit.create(ArtistMusicService::class.java)
     private val artistAlbumApi = retrofit.create(ArtistAlbumService::class.java)
     private val musicRecordApi = retrofit.create(MusicRecordService::class.java)
-    var _albumDetail = MutableLiveData<List<Music>?>()
-    var _artistMusic = MutableLiveData<List<ArtistMusic>?>()
-    var _artistAlbum = MutableLiveData<List<Album>?>()
-    var _musicRecord = MutableLiveData<List<Record>?>()
 
-
-    var _stateAlbumDetail = MutableLiveData<Constant.ApiState>()
-    var _stateArtistMusic = MutableLiveData<Constant.ApiState>()
-    var _stateArtistAlbum = MutableLiveData<Constant.ApiState>()
-    var _stateMusicRecord = MutableLiveData<Constant.ApiState>()
-
+    var musicRecord = MutableLiveData<List<Record>>()
+    var stateMusicRecord = MutableLiveData<Constant.ApiState>()
     fun getMusicRecord(musicId: String, postId: Int?, size: Int, userId: Int){
-        _stateMusicRecord.value = Constant.ApiState.LOADING
+        stateMusicRecord.value = Constant.ApiState.LOADING
         musicRecordApi.getMusicRecord(musicId, postId, size, userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MusicRecordAPI", "Success")
-                        _musicRecord.value = body
-                        _stateMusicRecord.value = Constant.ApiState.DONE
+                        musicRecord.postValue(body!!)
+                        stateMusicRecord.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -56,8 +48,8 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("MusicRecordAPI", errorBody!!.message)
-                        _musicRecord.value = emptyList()
-                        _stateMusicRecord.value = Constant.ApiState.ERROR
+                        musicRecord.postValue(emptyList())
+                        stateMusicRecord.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -73,16 +65,18 @@ class SearchRepository {
         })
     }
 
+    var artistAlbum = MutableLiveData<List<Album>>()
+    var stateArtistAlbum = MutableLiveData<Constant.ApiState>()
     fun getArtistAlbum(artistId: String, limit: Int, offset: Int){
-        _stateArtistAlbum.value = Constant.ApiState.LOADING
+        stateArtistAlbum.value = Constant.ApiState.LOADING
         artistAlbumApi.getArtistAlbum(artistId, limit, offset).enqueue(object: Callback<List<Album>> {
             override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("ArtistAlbumAPI", "Success")
-                        _artistAlbum.value = body
-                        _stateArtistAlbum.value = Constant.ApiState.DONE
+                        artistAlbum.postValue(body!!)
+                        stateArtistAlbum.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -94,7 +88,7 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("ArtistAlbumAPI", errorBody!!.message)
-                        _stateArtistAlbum.value = Constant.ApiState.ERROR
+                        stateArtistAlbum.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -110,16 +104,18 @@ class SearchRepository {
         })
     }
 
+    var artistMusic = MutableLiveData<List<ArtistMusic>>()
+    var stateArtistMusic = MutableLiveData<Constant.ApiState>()
     fun getArtistMusic(artistId: String){
-        _stateArtistMusic.value = Constant.ApiState.LOADING
+        stateArtistMusic.value = Constant.ApiState.LOADING
         artistMusicApi.getArtistMusic(artistId).enqueue(object: Callback<List<ArtistMusic>> {
             override fun onResponse(call: Call<List<ArtistMusic>>, response: Response<List<ArtistMusic>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("ArtistMusicAPI", "Success")
-                        _artistMusic.value = body
-                        _stateArtistMusic.value = Constant.ApiState.DONE
+                        artistMusic.postValue(body!!)
+                        stateArtistMusic.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -131,7 +127,7 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("ArtistMusicAPI", errorBody!!.message)
-                        _stateArtistMusic.value = Constant.ApiState.ERROR
+                        stateArtistMusic.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -147,16 +143,18 @@ class SearchRepository {
         })
     }
 
+    var albumDetail = MutableLiveData<List<Music>>()
+    var stateAlbumDetail = MutableLiveData<Constant.ApiState>()
     fun getAlbumDetail(albumId: String){
-        _stateAlbumDetail.value = Constant.ApiState.LOADING
+        stateAlbumDetail.value = Constant.ApiState.LOADING
         albumDetailApi.getAlbumDetail(albumId).enqueue(object: Callback<List<Music>> {
             override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("AlbumDetailAPI", "Success")
-                        _albumDetail.value = body
-                        _stateAlbumDetail.value = Constant.ApiState.DONE
+                        albumDetail.postValue(body!!)
+                        stateAlbumDetail.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -168,7 +166,7 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("AlbumDetailAPI", errorBody!!.message)
-                        _stateAlbumDetail.value = Constant.ApiState.ERROR
+                        stateAlbumDetail.value = Constant.ApiState.ERROR
                     }
 
                     else -> {

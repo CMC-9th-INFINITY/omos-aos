@@ -117,7 +117,7 @@ class RegisterNickActivity : AppCompatActivity() {
         })
 
         // 회원가입 완료
-        viewModel.stateSignUp.observe(this, Observer { state ->
+        viewModel.getStateSignUp().observe(this, Observer { state ->
             state?.let {
                 if (it == Constant.ApiState.DONE){
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
@@ -139,7 +139,7 @@ class RegisterNickActivity : AppCompatActivity() {
         })
 
         // 회원가입 완료
-        viewModel.stateSnsSignUp.observe(this, Observer { state ->
+        viewModel.getStateSnsSignUp().observe(this, Observer { state ->
             state?.let {
                 if (it == Constant.ApiState.DONE){
                     val intent = Intent(this, MainActivity::class.java)

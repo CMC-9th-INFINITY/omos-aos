@@ -86,7 +86,7 @@ class LoginActivity : AppCompatActivity() {
         })
 
         // 이미 가입된 회원인지 확인
-        viewModel.stateSnsLogin.observe(this, Observer { state ->
+        viewModel.getStateSnsLogin().observe(this, Observer { state ->
             state?.let {
                 if (it == Constant.ApiState.DONE){
                     Log.d("LoginActivity", "이미 가입된 회원입니다.")
@@ -174,7 +174,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 로그인 상태
-        viewModel.statusLogin.observe(this, Observer { status ->
+        viewModel.getStateLogin().observe(this, Observer { status ->
             status?.let {
                 if (it == Constant.ApiState.DONE){
                     var intent = Intent(this, MainActivity::class.java)

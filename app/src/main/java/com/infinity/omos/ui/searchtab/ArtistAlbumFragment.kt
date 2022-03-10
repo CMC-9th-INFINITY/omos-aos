@@ -59,8 +59,8 @@ class ArtistAlbumFragment : Fragment() {
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreAlbum(artistId, pageSize, 0)
-        viewModel.artistAlbum.observe(viewLifecycleOwner, Observer { album ->
+        viewModel.setArtistAlbum(artistId, pageSize, 0)
+        viewModel.getArtistAlbum().observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 mAdapter.setRecord(it)
                 isLoading = if (it.isEmpty()) {
@@ -75,7 +75,7 @@ class ArtistAlbumFragment : Fragment() {
         })
 
         // 로딩화면
-        viewModel.stateArtistAlbum.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateArtistAlbum().observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
@@ -110,7 +110,7 @@ class ArtistAlbumFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreAlbum(artistId, pageSize, ++page*pageSize)
+                    viewModel.setArtistAlbum(artistId, pageSize, ++page*pageSize)
                 }
             }
         })

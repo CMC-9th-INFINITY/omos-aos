@@ -50,8 +50,8 @@ class AlbumActivity : AppCompatActivity() {
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreMusic(albumId!!)
-        viewModel.albumDetail.observe(this, Observer { music ->
+        viewModel.setAlbumDetail(albumId!!)
+        viewModel.getAlbumDetail().observe(this, Observer { music ->
             music?.let {
                 mAdapter.setRecord(it)
                 mAdapter.deleteLoading()
@@ -60,7 +60,7 @@ class AlbumActivity : AppCompatActivity() {
         })
 
         // 로딩화면
-        viewModel.stateAlbumDetail.observe(this, Observer { state ->
+        viewModel.getStateAlbumDetail().observe(this, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {

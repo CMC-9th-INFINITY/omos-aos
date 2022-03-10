@@ -23,8 +23,6 @@ class MyDjRepository {
 
     private val myDjApi = retrofit.create(MyDjService::class.java)
     private val myDjRecordApi = retrofit.create(MyDjRecordService::class.java)
-    var _stateMyDj = MutableLiveData<Constant.ApiState>()
-
 
     var myDjRecord = MutableLiveData<List<Record>>()
     var stateMyDjRecord = MutableLiveData<Constant.ApiState>()
@@ -69,10 +67,11 @@ class MyDjRepository {
         })
     }
 
+    var stateMyDj = MutableLiveData<Constant.ApiState>()
     fun getMyDj(userId: Int): LiveData<List<Profile>?>{
         var data = MutableLiveData<List<Profile>?>()
 
-        _stateMyDj.value = Constant.ApiState.LOADING
+        stateMyDj.value = Constant.ApiState.LOADING
         myDjApi.getMyDj(userId).enqueue(object: Callback<List<Profile>> {
             override fun onResponse(
                 call: Call<List<Profile>>,
@@ -83,7 +82,7 @@ class MyDjRepository {
                     in 200..300 -> {
                         Log.d("MyDjAPI", "Success")
                         data.value = body
-                        _stateMyDj.value = Constant.ApiState.DONE
+                        stateMyDj.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -95,7 +94,7 @@ class MyDjRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("MyDjAPI", errorBody!!.message)
-                        _stateMyDj.value = Constant.ApiState.ERROR
+                        stateMyDj.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
