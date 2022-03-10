@@ -9,7 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MainActivity
 import com.infinity.omos.MainActivity.Companion.keyword
+import com.infinity.omos.MusicRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.SelectCategoryActivity
 import com.infinity.omos.data.Artists
@@ -79,12 +81,18 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
             binding.tvCount.text = String.format("%02d", pos+1)
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    val intent = Intent(context, SelectCategoryActivity::class.java)
-                    intent.putExtra("musicId", music.musicId)
-                    intent.putExtra("musicTitle", music.musicTitle)
-                    intent.putExtra("artists", binding.tvArtist.text.toString())
-                    intent.putExtra("albumImageUrl", albumImageUrl)
-                    context.startActivity(intent)
+                    if (MainActivity.isWrite){
+                        val intent = Intent(context, SelectCategoryActivity::class.java)
+                        intent.putExtra("musicId", music.musicId)
+                        intent.putExtra("musicTitle", music.musicTitle)
+                        intent.putExtra("artists", binding.tvArtist.text.toString())
+                        intent.putExtra("albumImageUrl", music.albumImageUrl)
+                        context.startActivity(intent)
+                    } else {
+                        val intent = Intent(context, MusicRecordActivity::class.java)
+                        intent.putExtra("musicId", music.musicId)
+                        context.startActivity(intent)
+                    }
                 }
             }
         }
