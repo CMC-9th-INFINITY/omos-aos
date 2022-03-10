@@ -24,7 +24,7 @@ class MyRecordFragment : Fragment() {
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyRecordBinding
 
-    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,22 +53,22 @@ class MyRecordFragment : Fragment() {
         }
 
         // 스크롤 시 레코드 업데이트
-        viewModel.getMyRecord(userId)
-        viewModel.myRecord.observe(viewLifecycleOwner, Observer { record ->
+        viewModel.setMyRecord(userId)
+        viewModel.getMyRecord().observe(viewLifecycleOwner) { record ->
             record?.let {
                 mAdapter.setRecord(it)
 
                 // 작성한 레코드가 없을 때,
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     binding.lnNorecord.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         // 로딩화면
-        viewModel.stateMyRecord.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateMyRecord().observe(viewLifecycleOwner) { state ->
             state?.let {
-                when(it){
+                when (it) {
                     Constant.ApiState.LOADING -> {
                         binding.progressBar.visibility = View.VISIBLE
                         binding.lnNorecord.visibility = View.GONE
@@ -83,6 +83,6 @@ class MyRecordFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 }

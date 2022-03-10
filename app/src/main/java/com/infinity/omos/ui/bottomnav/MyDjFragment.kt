@@ -22,8 +22,6 @@ class MyDjFragment : Fragment() {
     private lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentMyDjBinding
 
-    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -51,10 +49,21 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        viewModel.djRecord.observe(viewLifecycleOwner, Observer { record ->
+            record?.let {
+//                rAdapter.setRecord(it)
+//
+//                // 작성한 레코드가 없을 때,
+//                if (it.isEmpty()){
+//                    binding.lnNorecord.visibility = View.VISIBLE
+//                }
+            }
+        })
+
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, records: List<SaveRecord>?) {
                 // TODO: 수정 필요
-                //viewModel.updateDjRecord(position+1)
+                //viewModel.getDjRecord()
             }
         })
 

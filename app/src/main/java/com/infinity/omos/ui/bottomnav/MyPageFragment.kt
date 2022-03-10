@@ -49,7 +49,7 @@ class MyPageFragment : Fragment() {
                 }
 
                 Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-                GlobalApplication.prefs.setUserToken(null, null, -1L)
+                GlobalApplication.prefs.setUserToken(null, null, -1)
                 val intent = Intent(context, LoginActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                 startActivity(intent)

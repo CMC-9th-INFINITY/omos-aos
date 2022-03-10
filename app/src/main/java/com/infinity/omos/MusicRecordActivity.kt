@@ -29,7 +29,7 @@ class MusicRecordActivity : AppCompatActivity() {
 
     private var postId = -1
 
-    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

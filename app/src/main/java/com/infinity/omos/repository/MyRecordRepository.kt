@@ -24,8 +24,6 @@ class MyRecordRepository {
     private val myRecordApi = retrofit.create(MyRecordService::class.java)
     private val saveRecordApi = retrofit.create(SaveRecordService::class.java)
 
-    var _myRecord = MutableLiveData<List<Record>?>()
-
     var _stateSaveRecord = MutableLiveData<ResultState?>()
     var _stateMyRecord = MutableLiveData<Constant.ApiState>()
 
@@ -66,9 +64,9 @@ class MyRecordRepository {
         })
     }
 
-    fun getMyRecord(userId: Int){
+    fun getMyRecord(userId: Int): MutableLiveData<List<Record>>{
         _stateMyRecord.value = Constant.ApiState.LOADING
-
+        var myRecord = MutableLiveData<List<Record>>()
         myRecordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
                 call: Call<List<Record>>,
@@ -78,7 +76,7 @@ class MyRecordRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MyRecordAPI", "Success")
-                        _myRecord.value = body
+                        myRecord.postValue(body!!)
                         _stateMyRecord.value = Constant.ApiState.DONE
                     }
 
@@ -105,5 +103,7 @@ class MyRecordRepository {
                 t.stackTrace
             }
         })
+
+        return myRecord
     }
 }

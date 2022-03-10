@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
         // 토큰 정보 확인
         val token = GlobalApplication.prefs.getUserToken()
         if (token != null){
-            repository.getUserToken(token!!)
+            repository.getUserToken(token)
         }
 
         repository._stateToken.observe(this, Observer { state ->
@@ -43,7 +43,7 @@ class SplashActivity : AppCompatActivity() {
             UserApiClient.instance.accessTokenInfo { tokenInfo, error ->
                 if (error != null) {
                     // 이메일 로그인 상태 확인
-                    if (GlobalApplication.prefs.getLong("userId") == -1L && !stateToken){
+                    if (GlobalApplication.prefs.getInt("userId") == -1 || !stateToken){
                         Log.d("SplashActivity", "토큰 불러오기 실패")
                         val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
@@ -55,7 +55,7 @@ class SplashActivity : AppCompatActivity() {
                 }
                 else if (tokenInfo != null) {
                     // 소셜 로그인 상태 확인
-                    if (GlobalApplication.prefs.getLong("userId") == -1L && !stateToken){
+                    if (GlobalApplication.prefs.getInt("userId") == -1 && !stateToken){
                         // 소셜 로그인하고 닉네임 입력 안한 상황
                         Log.d("SplashActivity", "토큰 불러오기 실패")
                         val intent = Intent(this, RegisterNickActivity::class.java)

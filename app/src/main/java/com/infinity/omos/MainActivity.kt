@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
 
         Log.d("MainActivity", "aToken: ${GlobalApplication.prefs.getString("accessToken")}")
         Log.d("MainActivity", "rToken: ${GlobalApplication.prefs.getString("refreshToken")}")
-        Log.d("MainActivity", "userId: ${GlobalApplication.prefs.getLong("userId")}")
+        Log.d("MainActivity", "userId: ${GlobalApplication.prefs.getInt("userId")}")
 
         initToolBar()
         initNavigationBar()

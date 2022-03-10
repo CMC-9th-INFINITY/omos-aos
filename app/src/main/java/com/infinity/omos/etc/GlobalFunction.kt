@@ -7,7 +7,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.infinity.omos.R
 import com.infinity.omos.data.Artists
-import kotlinx.android.synthetic.main.activity_select_category.*
 
 class GlobalFunction {
     companion object{
@@ -105,10 +104,9 @@ class GlobalFunction {
             return ctg
         }
 
-        fun setDate(createdDate: String): String{
+        fun setDate(createdDate: String): String {
             var listDate = createdDate.split("T")
-            var date = listDate[0].replace("-", " ")
-            return date
+            return listDate[0].replace("-", " ")
         }
     }
 }

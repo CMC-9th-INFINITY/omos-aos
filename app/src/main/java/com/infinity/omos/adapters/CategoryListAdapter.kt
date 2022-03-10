@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +12,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
 import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListCategoryItemBinding
+import com.infinity.omos.etc.GlobalFunction.Companion.categoryEngToKr
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
+import com.infinity.omos.etc.GlobalFunction.Companion.setDate
 
 class CategoryListAdapter internal constructor(context: Context, category: List<Record>?):
     ListAdapter<Record, CategoryListAdapter.ViewHolder>(
@@ -58,7 +61,6 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, MyRecordDetailActivity::class.java)
-                    intent.putExtra("title", record.music.musicTitle)
                     context.startActivity(intent)
                 }
             }

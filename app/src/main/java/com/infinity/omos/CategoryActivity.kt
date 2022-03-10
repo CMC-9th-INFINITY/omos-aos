@@ -28,7 +28,7 @@ class CategoryActivity : AppCompatActivity() {
     private val pageSize = 5
     private var isLoading = false
 
-    private val userId = GlobalApplication.prefs.getLong("userId").toInt()
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

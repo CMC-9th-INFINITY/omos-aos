@@ -53,7 +53,7 @@ class MyRecordDetailActivity : AppCompatActivity() {
         var scrapCnt = intent.getIntExtra("scrapCnt", 0)
         var nickname = intent.getStringExtra("nickname")
 
-        binding = DataBindingUtil.setContentView<ActivityRecordDetailBinding>(this, R.layout.activity_record_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_record_detail)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 

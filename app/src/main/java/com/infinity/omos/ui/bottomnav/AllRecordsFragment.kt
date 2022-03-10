@@ -24,7 +24,6 @@ class AllRecordFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -52,14 +51,14 @@ class AllRecordFragment : Fragment() {
 
         // 카테고리 리스트 초기화
         viewModel.setAllRecords()
-        viewModel.allRecords.observe(viewLifecycleOwner, Observer { records ->
+        viewModel.getAllRecords().observe(viewLifecycleOwner, Observer { records ->
             records?.let {
                 mAdapter.setCategory(addCategory(it))
             }
         })
 
         // 빈 카테고리 및 토큰 만료 상태 확인
-        viewModel.stateAllRecords.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateAllRecords().observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {

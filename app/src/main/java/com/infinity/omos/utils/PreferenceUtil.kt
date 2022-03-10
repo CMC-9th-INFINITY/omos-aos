@@ -14,20 +14,20 @@ class PreferenceUtil(context: Context) {
     fun getUserToken(): UserToken?{
         var accessToken = getString("accessToken")
         var refreshToken = getString("refreshToken")
-        var userId = getLong("userId")
+        var userId = getInt("userId")
 
         var userToken: UserToken? = null
-        if (userId != -1L){
+        if (userId != -1){
             userToken = UserToken(accessToken, refreshToken, userId)
         }
 
         return userToken
     }
 
-    fun setUserToken(accessToken: String?, refreshToken: String?, userId: Long){
+    fun setUserToken(accessToken: String?, refreshToken: String?, userId: Int){
         setString("accessToken", accessToken)
         setString("refreshToken", refreshToken)
-        setLong("userId", userId)
+        setInt("userId", userId)
     }
 
     fun getString(key: String): String {
@@ -36,14 +36,6 @@ class PreferenceUtil(context: Context) {
 
     fun setString(key: String, str: String?) {
         prefs.edit().putString(key, str).apply()
-    }
-
-    fun getLong(key: String): Long {
-        return prefs.getLong(key, -1L)
-    }
-
-    fun setLong(key: String, value: Long) {
-        prefs.edit().putLong(key, value).apply()
     }
 
     fun getInt(key: String): Int {

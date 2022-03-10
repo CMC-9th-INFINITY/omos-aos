@@ -66,6 +66,7 @@ class OnBoardingRepository {
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("ReissueAPI", t.message.toString())
+                _stateToken.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })

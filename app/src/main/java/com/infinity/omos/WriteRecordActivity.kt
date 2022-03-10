@@ -50,7 +50,7 @@ class WriteRecordActivity : AppCompatActivity() {
     private var recordContents = ""
     private var recordImageUrl = ""
     private var recordTitle = ""
-    private var userId = GlobalApplication.prefs.getLong("userId").toInt()
+    private var userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

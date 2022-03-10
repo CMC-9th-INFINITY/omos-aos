@@ -2,7 +2,6 @@ package com.infinity.omos.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import com.infinity.omos.repository.AllRecordRepository
 import com.infinity.omos.repository.SearchRepository
 
 class MusicRecordViewModel(application: Application): AndroidViewModel(application)  {

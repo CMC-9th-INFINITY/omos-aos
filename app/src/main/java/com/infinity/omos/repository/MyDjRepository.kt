@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.MyDjService
+import com.infinity.omos.api.MyRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
@@ -20,7 +21,51 @@ class MyDjRepository {
     private val onBoardingRepository = OnBoardingRepository()
 
     private val myDjApi = retrofit.create(MyDjService::class.java)
+    private val djRecordApi = retrofit.create(MyRecordService::class.java)
+    var _djRecord = MutableLiveData<List<Record>?>()
     var _stateMyDj = MutableLiveData<Constant.ApiState>()
+    var _stateDjRecord = MutableLiveData<Constant.ApiState>()
+
+    fun getDjRecord(userId: Int){
+        _stateDjRecord.value = Constant.ApiState.LOADING
+
+        djRecordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
+            override fun onResponse(
+                call: Call<List<Record>>,
+                response: Response<List<Record>>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("DjRecordAPI", "Success")
+                        _djRecord.value = body
+                        _stateDjRecord.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("DjRecordAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getDjRecord(userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("DjRecordAPI", errorBody!!.message)
+                        _stateDjRecord.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("DjRecordAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+                Log.d("DjRecordAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 
     fun getMyDj(userId: Int): LiveData<List<Profile>?>{
         var data = MutableLiveData<List<Profile>?>()

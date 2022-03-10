@@ -15,27 +15,27 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class AllRecordRepository {
+class AllRecordsRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val onBoardingRepository = OnBoardingRepository()
 
     private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
     private val categoryApi = retrofit.create(CategoryService::class.java)
-    var _allRecords = MutableLiveData<Category?>()
     var _category = MutableLiveData<List<Record>?>()
     var _stateAllRecords = MutableLiveData<Constant.ApiState>()
     var _stateCategory = MutableLiveData<Constant.ApiState>()
 
-    fun setAllRecords(){
+    fun setAllRecords(): MutableLiveData<Category>{
         _stateAllRecords.value = Constant.ApiState.LOADING
+        var allRecords = MutableLiveData<Category>()
         allRecordsApi.setAllRecords().enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("AllRecordsAPI", "Success")
-                        _allRecords.value = body
+                        allRecords.postValue(body!!)
                         _stateAllRecords.value = Constant.ApiState.DONE
                     }
 
@@ -62,6 +62,8 @@ class AllRecordRepository {
                 t.stackTrace
             }
         })
+
+        return allRecords
     }
 
     fun getCategory(category: String, page: Int, size: Int, sort: String?, userId: Int){
