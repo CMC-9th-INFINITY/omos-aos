@@ -44,16 +44,21 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     // My DJ
-    private val userId = GlobalApplication.prefs.getInt("userId")
-    private val myDj = myDjRepository.getMyDj(userId)
-    val myDjRecord = myDjRepository._myDjRecord
 
-    // xml 연결 (myDjListData)
+    private val myDj = myDjRepository.getMyDj(GlobalApplication.prefs.getInt("userId"))
     fun getMyDjData(): LiveData<List<Profile>?> {
+        // xml 연결 (myDjListData)
         return myDj
     }
 
-    fun getMyDjRecord(fromUserId: Int, toUserId: Int){
+    private val myDjRecord = myDjRepository.myDjRecord
+    fun setMyDjRecord(fromUserId: Int, toUserId: Int){
         myDjRepository.getMyDjRecord(fromUserId, toUserId)
+    }
+    fun getMyDjRecord(): LiveData<List<Record>>{
+        return myDjRecord
+    }
+    fun getStateDjRecord(): LiveData<Constant.ApiState>{
+        return myDjRepository.stateMyDjRecord
     }
 }

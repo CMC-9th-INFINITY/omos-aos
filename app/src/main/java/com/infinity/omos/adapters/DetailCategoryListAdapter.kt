@@ -119,6 +119,11 @@ class DetailCategoryListAdapter internal constructor(
 
     inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
 
+    internal fun setCategory(category: List<Record>){
+        this.category.addAll(category)
+        notifyDataSetChanged()
+    }
+
     internal fun addCategory(category: List<Record>){
         this.category.addAll(category)
         this.category.add(null)

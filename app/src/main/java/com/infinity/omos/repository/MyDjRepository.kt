@@ -23,12 +23,13 @@ class MyDjRepository {
 
     private val myDjApi = retrofit.create(MyDjService::class.java)
     private val myDjRecordApi = retrofit.create(MyDjRecordService::class.java)
-    var _myDjRecord = MutableLiveData<List<Record>>()
     var _stateMyDj = MutableLiveData<Constant.ApiState>()
-    var _stateMyDjRecord = MutableLiveData<Constant.ApiState>()
 
+
+    var myDjRecord = MutableLiveData<List<Record>>()
+    var stateMyDjRecord = MutableLiveData<Constant.ApiState>()
     fun getMyDjRecord(fromUserId: Int, toUserId: Int){
-        _stateMyDjRecord.value = Constant.ApiState.LOADING
+        stateMyDjRecord.value = Constant.ApiState.LOADING
 
         myDjRecordApi.getMyDjRecord(fromUserId, toUserId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
@@ -38,31 +39,31 @@ class MyDjRepository {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
-                        Log.d("DjRecordAPI", "Success")
-                        _myDjRecord.value = body!!
-                        _stateMyDjRecord.value = Constant.ApiState.DONE
+                        Log.d("MyDjRecordAPI", "Success")
+                        myDjRecord.postValue(body!!)
+                        stateMyDjRecord.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
-                        Log.d("DjRecordAPI", "Unauthorized")
+                        Log.d("MyDjRecordAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
                         getMyDjRecord(fromUserId, toUserId)
                     }
 
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
-                        Log.d("DjRecordAPI", errorBody!!.message)
-                        _stateMyDjRecord.value = Constant.ApiState.ERROR
+                        Log.d("MyDjRecordAPI", errorBody!!.message)
+                        stateMyDjRecord.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
-                        Log.d("DjRecordAPI", "Code: $code")
+                        Log.d("MyDjRecordAPI", "Code: $code")
                     }
                 }
             }
 
             override fun onFailure(call: Call<List<Record>>, t: Throwable) {
-                Log.d("DjRecordAPI", t.message.toString())
+                Log.d("MyDjRecordAPI", t.message.toString())
                 t.stackTrace
             }
         })

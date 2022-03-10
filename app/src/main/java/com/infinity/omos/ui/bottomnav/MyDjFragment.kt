@@ -14,6 +14,7 @@ import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.FragmentMyDjBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
@@ -21,6 +22,8 @@ class MyDjFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentMyDjBinding
+
+    private val fromUserId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,23 +52,34 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        viewModel.getMyDjRecord(26, 1)
-        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
+        viewModel.getMyDjRecord().observe(viewLifecycleOwner) { record ->
             record?.let {
-                rAdapter.addCategory(it)
-                rAdapter.notifyDataSetChanged()
-
-//                // 작성한 레코드가 없을 때,
-//                if (it.isEmpty()){
-//                    binding.lnNorecord.visibility = View.VISIBLE
-//                }
+                rAdapter.setCategory(it)
             }
-        })
+        }
+
+        viewModel.getStateDjRecord().observe(viewLifecycleOwner) { state ->
+            state?.let {
+                when (it) {
+                    Constant.ApiState.LOADING -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.lnNorecord.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+
+                    }
+                }
+            }
+        }
 
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
-            override fun onClick(v: View, position: Int, records: List<SaveRecord>?) {
-                // TODO: 수정 필요
-                //viewModel.getDjRecord()
+            override fun onClick(v: View, position: Int, toUserId: Int) {
+                viewModel.setMyDjRecord(fromUserId, toUserId)
             }
         })
 
