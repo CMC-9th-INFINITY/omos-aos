@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -63,12 +64,12 @@ class MusicFragment : Fragment() {
 
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreMusic(MainActivity.keyword, pageSize, 0)
-        viewModel.music.observe(viewLifecycleOwner, Observer { music ->
+        viewModel.getMusic().observe(viewLifecycleOwner) { music ->
             music?.let {
                 mAdapter.setRecord(it)
                 isLoading = if (it.isEmpty()) {
                     mAdapter.deleteLoading()
-                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount - 1)
                     true
                 } else {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
@@ -76,18 +77,18 @@ class MusicFragment : Fragment() {
                 }
 
                 // 작성한 레코드가 없을 때,
-                if (it.isEmpty() && page == 0){
+                if (it.isEmpty() && page == 0) {
                     binding.lnNorecord.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         // 로딩화면
-        viewModel.stateMusic.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateMusic().observe(viewLifecycleOwner) { state ->
             state?.let {
-                when(it){
+                when (it) {
                     Constant.ApiState.LOADING -> {
-                        if (page == 0){
+                        if (page == 0) {
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
                             binding.lnNorecord.visibility = View.GONE
@@ -104,7 +105,7 @@ class MusicFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
         // 무한 스크롤
         binding.recyclerView.addOnScrollListener(object: RecyclerView.OnScrollListener(){

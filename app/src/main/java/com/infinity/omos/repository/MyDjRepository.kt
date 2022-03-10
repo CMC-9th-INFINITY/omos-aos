@@ -3,6 +3,7 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.api.MyDjRecordService
 import com.infinity.omos.api.MyDjService
 import com.infinity.omos.api.MyRecordService
 import com.infinity.omos.api.RetrofitAPI
@@ -21,15 +22,15 @@ class MyDjRepository {
     private val onBoardingRepository = OnBoardingRepository()
 
     private val myDjApi = retrofit.create(MyDjService::class.java)
-    private val djRecordApi = retrofit.create(MyRecordService::class.java)
-    var _djRecord = MutableLiveData<List<Record>?>()
+    private val myDjRecordApi = retrofit.create(MyDjRecordService::class.java)
+    var _myDjRecord = MutableLiveData<List<Record>>()
     var _stateMyDj = MutableLiveData<Constant.ApiState>()
-    var _stateDjRecord = MutableLiveData<Constant.ApiState>()
+    var _stateMyDjRecord = MutableLiveData<Constant.ApiState>()
 
-    fun getDjRecord(userId: Int){
-        _stateDjRecord.value = Constant.ApiState.LOADING
+    fun getMyDjRecord(fromUserId: Int, toUserId: Int){
+        _stateMyDjRecord.value = Constant.ApiState.LOADING
 
-        djRecordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
+        myDjRecordApi.getMyDjRecord(fromUserId, toUserId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
                 call: Call<List<Record>>,
                 response: Response<List<Record>>
@@ -38,20 +39,20 @@ class MyDjRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("DjRecordAPI", "Success")
-                        _djRecord.value = body
-                        _stateDjRecord.value = Constant.ApiState.DONE
+                        _myDjRecord.value = body!!
+                        _stateMyDjRecord.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
                         Log.d("DjRecordAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        getDjRecord(userId)
+                        getMyDjRecord(fromUserId, toUserId)
                     }
 
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("DjRecordAPI", errorBody!!.message)
-                        _stateDjRecord.value = Constant.ApiState.ERROR
+                        _stateMyDjRecord.value = Constant.ApiState.ERROR
                     }
 
                     else -> {

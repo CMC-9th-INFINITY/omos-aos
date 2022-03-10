@@ -49,10 +49,12 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        viewModel.djRecord.observe(viewLifecycleOwner, Observer { record ->
+        viewModel.getMyDjRecord(26, 1)
+        viewModel.myDjRecord.observe(viewLifecycleOwner, Observer { record ->
             record?.let {
-//                rAdapter.setRecord(it)
-//
+                rAdapter.addCategory(it)
+                rAdapter.notifyDataSetChanged()
+
 //                // 작성한 레코드가 없을 때,
 //                if (it.isEmpty()){
 //                    binding.lnNorecord.visibility = View.VISIBLE

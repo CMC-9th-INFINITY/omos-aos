@@ -64,7 +64,7 @@ class AlbumFragment : Fragment() {
 
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreAlbum(keyword, pageSize, 0)
-        viewModel.album.observe(viewLifecycleOwner, Observer { album ->
+        viewModel.getAlbum().observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 mAdapter.setRecord(it)
                 isLoading = if (it.isEmpty()) {
@@ -84,7 +84,7 @@ class AlbumFragment : Fragment() {
         })
 
         // 로딩화면
-        viewModel.stateAlbum.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateAlbum().observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {

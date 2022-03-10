@@ -77,69 +77,69 @@ class AllFragment : Fragment() {
         viewModel.loadMoreArtist(keyword, 5, 0)
 
         // 노래 초기화
-        viewModel.music.observe(viewLifecycleOwner, Observer { music ->
+        viewModel.getMusic().observe(viewLifecycleOwner) { music ->
             music?.let {
                 mAdapter.clearRecord() // 기존 리스트 삭제
                 mAdapter.setRecord(it) // 검색된 리스트 추가
                 mAdapter.deleteLoading() // 로딩 리스트 삭제
                 mAdapter.notifyDataSetChanged()
 
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     isEmpty++
-                    if (isEmpty == 3){
+                    if (isEmpty == 3) {
                         binding.lnNorecord.visibility = View.VISIBLE
                         binding.scrollView.visibility = View.GONE
                     }
-                } else{
+                } else {
                     binding.scrollView.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         // 앨범 초기화
-        viewModel.album.observe(viewLifecycleOwner, Observer { album ->
+        viewModel.getAlbum().observe(viewLifecycleOwner) { album ->
             album?.let {
                 aAdapter.clearRecord() // 기존 리스트 삭제
                 aAdapter.setRecord(it) // 검색된 리스트 추가
                 aAdapter.deleteLoading() // 로딩 리스트 삭제
                 aAdapter.notifyDataSetChanged()
 
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     isEmpty++
-                    if (isEmpty == 3){
+                    if (isEmpty == 3) {
                         binding.lnNorecord.visibility = View.VISIBLE
                         binding.scrollView.visibility = View.GONE
                     }
-                } else{
+                } else {
                     binding.scrollView.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         // 아티스트 초기화
-        viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
+        viewModel.getArtist().observe(viewLifecycleOwner) { artist ->
             artist?.let {
                 tAdapter.clearRecord() // 기존 리스트 삭제
                 tAdapter.setRecord(it) // 검색된 리스트 추가
                 tAdapter.deleteLoading() // 로딩 리스트 삭제
                 tAdapter.notifyDataSetChanged()
 
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     isEmpty++
-                    if (isEmpty == 3){
+                    if (isEmpty == 3) {
                         binding.lnNorecord.visibility = View.VISIBLE
                         binding.scrollView.visibility = View.GONE
                     }
-                } else{
+                } else {
                     binding.scrollView.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         // 로딩화면
-        viewModel.stateArtist.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateArtist().observe(viewLifecycleOwner) { state ->
             state?.let {
-                when(it){
+                when (it) {
                     Constant.ApiState.LOADING -> {
                         binding.scrollView.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
@@ -155,7 +155,7 @@ class AllFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
 
         // 검색 후 스크롤 맨 위로 이동
         mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {

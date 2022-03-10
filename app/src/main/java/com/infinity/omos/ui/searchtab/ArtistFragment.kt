@@ -64,7 +64,7 @@ class ArtistFragment : Fragment() {
 
         // 스크롤 시 앨범 업데이트
         viewModel.loadMoreArtist(MainActivity.keyword, pageSize, 0)
-        viewModel.artist.observe(viewLifecycleOwner, Observer { artist ->
+        viewModel.getArtist().observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
                 mAdapter.setRecord(it)
                 isLoading = if (it.isEmpty()) {
@@ -84,7 +84,7 @@ class ArtistFragment : Fragment() {
         })
 
         // 로딩화면
-        viewModel.stateArtist.observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateArtist().observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when (it) {
                     Constant.ApiState.LOADING -> {
