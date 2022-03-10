@@ -2,6 +2,7 @@ package com.infinity.omos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +30,7 @@ class CategoryActivity : AppCompatActivity() {
     private var isLoading = false
 
     private var postId = -1
+    private lateinit var mAdapter: DetailCategoryListAdapter
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -61,7 +63,7 @@ class CategoryActivity : AppCompatActivity() {
             }
         }
 
-        val mAdapter = DetailCategoryListAdapter(this)
+        mAdapter = DetailCategoryListAdapter(this)
         recyclerView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
@@ -155,5 +157,9 @@ class CategoryActivity : AppCompatActivity() {
         super.onDestroy()
 
         // TODO: 좋아요, 스크랩 API
+        val heartList = mAdapter.getHeart()
+        for (i in heartList){
+            Log.d("jaemin", i.toString())
+        }
     }
 }

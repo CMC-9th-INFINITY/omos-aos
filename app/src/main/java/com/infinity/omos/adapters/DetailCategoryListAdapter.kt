@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.databinding.adapters.CalendarViewBindingAdapter
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -31,8 +30,9 @@ class DetailCategoryListAdapter internal constructor(
     private val inflater: LayoutInflater = LayoutInflater.from(context)
 
     private var category = ArrayList<Record?>()
-    private var stateHeart = false
-    private var stateStar = false
+
+    private var heartList = ArrayList<Int>()
+    private var scrapList = ArrayList<Int>()
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -79,6 +79,9 @@ class DetailCategoryListAdapter internal constructor(
 
             binding.executePendingBindings()
 
+            var stateHeart = category.isLiked
+            var stateStar = category.isScraped
+
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.tv_dj.setOnClickListener {
@@ -91,11 +94,13 @@ class DetailCategoryListAdapter internal constructor(
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
                         binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) - 1).toString()
+                        heartList.remove(category.recordId)
                         false
                     } else{
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
                         binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) + 1).toString()
+                        heartList.add(category.recordId)
                         true
                     }
                 }
@@ -105,11 +110,13 @@ class DetailCategoryListAdapter internal constructor(
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
                         binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) - 1).toString()
+                        scrapList.remove(category.recordId)
                         false
                     } else{
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
                         binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) + 1).toString()
+                        scrapList.add(category.recordId)
                         true
                     }
                 }
@@ -118,6 +125,14 @@ class DetailCategoryListAdapter internal constructor(
     }
 
     inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
+
+    internal fun getHeart(): List<Int>{
+        return heartList
+    }
+
+    internal fun getScrap(): List<Int>{
+        return scrapList
+    }
 
     internal fun setCategory(category: List<Record>){
         this.category.addAll(category)
@@ -137,13 +152,11 @@ class DetailCategoryListAdapter internal constructor(
         if (record.isLiked){
             binding.imgHeart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
             binding.tvHeartCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
-            stateHeart = true
         }
 
         if (record.isScraped){
             binding.imgStar.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
             binding.tvStarCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
-            stateStar = true
         }
     }
 
