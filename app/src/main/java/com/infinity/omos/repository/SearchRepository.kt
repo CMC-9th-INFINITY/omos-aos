@@ -15,15 +15,9 @@ import retrofit2.Retrofit
 class SearchRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
+    private val searchApi = retrofit.create(SearchService::class.java)
+    private val musicRecordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
-
-    private val musicApi = retrofit.create(SearchMusicService::class.java)
-    private val albumApi = retrofit.create(SearchAlbumService::class.java)
-    private val artistApi = retrofit.create(SearchArtistService::class.java)
-    private val albumDetailApi = retrofit.create(AlbumDetailService::class.java)
-    private val artistMusicApi = retrofit.create(ArtistMusicService::class.java)
-    private val artistAlbumApi = retrofit.create(ArtistAlbumService::class.java)
-    private val musicRecordApi = retrofit.create(MusicRecordService::class.java)
 
     var musicRecord = MutableLiveData<List<Record>>()
     var stateMusicRecord = MutableLiveData<Constant.ApiState>()
@@ -69,7 +63,7 @@ class SearchRepository {
     var stateArtistAlbum = MutableLiveData<Constant.ApiState>()
     fun getArtistAlbum(artistId: String, limit: Int, offset: Int){
         stateArtistAlbum.value = Constant.ApiState.LOADING
-        artistAlbumApi.getArtistAlbum(artistId, limit, offset).enqueue(object: Callback<List<Album>> {
+        searchApi.getArtistAlbum(artistId, limit, offset).enqueue(object: Callback<List<Album>> {
             override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -108,7 +102,7 @@ class SearchRepository {
     var stateArtistMusic = MutableLiveData<Constant.ApiState>()
     fun getArtistMusic(artistId: String){
         stateArtistMusic.value = Constant.ApiState.LOADING
-        artistMusicApi.getArtistMusic(artistId).enqueue(object: Callback<List<ArtistMusic>> {
+        searchApi.getArtistMusic(artistId).enqueue(object: Callback<List<ArtistMusic>> {
             override fun onResponse(call: Call<List<ArtistMusic>>, response: Response<List<ArtistMusic>>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -147,7 +141,7 @@ class SearchRepository {
     var stateAlbumDetail = MutableLiveData<Constant.ApiState>()
     fun getAlbumDetail(albumId: String){
         stateAlbumDetail.value = Constant.ApiState.LOADING
-        albumDetailApi.getAlbumDetail(albumId).enqueue(object: Callback<List<Music>> {
+        searchApi.getAlbumDetail(albumId).enqueue(object: Callback<List<Music>> {
             override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -186,7 +180,7 @@ class SearchRepository {
     var stateArtist = MutableLiveData<Constant.ApiState>()
     fun getArtist(keyword: String, limit: Int, offset: Int){
         stateArtist.value = Constant.ApiState.LOADING
-        artistApi.getArtist(keyword, limit, offset).enqueue(object: Callback<List<Artists>>{
+        searchApi.getArtist(keyword, limit, offset).enqueue(object: Callback<List<Artists>>{
             override fun onResponse(call: Call<List<Artists>>, response: Response<List<Artists>>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -225,7 +219,7 @@ class SearchRepository {
     var stateMusic = MutableLiveData<Constant.ApiState>()
     fun getMusic(keyword: String, limit: Int, offset: Int){
         stateMusic.value = Constant.ApiState.LOADING
-        musicApi.getMusic(keyword, limit, offset).enqueue(object: Callback<List<Music>>{
+        searchApi.getMusic(keyword, limit, offset).enqueue(object: Callback<List<Music>>{
             override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -264,7 +258,7 @@ class SearchRepository {
     var stateAlbum = MutableLiveData<Constant.ApiState>()
     fun getAlbum(keyword: String, limit: Int, offset: Int){
         stateAlbum.value = Constant.ApiState.LOADING
-        albumApi.getAlbum(keyword, limit, offset).enqueue(object: Callback<List<Album>>{
+        searchApi.getAlbum(keyword, limit, offset).enqueue(object: Callback<List<Album>>{
             override fun onResponse(call: Call<List<Album>>, response: Response<List<Album>>) {
                 val body = response.body()
                 when(val code = response.code()){

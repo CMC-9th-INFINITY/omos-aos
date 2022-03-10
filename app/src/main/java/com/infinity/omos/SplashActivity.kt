@@ -30,7 +30,7 @@ class SplashActivity : AppCompatActivity() {
             repository.getUserToken(token)
         }
 
-        repository._stateToken.observe(this, Observer { state ->
+        repository.stateToken.observe(this, Observer { state ->
             state?.let {
                 stateToken = it != Constant.ApiState.ERROR
             }

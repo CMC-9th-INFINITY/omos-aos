@@ -2,11 +2,9 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.DetailRecordService
+import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.Record
-import com.infinity.omos.data.ResultState
-import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -18,9 +16,8 @@ import retrofit2.Retrofit
 class RecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
+    private val detailRecordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
-
-    private val detailRecordApi = retrofit.create(DetailRecordService::class.java)
 
     val detailRecord = MutableLiveData<Record>()
     val stateDetailRecord = MutableLiveData<Constant.ApiState>()

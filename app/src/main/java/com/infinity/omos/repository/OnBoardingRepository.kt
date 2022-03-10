@@ -15,18 +15,12 @@ import retrofit2.Retrofit
 class OnBoardingRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-
-    private val loginApi = retrofit.create(LoginService::class.java)
-    private val signUpApi = retrofit.create(SignUpService::class.java)
-    private val snsLoginApi = retrofit.create(SnsLoginService::class.java)
-    private val snsSignUpApi = retrofit.create(SnsSignUpService::class.java)
-    private val checkDupApi = retrofit.create(DupEmailService::class.java)
-    private val reissueApi = retrofit.create(ReissueService::class.java)
+    private val onBoardingApi = retrofit.create(OnBoardingService::class.java)
 
     var stateToken = MutableLiveData<Constant.ApiState>()
     fun getUserToken(userInfo: UserToken){
         stateToken.value = Constant.ApiState.LOADING
-        reissueApi.getToken(userInfo).enqueue(object: Callback<UserToken> {
+        onBoardingApi.getToken(userInfo).enqueue(object: Callback<UserToken> {
             override fun onResponse(
                 call: Call<UserToken>,
                 response: Response<UserToken>
@@ -69,7 +63,7 @@ class OnBoardingRepository {
 
     var stateLogin = MutableLiveData<Constant.ApiState>()
     fun checkLogin(userLogin: UserLogin){
-        loginApi.getResultLogin(userLogin).enqueue(object: Callback<UserToken> {
+        onBoardingApi.getResultLogin(userLogin).enqueue(object: Callback<UserToken> {
             override fun onResponse(
                 call: Call<UserToken>,
                 response: Response<UserToken>
@@ -111,7 +105,7 @@ class OnBoardingRepository {
 
     var stateSnsLogin = MutableLiveData<Constant.ApiState>()
     fun checkSnsLogin(id: UserSnsLogin){
-        snsLoginApi.getResultSnsLogin(id).enqueue(object: Callback<UserToken> {
+        onBoardingApi.getResultSnsLogin(id).enqueue(object: Callback<UserToken> {
             override fun onResponse(
                 call: Call<UserToken>,
                 response: Response<UserToken>
@@ -155,7 +149,7 @@ class OnBoardingRepository {
 
     var stateSignUp = MutableLiveData<Constant.ApiState>()
     fun signUp(userInfo: UserSignUp){
-        signUpApi.getResultSignUp(userInfo).enqueue(object: Callback<ResultState>{
+        onBoardingApi.getResultSignUp(userInfo).enqueue(object: Callback<ResultState>{
             override fun onResponse(call: Call<ResultState>, response: Response<ResultState>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -195,7 +189,7 @@ class OnBoardingRepository {
 
     var stateSnsSignUp = MutableLiveData<Constant.ApiState>()
     fun snsSignUp(userInfo: UserSnsSignUp){
-        snsSignUpApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<UserToken>{
+        onBoardingApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<UserToken>{
             override fun onResponse(
                 call: Call<UserToken>,
                 response: Response<UserToken>
@@ -238,7 +232,7 @@ class OnBoardingRepository {
 
     var stateDupEmail = MutableLiveData<Boolean>()
     fun checkDupEmail(email: String){
-        checkDupApi.checkDupEmail(email).enqueue(object: Callback<ResultState>{
+        onBoardingApi.checkDupEmail(email).enqueue(object: Callback<ResultState>{
             override fun onResponse(
                 call: Call<ResultState>,
                 response: Response<ResultState>

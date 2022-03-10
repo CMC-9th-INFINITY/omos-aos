@@ -2,8 +2,7 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.AllRecordsService
-import com.infinity.omos.api.CategoryService
+import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.Category
 import com.infinity.omos.data.Record
@@ -18,16 +17,14 @@ import retrofit2.Retrofit
 class AllRecordsRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
+    private val recordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
-
-    private val allRecordsApi = retrofit.create(AllRecordsService::class.java)
-    private val categoryApi = retrofit.create(CategoryService::class.java)
 
     var stateAllRecords = MutableLiveData<Constant.ApiState>()
     fun setAllRecords(): MutableLiveData<Category>{
         stateAllRecords.value = Constant.ApiState.LOADING
         var allRecords = MutableLiveData<Category>()
-        allRecordsApi.setAllRecords().enqueue(object: Callback<Category>{
+        recordApi.setAllRecords().enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -68,7 +65,7 @@ class AllRecordsRepository {
     var stateCategory = MutableLiveData<Constant.ApiState>()
     fun getCategory(category: String, postId: Int?, size: Int, sortType: String, userId: Int){
         stateCategory.value = Constant.ApiState.LOADING
-        categoryApi.getCategory(category, postId, size, sortType, userId).enqueue(object:
+        recordApi.getCategory(category, postId, size, sortType, userId).enqueue(object:
             Callback<List<Record>> {
             override fun onResponse(
                 call: Call<List<Record>>,

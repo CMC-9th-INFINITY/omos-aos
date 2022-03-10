@@ -3,10 +3,7 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.MyDjRecordService
-import com.infinity.omos.api.MyDjService
-import com.infinity.omos.api.MyRecordService
-import com.infinity.omos.api.RetrofitAPI
+import com.infinity.omos.api.*
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
@@ -19,10 +16,9 @@ import retrofit2.Retrofit
 class MyDjRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
+    private val followApi = retrofit.create(FollowService::class.java)
+    private val myDjRecordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
-
-    private val myDjApi = retrofit.create(MyDjService::class.java)
-    private val myDjRecordApi = retrofit.create(MyDjRecordService::class.java)
 
     var myDjRecord = MutableLiveData<List<Record>>()
     var stateMyDjRecord = MutableLiveData<Constant.ApiState>()
@@ -72,7 +68,7 @@ class MyDjRepository {
         var data = MutableLiveData<List<Profile>?>()
 
         stateMyDj.value = Constant.ApiState.LOADING
-        myDjApi.getMyDj(userId).enqueue(object: Callback<List<Profile>> {
+        followApi.getMyDj(userId).enqueue(object: Callback<List<Profile>> {
             override fun onResponse(
                 call: Call<List<Profile>>,
                 response: Response<List<Profile>>

@@ -150,17 +150,18 @@ class WriteRecordActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.stateSaveRecord.observe(this, Observer { record ->
+        viewModel.getStateSaveRecord().observe(this) { record ->
             record?.let {
-                if (it.state){
+                if (it.state) {
                     val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                    intent.flags =
+                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                     startActivity(intent)
-                } else{
+                } else {
                     Toast.makeText(this, "저장 실패", Toast.LENGTH_SHORT).show()
                 }
             }
-        })
+        }
 
     }
 

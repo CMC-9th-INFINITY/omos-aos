@@ -2,9 +2,8 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.MyRecordService
+import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
-import com.infinity.omos.api.SaveRecordService
 import com.infinity.omos.data.Record
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.data.SaveRecord
@@ -19,14 +18,12 @@ import retrofit2.Retrofit
 class MyRecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
+    private val recordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    private val myRecordApi = retrofit.create(MyRecordService::class.java)
-    private val saveRecordApi = retrofit.create(SaveRecordService::class.java)
-
-    var stateSaveRecord = MutableLiveData<ResultState?>()
+    var stateSaveRecord = MutableLiveData<ResultState>()
     fun saveRecord(record: SaveRecord){
-        saveRecordApi.saveRecord(record).enqueue(object: Callback<ResultState> {
+        recordApi.saveRecord(record).enqueue(object: Callback<ResultState> {
             override fun onResponse(
                 call: Call<ResultState>,
                 response: Response<ResultState>
@@ -35,7 +32,7 @@ class MyRecordRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("SaveRecordAPI", "Success")
-                        stateSaveRecord.value = body
+                        stateSaveRecord.postValue(body!!)
                     }
 
                     401 -> {
@@ -66,7 +63,7 @@ class MyRecordRepository {
     fun getMyRecord(userId: Int): MutableLiveData<List<Record>>{
         stateMyRecord.value = Constant.ApiState.LOADING
         var myRecord = MutableLiveData<List<Record>>()
-        myRecordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
+        recordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
                 call: Call<List<Record>>,
                 response: Response<List<Record>>

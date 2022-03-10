@@ -28,7 +28,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
         return myRecord
     }
     fun getStateMyRecord(): LiveData<Constant.ApiState>{
-        return myRecordRepository._stateMyRecord
+        return myRecordRepository.stateMyRecord
     }
 
     // 전체 레코드

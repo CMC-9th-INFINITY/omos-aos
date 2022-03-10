@@ -5,7 +5,7 @@ import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-interface MyDjService {
+interface FollowService {
     @GET("api/follow/select/myDj/{userId}")
     fun getMyDj(
         @Path("userId") userId: Int
