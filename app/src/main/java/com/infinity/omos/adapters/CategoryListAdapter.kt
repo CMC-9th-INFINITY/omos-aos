@@ -61,6 +61,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, MyRecordDetailActivity::class.java)
+                    intent.putExtra("postId", record.recordId)
                     context.startActivity(intent)
                 }
             }
