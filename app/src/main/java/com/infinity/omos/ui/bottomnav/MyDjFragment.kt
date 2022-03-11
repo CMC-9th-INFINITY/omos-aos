@@ -62,11 +62,13 @@ class MyDjFragment : Fragment() {
             state?.let {
                 when (it) {
                     Constant.ApiState.LOADING -> {
+                        binding.rvRecord.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                         binding.lnNorecord.visibility = View.GONE
                     }
 
                     Constant.ApiState.DONE -> {
+                        binding.rvRecord.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 

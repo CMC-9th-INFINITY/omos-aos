@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.DjProfile
 import com.infinity.omos.data.Profile
+import com.infinity.omos.data.Record
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyDjRepository
 
@@ -20,12 +21,25 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
         return repository.djProfile
     }
 
+    fun saveFollow(fromUserId: Int, toUserId: Int){
+        repository.saveFollow(fromUserId, toUserId)
+    }
+
+    fun deleteFollow(fromUserId: Int, toUserId: Int){
+        repository.deleteFollow(fromUserId, toUserId)
+    }
+
+    fun setDjRecord(fromUserId: Int, toUserId: Int){
+        repository.getMyDjRecord(fromUserId, toUserId)
+    }
+    fun getDjRecord(): LiveData<List<Record>>{
+        return repository.myDjRecord
+    }
+    fun getStateDjRecord(): LiveData<Constant.ApiState>{
+        return repository.stateMyDjRecord
+    }
 
     var follow = MutableLiveData<String>()
-
-    init {
-        follow.value = "팔로우"
-    }
 
     fun changeFollow(){
         if (follow.value == "팔로우"){

@@ -51,6 +51,41 @@ class DjActivity : AppCompatActivity() {
         viewModel.getDjProfile().observe(this) { profile ->
             profile?.let {
                 binding.data = it
+                if (it.isFollowed){
+                    viewModel.follow.value = "팔로잉"
+                } else{
+                    viewModel.follow.value = "팔로우"
+                }
+            }
+        }
+
+        viewModel.setDjRecord(fromUserId, toUserId)
+        viewModel.getDjRecord().observe(this) { record ->
+            record?.let {
+                mAdapter.setRecord(it)
+
+                if (it.isEmpty()){
+                    binding.lnNorecord.visibility = View.VISIBLE
+                }
+            }
+        }
+
+        viewModel.getStateDjRecord().observe(this) { state ->
+            state?.let {
+                when(it){
+                    Constant.ApiState.LOADING -> {
+                        binding.lnNorecord.visibility = View.GONE
+                        binding.progressBar.visibility = View.VISIBLE
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+
+                    }
+                }
             }
         }
 
@@ -60,10 +95,12 @@ class DjActivity : AppCompatActivity() {
                     binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.white))
                     binding.btnFollow.background =
                         ResourcesCompat.getDrawable(resources, R.drawable.bg_follow, null)
+                    viewModel.deleteFollow(fromUserId, toUserId)
                 } else {
                     binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.gray_04))
                     binding.btnFollow.background =
                         ResourcesCompat.getDrawable(resources, R.drawable.bg_following, null)
+                    viewModel.saveFollow(fromUserId, toUserId)
                 }
             }
         }
