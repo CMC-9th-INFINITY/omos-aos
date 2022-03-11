@@ -184,15 +184,25 @@ class CategoryActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
 
-        // TODO: 좋아요, 스크랩 API
+        // 좋아요, 스크랩 처리
         val saveHeartList = mAdapter.getSaveHeart()
         for (i in saveHeartList){
-            Log.d("jaeminS", i.toString())
+            viewModel.saveLike(i, userId)
         }
 
         val deleteHeartList = mAdapter.getDeleteHeart()
         for (i in deleteHeartList){
-            Log.d("jaeminD", i.toString())
+            viewModel.deleteLike(i, userId)
+        }
+
+        val saveScrapList = mAdapter.getSaveScrap()
+        for (i in saveScrapList){
+            viewModel.saveScrap(i, userId)
+        }
+
+        val deleteScrapList = mAdapter.getDeleteScrap()
+        for (i in deleteScrapList){
+            viewModel.deleteScrap(i, userId)
         }
     }
 }

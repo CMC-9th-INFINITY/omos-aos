@@ -235,10 +235,7 @@ class DetailCategoryListAdapter internal constructor(
     }
 
     override fun getItemCount(): Int {
-        return if (category != null){
-            category!!.size
-        } else
-            super.getItemCount()
+        return category.size
     }
 
     override fun getItemViewType(position: Int): Int {
