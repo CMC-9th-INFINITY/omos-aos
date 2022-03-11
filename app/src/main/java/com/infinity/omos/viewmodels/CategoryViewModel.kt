@@ -36,6 +36,6 @@ class CategoryViewModel(application: Application): AndroidViewModel(application)
     }
 
     fun deleteScrap(postId: Int, userId: Int){
-        recordRepository.deleteLike(postId, userId)
+        recordRepository.deleteScrap(postId, userId)
     }
 }
