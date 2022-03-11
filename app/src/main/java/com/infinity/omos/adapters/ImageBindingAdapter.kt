@@ -19,6 +19,7 @@ object ImageBindingAdapter {
             .into(imageView)
     }
 
+    // recordImageUrl 이 null 일 때, 빈 이미지 보여주기 위함
     @BindingAdapter("categoryImageUrl")
     @JvmStatic
     fun loadCategoryImage(imageView: ImageView, url: String?){

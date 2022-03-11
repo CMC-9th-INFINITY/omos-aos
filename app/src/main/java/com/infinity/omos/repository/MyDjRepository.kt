@@ -20,11 +20,124 @@ class MyDjRepository {
     private val myDjRecordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
+    fun deleteFollow(postId: Int, userId: Int){
+        followApi.deleteFollow(postId, userId).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("DeleteFollowAPI", "Success: ${body!!.state}")
+                    }
+
+                    401 -> {
+                        Log.d("DeleteFollowAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        deleteFollow(postId, userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("DeleteFollowAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("DeleteFollowAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("DeleteFollowAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    fun saveFollow(postId: Int, userId: Int){
+        followApi.saveFollow(postId, userId).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("SaveFollowAPI", "Success: ${body!!.state}")
+                    }
+
+                    401 -> {
+                        Log.d("SaveFollowAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        saveFollow(postId, userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("SaveFollowAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("SaveFollowAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("SaveFollowAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    var djProfile = MutableLiveData<DjProfile>()
+    var stateDjProfile = MutableLiveData<Constant.ApiState>()
+    fun getDjProfile(fromUserId: Int, toUserId: Int){
+        stateDjProfile.value = Constant.ApiState.LOADING
+        followApi.getDjProfile(fromUserId, toUserId).enqueue(object: Callback<DjProfile> {
+            override fun onResponse(
+                call: Call<DjProfile>,
+                response: Response<DjProfile>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("DjProfileAPI", "Success")
+                        djProfile.postValue(body!!)
+                        stateDjProfile.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("DjProfileAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getDjProfile(fromUserId, toUserId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("DjProfileAPI", errorBody!!.message)
+                        stateDjProfile.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("DjProfileAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<DjProfile>, t: Throwable) {
+                Log.d("DjProfileAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     var myDjRecord = MutableLiveData<List<Record>>()
     var stateMyDjRecord = MutableLiveData<Constant.ApiState>()
     fun getMyDjRecord(fromUserId: Int, toUserId: Int){
         stateMyDjRecord.value = Constant.ApiState.LOADING
-
         myDjRecordApi.getMyDjRecord(fromUserId, toUserId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
                 call: Call<List<Record>>,

@@ -107,6 +107,7 @@ class DetailCategoryListAdapter internal constructor(
             if (pos != RecyclerView.NO_POSITION){
                 itemView.tv_dj.setOnClickListener {
                     val intent = Intent(context, DjActivity::class.java)
+                    intent.putExtra("toUserId", category.userId)
                     context.startActivity(intent)
                 }
 
