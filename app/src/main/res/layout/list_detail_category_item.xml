@@ -187,7 +187,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{Integer.toString(data.likeCnt)}"
                         android:textSize="12sp"
                         android:textColor="@color/gray_03"/>
 
@@ -212,7 +211,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{Integer.toString(data.scrapCnt)}"
                         android:textSize="12sp"
                         android:textColor="@color/gray_03"/>
 

@@ -114,8 +114,10 @@ class DetailCategoryListAdapter internal constructor(
                     if (heartStarList[num].isLiked){
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
-                        itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) - 1).toString()
                         heartStarList[num].isLiked = false
+                        heartStarList[num].likeCnt -= 1
+
+                        itemView.tv_heart_cnt.text = String.format("%03d", heartStarList[num].likeCnt)
 
                         // 상태 변화 확인
                         if (category.isLiked){
@@ -126,8 +128,10 @@ class DetailCategoryListAdapter internal constructor(
                     } else{
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
-                        itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) + 1).toString()
                         heartStarList[num].isLiked = true
+                        heartStarList[num].likeCnt += 1
+
+                        itemView.tv_heart_cnt.text = String.format("%03d", heartStarList[num].likeCnt)
 
                         if (category.isLiked){
                             deleteHeartList.remove(category.recordId)
@@ -141,8 +145,10 @@ class DetailCategoryListAdapter internal constructor(
                     if (heartStarList[num].isScraped){
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
-                        itemView.tv_star_cnt.text = (Integer.parseInt(itemView.tv_star_cnt.text.toString()) - 1).toString()
                         heartStarList[num].isScraped = false
+                        heartStarList[num].scrapCnt -= 1
+
+                        itemView.tv_star_cnt.text = String.format("%03d", heartStarList[num].scrapCnt)
 
                         // 상태 변화 확인
                         if (category.isScraped){
@@ -153,10 +159,12 @@ class DetailCategoryListAdapter internal constructor(
                     } else{
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
-                        itemView.tv_star_cnt.text = (Integer.parseInt(itemView.tv_star_cnt.text.toString()) + 1).toString()
                         heartStarList[num].isScraped = true
+                        heartStarList[num].scrapCnt += 1
 
-                        if (category.isLiked){
+                        itemView.tv_star_cnt.text = String.format("%03d", heartStarList[num].scrapCnt)
+
+                        if (category.isScraped){
                             deleteScrapList.remove(category.recordId)
                         } else{
                             saveScrapList.add(category.recordId)
@@ -208,17 +216,21 @@ class DetailCategoryListAdapter internal constructor(
         if (data.isLiked){
             binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
             binding.tvHeartCnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+            binding.tvHeartCnt.text = String.format("%03d", data.likeCnt)
         } else{
             binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
             binding.tvHeartCnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+            binding.tvHeartCnt.text = String.format("%03d", data.likeCnt)
         }
 
         if (data.isScraped){
             binding.imgStar.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
             binding.tvStarCnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+            binding.tvStarCnt.text = String.format("%03d", data.scrapCnt)
         } else{
             binding.imgStar.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
             binding.tvStarCnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+            binding.tvStarCnt.text = String.format("%03d", data.scrapCnt)
         }
     }
 
