@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class Record(
     @SerializedName("category") val category: String,
     @SerializedName("createdDate") val createdDate: String,
-    @SerializedName("isLiked") val isLiked: Boolean,
+    @SerializedName("isLiked") var isLiked: Boolean,
     @SerializedName("isPublic") val isPublic: Boolean,
     @SerializedName("isScraped") val isScraped: Boolean,
     @SerializedName("likeCnt") val likeCnt: Int,

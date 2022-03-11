@@ -7,8 +7,10 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.adapters.DetailCategoryListAdapter
@@ -18,6 +20,7 @@ import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
+import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class CategoryActivity : AppCompatActivity() {
 
@@ -32,6 +35,11 @@ class CategoryActivity : AppCompatActivity() {
     private var postId = -1
     private lateinit var mAdapter: DetailCategoryListAdapter
 
+    private var saveHeartList = ArrayList<Int>()
+    private var deleteHeartList = ArrayList<Int>()
+
+    private var stateHeart = false
+
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,6 +48,8 @@ class CategoryActivity : AppCompatActivity() {
         val binding = DataBindingUtil.setContentView<ActivityCategoryBinding>(this, R.layout.activity_category)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        var context = this
 
         var category = intent.getStringExtra("category")
         initToolBar(category!!)
@@ -69,7 +79,25 @@ class CategoryActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.setCategoryRecord(ctg, null, pageSize, "random", userId)
+//        stateHeart = if (stateHeart){
+//            itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
+//            itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
+//            itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) - 1).toString()
+//            false
+//        } else{
+//            itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
+//            itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+//            itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) + 1).toString()
+//            true
+//        }
+
+        mAdapter.setItemClickListener(object: DetailCategoryListAdapter.OnItemClickListener{
+            override fun onClick(itemView: View, position: Int) {
+                mAdapter.changeState(position)
+            }
+        })
+
+        viewModel.setCategoryRecord(ctg, null, pageSize, "viewsCount", userId)
         viewModel.getCategoryRecord().observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
@@ -121,7 +149,7 @@ class CategoryActivity : AppCompatActivity() {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page ++
-                    viewModel.setCategoryRecord(ctg, postId, pageSize, "random", userId)
+                    viewModel.setCategoryRecord(ctg, postId, pageSize, "viewsCount", userId)
                 }
             }
         })
@@ -157,9 +185,14 @@ class CategoryActivity : AppCompatActivity() {
         super.onDestroy()
 
         // TODO: 좋아요, 스크랩 API
-        val heartList = mAdapter.getHeart()
-        for (i in heartList){
-            Log.d("jaemin", i.toString())
+        val saveHeartList = mAdapter.getSaveHeart()
+        for (i in saveHeartList){
+            Log.d("jaeminS", i.toString())
+        }
+
+        val deleteHeartList = mAdapter.getDeleteHeart()
+        for (i in deleteHeartList){
+            Log.d("jaeminD", i.toString())
         }
     }
 }

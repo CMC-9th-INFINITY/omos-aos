@@ -3,6 +3,7 @@ package com.infinity.omos.adapters
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DjActivity
 import com.infinity.omos.R
+import com.infinity.omos.data.LikeScrap
 import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
@@ -28,14 +30,32 @@ class DetailCategoryListAdapter internal constructor(
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-
     private var category = ArrayList<Record?>()
-
-    private var heartList = ArrayList<Int>()
-    private var scrapList = ArrayList<Int>()
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
+
+    private lateinit var itemClickListener: OnItemClickListener
+
+    private var heartStarList = ArrayList<LikeScrap>()
+
+    private var saveHeartList = ArrayList<Int>()
+    private var deleteHeartList = ArrayList<Int>()
+
+    private var saveScrapList = ArrayList<Int>()
+    private var deleteScrapList = ArrayList<Int>()
+
+    interface OnItemClickListener{
+        fun onClick(v: View, position: Int)
+    }
+
+    interface OnItemLongClickListener{
+        fun onLongClick(v: View, position: Int)
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when(viewType){
@@ -54,18 +74,17 @@ class DetailCategoryListAdapter internal constructor(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (holder is CategoryViewHolder){
             val category = category[position]
-            holder.bind(category!!)
+            holder.bind(category!!, position)
         }
     }
 
     inner class CategoryViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(category: Record){
+        fun bind(category: Record, num: Int){
             binding.data = category
             binding.tvDj.text = "DJ ${category.nickname}"
             binding.tvArtist.text = setArtist(category.music.artists) + " - " + category.music.albumTitle
             binding.tvCategory.text = setCategoryText(context, category.category)
             binding.tvDate.text = setDate(category.createdDate)
-            setHeartStar(binding, category)
 
             if (category.category == "A_LINE"){
                 binding.tvAlineContents.visibility = View.VISIBLE
@@ -77,10 +96,12 @@ class DetailCategoryListAdapter internal constructor(
                 binding.tvRecordContents.text = category.recordContents
             }
 
-            binding.executePendingBindings()
+            if (num >= heartStarList.size){
+                heartStarList.add(num, LikeScrap(category.isLiked, category.isScraped, category.likeCnt, category.scrapCnt))
+            }
+            setHeartStar(binding, heartStarList[num])
 
-            var stateHeart = category.isLiked
-            var stateStar = category.isScraped
+            binding.executePendingBindings()
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
@@ -90,34 +111,56 @@ class DetailCategoryListAdapter internal constructor(
                 }
 
                 itemView.btn_heart.setOnClickListener {
-                    stateHeart = if (stateHeart){
+                    if (heartStarList[num].isLiked){
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
-                        binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) - 1).toString()
-                        heartList.remove(category.recordId)
-                        false
+                        itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) - 1).toString()
+                        heartStarList[num].isLiked = false
+
+                        // 상태 변화 확인
+                        if (category.isLiked){
+                            deleteHeartList.add(category.recordId)
+                        } else{
+                            saveHeartList.remove(category.recordId)
+                        }
                     } else{
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
                         itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
-                        binding.tvHeartCnt.text = (Integer.parseInt(binding.tvHeartCnt.text.toString()) + 1).toString()
-                        heartList.add(category.recordId)
-                        true
+                        itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) + 1).toString()
+                        heartStarList[num].isLiked = true
+
+                        if (category.isLiked){
+                            deleteHeartList.remove(category.recordId)
+                        } else{
+                            saveHeartList.add(category.recordId)
+                        }
                     }
                 }
 
                 itemView.btn_star.setOnClickListener {
-                    stateStar = if (stateStar){
+                    if (heartStarList[num].isScraped){
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
-                        binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) - 1).toString()
-                        scrapList.remove(category.recordId)
-                        false
+                        itemView.tv_star_cnt.text = (Integer.parseInt(itemView.tv_star_cnt.text.toString()) - 1).toString()
+                        heartStarList[num].isScraped = false
+
+                        // 상태 변화 확인
+                        if (category.isScraped){
+                            deleteScrapList.add(category.recordId)
+                        } else{
+                            saveScrapList.remove(category.recordId)
+                        }
                     } else{
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
-                        binding.tvStarCnt.text = (Integer.parseInt(binding.tvStarCnt.text.toString()) + 1).toString()
-                        scrapList.add(category.recordId)
-                        true
+                        itemView.tv_star_cnt.text = (Integer.parseInt(itemView.tv_star_cnt.text.toString()) + 1).toString()
+                        heartStarList[num].isScraped = true
+
+                        if (category.isLiked){
+                            deleteScrapList.remove(category.recordId)
+                        } else{
+                            saveScrapList.add(category.recordId)
+                        }
                     }
                 }
             }
@@ -126,12 +169,25 @@ class DetailCategoryListAdapter internal constructor(
 
     inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
 
-    internal fun getHeart(): List<Int>{
-        return heartList
+    internal fun getSaveHeart(): List<Int>{
+        return saveHeartList
     }
 
-    internal fun getScrap(): List<Int>{
-        return scrapList
+    internal fun getDeleteHeart(): List<Int>{
+        return deleteHeartList
+    }
+
+    internal fun getSaveScrap(): List<Int>{
+        return saveScrapList
+    }
+
+    internal fun getDeleteScrap(): List<Int>{
+        return deleteScrapList
+    }
+
+    internal fun changeState(position: Int){
+        category[position]?.isLiked = category[position]?.isLiked != true
+        notifyItemChanged(position)
     }
 
     internal fun setCategory(category: List<Record>){
@@ -148,15 +204,21 @@ class DetailCategoryListAdapter internal constructor(
         category.removeAt(category.lastIndex) // 로딩이 완료되면 프로그레스바를 지움
     }
 
-    private fun setHeartStar(binding: ListDetailCategoryItemBinding, record: Record){
-        if (record.isLiked){
-            binding.imgHeart.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
-            binding.tvHeartCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
+    private fun setHeartStar(binding: ListDetailCategoryItemBinding, data: LikeScrap){
+        if (data.isLiked){
+            binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
+            binding.tvHeartCnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+        } else{
+            binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
+            binding.tvHeartCnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
         }
 
-        if (record.isScraped){
-            binding.imgStar.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
-            binding.tvStarCnt.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context, R.color.orange))
+        if (data.isScraped){
+            binding.imgStar.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_star))
+            binding.tvStarCnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
+        } else{
+            binding.imgStar.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
+            binding.tvStarCnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
         }
     }
 
