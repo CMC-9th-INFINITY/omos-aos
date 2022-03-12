@@ -9,6 +9,8 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -73,7 +75,7 @@ class WriteRecordActivity : AppCompatActivity() {
         viewModel.category.value = category
         if (viewModel.category.value == resources.getString(R.string.a_line)){
             record_contents.visibility = View.GONE
-            oneline_contents.visibility = View.VISIBLE
+            aline_contents.visibility = View.VISIBLE
             binding.tvLimitContents.text = "/50"
         }
 
@@ -163,6 +165,49 @@ class WriteRecordActivity : AppCompatActivity() {
             }
         }
 
+        binding.etRecordTitle.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.tvTitleCount.text = binding.etRecordTitle.length().toString()
+            }
+        })
+
+        binding.recordContents.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.tvContentsCount.text = binding.recordContents.length().toString()
+            }
+        })
+
+        binding.alineContents.addTextChangedListener(object: TextWatcher{
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                binding.tvContentsCount.text = binding.alineContents.length().toString()
+            }
+        })
+
+
     }
 
     private fun cropImage(uri: Uri?){
@@ -197,7 +242,7 @@ class WriteRecordActivity : AppCompatActivity() {
             R.id.action_next -> {
                 category = GlobalFunction.categoryKrToEng(this, category)
                 recordContents = if (category == "A_LINE"){
-                    binding.onelineContents.text.toString()
+                    binding.alineContents.text.toString()
                 } else {
                     binding.recordContents.text.toString()
                 }

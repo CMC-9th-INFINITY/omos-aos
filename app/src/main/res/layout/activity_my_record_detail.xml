@@ -8,10 +8,6 @@
             name="vm"
             type="com.infinity.omos.viewmodels.MyRecordDetailViewModel" />
 
-        <variable
-            name="data"
-            type="com.infinity.omos.data.Record" />
-
     </data>
 
     <LinearLayout
@@ -53,8 +49,7 @@
                         android:id="@+id/img_album_cover"
                         android:layout_width="36dp"
                         android:layout_height="36dp"
-                        android:layout_marginRight="12dp"
-                        app:imageUrl="@{data.music.albumImageUrl}"/>
+                        android:layout_marginRight="12dp"/>
 
                     <LinearLayout
                         android:layout_width="wrap_content"
@@ -65,7 +60,6 @@
                             android:id="@+id/tv_music_title"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{data.music.musicTitle}"
                             android:textSize="14sp"
                             android:textColor="@color/white"/>
 
@@ -93,7 +87,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="70dp"
                         android:layout_marginBottom="10dp"
-                        android:text="@{data.recordTitle}"
                         android:textSize="22sp"
                         android:textColor="@color/white"
                         android:maxLines="2"
@@ -158,7 +151,6 @@
                         android:layout_height="wrap_content"
                         android:paddingVertical="16dp"
                         android:layout_marginBottom="30dp"
-                        android:text="@{data.recordContents}"
                         android:textSize="16sp"
                         android:textColor="@color/gray_02"
                         android:maxLength="794"
@@ -208,7 +200,6 @@
                                 android:id="@+id/tv_nickname"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:text="@{data.nickname}"
                                 android:textColor="@color/gray_03"
                                 android:textSize="14sp" />
 

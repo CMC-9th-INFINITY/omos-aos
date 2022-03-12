@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.infinity.omos.databinding.ActivityRecordDetailBinding
 import com.infinity.omos.databinding.ActivityUserRecordDetailBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction

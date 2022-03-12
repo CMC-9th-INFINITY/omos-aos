@@ -107,7 +107,20 @@ class MyRecordListAdapter internal constructor(context: Context):
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
                     val intent = Intent(context, MyRecordDetailActivity::class.java)
-                    intent.putExtra("postId", record.recordId)
+                    intent.putExtra("musicTitle", record.music.musicTitle)
+                    intent.putExtra("artists", binding.tvArtist.text.toString())
+                    intent.putExtra("albumTitle", record.music.albumTitle)
+                    intent.putExtra("albumImageUrl", record.music.albumImageUrl)
+                    intent.putExtra("recordTitle", record.recordTitle)
+                    intent.putExtra("recordContents", record.recordContents)
+                    intent.putExtra("date", binding.tvDate.text.toString())
+                    intent.putExtra("category", binding.tvCategory.text.toString())
+                    intent.putExtra("isPublic", record.isPublic)
+                    intent.putExtra("isLiked", record.isLiked)
+                    intent.putExtra("isScraped", record.isScraped)
+                    intent.putExtra("likeCnt", record.likeCnt)
+                    intent.putExtra("scrapCnt", record.scrapCnt)
+                    intent.putExtra("nickname", record.nickname)
                     context.startActivity(intent)
                 }
             }

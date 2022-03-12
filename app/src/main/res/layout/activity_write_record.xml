@@ -121,7 +121,6 @@
                     android:background="#00FFFFFF"
                     android:beforeTextChanged="@{()->vm.setPrevText(etRecordTitle)}"
                     android:afterTextChanged="@{()->vm.limitText(etRecordTitle)}"
-                    android:onTextChanged="@{()->vm.countTitle(etRecordTitle)}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toTopOf="@id/linear"/>
@@ -201,11 +200,10 @@
                     android:textColor="@color/white"
                     android:textSize="16sp"
                     android:maxLength="794"
-                    android:onTextChanged="@{()->vm.countContents(recordContents)}"
                     android:background="#00FFFFFF"/>
 
                 <EditText
-                    android:id="@+id/oneline_contents"
+                    android:id="@+id/aline_contents"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
@@ -216,7 +214,6 @@
                     android:textSize="24sp"
                     android:fontFamily="@font/cafe24oneprettynight"
                     android:maxLength="52"
-                    android:onTextChanged="@{()->vm.countContents(onelineContents)}"
                     android:background="#00FFFFFF"
                     android:visibility="gone"/>
 
@@ -266,9 +263,9 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_title_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vm.titleLength.toString()}"
                             android:textSize="12sp"
                             android:textColor="@color/light_gray"/>
 
@@ -306,9 +303,9 @@
                         android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/tv_contents_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@{vm.contentsLength.toString()}"
                             android:textSize="12sp"
                             android:textColor="@color/light_gray"/>
 

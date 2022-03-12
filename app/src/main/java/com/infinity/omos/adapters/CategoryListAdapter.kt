@@ -10,11 +10,13 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MyRecordDetailActivity
+import com.infinity.omos.UserRecordDetailActivity
 import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.categoryEngToKr
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
+import com.infinity.omos.utils.GlobalApplication
 
 class CategoryListAdapter internal constructor(context: Context, category: List<Record>?):
     ListAdapter<Record, CategoryListAdapter.ViewHolder>(
@@ -24,6 +26,8 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
     private var record = category
+
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -60,7 +64,7 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    val intent = Intent(context, MyRecordDetailActivity::class.java)
+                    val intent = Intent(context, UserRecordDetailActivity::class.java)
                     intent.putExtra("postId", record.recordId)
                     context.startActivity(intent)
                 }

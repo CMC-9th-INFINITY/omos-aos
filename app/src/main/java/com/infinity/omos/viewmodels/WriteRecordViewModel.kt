@@ -27,25 +27,13 @@ class WriteRecordViewModel(application: Application): AndroidViewModel(applicati
     var albumImageUrl = MutableLiveData<String>()
     var createdDate = MutableLiveData<String>()
     var category = MutableLiveData<String>()
-    var titleLength = MutableLiveData<Int>()
-    var contentsLength = MutableLiveData<Int>()
 
     init {
         isPrivate.value = false
-        titleLength.value = 0
-        contentsLength.value = 0
     }
 
     fun saveRecord(record: SaveRecord){
         repository.saveRecord(record)
-    }
-
-    fun countTitle(et: EditText){
-        titleLength.value = et.length()
-    }
-
-    fun countContents(et: EditText){
-        contentsLength.value = et.length()
     }
 
     fun changePrivate(){

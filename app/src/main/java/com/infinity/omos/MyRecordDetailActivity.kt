@@ -17,6 +17,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
+import com.bumptech.glide.Glide
 import com.infinity.omos.databinding.ActivityMyRecordDetailBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
@@ -41,53 +42,50 @@ class MyRecordDetailActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        var postId = intent.getIntExtra("postId", -1)
+        var musicTitle = intent.getStringExtra("musicTitle")
+        var artists = intent.getStringExtra("artists")
+        var albumTitle = intent.getStringExtra("albumTitle")
+        var albumImageUrl = intent.getStringExtra("albumImageUrl")
+        var recordTitle = intent.getStringExtra("recordTitle")
+        var recordContents = intent.getStringExtra("recordContents")
+        var date = intent.getStringExtra("date")
+        var category = intent.getStringExtra("category")
+        var isPublic = intent.getBooleanExtra("isPublic", false)
+        var isLiked = intent.getBooleanExtra("isLiked", false)
+        var isScraped = intent.getBooleanExtra("isScraped", false)
+        var likeCnt = intent.getIntExtra("likeCnt", 0)
+        var scrapCnt = intent.getIntExtra("scrapCnt", 0)
+        var nickname = intent.getStringExtra("nickname")
 
-        viewModel.setDetailRecord(postId, userId)
-        viewModel.getDetailRecord().observe(this) { record ->
-            record?.let {
-                binding.data = it
-                binding.tvArtist.text = GlobalFunction.setArtist(it.music.artists)
-                binding.tvDate.text = GlobalFunction.setDate(it.createdDate)
-                binding.tvCategory.text = GlobalFunction.categoryEngToKr(this, it.category)
-                binding.tvLikeCnt.text = String.format("%03d", it.likeCnt)
-                binding.tvScrapCnt.text = String.format("%03d", it.scrapCnt)
+        binding.tvMusicTitle.text = musicTitle
+        binding.tvArtist.text = "$artists - $albumTitle"
+        binding.tvRecordTitle.text = recordTitle
+        binding.tvDate.text = date
+        binding.tvCategory.text = category
+        binding.tvNickname.text = "DJ $nickname"
+        binding.tvLikeCnt.text = String.format("%03d", likeCnt)
+        binding.tvScrapCnt.text = String.format("%03d", scrapCnt)
 
-                if (it.category == "A_LINE"){
-                    binding.tvAlineContents.visibility = View.VISIBLE
-                    binding.tvRecordContents.visibility = View.GONE
-                    binding.tvAlineContents.text = "\"${it.recordContents}\""
-                } else {
-                    binding.tvRecordContents.visibility = View.VISIBLE
-                    binding.tvAlineContents.visibility = View.GONE
-                }
-
-                if (it.isPublic){
-                    binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
-                } else{
-                    binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
-                }
-            }
+        if (category == "한 줄 감상"){
+            binding.tvAlineContents.visibility = View.VISIBLE
+            binding.tvRecordContents.visibility = View.GONE
+            binding.tvAlineContents.text = "\"${recordContents}\""
+        } else {
+            binding.tvRecordContents.visibility = View.VISIBLE
+            binding.tvAlineContents.visibility = View.GONE
+            binding.tvRecordContents.text = recordContents
         }
 
-        viewModel.getStateDetailRecord().observe(this) { state->
-            state?.let {
-                when(it){
-                    Constant.ApiState.LOADING -> {
-                        binding.linearLayout.visibility = View.GONE
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
+        Glide.with(binding.imgAlbumCover.context)
+            .load(albumImageUrl)
+            .error(R.drawable.ic_launcher_background)
+            .fallback(R.drawable.ic_record)
+            .into(binding.imgAlbumCover)
 
-                    Constant.ApiState.DONE -> {
-                        binding.linearLayout.visibility = View.VISIBLE
-                        binding.progressBar.visibility = View.GONE
-                    }
-
-                    Constant.ApiState.ERROR -> {
-
-                    }
-                }
-            }
+        if (isPublic){
+            binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+        } else{
+            binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
         }
 
         initToolBar()
