@@ -43,6 +43,8 @@ class MainActivity : AppCompatActivity() {
     private var stateWrite = false
     private var stateNoti = false
     private var stateSearch = false
+
+    private var isMusicSearch = false
     private var prevTag = ""
 
     private lateinit var actionSearch: MenuItem
@@ -69,16 +71,8 @@ class MainActivity : AppCompatActivity() {
         }
 
         // 검색뷰 취소 버튼 클릭 시
-        btn_cancel.setOnClickListener {
-            linear.visibility = View.VISIBLE
-            searchView.visibility = View.GONE
-            searchTab.visibility = View.GONE
-            viewPager.currentItem = 0
-            et_search.setText("")
-
-            // 키보드 내리기
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-            inputMethodManager.hideSoftInputFromWindow(et_search.windowToken, 0)
+        binding.btnCancel.setOnClickListener {
+            cancelSearch()
         }
 
         // EditText 초기화
@@ -90,11 +84,11 @@ class MainActivity : AppCompatActivity() {
         et_search.addTextChangedListener(object: TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
                 if (et_search.length() > 0 || searchTab.visibility == View.VISIBLE){
-                    ln_ranking.visibility = View.GONE
-                    rv_search.visibility = View.VISIBLE
-                } else{
-                    ln_ranking.visibility = View.VISIBLE
-                    rv_search.visibility = View.GONE
+                    if (isMusicSearch){
+                        // 검색어 노출
+                        binding.lnRanking.visibility = View.GONE
+                        binding.rvSearch.visibility = View.VISIBLE
+                    }
                 }
             }
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
@@ -106,16 +100,18 @@ class MainActivity : AppCompatActivity() {
             when(i){
                 KeyEvent.KEYCODE_ENTER -> {
                     if (keyEvent.action != KeyEvent.ACTION_DOWN){
-                        if (et_search.length() > 0){
-                            keyword = et_search.text.toString()
-                            var intent = Intent("SEARCH_UPDATE")
-                            intent.putExtra("keyword", keyword)
-                            sendBroadcast(intent)
+                        if (isMusicSearch){
+                            if (et_search.length() > 0){
+                                keyword = et_search.text.toString()
+                                var intent = Intent("SEARCH_UPDATE")
+                                intent.putExtra("keyword", keyword)
+                                sendBroadcast(intent)
 
-                            rv_search.visibility = View.GONE
-                            searchTab.visibility = View.VISIBLE
-                        } else{
-                            Toast.makeText(this, "텍스트를 입력하세요.",Toast.LENGTH_SHORT).show()
+                                binding.rvSearch.visibility = View.GONE
+                                binding.searchTab.visibility = View.VISIBLE
+                            } else{
+                                Toast.makeText(this, "텍스트를 입력하세요.",Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
                     true
@@ -173,9 +169,8 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
 
-                        if (searchView.visibility == View.VISIBLE){
-                            searchView.visibility = View.GONE
-                            linear.visibility = View.VISIBLE
+                        if (binding.searchView.visibility == View.VISIBLE){
+                            cancelSearch()
                         }
                     }
                     R.id.menu_myrecord -> {
@@ -192,6 +187,10 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+
+                        if (binding.searchView.visibility == View.VISIBLE){
+                            cancelSearch()
+                        }
                     }
                     R.id.menu_allrecords -> {
                         toolbar.title = "전체 레코드"
@@ -208,9 +207,8 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
 
-                        if (searchView.visibility == View.VISIBLE){
-                            searchView.visibility = View.GONE
-                            linear.visibility = View.VISIBLE
+                        if (binding.searchView.visibility == View.VISIBLE){
+                            cancelSearch()
                         }
                     }
                     R.id.menu_mydj -> {
@@ -228,9 +226,8 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
 
-                        if (searchView.visibility == View.VISIBLE){
-                            searchView.visibility = View.GONE
-                            linear.visibility = View.VISIBLE
+                        if (binding.searchView.visibility == View.VISIBLE){
+                            cancelSearch()
                         }
                     }
                     R.id.menu_mypage -> {
@@ -248,9 +245,8 @@ class MainActivity : AppCompatActivity() {
                         bottom_nav.menu.findItem(R.id.menu_allrecords).setIcon(R.drawable.ic_allrecords)
                         bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
 
-                        if (searchView.visibility == View.VISIBLE){
-                            searchView.visibility = View.GONE
-                            linear.visibility = View.VISIBLE
+                        if (binding.searchView.visibility == View.VISIBLE){
+                            cancelSearch()
                         }
                     }
                 }
@@ -265,7 +261,7 @@ class MainActivity : AppCompatActivity() {
         if (supportFragmentManager.findFragmentByTag(tag) == null){
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.framelayout, fragment, tag)
+                .add(R.id.frameLayout, fragment, tag)
                 .commit()
         } else{
             supportFragmentManager
@@ -297,9 +293,19 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_search -> {
+                if (binding.bottomNav.selectedItemId == R.id.menu_allrecords){
+                    binding.lnToolbar.visibility = View.GONE
+                    binding.frameLayout.visibility = View.GONE
+                    binding.bottomNav.visibility = View.GONE
+                    binding.searchView.visibility = View.VISIBLE
+                    binding.lnRanking.visibility = View.VISIBLE
+                    isMusicSearch = true
+                } else{
+                    binding.lnToolbar.visibility = View.GONE
+                    binding.searchView.visibility = View.VISIBLE
+                    isMusicSearch = false
+                }
                 isWrite = false
-                linear.visibility = View.GONE
-                searchView.visibility = View.VISIBLE
 
                 // editText 포커스 주기
                 et_search.isFocusableInTouchMode = true
@@ -310,9 +316,13 @@ class MainActivity : AppCompatActivity() {
                 true
             }
             R.id.action_write -> {
+                binding.lnToolbar.visibility = View.GONE
+                binding.frameLayout.visibility = View.GONE
+                binding.bottomNav.visibility = View.GONE
+                binding.searchView.visibility = View.VISIBLE
+                binding.lnRanking.visibility = View.VISIBLE
                 isWrite = true
-                linear.visibility = View.GONE
-                searchView.visibility = View.VISIBLE
+                isMusicSearch = true
 
                 // editText 포커스 주기
                 et_search.isFocusableInTouchMode = true
@@ -324,6 +334,22 @@ class MainActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    fun cancelSearch(){
+        binding.searchView.visibility = View.GONE
+        binding.lnRanking.visibility = View.GONE
+        binding.searchTab.visibility = View.GONE
+        binding.rvSearch.visibility = View.GONE
+        binding.lnToolbar.visibility = View.VISIBLE
+        binding.frameLayout.visibility = View.VISIBLE
+        binding.bottomNav.visibility = View.VISIBLE
+        viewPager.currentItem = 0
+        et_search.setText("")
+
+        // 키보드 내리기
+        val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(et_search.windowToken, 0)
     }
 
     companion object {
