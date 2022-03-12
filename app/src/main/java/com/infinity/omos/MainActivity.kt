@@ -293,17 +293,17 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_search -> {
-                if (binding.bottomNav.selectedItemId == R.id.menu_allrecords){
+                if (binding.bottomNav.selectedItemId == R.id.menu_myrecord){
+                    binding.lnToolbar.visibility = View.GONE
+                    binding.searchView.visibility = View.VISIBLE
+                    isMusicSearch = false
+                } else{
                     binding.lnToolbar.visibility = View.GONE
                     binding.frameLayout.visibility = View.GONE
                     binding.bottomNav.visibility = View.GONE
                     binding.searchView.visibility = View.VISIBLE
                     binding.lnRanking.visibility = View.VISIBLE
                     isMusicSearch = true
-                } else{
-                    binding.lnToolbar.visibility = View.GONE
-                    binding.searchView.visibility = View.VISIBLE
-                    isMusicSearch = false
                 }
                 isWrite = false
 
@@ -336,7 +336,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun cancelSearch(){
+    private fun cancelSearch(){
         binding.searchView.visibility = View.GONE
         binding.lnRanking.visibility = View.GONE
         binding.searchTab.visibility = View.GONE

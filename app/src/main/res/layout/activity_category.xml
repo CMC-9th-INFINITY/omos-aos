@@ -24,7 +24,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:titleTextColor="@color/white"
             android:background="@color/dark"
-            android:theme="@style/ToolbarColoredBackArrow"/>
+            android:theme="@style/ToolbarColoredBackArrow"
+            app:popupTheme="@style/MenuItemStyle"/>
 
         <FrameLayout
             android:layout_width="match_parent"

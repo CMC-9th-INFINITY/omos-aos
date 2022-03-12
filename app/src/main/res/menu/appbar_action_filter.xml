@@ -11,13 +11,16 @@
         <menu>
             <item
                 android:id="@+id/sort_new"
-                android:title="최신순"/>
+                android:title="최신순"
+                app:actionLayout="@layout/list_album_detail_item"/>
             <item
                 android:id="@+id/sort_scrap"
-                android:title="공감순"/>
+                android:title="공감순"
+                app:actionLayout="@layout/list_detail_category_item"/>
             <item
                 android:id="@+id/sort_view"
-                android:title="조회순"/>
+                android:title="조회순"
+                app:actionLayout="@layout/list_music_item"/>
 
         </menu>
 

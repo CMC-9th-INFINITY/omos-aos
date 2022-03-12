@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/iamjm/.gradle/caches/transforms-3/fb3270031bd107031c21c5dc13d9e5ef/transformed/core-1.7.0/res/layout/custom_dialog.xml" value="0.165625" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_dialog.xml" value="0.221" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_follow.xml" value="0.1415" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_gradient.xml" value="0.19479166666666667" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.18958333333333333" />
@@ -29,6 +30,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_user_record_detail.xml" value="0.23324275362318841" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_write_record.xml" value="0.152" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/dialog_pp.xml" value="0.165625" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/dialog_report.xml" value="0.2140625" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/dialog_tos.xml" value="0.24850299401197604" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_album.xml" value="0.125" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_all.xml" value="0.17708333333333334" />
@@ -44,6 +46,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_page.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_record.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_today.xml" value="0.3068893528183716" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_album_detail_item.xml" value="0.18070652173913043" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_album_item.xml" value="0.4" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_aline_category_item.xml" value="0.1734375" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_allrecords_item.xml" value="0.234375" />

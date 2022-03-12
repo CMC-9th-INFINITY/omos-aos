@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -20,6 +21,7 @@ import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
+import com.infinity.omos.utils.CustomDialog
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailCategoryListAdapter internal constructor(
@@ -105,12 +107,29 @@ class DetailCategoryListAdapter internal constructor(
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
+
+                // DJ 클릭
                 itemView.tv_dj.setOnClickListener {
                     val intent = Intent(context, DjActivity::class.java)
                     intent.putExtra("toUserId", category.userId)
                     context.startActivity(intent)
                 }
 
+                // 신고하기 클릭
+                itemView.btn_report.setOnClickListener {
+                    val dlg = CustomDialog(context)
+                    dlg.show(category.recordId)
+
+                    dlg.setOnOkClickedListener { content ->
+                        when(content){
+                            "yes" -> {
+                                Toast.makeText(context, "준비 중", Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
+                }
+
+                // 좋아요 클릭
                 itemView.btn_heart.setOnClickListener {
                     if (heartStarList[num].isLiked){
                         itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
@@ -142,7 +161,8 @@ class DetailCategoryListAdapter internal constructor(
                     }
                 }
 
-                itemView.btn_star.setOnClickListener {
+                // 스크랩 클릭
+               itemView.btn_star.setOnClickListener {
                     if (heartStarList[num].isScraped){
                         itemView.img_star.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_star))
                         itemView.tv_star_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
