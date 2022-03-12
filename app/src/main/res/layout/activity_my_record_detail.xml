@@ -6,7 +6,7 @@
     <data>
         <variable
             name="vm"
-            type="com.infinity.omos.viewmodels.RecordDetailViewModel" />
+            type="com.infinity.omos.viewmodels.MyRecordDetailViewModel" />
 
         <variable
             name="data"

@@ -8,7 +8,6 @@ import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -18,15 +17,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import androidx.databinding.DataBindingUtil
-import com.bumptech.glide.Glide
-import com.infinity.omos.data.Music
-import com.infinity.omos.data.Record
-import com.infinity.omos.databinding.ActivityRecordDetailBinding
+import com.infinity.omos.databinding.ActivityMyRecordDetailBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.viewmodels.RecordDetailViewModel
-import kotlinx.android.synthetic.main.activity_record_detail.*
+import com.infinity.omos.viewmodels.MyRecordDetailViewModel
 import kotlinx.android.synthetic.main.activity_register.toolbar
 import java.io.File
 import java.io.FileNotFoundException
@@ -35,20 +30,18 @@ import java.io.IOException
 
 class MyRecordDetailActivity : AppCompatActivity() {
 
-    private val viewModel: RecordDetailViewModel by viewModels()
-    private lateinit var binding: ActivityRecordDetailBinding
+    private val viewModel: MyRecordDetailViewModel by viewModels()
+    private lateinit var binding: ActivityMyRecordDetailBinding
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_record_detail)
-
-        var postId = intent.getIntExtra("postId", -1)
-
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_record_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_record_detail)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        var postId = intent.getIntExtra("postId", -1)
 
         viewModel.setDetailRecord(postId, userId)
         viewModel.getDetailRecord().observe(this) { record ->
