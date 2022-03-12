@@ -33,6 +33,16 @@ class AllFragment : Fragment() {
 
     private var isEmpty = 0
 
+    private lateinit var itemClickListener: OnItemClickListener
+
+    interface OnItemClickListener{
+        fun setCurrentItem(position: Int)
+    }
+
+    fun setCurrentItem(onItemClickListener: OnItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBroadcastReceiver()
@@ -155,6 +165,19 @@ class AllFragment : Fragment() {
                     }
                 }
             }
+        }
+
+        // 더보기 클릭 시 이동
+        binding.lnMusicMore.setOnClickListener {
+            itemClickListener.setCurrentItem(1)
+        }
+
+        binding.lnAlbumMore.setOnClickListener {
+            itemClickListener.setCurrentItem(2)
+        }
+
+        binding.lnArtistMore.setOnClickListener {
+            itemClickListener.setCurrentItem(3)
         }
 
         // 검색 후 스크롤 맨 위로 이동

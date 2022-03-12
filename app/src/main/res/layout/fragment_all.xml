@@ -25,6 +25,7 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ln_music_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="18dp"
@@ -62,6 +63,7 @@
                     android:nestedScrollingEnabled="false"/>
 
                 <LinearLayout
+                    android:id="@+id/ln_album_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="31dp"
@@ -98,6 +100,7 @@
                     android:nestedScrollingEnabled="false"/>
 
                 <LinearLayout
+                    android:id="@+id/ln_artist_more"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"

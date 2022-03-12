@@ -16,10 +16,13 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import com.google.android.material.tabs.TabLayoutMediator
+import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.ui.bottomnav.*
+import com.infinity.omos.ui.searchtab.AllFragment
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,10 +45,13 @@ class MainActivity : AppCompatActivity() {
     private var stateSearch = false
     private var prevTag = ""
 
+    private lateinit var actionSearch: MenuItem
+    private lateinit var actionWrite: MenuItem
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView<ActivityMainBinding>(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -56,6 +62,11 @@ class MainActivity : AppCompatActivity() {
         initToolBar()
         initNavigationBar()
         initTabLayout()
+
+        // 플로팅 버튼
+        binding.btnFloating.setOnClickListener {
+            onOptionsItemSelected(actionWrite)
+        }
 
         // 검색뷰 취소 버튼 클릭 시
         btn_cancel.setOnClickListener {
@@ -91,7 +102,7 @@ class MainActivity : AppCompatActivity() {
         })
 
         // 검색 완료
-        et_search.setOnKeyListener { view, i, keyEvent ->
+        et_search.setOnKeyListener { _, i, keyEvent ->
             when(i){
                 KeyEvent.KEYCODE_ENTER -> {
                     if (keyEvent.action != KeyEvent.ACTION_DOWN){
@@ -132,6 +143,14 @@ class MainActivity : AppCompatActivity() {
         viewPager.isUserInputEnabled = false
         val tabTitles = listOf("전체", "노래", "앨범", "아티스트")
         TabLayoutMediator(tabLayout, viewPager) { tab, position -> tab.text = tabTitles[position] }.attach()
+
+        // 더보기 클릭 시 이동
+        val allFragment = viewpagerFragmentAdapter.getFragment()
+        allFragment.setCurrentItem(object: AllFragment.OnItemClickListener{
+            override fun setCurrentItem(position: Int) {
+                viewPager.currentItem = position
+            }
+        })
     }
 
     private fun initNavigationBar(){
@@ -145,6 +164,7 @@ class MainActivity : AppCompatActivity() {
                         stateWrite = false
                         stateSearch = false
                         binding.lnToolbar.visibility = View.GONE
+                        binding.btnFloating.visibility = View.VISIBLE
                         invalidateOptionsMenu()
                         changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
@@ -164,6 +184,7 @@ class MainActivity : AppCompatActivity() {
                         stateWrite = true
                         stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
+                        binding.btnFloating.visibility = View.GONE
                         invalidateOptionsMenu()
                         changeFragment("MyRecord", fragmentMyRecord)
                         item.setIcon(R.drawable.ic_selected_myrecord)
@@ -178,6 +199,7 @@ class MainActivity : AppCompatActivity() {
                         stateWrite = false
                         stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
+                        binding.btnFloating.visibility = View.GONE
                         invalidateOptionsMenu()
                         changeFragment("AllRecords", fragmentAllRecords)
                         item.setIcon(R.drawable.ic_selected_allrecords)
@@ -197,6 +219,7 @@ class MainActivity : AppCompatActivity() {
                         stateWrite = false
                         stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
+                        binding.btnFloating.visibility = View.GONE
                         invalidateOptionsMenu()
                         changeFragment("MyDJ", fragmentMyDj)
                         item.setIcon(R.drawable.ic_selected_mydj)
@@ -216,6 +239,7 @@ class MainActivity : AppCompatActivity() {
                         stateWrite = false
                         stateSearch = false
                         binding.lnToolbar.visibility = View.VISIBLE
+                        binding.btnFloating.visibility = View.GONE
                         invalidateOptionsMenu()
                         changeFragment("MyPage", fragmentMyPage)
                         item.setIcon(R.drawable.ic_selected_mypage)
@@ -262,10 +286,11 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action, menu)
-        var actionWrite = menu.findItem(R.id.action_write)
-        var actionSearch = menu.findItem(R.id.action_search)
+        actionWrite = menu.findItem(R.id.action_write)
+        actionSearch = menu.findItem(R.id.action_search)
         actionWrite.isVisible = stateWrite
         actionSearch.isVisible = stateSearch
+
         return true
     }
 

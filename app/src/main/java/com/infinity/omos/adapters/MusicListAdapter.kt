@@ -36,10 +36,6 @@ class MusicListAdapter internal constructor(private val context: Context):
         fun onClick(v: View, position: Int)
     }
 
-    interface OnItemLongClickListener{
-        fun onLongClick(v: View, position: Int)
-    }
-
     fun setItemClickListener(onItemClickListener: OnItemClickListener){
         this.itemClickListener = onItemClickListener
     }

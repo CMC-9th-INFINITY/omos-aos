@@ -131,9 +131,9 @@
                 android:textSize="16sp"
                 android:textColor="@color/gray_02"
                 android:maxLength="794"
-                app:readMoreColor="@color/gray_05"
+                app:readMoreColor="@color/gray_06"
                 app:readMoreMaxLine="4"
-                app:readMoreText="…더보기" />
+                app:readMoreText="…더보기"/>
 
             <TextView
                 android:id="@+id/tv_aline_contents"

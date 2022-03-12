@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
 import android.widget.ImageView
+import com.infinity.omos.R
 
 
 class RoundImageView : androidx.appcompat.widget.AppCompatImageView {
@@ -18,6 +19,7 @@ class RoundImageView : androidx.appcompat.widget.AppCompatImageView {
     }
 
     constructor(context: Context?, attrs: AttributeSet?) : super(context!!, attrs) {
+        rectRadius = context.obtainStyledAttributes(attrs, R.styleable.RoundImageView).getInt(R.styleable.RoundImageView_radius, 7).toFloat()
         initView()
     }
 

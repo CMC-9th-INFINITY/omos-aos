@@ -57,6 +57,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/bottom_nav"/>
 
+            <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/btn_floating"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="15dp"
+                android:layout_marginBottom="27dp"
+                android:backgroundTint="#CCAEAEB2"
+                android:src="@drawable/ic_write_gray08"
+                app:borderWidth="0dp"
+                app:layout_constraintBottom_toTopOf="@id/bottom_nav"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
             <com.google.android.material.bottomnavigation.BottomNavigationView
                 android:id="@+id/bottom_nav"
                 android:layout_width="match_parent"
@@ -491,8 +503,6 @@
                     android:layout_height="match_parent"/>
 
             </LinearLayout>
-
-
 
         </LinearLayout>
 
