@@ -62,9 +62,9 @@ class MyRecordDetailActivity : AppCompatActivity() {
         binding.tvRecordTitle.text = recordTitle
         binding.tvDate.text = date
         binding.tvCategory.text = category
-        binding.tvNickname.text = "DJ $nickname"
         binding.tvLikeCnt.text = String.format("%03d", likeCnt)
         binding.tvScrapCnt.text = String.format("%03d", scrapCnt)
+        binding.tvNickname.text = nickname
 
         if (category == "한 줄 감상"){
             binding.tvAlineContents.visibility = View.VISIBLE

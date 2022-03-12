@@ -140,6 +140,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="228dp"
                 android:layout_gravity="center"
+                android:paddingHorizontal="24dp"
                 android:gravity="center"
                 android:textSize="24sp"
                 android:textColor="@color/gray_02"
@@ -157,15 +158,29 @@
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp">
 
-                <TextView
+                <LinearLayout
                     android:id="@+id/tv_dj"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/gray_03"
-                    android:textSize="14sp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintBottom_toBottomOf="parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DJ "
+                        android:textColor="@color/gray_03"
+                        android:textSize="14sp"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{data.nickname}"
+                        android:textColor="@color/gray_03"
+                        android:textSize="14sp" />
+
+                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/btn_heart"

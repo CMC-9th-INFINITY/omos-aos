@@ -83,7 +83,6 @@ class DetailCategoryListAdapter internal constructor(
     inner class CategoryViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(category: Record, num: Int){
             binding.data = category
-            binding.tvDj.text = "DJ ${category.nickname}"
             binding.tvArtist.text = setArtist(category.music.artists) + " - " + category.music.albumTitle
             binding.tvCategory.text = setCategoryText(context, category.category)
             binding.tvDate.text = setDate(category.createdDate)
