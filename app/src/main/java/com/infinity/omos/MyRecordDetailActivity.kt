@@ -126,7 +126,7 @@ class MyRecordDetailActivity : AppCompatActivity() {
                 true
             }
             R.id.action_more -> {
-                Toast.makeText(this, "More", Toast.LENGTH_SHORT).show()
+
                 true
             }
             android.R.id.home -> {
