@@ -25,6 +25,7 @@
                 android:id="@+id/img_album_cover"
                 android:layout_width="72dp"
                 android:layout_height="72dp"
+                android:layout_marginBottom="5dp"
                 android:layout_gravity="bottom"
                 app:imageUrl="@{data.music.albumImageUrl}"/>
 
@@ -34,6 +35,14 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="end"
                 android:background="@color/dark">
+
+                <View
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/deep_dark"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -85,12 +94,13 @@
 
                     <TextView
                         android:id="@+id/tv_record_contents"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:text="@{data.recordContents}"
                         android:textSize="12sp"
                         android:textColor="@color/gray_04"
+                        android:maxLines="2"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintBottom_toTopOf="@+id/ln_date"/>
 
