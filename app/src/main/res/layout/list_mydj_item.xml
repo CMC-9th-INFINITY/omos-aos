@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -15,12 +16,13 @@
         android:paddingVertical="12dp"
         android:paddingHorizontal="16dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_album_cover"
             android:layout_width="66dp"
             android:layout_height="66dp"
             android:layout_marginBottom="6dp"
-            android:src="@drawable/ic_record"/>
+            app:civ_border_width="2dp"
+            app:imageUrl="@{dj.profileUrl}"/>
 
         <TextView
             android:id="@+id/tv_nick"
