@@ -67,6 +67,7 @@ class MainActivity : AppCompatActivity() {
 
         // 플로팅 버튼
         binding.btnFloating.setOnClickListener {
+            binding.btnFloating.visibility = View.GONE
             onOptionsItemSelected(actionWrite)
         }
 
@@ -159,8 +160,6 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         stateWrite = false
                         stateSearch = false
-                        binding.lnToolbar.visibility = View.GONE
-                        binding.btnFloating.visibility = View.VISIBLE
                         invalidateOptionsMenu()
                         changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
@@ -172,6 +171,9 @@ class MainActivity : AppCompatActivity() {
                         if (binding.searchView.visibility == View.VISIBLE){
                             cancelSearch()
                         }
+
+                        binding.lnToolbar.visibility = View.GONE
+                        binding.btnFloating.visibility = View.VISIBLE
                     }
                     R.id.menu_myrecord -> {
                         toolbar.title = "MY 레코드"
@@ -258,6 +260,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun changeFragment(tag:String, fragment: Fragment){
 
+        if (prevTag != ""){
+            supportFragmentManager
+                .beginTransaction()
+                .hide(supportFragmentManager.findFragmentByTag(prevTag)!!)
+                .commit()
+        }
+
         if (supportFragmentManager.findFragmentByTag(tag) == null){
             supportFragmentManager
                 .beginTransaction()
@@ -267,13 +276,6 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager
                 .beginTransaction()
                 .show(supportFragmentManager.findFragmentByTag(tag)!!)
-                .commit()
-        }
-
-        if (prevTag != ""){
-            supportFragmentManager
-                .beginTransaction()
-                .hide(supportFragmentManager.findFragmentByTag(prevTag)!!)
                 .commit()
         }
 
@@ -345,9 +347,16 @@ class MainActivity : AppCompatActivity() {
         binding.lnRanking.visibility = View.GONE
         binding.searchTab.visibility = View.GONE
         binding.rvSearch.visibility = View.GONE
-        binding.lnToolbar.visibility = View.VISIBLE
         binding.frameLayout.visibility = View.VISIBLE
         binding.bottomNav.visibility = View.VISIBLE
+
+        // today는 툴바 없음
+        if (binding.bottomNav.selectedItemId != R.id.menu_today){
+            binding.lnToolbar.visibility = View.VISIBLE
+        } else{
+            binding.btnFloating.visibility = View.VISIBLE
+        }
+
         viewPager.currentItem = 0
         et_search.setText("")
 

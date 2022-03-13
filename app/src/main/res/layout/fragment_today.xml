@@ -218,15 +218,113 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="36dp"
-                    android:paddingHorizontal="16dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:paddingHorizontal="16dp"
                         android:text="내가 사랑했던 노래"
                         android:textSize="18sp"
                         android:textColor="@color/white"/>
+
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:id="@+id/img_record"
+                            android:layout_width="match_parent"
+                            android:layout_height="164dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_main"/>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1"
+                                android:background="@drawable/bg_gradient_main"/>
+
+                            <ImageView
+                                android:layout_width="56dp"
+                                android:layout_height="match_parent"
+                                android:scaleType="center"
+                                android:src="@drawable/ic_next"
+                                android:background="#EB1A1A1A"/>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="14dp">
+
+                            <ImageView
+                                android:id="@+id/img_album_cover"
+                                android:layout_width="65dp"
+                                android:layout_height="65dp"
+                                android:layout_marginBottom="10dp"
+                                android:src="@drawable/ic_record"/>
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/tv_music_title"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:text="노래 제목이 들어갑니다."
+                                    android:textSize="16sp"
+                                    android:textColor="@color/white"/>
+
+                                <TextView
+                                    android:id="@+id/tv_artist"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="2dp"
+                                    android:text="가수 이름이 들어갑니다."
+                                    android:textSize="14sp"
+                                    android:textColor="@color/gray_03"/>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:orientation="horizontal">
+
+                                    <ImageView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:layout_marginEnd="4dp"
+                                        android:src="@drawable/ic_disc"/>
+
+                                    <TextView
+                                        android:id="@+id/tv_album_title"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center"
+                                        android:text="앨범 제목이 들어갑니다."
+                                        android:textSize="12sp"
+                                        android:textColor="@color/gray_05"/>
+
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
