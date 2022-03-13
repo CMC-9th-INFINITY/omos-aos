@@ -6,7 +6,7 @@ data class Record(
     @SerializedName("category") val category: String,
     @SerializedName("createdDate") val createdDate: String,
     @SerializedName("isLiked") var isLiked: Boolean,
-    @SerializedName("isPublic") val isPublic: Boolean,
+    @SerializedName("isPublic") val isPublic: Boolean?,
     @SerializedName("isScraped") val isScraped: Boolean,
     @SerializedName("likeCnt") val likeCnt: Int,
     @SerializedName("music") val music: Music,

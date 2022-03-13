@@ -2,10 +2,12 @@ package com.infinity.omos
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant
@@ -41,6 +43,14 @@ class DetailRecordActivity : AppCompatActivity() {
                 binding.tvLikeCnt.text = String.format("%03d", it.likeCnt)
                 binding.tvScrapCnt.text = String.format("%03d", it.scrapCnt)
 
+                // 공개/비공개 아이콘 변경
+                if (it.isPublic == null || it.isPublic == true){
+                    binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                } else {
+                    binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                }
+
+                // 한 줄 감상 구분
                 if (it.category == "A_LINE"){
                     binding.tvAlineContents.visibility = View.VISIBLE
                     binding.tvRecordContents.visibility = View.GONE
@@ -54,7 +64,7 @@ class DetailRecordActivity : AppCompatActivity() {
                 if (it.userId == userId){
                     binding.btnPublic.visibility = View.VISIBLE
                     binding.btnReport.visibility = View.GONE
-                    actionInstar.isVisible = true
+                    actionInstar.isVisible = it.category == "A_LINE"
                     actionMore.isVisible = true
                 } else{
                     binding.btnPublic.visibility = View.GONE

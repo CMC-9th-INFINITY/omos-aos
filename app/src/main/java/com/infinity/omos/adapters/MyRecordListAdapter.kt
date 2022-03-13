@@ -96,7 +96,7 @@ class MyRecordListAdapter internal constructor(context: Context):
             binding.tvDate.text = setDate(record.createdDate)
             binding.tvCategory.text = setCategoryText(context, record.category)
 
-            if (record.isPublic){
+            if (record.isPublic == true){
                 binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_public))
             } else {
                 binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_private))
