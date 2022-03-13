@@ -29,7 +29,8 @@
             android:exported="false" />
         <activity
             android:name=".DjActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/StatusBarStyle"/>
 
         <receiver
             android:name=".utils.MyReceiver"

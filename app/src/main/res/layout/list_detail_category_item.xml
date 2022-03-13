@@ -144,8 +144,7 @@
                 android:gravity="center"
                 android:textSize="24sp"
                 android:textColor="@color/gray_02"
-                android:fontFamily="@font/cafe24oneprettynight"
-                android:maxLength="52"/>
+                android:fontFamily="@font/cafe24oneprettynight"/>
 
             <View
                 android:layout_width="match_parent"

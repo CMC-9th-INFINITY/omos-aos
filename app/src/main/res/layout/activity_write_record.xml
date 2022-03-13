@@ -213,7 +213,7 @@
                     android:textColor="@color/white"
                     android:textSize="24sp"
                     android:fontFamily="@font/cafe24oneprettynight"
-                    android:maxLength="52"
+                    android:maxLength="50"
                     android:background="#00FFFFFF"
                     android:visibility="gone"/>
 
@@ -306,6 +306,7 @@
                             android:id="@+id/tv_contents_count"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:text="0"
                             android:textSize="12sp"
                             android:textColor="@color/light_gray"/>
 
