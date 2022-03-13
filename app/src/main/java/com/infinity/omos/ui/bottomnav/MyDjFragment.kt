@@ -1,6 +1,8 @@
 package com.infinity.omos.ui.bottomnav
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +11,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
@@ -17,6 +21,7 @@ import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
+import kotlinx.android.synthetic.main.fragment_artist.*
 
 class MyDjFragment : Fragment() {
 
@@ -24,6 +29,15 @@ class MyDjFragment : Fragment() {
     private lateinit var binding: FragmentMyDjBinding
 
     private val fromUserId = GlobalApplication.prefs.getInt("userId")
+
+    private var page = 0
+    private val pageSize = 5
+    private var isLoading = false
+    private var isFirst = true
+
+    private var postId = -1
+    private lateinit var mAdapter: MyDjListAdapter
+    private lateinit var rAdapter: DetailCategoryListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,16 +54,55 @@ class MyDjFragment : Fragment() {
             binding.lifecycleOwner = this
         }
 
-        val mAdapter = MyDjListAdapter(requireContext())
+        mAdapter = MyDjListAdapter(requireContext())
         binding.rvMydj.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         }
 
-        val rAdapter = DetailCategoryListAdapter(requireContext())
+        rAdapter = DetailCategoryListAdapter(requireContext())
         binding.rvRecord.apply {
             adapter = rAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+
+        viewModel.setDjAllRecords(fromUserId, null, pageSize)
+        viewModel.getDjAllRecords().observe(viewLifecycleOwner) { record ->
+            record?.let {
+                rAdapter.addCategory(it)
+                isLoading = if (it.isEmpty()) {
+                    rAdapter.deleteLoading()
+                    rAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    true
+                } else {
+                    rAdapter.notifyItemRangeInserted(page * pageSize, it.size)
+                    postId = it[it.lastIndex].recordId
+                    false
+                }
+            }
+        }
+
+        viewModel.getStateDjAllRecords().observe(viewLifecycleOwner) { state ->
+            state?.let {
+                when (it) {
+                    Constant.ApiState.LOADING -> {
+                        if (page == 0){
+                            binding.rvRecord.visibility = View.GONE
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.lnNorecord.visibility = View.GONE
+                        }
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.rvRecord.visibility = View.VISIBLE
+                        binding.progressBar.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+
+                    }
+                }
+            }
         }
 
         viewModel.getMyDjRecord().observe(viewLifecycleOwner) { record ->
@@ -81,7 +134,37 @@ class MyDjFragment : Fragment() {
 
         mAdapter.setItemClickListener(object : MyDjListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, toUserId: Int) {
-                viewModel.setMyDjRecord(fromUserId, toUserId)
+                // 한 번 더 클릭 시 첫 화면 노출
+                if (position == -1){
+                    page = 0
+                    isLoading = false
+                    isFirst = true
+                    rAdapter.clearCategory()
+                    viewModel.setDjAllRecords(fromUserId, null, pageSize)
+                } else {
+                    isFirst = false
+                    viewModel.setMyDjRecord(fromUserId, toUserId)
+                }
+                binding.rvRecord.scrollToPosition(0)
+            }
+        })
+
+        // 무한 스크롤
+        binding.rvRecord.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                val lastVisibleItemPosition =
+                    (recyclerView.layoutManager as LinearLayoutManager?)!!.findLastCompletelyVisibleItemPosition()
+                val itemTotalCount = recyclerView.adapter!!.itemCount-1
+
+                // 스크롤이 끝에 도달했는지 확인
+                if (!binding.rvRecord.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && isFirst) {
+                    isLoading = true
+                    page ++
+                    rAdapter.deleteLoading()
+                    viewModel.setDjAllRecords(fromUserId, postId, pageSize)
+                }
             }
         })
 

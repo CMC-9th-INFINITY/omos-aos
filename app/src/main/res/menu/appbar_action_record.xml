@@ -16,10 +16,10 @@
 
         <menu>
             <item
-                android:id="@+id/sort_new"
+                android:id="@+id/action_delete"
                 android:title="삭제"/>
             <item
-                android:id="@+id/sort_scrap"
+                android:id="@+id/action_modify"
                 android:title="수정"/>
 
         </menu>

@@ -21,6 +21,44 @@ class MyRecordRepository {
     private val recordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
+    var stateDeleteRecord = MutableLiveData<ResultState>()
+    fun deleteRecord(postId: Int){
+        recordApi.deleteRecord(postId).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("DeleteRecordAPI", "Success")
+                        stateDeleteRecord.postValue(body!!)
+                    }
+
+                    401 -> {
+                        Log.d("DeleteRecordAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        deleteRecord(postId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("DeleteRecordAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("DeleteRecordAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("DeleteRecordAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     var stateSaveRecord = MutableLiveData<ResultState>()
     fun saveRecord(record: SaveRecord){
         recordApi.saveRecord(record).enqueue(object: Callback<ResultState> {

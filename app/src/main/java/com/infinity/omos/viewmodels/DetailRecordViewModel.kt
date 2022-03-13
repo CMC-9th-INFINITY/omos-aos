@@ -4,13 +4,16 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.infinity.omos.data.Record
+import com.infinity.omos.data.ResultState
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.repository.MyRecordRepository
 import com.infinity.omos.repository.RecordRepository
 
 class DetailRecordViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: RecordRepository = RecordRepository()
+    private val myRecordRepository = MyRecordRepository()
 
     // 상세 레코드
     fun setDetailRecord(postId: Int, userId: Int){
@@ -37,5 +40,12 @@ class DetailRecordViewModel(application: Application): AndroidViewModel(applicat
 
     fun deleteScrap(postId: Int, userId: Int){
         repository.deleteScrap(postId, userId)
+    }
+
+    fun deleteRecord(postId: Int){
+        myRecordRepository.deleteRecord(postId)
+    }
+    fun getStateDeleteRecord(): LiveData<ResultState>{
+        return myRecordRepository.stateDeleteRecord
     }
 }

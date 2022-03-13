@@ -7,12 +7,14 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.ShareInstagram
 import com.infinity.omos.viewmodels.DetailRecordViewModel
@@ -136,6 +138,17 @@ class DetailRecordActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getStateDeleteRecord().observe(this) { state ->
+            state?.let {
+                if (it.state){
+                    finish()
+                    Toast.makeText(this, "삭제 완료", Toast.LENGTH_SHORT).show()
+                } else{
+                    Toast.makeText(this, "삭제 실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         // 좋아요 클릭
         binding.btnHeart.setOnClickListener {
             if (heart){
@@ -175,6 +188,20 @@ class DetailRecordActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+        // 신고하기
+        binding.btnReport.setOnClickListener {
+            val dlg = CustomDialog(this)
+            dlg.show("이 레코드를 신고하시겠어요?")
+
+            dlg.setOnOkClickedListener { content ->
+                when(content){
+                    "yes" -> {
+                        Toast.makeText(this, "준비 중", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
         initToolBar()
     }
 
@@ -199,7 +226,20 @@ class DetailRecordActivity : AppCompatActivity() {
                 insta.shareInsta(binding.imgAlbumCover, binding.tvRecordTitle)
                 true
             }
-            R.id.action_more -> {
+            R.id.action_delete -> {
+                val dlg = CustomDialog(this)
+                dlg.show("삭제하시겠어요?")
+
+                dlg.setOnOkClickedListener { content ->
+                    when(content){
+                        "yes" -> {
+                            viewModel.deleteRecord(postId)
+                        }
+                    }
+                }
+                true
+            }
+            R.id.action_delete -> {
 
                 true
             }

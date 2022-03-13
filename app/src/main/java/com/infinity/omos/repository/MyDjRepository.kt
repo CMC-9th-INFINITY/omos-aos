@@ -20,6 +20,48 @@ class MyDjRepository {
     private val myDjRecordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
+    var myDjAllRecords = MutableLiveData<List<Record>>()
+    var stateMyDjAllRecords = MutableLiveData<Constant.ApiState>()
+    fun getMyDjAllRecords(userId: Int, postId: Int?, size: Int){
+        stateMyDjAllRecords.value = Constant.ApiState.LOADING
+        myDjRecordApi.getMyDjAllRecords(userId, postId, size).enqueue(object: Callback<List<Record>> {
+            override fun onResponse(
+                call: Call<List<Record>>,
+                response: Response<List<Record>>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("MyDjAllRecordsAPI", "Success")
+                        myDjAllRecords.postValue(body!!)
+                        stateMyDjAllRecords.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("MyDjAllRecordsAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getMyDjAllRecords(userId, postId, size)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("MyDjAllRecordsAPI", errorBody!!.message)
+                        stateMyDjAllRecords.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("MyDjAllRecordsAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+                Log.d("MyDjAllRecordsAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     fun deleteFollow(postId: Int, userId: Int){
         followApi.deleteFollow(postId, userId).enqueue(object: Callback<ResultState> {
             override fun onResponse(

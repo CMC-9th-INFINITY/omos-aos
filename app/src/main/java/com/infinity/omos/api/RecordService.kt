@@ -13,6 +13,11 @@ interface RecordService {
         @Path("userId") userId: Int
     ): Call<List<Record>>
 
+    @DELETE("api/records/delete/{postId}")
+    fun deleteRecord(
+        @Path("postId") postId: Int
+    ): Call<ResultState>
+
     @POST("api/records/save")
     fun saveRecord(
         @Body params: SaveRecord
@@ -26,6 +31,13 @@ interface RecordService {
         @Path("postId") postId: Int,
         @Path("userId") userId: Int
     ): Call<Record>
+
+    @GET("api/records/select/{userId}/my-dj")
+    fun getMyDjAllRecords(
+        @Path("userId") userId: Int,
+        @Query("postId") postId: Int?,
+        @Query("size") size: Int
+    ): Call<List<Record>>
 
     @GET("api/records/select/category/{category}")
     fun getCategory(

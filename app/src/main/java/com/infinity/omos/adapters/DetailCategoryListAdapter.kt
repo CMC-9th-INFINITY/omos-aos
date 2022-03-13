@@ -117,7 +117,7 @@ class DetailCategoryListAdapter internal constructor(
                 // 신고하기 클릭
                 itemView.btn_report.setOnClickListener {
                     val dlg = CustomDialog(context)
-                    dlg.show(category.recordId)
+                    dlg.show("이 레코드를 신고하시겠어요?")
 
                     dlg.setOnOkClickedListener { content ->
                         when(content){
@@ -216,6 +216,11 @@ class DetailCategoryListAdapter internal constructor(
     internal fun changeState(position: Int){
         category[position]?.isLiked = category[position]?.isLiked != true
         notifyItemChanged(position)
+    }
+
+    internal fun clearCategory(){
+        this.category.clear()
+        notifyDataSetChanged()
     }
 
     internal fun setCategory(category: List<Record>){

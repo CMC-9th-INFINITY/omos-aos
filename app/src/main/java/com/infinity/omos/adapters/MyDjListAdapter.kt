@@ -73,11 +73,20 @@ class MyDjListAdapter internal constructor(context: Context):
                         isChecked[num] = true
                         prevChecked = num
                         notifyDataSetChanged() // 이미지 재적용
+                        itemClickListener.onClick(itemView, pos, dj.userId)
+                    } else{
+                        isChecked[num] = false
+                        notifyDataSetChanged()
+                        itemClickListener.onClick(itemView, -1, dj.userId)
                     }
-                    itemClickListener.onClick(itemView, pos, dj.userId)
                 }
             }
         }
+    }
+
+    internal fun clearChecked(){
+        isChecked[prevChecked] = false
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {

@@ -51,6 +51,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
         return myDj
     }
 
+    // 선택된 DJ 레코드
     private val myDjRecord = myDjRepository.myDjRecord
     fun setMyDjRecord(fromUserId: Int, toUserId: Int){
         myDjRepository.getMyDjRecord(fromUserId, toUserId)
@@ -60,5 +61,16 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getStateDjRecord(): LiveData<Constant.ApiState>{
         return myDjRepository.stateMyDjRecord
+    }
+
+    // 모든 DJ 레코드
+    fun setDjAllRecords(userId: Int, postId: Int?, size: Int){
+        myDjRepository.getMyDjAllRecords(userId, postId, size)
+    }
+    fun getDjAllRecords(): LiveData<List<Record>>{
+        return myDjRepository.myDjAllRecords
+    }
+    fun getStateDjAllRecords(): LiveData<Constant.ApiState>{
+        return myDjRepository.stateMyDjAllRecords
     }
 }
