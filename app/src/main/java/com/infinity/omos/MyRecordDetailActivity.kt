@@ -109,7 +109,7 @@ class MyRecordDetailActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
-            R.id.action_instar -> {
+            R.id.action_insta -> {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                     val bgBitmap = drawBackgroundBitmap()
                     val bgUri = saveImageAtCacheDir(bgBitmap)

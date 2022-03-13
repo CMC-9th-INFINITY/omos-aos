@@ -3,9 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
-        android:id="@+id/action_instar"
-        android:icon="@drawable/ic_instar"
-        android:title="Instargram"
+        android:id="@+id/action_insta"
+        android:icon="@drawable/ic_insta"
+        android:title="Instagram"
         app:showAsAction="always"/>
 
     <item

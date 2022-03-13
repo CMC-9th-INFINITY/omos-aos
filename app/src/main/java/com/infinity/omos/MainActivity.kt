@@ -302,7 +302,11 @@ class MainActivity : AppCompatActivity() {
                     binding.frameLayout.visibility = View.GONE
                     binding.bottomNav.visibility = View.GONE
                     binding.searchView.visibility = View.VISIBLE
-                    binding.lnRanking.visibility = View.VISIBLE
+
+                    if (binding.bottomNav.selectedItemId != R.id.menu_mydj){
+                        binding.lnRanking.visibility = View.VISIBLE
+                    }
+
                     isMusicSearch = true
                 }
                 isWrite = false

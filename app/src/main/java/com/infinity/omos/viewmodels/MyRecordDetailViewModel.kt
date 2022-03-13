@@ -7,6 +7,10 @@ import com.infinity.omos.data.Record
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.RecordRepository
 
+/**
+ *  삭제 필요
+ */
+
 class MyRecordDetailViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: RecordRepository = RecordRepository()

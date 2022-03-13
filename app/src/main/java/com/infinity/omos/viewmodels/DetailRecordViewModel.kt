@@ -8,7 +8,7 @@ import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.RecordRepository
 
-class UserRecordDetailViewModel(application: Application): AndroidViewModel(application) {
+class DetailRecordViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: RecordRepository = RecordRepository()
 
@@ -21,5 +21,21 @@ class UserRecordDetailViewModel(application: Application): AndroidViewModel(appl
     }
     fun getStateDetailRecord(): LiveData<Constant.ApiState>{
         return repository.stateDetailRecord
+    }
+
+    fun saveLike(postId: Int, userId: Int){
+        repository.saveLike(postId, userId)
+    }
+
+    fun deleteLike(postId: Int, userId: Int){
+        repository.deleteLike(postId, userId)
+    }
+
+    fun saveScrap(postId: Int, userId: Int){
+        repository.saveScrap(postId, userId)
+    }
+
+    fun deleteScrap(postId: Int, userId: Int){
+        repository.deleteScrap(postId, userId)
     }
 }

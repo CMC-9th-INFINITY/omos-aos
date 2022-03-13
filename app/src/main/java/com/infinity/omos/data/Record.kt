@@ -17,5 +17,7 @@ data class Record(
     @SerializedName("recordTitle") val recordTitle: String,
     @SerializedName("scrapCnt") val scrapCnt: Int,
     @SerializedName("userId") val userId: Int,
-    @SerializedName("viewsCnt") val viewsCnt: Int
+    @SerializedName("viewsCnt") val viewsCnt: Int,
+
+    @SerializedName("test") val test: Boolean = true,
 )
