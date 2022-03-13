@@ -68,6 +68,13 @@ class MusicListAdapter internal constructor(private val context: Context):
             binding.tvArtist.text = setArtist(music.artists)
             binding.tvMusicTitle.text = music.musicTitle
 
+            // 글쓰기 아이콘 유무
+            if (isWrite){
+                binding.btnWrite.visibility = View.VISIBLE
+            } else{
+                binding.btnWrite.visibility = View.GONE
+            }
+
             // keyword 색상 변경
             var start = music.musicTitle.lowercase().indexOf(keyword.lowercase())
             if (start != -1){

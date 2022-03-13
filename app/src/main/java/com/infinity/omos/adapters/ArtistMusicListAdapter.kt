@@ -59,6 +59,13 @@ class ArtistMusicListAdapter internal constructor(private val context: Context):
             binding.tvArtist.text = setArtist(music.artistName)
             binding.tvMusicTitle.text = music.musicTitle
 
+            // 글쓰기 아이콘 유무
+            if (isWrite){
+                binding.btnWrite.visibility = View.VISIBLE
+            } else{
+                binding.btnWrite.visibility = View.GONE
+            }
+
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             val pos = adapterPosition

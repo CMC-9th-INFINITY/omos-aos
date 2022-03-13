@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity
+import com.infinity.omos.MainActivity.Companion.isWrite
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.MusicRecordActivity
 import com.infinity.omos.R
@@ -77,11 +78,18 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
             binding.tvMusicTitle.text = music.musicTitle
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
+            // 글쓰기 아이콘 유무
+            if (isWrite){
+                binding.btnWrite.visibility = View.VISIBLE
+            } else{
+                binding.btnWrite.visibility = View.GONE
+            }
+
             val pos = adapterPosition
             binding.tvCount.text = String.format("%02d", pos+1)
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    if (MainActivity.isWrite){
+                    if (isWrite){
                         val intent = Intent(context, SelectCategoryActivity::class.java)
                         intent.putExtra("musicId", music.musicId)
                         intent.putExtra("musicTitle", music.musicTitle)
