@@ -1,32 +1,31 @@
 package com.infinity.omos
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
-import com.infinity.omos.databinding.ActivityUserRecordDetailBinding
+import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.UserRecordDetailViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
-class UserRecordDetailActivity : AppCompatActivity() {
+class DetailRecordActivity : AppCompatActivity() {
 
     private val viewModel: UserRecordDetailViewModel by viewModels()
-    private lateinit var binding: ActivityUserRecordDetailBinding
+    private lateinit var binding: ActivityDetailRecordBinding
 
     private val userId = GlobalApplication.prefs.getInt("userId")
+    private lateinit var actionInstar: MenuItem
+    private lateinit var actionMore: MenuItem
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_user_record_detail)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_record)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -49,6 +48,19 @@ class UserRecordDetailActivity : AppCompatActivity() {
                 } else {
                     binding.tvRecordContents.visibility = View.VISIBLE
                     binding.tvAlineContents.visibility = View.GONE
+                }
+
+                // 내 레코드인지 확인
+                if (it.userId == userId){
+                    binding.btnPublic.visibility = View.VISIBLE
+                    binding.btnReport.visibility = View.GONE
+                    actionInstar.isVisible = true
+                    actionMore.isVisible = true
+                } else{
+                    binding.btnPublic.visibility = View.GONE
+                    binding.btnReport.visibility = View.VISIBLE
+                    actionInstar.isVisible = false
+                    actionMore.isVisible = false
                 }
             }
         }
@@ -85,6 +97,8 @@ class UserRecordDetailActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action_record, menu)
+        actionInstar = menu.findItem(R.id.action_instar)
+        actionMore = menu.findItem(R.id.action_more)
         return true
     }
 

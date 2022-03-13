@@ -47,12 +47,12 @@ class MusicRecordActivity : AppCompatActivity() {
         }
 
         viewModel.setMusicRecord(musicId!!, null, pageSize, userId)
-        viewModel.getMusicRecord().observe(this, Observer { category ->
+        viewModel.getMusicRecord().observe(this) { category ->
             category?.let {
                 mAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
                     mAdapter.deleteLoading()
-                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount - 1)
                     true
                 } else {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
@@ -65,7 +65,7 @@ class MusicRecordActivity : AppCompatActivity() {
                     binding.lnNorecord.visibility = View.VISIBLE
                 }
             }
-        })
+        }
 
         viewModel.getStateMusicRecord().observe(this, Observer { state ->
             state?.let {

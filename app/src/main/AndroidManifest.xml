@@ -16,7 +16,7 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".UserRecordDetailActivity"
+            android:name=".DetailRecordActivity"
             android:exported="false" />
         <activity
             android:name=".MusicRecordActivity"

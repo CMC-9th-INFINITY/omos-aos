@@ -29,6 +29,10 @@ import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
 
+/**
+ *  삭제 필요
+ */
+
 class MyRecordDetailActivity : AppCompatActivity() {
 
     private val viewModel: MyRecordDetailViewModel by viewModels()
