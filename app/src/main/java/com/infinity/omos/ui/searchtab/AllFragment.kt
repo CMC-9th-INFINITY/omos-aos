@@ -203,7 +203,7 @@ class AllFragment : Fragment() {
         })
     }
 
-    fun initializeBroadcastReceiver() {
+    private fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var keyword = intent?.getStringExtra("keyword")!!

@@ -20,12 +20,11 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     private val myDjRepository: MyDjRepository = MyDjRepository()
 
     // My 레코드
-    private var myRecord = MutableLiveData<List<Record>>()
     fun setMyRecord(userId: Int){
-        myRecord = myRecordRepository.getMyRecord(userId)
+        myRecordRepository.getMyRecord(userId)
     }
     fun getMyRecord(): LiveData<List<Record>>{
-        return myRecord
+        return myRecordRepository.myRecord
     }
     fun getStateMyRecord(): LiveData<Constant.ApiState>{
         return myRecordRepository.stateMyRecord

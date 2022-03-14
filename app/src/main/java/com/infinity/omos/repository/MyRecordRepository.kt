@@ -97,10 +97,10 @@ class MyRecordRepository {
         })
     }
 
+    var myRecord = MutableLiveData<List<Record>>()
     var stateMyRecord = MutableLiveData<Constant.ApiState>()
     fun getMyRecord(userId: Int): MutableLiveData<List<Record>>{
         stateMyRecord.value = Constant.ApiState.LOADING
-        var myRecord = MutableLiveData<List<Record>>()
         recordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(
                 call: Call<List<Record>>,

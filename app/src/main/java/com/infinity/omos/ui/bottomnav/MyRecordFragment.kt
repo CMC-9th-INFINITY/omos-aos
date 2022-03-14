@@ -1,5 +1,9 @@
 package com.infinity.omos.ui.bottomnav
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -23,11 +27,13 @@ class MyRecordFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyRecordBinding
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeBroadcastReceiver()
     }
 
     override fun onCreateView(
@@ -52,7 +58,7 @@ class MyRecordFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
-        // 스크롤 시 레코드 업데이트
+        // 레코드 셋팅
         viewModel.setMyRecord(userId)
         viewModel.getMyRecord().observe(viewLifecycleOwner) { record ->
             record?.let {
@@ -70,11 +76,13 @@ class MyRecordFragment : Fragment() {
             state?.let {
                 when (it) {
                     Constant.ApiState.LOADING -> {
+                        binding.recyclerView.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                         binding.lnNorecord.visibility = View.GONE
                     }
 
                     Constant.ApiState.DONE -> {
+                        binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
@@ -84,5 +92,18 @@ class MyRecordFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                viewModel.setMyRecord(userId)
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("RECORD_UPDATE")
+        )
     }
 }

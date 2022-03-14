@@ -233,7 +233,10 @@ class DetailRecordActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
+                            val intent = Intent("RECORD_UPDATE")
+                            sendBroadcast(intent)
                             viewModel.deleteRecord(postId)
+                            finish()
                         }
                     }
                 }

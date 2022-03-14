@@ -241,6 +241,8 @@ class WriteRecordActivity : AppCompatActivity() {
         return when(item.itemId){
             R.id.action_next -> {
                 category = GlobalFunction.categoryKrToEng(this, category)
+
+                // 한 줄 감상 내용인지 구분
                 recordContents = if (category == "A_LINE"){
                     binding.alineContents.text.toString()
                 } else {
@@ -248,6 +250,10 @@ class WriteRecordActivity : AppCompatActivity() {
                 }
                 recordTitle = binding.etRecordTitle.text.toString()
                 viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
+
+                val intent = Intent("RECORD_UPDATE")
+                sendBroadcast(intent)
+
                 Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                 true
             }

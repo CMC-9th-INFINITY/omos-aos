@@ -117,6 +117,7 @@ class MyRecordListAdapter internal constructor(context: Context):
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
     internal fun setRecord(rec: List<Record>) {
+        record.clear()
         record.addAll(rec)
         notifyDataSetChanged()
     }
