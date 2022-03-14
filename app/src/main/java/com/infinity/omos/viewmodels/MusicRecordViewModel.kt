@@ -11,8 +11,8 @@ class MusicRecordViewModel(application: Application): AndroidViewModel(applicati
 
     private val repository: SearchRepository = SearchRepository()
 
-    fun setMusicRecord(musicId: String, postId: Int?, size: Int, userId: Int){
-        repository.getMusicRecord(musicId, postId, size, userId)
+    fun setMusicRecord(musicId: String, postId: Int?, size: Int, sortType: String, userId: Int){
+        repository.getMusicRecord(musicId, postId, size, sortType, userId)
     }
     fun getMusicRecord():LiveData<List<Record>>{
         return repository.musicRecord

@@ -53,6 +53,7 @@ interface RecordService {
         @Path("musicId") musicId: String,
         @Query("postId") postId: Int?,
         @Query("size") size: Int,
+        @Query("sortType") sortType: String,
         @Query("userId") userId: Int
     ): Call<List<Record>>
 

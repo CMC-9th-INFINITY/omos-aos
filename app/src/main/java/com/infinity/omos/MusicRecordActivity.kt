@@ -46,7 +46,7 @@ class MusicRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.setMusicRecord(musicId!!, null, pageSize, userId)
+        viewModel.setMusicRecord(musicId!!, null, pageSize, "date", userId)
         viewModel.getMusicRecord().observe(this) { category ->
             category?.let {
                 mAdapter.addCategory(it)
@@ -105,7 +105,7 @@ class MusicRecordActivity : AppCompatActivity() {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page++
-                    viewModel.setMusicRecord(musicId, postId, pageSize, userId)
+                    viewModel.setMusicRecord(musicId, postId, pageSize, "date", userId)
                 }
             }
         })

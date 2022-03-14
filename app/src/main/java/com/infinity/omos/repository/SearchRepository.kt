@@ -21,9 +21,9 @@ class SearchRepository {
 
     var musicRecord = MutableLiveData<List<Record>>()
     var stateMusicRecord = MutableLiveData<Constant.ApiState>()
-    fun getMusicRecord(musicId: String, postId: Int?, size: Int, userId: Int){
+    fun getMusicRecord(musicId: String, postId: Int?, size: Int, sortType: String, userId: Int){
         stateMusicRecord.value = Constant.ApiState.LOADING
-        musicRecordApi.getMusicRecord(musicId, postId, size, userId).enqueue(object: Callback<List<Record>> {
+        musicRecordApi.getMusicRecord(musicId, postId, size, sortType, userId).enqueue(object: Callback<List<Record>> {
             override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -36,7 +36,7 @@ class SearchRepository {
                     401 -> {
                         Log.d("MusicRecordAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        getMusicRecord(musicId, postId, size, userId)
+                        getMusicRecord(musicId, postId, size, sortType, userId)
                     }
 
                     500 -> {
