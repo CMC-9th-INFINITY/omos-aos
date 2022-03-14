@@ -16,8 +16,8 @@
                 android:id="@+id/sort_scrap"
                 android:title="공감순"/>
             <item
-                android:id="@+id/sort_view"
-                android:title="조회순"/>
+                android:id="@+id/sort_random"
+                android:title="랜덤순"/>
 
         </menu>
 

@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
@@ -25,6 +26,7 @@ import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 class CategoryActivity : AppCompatActivity() {
 
     private val viewModel: CategoryViewModel by viewModels()
+    private lateinit var binding: ActivityCategoryBinding
 
     private var ctg = ""
 
@@ -45,7 +47,7 @@ class CategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityCategoryBinding>(this, R.layout.activity_category)
+       binding = DataBindingUtil.setContentView(this, R.layout.activity_category)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -162,11 +164,35 @@ class CategoryActivity : AppCompatActivity() {
                 true
             }
 
-            R.id.action_sort -> {
+            R.id.sort_new -> {
+                setSortRecord("date")
+                Toast.makeText(this, "최신순", Toast.LENGTH_SHORT).show()
                 true
             }
+
+            R.id.sort_scrap -> {
+                setSortRecord("like")
+                Toast.makeText(this, "공감순", Toast.LENGTH_SHORT).show()
+                true
+            }
+
+            R.id.sort_random -> {
+                setSortRecord("random")
+                Toast.makeText(this, "랜덤순", Toast.LENGTH_SHORT).show()
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun setSortRecord(sortType: String){
+        page = 0
+        isLoading = false
+        postId = -1
+        binding.recyclerView.scrollToPosition(0)
+        mAdapter.clearCategory()
+        viewModel.setCategoryRecord(ctg, null, pageSize, sortType, userId)
     }
 
     override fun onDestroy() {
