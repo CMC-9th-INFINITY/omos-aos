@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{data.count.recordsCount}"
+                        android:text="@{String.valueOf(data.count.recordsCount)}"
                         android:textSize="16sp"
                         android:textColor="@color/white"/>
 
@@ -149,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{data.count.followerCount}"
+                        android:text="@{String.valueOf(data.count.followerCount)}"
                         android:textSize="16sp"
                         android:textColor="@color/white"/>
 
@@ -177,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="@{data.count.followingCount}"
+                        android:text="@{String.valueOf(data.count.followingCount)}"
                         android:textSize="16sp"
                         android:textColor="@color/white"/>
 
