@@ -79,25 +79,13 @@ class CategoryActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-//        stateHeart = if (stateHeart){
-//            itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_unchecked_heart))
-//            itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.gray_03))
-//            itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) - 1).toString()
-//            false
-//        } else{
-//            itemView.img_heart.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_checked_heart))
-//            itemView.tv_heart_cnt.setTextColor(ContextCompat.getColor(context, R.color.orange))
-//            itemView.tv_heart_cnt.text = (Integer.parseInt(itemView.tv_heart_cnt.text.toString()) + 1).toString()
-//            true
-//        }
-
         mAdapter.setItemClickListener(object: DetailCategoryListAdapter.OnItemClickListener{
             override fun onClick(itemView: View, position: Int) {
                 mAdapter.changeState(position)
             }
         })
 
-        viewModel.setCategoryRecord(ctg, null, pageSize, "viewsCount", userId)
+        viewModel.setCategoryRecord(ctg, null, pageSize, "date", userId)
         viewModel.getCategoryRecord().observe(this, Observer { category ->
             category?.let {
                 mAdapter.addCategory(it)
@@ -149,7 +137,7 @@ class CategoryActivity : AppCompatActivity() {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page ++
-                    viewModel.setCategoryRecord(ctg, postId, pageSize, "viewsCount", userId)
+                    viewModel.setCategoryRecord(ctg, postId, pageSize, "date", userId)
                 }
             }
         })

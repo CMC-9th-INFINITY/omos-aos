@@ -53,9 +53,6 @@
             android:name=".ui.onboarding.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".MyRecordDetailActivity"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
