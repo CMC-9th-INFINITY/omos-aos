@@ -12,6 +12,7 @@ import com.infinity.omos.CategoryActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Record
+import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
@@ -59,7 +60,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
                 }
             }
 
-            val mAdapter = CategoryListAdapter(context, content.category)
+            val mAdapter = CategoryListAdapter(context)
             mAdapter.setRecords(content.category)
             binding.rvCategory.apply{
                 adapter = mAdapter
@@ -82,7 +83,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
         notifyDataSetChanged()
     }
 
-    internal fun updateCategory(record: List<Record>?, pos: Int) {
+    internal fun updateCategory(record: List<SumRecord>?, pos: Int) {
         this.category[pos].category = record
         notifyDataSetChanged()
     }

@@ -9,19 +9,21 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DetailRecordActivity
+import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Record
+import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.utils.GlobalApplication
 
-class CategoryListAdapter internal constructor(context: Context, category: List<Record>?):
-    ListAdapter<Record, CategoryListAdapter.ViewHolder>(
+class CategoryListAdapter internal constructor(context: Context):
+    ListAdapter<SumRecord, CategoryListAdapter.ViewHolder>(
         CategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
-    private var record = category
+    private var record = ArrayList<SumRecord?>()
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -45,12 +47,12 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val record = record!![position]
-        holder.bind(record)
+        val record = record[position]
+        holder.bind(record!!)
     }
 
     inner class ViewHolder(private val binding: ListCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(record: Record) {
+        fun bind(record: SumRecord) {
             binding.record = record
             binding.tvNick.text = "by. ${record.nickname}"
             binding.tvArtist.text = setArtist(record.music.artists) + " - " + record.music.albumTitle
@@ -68,25 +70,25 @@ class CategoryListAdapter internal constructor(context: Context, category: List<
         }
     }
 
-    internal fun setRecords(record: List<Record>?) {
-        this.record = record
+    internal fun setRecords(record: List<SumRecord>?) {
+        if (record != null) {
+            this.record.clear()
+            this.record.addAll(record)
+        }
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return if (record != null){
-            record!!.size
-        } else
-            super.getItemCount()
+        return record.size
     }
 
-    companion object CategoryDiffUtil: DiffUtil.ItemCallback<Record>(){
-        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
+    companion object CategoryDiffUtil: DiffUtil.ItemCallback<SumRecord>(){
+        override fun areItemsTheSame(oldItem: SumRecord, newItem: SumRecord): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
+        override fun areContentsTheSame(oldItem: SumRecord, newItem: SumRecord): Boolean {
             return oldItem==newItem
         }
     }

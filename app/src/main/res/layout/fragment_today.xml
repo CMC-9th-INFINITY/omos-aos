@@ -7,6 +7,14 @@
         <variable
             name="vm"
             type="com.infinity.omos.viewmodels.SharedViewModel" />
+
+        <variable
+            name="today"
+            type="com.infinity.omos.data.Music" />
+
+        <variable
+            name="love"
+            type="com.infinity.omos.data.Music" />
     </data>
 
     <FrameLayout
@@ -104,10 +112,10 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content">
 
-                                <ImageView
+                                <de.hdodenhof.circleimageview.CircleImageView
                                     android:layout_width="78dp"
                                     android:layout_height="78dp"
-                                    android:src="@drawable/ic_record"/>
+                                    app:imageUrl="@{today.albumImageUrl}"/>
 
                                 <ImageView
                                     android:layout_width="wrap_content"
@@ -129,15 +137,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
-                                    android:text="노래 제목이 들어갑니다."
+                                    android:text="@{today.musicTitle}"
                                     android:textSize="16sp"
                                     android:textColor="@color/white"/>
 
                                 <TextView
+                                    android:id="@+id/tv_today_artist"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
-                                    android:text="가수 이름이 들어갑니다."
                                     android:textSize="14sp"
                                     android:textColor="@color/gray_03"/>
 
@@ -157,7 +165,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:text="앨범 제목이 들어갑니다."
+                                        android:text="@{today.albumTitle}"
                                         android:textSize="12sp"
                                         android:textColor="@color/gray_05"/>
 
@@ -175,7 +183,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="25dp"
-                    android:paddingHorizontal="16dp"
+                    android:paddingStart="16dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -186,7 +194,7 @@
                         android:textColor="@color/white"/>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_best_record"
+                        android:id="@+id/rv_famous"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"/>
@@ -208,7 +216,7 @@
                         android:textColor="@color/white"/>
 
                     <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/rv_best_dj"
+                        android:id="@+id/rv_dj"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"/>
@@ -273,7 +281,8 @@
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
                                 android:layout_marginBottom="10dp"
-                                android:src="@drawable/ic_record"/>
+                                android:src="@drawable/ic_record"
+                                app:imageUrl="@{love.albumImageUrl}"/>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -285,16 +294,15 @@
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
-                                    android:text="노래 제목이 들어갑니다."
+                                    android:text="@{love.musicTitle}"
                                     android:textSize="16sp"
                                     android:textColor="@color/white"/>
 
                                 <TextView
-                                    android:id="@+id/tv_artist"
+                                    android:id="@+id/tv_love_artist"
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
-                                    android:text="가수 이름이 들어갑니다."
                                     android:textSize="14sp"
                                     android:textColor="@color/gray_03"/>
 
@@ -315,7 +323,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:text="앨범 제목이 들어갑니다."
+                                        android:text="@{love.albumTitle}"
                                         android:textSize="12sp"
                                         android:textColor="@color/gray_05"/>
 

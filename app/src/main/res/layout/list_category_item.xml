@@ -5,13 +5,14 @@
     <data>
         <variable
             name="record"
-            type="com.infinity.omos.data.Record" />
+            type="com.infinity.omos.data.SumRecord" />
     </data>
 
     <LinearLayout
         android:id="@+id/linear"
         android:layout_width="264dp"
         android:layout_height="172dp"
+        android:paddingEnd="2dp"
         android:orientation="vertical">
 
         <FrameLayout

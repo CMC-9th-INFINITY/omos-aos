@@ -43,6 +43,11 @@ class DjActivity : AppCompatActivity() {
 
         toUserId = intent.getIntExtra("toUserId", -1)
 
+        // 내 프로필이라면,
+        if (fromUserId == toUserId){
+            binding.btnFollow.visibility = View.GONE
+        }
+
         initToolBar()
 
         val mAdapter = MyRecordListAdapter(this)
