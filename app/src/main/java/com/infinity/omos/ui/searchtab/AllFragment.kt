@@ -179,28 +179,6 @@ class AllFragment : Fragment() {
         binding.lnArtistMore.setOnClickListener {
             itemClickListener.setCurrentItem(3)
         }
-
-        // 검색 후 스크롤 맨 위로 이동
-        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                scrollView.scrollTo(0, 0)
-            }
-            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                scrollView.scrollTo(0, 0)
-            }
-            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-                scrollView.scrollTo(0, 0)
-            }
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                scrollView.scrollTo(0, 0)
-            }
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                scrollView.scrollTo(0, 0)
-            }
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                scrollView.scrollTo(0, 0)
-            }
-        })
     }
 
     private fun initializeBroadcastReceiver() {
@@ -208,6 +186,7 @@ class AllFragment : Fragment() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 var keyword = intent?.getStringExtra("keyword")!!
                 isEmpty = 0
+                binding.scrollView.scrollTo(0, 0)
                 viewModel.loadMoreMusic(keyword, 5, 0)
                 viewModel.loadMoreAlbum(keyword, 5, 0)
                 viewModel.loadMoreArtist(keyword, 5, 0)

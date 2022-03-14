@@ -124,40 +124,6 @@ class AlbumFragment : Fragment() {
                 }
             }
         })
-
-        // 검색 후 맨 아래로 이동하는 현상 해결
-        mAdapter.registerAdapterDataObserver(object: RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                if (page == 0){
-                    recyclerView.scrollToPosition(0)
-                }
-            }
-            override fun onItemRangeRemoved(positionStart: Int, itemCount: Int) {
-                if (page == 0){
-                    recyclerView.scrollToPosition(0)
-                }
-            }
-            override fun onItemRangeMoved(fromPosition: Int, toPosition: Int, itemCount: Int) {
-                if (page == 0){
-                    recyclerView.scrollToPosition(0)
-                }
-            }
-            override fun onItemRangeInserted(positionStart: Int, itemCount: Int) {
-                if (page == 0){
-                    recyclerView.scrollToPosition(0)
-                }
-            }
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int) {
-                if (page == 0){
-                    recyclerView.scrollToPosition(0)
-                }
-            }
-            override fun onItemRangeChanged(positionStart: Int, itemCount: Int, payload: Any?) {
-                if (page == 0){
-                    recyclerView.scrollToPosition(0)
-                }
-            }
-        })
     }
 
     private fun initializeBroadcastReceiver() {
@@ -165,7 +131,7 @@ class AlbumFragment : Fragment() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 page = 0
                 mAdapter.clearRecord()
-
+                binding.recyclerView.scrollToPosition(0)
                 var keyword = intent?.getStringExtra("keyword")!!
                 viewModel.loadMoreAlbum(keyword, pageSize, 0)
             }
