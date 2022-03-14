@@ -89,13 +89,13 @@ class TodayFragment : Fragment() {
             }
         }
 
-        // 내가 사랑했던 노래
-        viewModel.setMyLoveMusic()
-        viewModel.getMyLoveMusic().observe(viewLifecycleOwner) { music ->
-            music?.let {
-                binding.love = it
-                binding.tvLoveArtist.text = GlobalFunction.setArtist(it.artists)
-            }
-        }
+//        // 내가 사랑했던 노래
+//        viewModel.setMyLoveMusic()
+//        viewModel.getMyLoveMusic().observe(viewLifecycleOwner) { music ->
+//            music?.let {
+//                binding.love = it
+//                binding.tvLoveArtist.text = GlobalFunction.setArtist(it.artists)
+//            }
+//        }
     }
 }

@@ -16,6 +16,12 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".InputLyricsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".WriteLyricsActivity"
+            android:exported="false" />
+        <activity
             android:name=".DetailRecordActivity"
             android:exported="false" />
         <activity
@@ -30,7 +36,7 @@
         <activity
             android:name=".DjActivity"
             android:exported="false"
-            android:theme="@style/StatusBarStyle"/>
+            android:theme="@style/StatusBarStyle" />
 
         <receiver
             android:name=".utils.MyReceiver"

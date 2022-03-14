@@ -76,9 +76,7 @@ class MyDjFragment : Fragment() {
             dj?.let {
                 mAdapter.setDj(it)
 
-                Log.d("jaemin", it.size.toString())
                 if (it.isEmpty()){
-                    Log.d("jaemin", "visible")
                     binding.linear.visibility = View.GONE
                     binding.lnNodj.visibility = View.VISIBLE
                 } else {
@@ -93,7 +91,6 @@ class MyDjFragment : Fragment() {
                     Constant.ApiState.LOADING -> {
                         binding.linear.visibility = View.GONE
                         binding.lnNodj.visibility = View.GONE
-                        Log.d("jaemin", "gone")
                     }
 
                     Constant.ApiState.DONE -> {

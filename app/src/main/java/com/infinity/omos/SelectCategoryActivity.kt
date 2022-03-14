@@ -92,17 +92,29 @@ class SelectCategoryActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
-                var category = viewModel.state.value
-                if (category == ""){
-                    Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
-                } else{
-                    val intent = Intent(this, WriteRecordActivity::class.java)
-                    intent.putExtra("musicId", musicId)
-                    intent.putExtra("musicTitle", musicTitle)
-                    intent.putExtra("artists", artists)
-                    intent.putExtra("albumImageUrl", albumImageUrl)
-                    intent.putExtra("category", category)
-                    startActivity(intent)
+                when(val category = viewModel.state.value) {
+                    "" -> {
+                        Toast.makeText(this, "카테고리를 선택해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+
+                    "나만의 가사해석"-> {
+                        val intent = Intent(this, InputLyricsActivity::class.java)
+                        intent.putExtra("musicId", musicId)
+                        intent.putExtra("musicTitle", musicTitle)
+                        intent.putExtra("artists", artists)
+                        intent.putExtra("albumImageUrl", albumImageUrl)
+                        intent.putExtra("category", category)
+                        startActivity(intent)
+                    }
+                    else -> {
+                        val intent = Intent(this, WriteRecordActivity::class.java)
+                        intent.putExtra("musicId", musicId)
+                        intent.putExtra("musicTitle", musicTitle)
+                        intent.putExtra("artists", artists)
+                        intent.putExtra("albumImageUrl", albumImageUrl)
+                        intent.putExtra("category", category)
+                        startActivity(intent)
+                    }
                 }
                 true
             }

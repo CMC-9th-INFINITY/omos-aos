@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="lyrics"
+            type="String" />
+
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_lyrics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:text="@{lyrics}"
+            android:textSize="18sp"
+            android:textColor="@color/gray_04"
+            android:fontFamily="@font/cafe24oneprettynight"
+            android:background="#29292A"/>
+
+        <EditText
+            android:id="@+id/et_interpret"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="10dp"
+            android:hint="가사해석을 적어주세요."
+            android:textColor="@color/white"
+            android:textSize="16sp"
+            android:textColorHint="@color/gray_07"
+            android:inputType="textMultiLine"
+            android:scrollHorizontally="false"
+            android:background="@color/dark"/>
+
+    </LinearLayout>
+
+</layout>

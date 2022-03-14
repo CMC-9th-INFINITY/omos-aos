@@ -6,14 +6,14 @@
     <data>
         <variable
             name="vm"
-            type="com.infinity.omos.viewmodels.WriteRecordViewModel" />
+            type="com.infinity.omos.viewmodels.WriteLyricsViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".WriteRecordActivity"
+        tools:context=".WriteLyricsActivity"
         android:background="@color/dark">
 
         <androidx.appcompat.widget.Toolbar
@@ -175,57 +175,25 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="16dp"
             android:background="@color/deep_dark">
 
-            <LinearLayout
-                android:id="@+id/contents"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_lyrics"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:orientation="vertical"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/divisor">
-
-                <EditText
-                    android:id="@+id/record_contents"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="top"
-                    android:paddingVertical="16dp"
-                    android:layout_marginBottom="30dp"
-                    android:hint="레코드 내용을 입력해주세요."
-                    android:textColorHint="@color/dark_gray"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:maxLength="794"
-                    android:background="#00FFFFFF"/>
-
-                <EditText
-                    android:id="@+id/aline_contents"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:padding="16dp"
-                    android:hint="&quot;레코드 내용을 입력해주세요.&quot;"
-                    android:textColorHint="@color/dark_gray"
-                    android:textColor="@color/white"
-                    android:textSize="24sp"
-                    android:fontFamily="@font/cafe24oneprettynight"
-                    android:maxLength="50"
-                    android:background="#00FFFFFF"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
+                app:layout_constraintBottom_toTopOf="@id/divisor"/>
 
             <View
                 android:id="@+id/divisor"
                 android:layout_width="match_parent"
                 android:layout_height="2px"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
                 android:background="@color/divide"
-                app:layout_constraintTop_toBottomOf="@id/contents"
+                app:layout_constraintTop_toBottomOf="@id/rv_lyrics"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/bottom_constraint"/>
@@ -235,6 +203,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:paddingVertical="10dp"
+                android:paddingHorizontal="16dp"
                 app:layout_constraintTop_toBottomOf="@id/divisor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -315,7 +284,7 @@
                             android:id="@+id/tv_limit_contents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="/794자"
+                            android:text="/380자"
                             android:textSize="12sp"
                             android:textColor="@color/light_gray"/>
 
