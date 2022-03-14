@@ -105,6 +105,7 @@ class MainActivity : AppCompatActivity() {
                             if (et_search.length() > 0) {
                                 keyword = et_search.text.toString()
                                 var intent = Intent("SEARCH_UPDATE")
+                                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                                 intent.putExtra("keyword", keyword)
                                 sendBroadcast(intent)
 

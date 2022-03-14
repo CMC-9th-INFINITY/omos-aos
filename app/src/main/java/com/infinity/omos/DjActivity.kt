@@ -1,5 +1,6 @@
 package com.infinity.omos
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -27,17 +28,20 @@ import kotlinx.android.synthetic.main.activity_register.toolbar
 class DjActivity : AppCompatActivity() {
 
     private val viewModel: DjViewModel by viewModels()
+    private lateinit var binding: ActivityDjBinding
 
     private val fromUserId = GlobalApplication.prefs.getInt("userId")
+    private var toUserId = -1
+    private var isClickFollow = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivityDjBinding>(this, R.layout.activity_dj)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_dj)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        val toUserId = intent.getIntExtra("toUserId", -1)
+        toUserId = intent.getIntExtra("toUserId", -1)
 
         initToolBar()
 
@@ -52,9 +56,9 @@ class DjActivity : AppCompatActivity() {
             profile?.let {
                 binding.data = it
                 if (it.isFollowed){
-                    viewModel.follow.value = "팔로잉"
+                    setFollowing()
                 } else{
-                    viewModel.follow.value = "팔로우"
+                    setFollow()
                 }
             }
         }
@@ -89,21 +93,30 @@ class DjActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.follow.observe(this) { state ->
-            state?.let {
-                if (it == "팔로우") {
-                    binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.white))
-                    binding.btnFollow.background =
-                        ResourcesCompat.getDrawable(resources, R.drawable.bg_follow, null)
-                    viewModel.deleteFollow(fromUserId, toUserId)
-                } else {
-                    binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.gray_04))
-                    binding.btnFollow.background =
-                        ResourcesCompat.getDrawable(resources, R.drawable.bg_following, null)
-                    viewModel.saveFollow(fromUserId, toUserId)
-                }
+        binding.btnFollow.setOnClickListener {
+            if (binding.btnFollow.text == "팔로우"){
+                setFollowing()
+                viewModel.saveFollow(fromUserId, toUserId)
+            } else{
+                setFollow()
+                viewModel.deleteFollow(fromUserId, toUserId)
             }
+            isClickFollow = true
         }
+    }
+
+    private fun setFollow(){
+        binding.btnFollow.text = "팔로우"
+        binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.white))
+        binding.btnFollow.background =
+            ResourcesCompat.getDrawable(resources, R.drawable.bg_follow, null)
+    }
+
+    private fun setFollowing(){
+        binding.btnFollow.text = "팔로잉"
+        binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.gray_04))
+        binding.btnFollow.background =
+            ResourcesCompat.getDrawable(resources, R.drawable.bg_following, null)
     }
 
     private fun initToolBar(){
@@ -120,6 +133,16 @@ class DjActivity : AppCompatActivity() {
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+
+        if (isClickFollow){
+            val intent = Intent("DJ_UPDATE")
+            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+            sendBroadcast(intent)
         }
     }
 }

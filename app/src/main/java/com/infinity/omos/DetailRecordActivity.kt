@@ -234,6 +234,7 @@ class DetailRecordActivity : AppCompatActivity() {
                     when(content){
                         "yes" -> {
                             val intent = Intent("RECORD_UPDATE")
+                            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                             sendBroadcast(intent)
                             viewModel.deleteRecord(postId)
                             finish()

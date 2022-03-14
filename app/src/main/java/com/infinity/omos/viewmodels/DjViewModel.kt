@@ -38,14 +38,4 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
     fun getStateDjRecord(): LiveData<Constant.ApiState>{
         return repository.stateMyDjRecord
     }
-
-    var follow = MutableLiveData<String>()
-
-    fun changeFollow(){
-        if (follow.value == "팔로우"){
-            follow.value = "팔로잉"
-        } else{
-            follow.value = "팔로우"
-        }
-    }
 }

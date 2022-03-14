@@ -22,6 +22,8 @@ class MyDjListAdapter internal constructor(context: Context):
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
 
+    private var myDj = ArrayList<Profile>()
+
     private var isChecked = ArrayList<Boolean>()
     private var prevChecked = 0
 
@@ -45,7 +47,7 @@ class MyDjListAdapter internal constructor(context: Context):
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val dj = getItem(position)
+        val dj = myDj[position]
         holder.bind(dj, position)
     }
 
@@ -84,13 +86,18 @@ class MyDjListAdapter internal constructor(context: Context):
         }
     }
 
-    internal fun clearChecked(){
-        isChecked[prevChecked] = false
+    internal fun setDj(dj: List<Profile>){
+        if (isChecked.size > 0){
+            isChecked[prevChecked] = false
+        }
+
+        myDj.clear()
+        myDj.addAll(dj)
         notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
-        return super.getItemCount()
+        return myDj.size
     }
 
     companion object MyDjDiffUtil: DiffUtil.ItemCallback<Profile>(){

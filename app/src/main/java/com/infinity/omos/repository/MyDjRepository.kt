@@ -218,10 +218,9 @@ class MyDjRepository {
         })
     }
 
+    var myDj = MutableLiveData<List<Profile>>()
     var stateMyDj = MutableLiveData<Constant.ApiState>()
-    fun getMyDj(userId: Int): LiveData<List<Profile>?>{
-        var data = MutableLiveData<List<Profile>?>()
-
+    fun getMyDj(userId: Int){
         stateMyDj.value = Constant.ApiState.LOADING
         followApi.getMyDj(userId).enqueue(object: Callback<List<Profile>> {
             override fun onResponse(
@@ -232,7 +231,7 @@ class MyDjRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MyDjAPI", "Success")
-                        data.value = body
+                        myDj.postValue(body!!)
                         stateMyDj.value = Constant.ApiState.DONE
                     }
 
@@ -259,7 +258,5 @@ class MyDjRepository {
                 t.stackTrace
             }
         })
-
-        return data
     }
 }

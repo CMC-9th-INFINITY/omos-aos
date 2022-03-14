@@ -74,13 +74,11 @@
                     android:id="@+id/btn_follow"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@{vm.follow}"
                     android:textSize="14sp"
                     android:textColor="@color/gray_04"
                     android:paddingHorizontal="17dp"
                     android:paddingVertical="5dp"
-                    android:background="@drawable/bg_following"
-                    android:onClick="@{()->vm.changeFollow()}"/>
+                    android:background="@drawable/bg_following"/>
 
             </LinearLayout>
 

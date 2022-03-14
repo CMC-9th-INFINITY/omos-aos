@@ -44,10 +44,15 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     // My DJ
 
-    private val myDj = myDjRepository.getMyDj(GlobalApplication.prefs.getInt("userId"))
-    fun getMyDjData(): LiveData<List<Profile>?> {
-        // xml 연결 (myDjListData)
-        return myDj
+    // DJ 리스트
+    fun setMyDj(userId: Int){
+        myDjRepository.getMyDj(userId)
+    }
+    fun getMyDj(): LiveData<List<Profile>>{
+        return myDjRepository.myDj
+    }
+    fun getStateMyDj(): LiveData<Constant.ApiState>{
+        return myDjRepository.stateMyDj
     }
 
     // 선택된 DJ 레코드

@@ -252,6 +252,7 @@ class WriteRecordActivity : AppCompatActivity() {
                 viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
 
                 val intent = Intent("RECORD_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                 sendBroadcast(intent)
 
                 Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()

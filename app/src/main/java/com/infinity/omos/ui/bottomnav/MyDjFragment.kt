@@ -1,6 +1,9 @@
 package com.infinity.omos.ui.bottomnav
 
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -27,6 +30,7 @@ class MyDjFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentMyDjBinding
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     private val fromUserId = GlobalApplication.prefs.getInt("userId")
 
@@ -41,6 +45,7 @@ class MyDjFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeBroadcastReceiver()
     }
 
     override fun onCreateView(
@@ -66,13 +71,49 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity)
         }
 
+        viewModel.setMyDj(fromUserId)
+        viewModel.getMyDj().observe(viewLifecycleOwner) { dj ->
+            dj?.let {
+                mAdapter.setDj(it)
+
+                Log.d("jaemin", it.size.toString())
+                if (it.isEmpty()){
+                    Log.d("jaemin", "visible")
+                    binding.linear.visibility = View.GONE
+                    binding.lnNodj.visibility = View.VISIBLE
+                } else {
+                    binding.lnNodj.visibility = View.GONE
+                }
+            }
+        }
+
+        viewModel.getStateMyDj().observe(viewLifecycleOwner) { state ->
+            state?.let {
+                when (it) {
+                    Constant.ApiState.LOADING -> {
+                        binding.linear.visibility = View.GONE
+                        binding.lnNodj.visibility = View.GONE
+                        Log.d("jaemin", "gone")
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.linear.visibility = View.VISIBLE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+
+                    }
+                }
+            }
+        }
+
         viewModel.setDjAllRecords(fromUserId, null, pageSize)
         viewModel.getDjAllRecords().observe(viewLifecycleOwner) { record ->
             record?.let {
                 rAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
                     rAdapter.deleteLoading()
-                    rAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    rAdapter.notifyItemRemoved(rAdapter.itemCount-1)
                     true
                 } else {
                     rAdapter.notifyItemRangeInserted(page * pageSize, it.size)
@@ -136,11 +177,7 @@ class MyDjFragment : Fragment() {
             override fun onClick(v: View, position: Int, toUserId: Int) {
                 // 한 번 더 클릭 시 첫 화면 노출
                 if (position == -1){
-                    page = 0
-                    isLoading = false
-                    isFirst = true
-                    rAdapter.clearCategory()
-                    viewModel.setDjAllRecords(fromUserId, null, pageSize)
+                    setFirst()
                 } else {
                     isFirst = false
                     viewModel.setMyDjRecord(fromUserId, toUserId)
@@ -169,5 +206,28 @@ class MyDjFragment : Fragment() {
         })
 
         return binding.root
+    }
+
+    private fun setFirst(){
+        page = 0
+        isLoading = false
+        isFirst = true
+        rAdapter.clearCategory()
+        viewModel.setDjAllRecords(fromUserId, null, pageSize)
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                setFirst()
+                viewModel.setMyDj(fromUserId)
+                binding.rvRecord.scrollToPosition(0)
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("DJ_UPDATE")
+        )
     }
 }

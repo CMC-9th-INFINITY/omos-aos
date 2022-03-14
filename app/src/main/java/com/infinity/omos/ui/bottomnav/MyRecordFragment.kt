@@ -98,6 +98,7 @@ class MyRecordFragment : Fragment() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
                 viewModel.setMyRecord(userId)
+                binding.recyclerView.scrollToPosition(0)
             }
         }
 

@@ -16,6 +16,7 @@
         tools:context=".ui.bottomnav.MyDjFragment">
 
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -23,8 +24,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_mydj"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:myDjListData="@{vm.myDjData}"/>
+                android:layout_height="wrap_content"/>
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -67,6 +67,29 @@
                     android:visibility="gone"/>
 
             </FrameLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ln_nodj"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="gone">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
+                android:src="@drawable/ic_norecord"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="팔로우한 DJ가 없어요!"
+                android:textSize="18sp"
+                android:textColor="@color/gray_03"/>
 
         </LinearLayout>
 
