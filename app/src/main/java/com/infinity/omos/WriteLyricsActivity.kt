@@ -226,12 +226,12 @@ class WriteLyricsActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
+                recordTitle = binding.etRecordTitle.text.toString()
                 recordContents = mAdapter.getContents()
-                if (recordContents == ""){
-                    Toast.makeText(this, "해석을 작성하세요.", Toast.LENGTH_SHORT).show()
+                if (recordContents == "" || recordTitle == ""){
+                    Toast.makeText(this, "제목 또는 내용을 기입하세요.", Toast.LENGTH_SHORT).show()
                 } else{
                     category = GlobalFunction.categoryKrToEng(this, category)
-                    recordTitle = binding.etRecordTitle.text.toString()
                     viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
 
                     val intent = Intent("RECORD_UPDATE")
