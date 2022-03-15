@@ -5,10 +5,14 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.graphics.Rect
 import android.media.MediaScannerConnection
 import android.net.Uri
 import android.os.Build
+import android.util.DisplayMetrics
+import android.util.Log
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
@@ -18,45 +22,40 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import kotlin.math.roundToInt
 
 class ShareInstagram(private val context: Context) {
 
-    fun shareInsta(imageView: ImageView, textView: TextView){
+    fun shareInsta(bgView: LinearLayout){
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-            val bgBitmap = drawBackgroundBitmap()
+            val bgBitmap = drawBackgroundBitmap(bgView)
             val bgUri = saveImageAtCacheDir(bgBitmap)
 
-            val viewBitmap = drawViewBitmap(imageView, textView)
-            val viewUri = saveImageAtCacheDir(viewBitmap)
+            //val viewBitmap = drawViewBitmap(imageView)
+            //val viewUri = saveImageAtCacheDir(viewBitmap)
 
-            instaShare(bgUri, viewUri)
+            instaShare(bgUri, null)
         } else {
-            val bgBitmap = drawBackgroundBitmap()
+            val bgBitmap = drawBackgroundBitmap(bgView)
             val bgUri = saveImageAtCacheDir(bgBitmap)
 
-            val viewBitmap = drawViewBitmap(imageView, textView)
-            val viewUri = saveImageAtCacheDir(viewBitmap)
+            //val viewBitmap = drawViewBitmap(imageView)
+            //val viewUri = saveImageAtCacheDir(viewBitmap)
 
-            instaShare(bgUri, viewUri)
+            instaShare(bgUri, null)
         }
     }
 
     // 화면에 나타난 View를 Bitmap에 그릴 용도.
-    private fun drawBackgroundBitmap(): Bitmap {
+    private fun drawBackgroundBitmap(bgView: LinearLayout): Bitmap {
         //기기 해상도를 가져옴.
         val backgroundWidth = context.resources.displayMetrics.widthPixels
         val backgroundHeight = context.resources.displayMetrics.heightPixels
 
         val backgroundBitmap = Bitmap.createBitmap(backgroundWidth, backgroundHeight, Bitmap.Config.ARGB_8888) // 비트맵 생성
         val canvas = Canvas(backgroundBitmap) // 캔버스에 비트맵을 Mapping.
-
-        // TODO : 배경색 설정하기
-        // val bgColor = viewModel?.background?.value // 뷰모델의 현재 설정된 배경색을 가져온다.
-        val bgColor = R.color.deep_dark
-        if(bgColor != null) {
-            val color = ContextCompat.getColor(context, bgColor)
-            canvas.drawColor(color) // 캔버스에 현재 설정된 배경화면색으로 칠한다.
-        }
+        bgView.draw(canvas)
+        canvas.drawBitmap(backgroundBitmap, 0F, 0F, null)
 
         return backgroundBitmap
     }
@@ -98,43 +97,21 @@ class ShareInstagram(private val context: Context) {
         return FileProvider.getUriForFile(context, "com.infinity.omos.fileprovider", fileItem)
     }
 
-    private fun drawViewBitmap(imageView: ImageView, textView: TextView): Bitmap {
+
+
+    private fun drawViewBitmap(imageView: ImageView): Bitmap {
         val margin = context.resources.displayMetrics.density * 20
 
-        val width = if (imageView.width > textView.width) {
-            imageView.width
-        } else {
-            textView.width
-        }
+        val height = (imageView.height + margin).toInt()
 
-        val height = (imageView.height + textView.height + margin).toInt()
-
-        val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
+        val bitmap = Bitmap.createBitmap(imageView.width, height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
 
         val imageViewBitmap = Bitmap.createBitmap(imageView.width, imageView.height, Bitmap.Config.ARGB_8888)
         val imageViewCanvas = Canvas(imageViewBitmap)
         imageView.draw(imageViewCanvas)
-        /*imageViewCanvas를 통해서 imageView를 그린다.
-         *이 때 스케치북은 imageViewBitmap이므로 imageViewBitmap에 imageView가 그려진다.
-         */
 
-        val imageViewLeft = ((width - imageView.width) / 2).toFloat()
-
-        canvas.drawBitmap(imageViewBitmap, imageViewLeft, (0).toFloat(), null)
-
-        //아래는 TextView. 위에 ImageView와 같은 로직으로 비트맵으로 만든 후 캔버스에 그려준다.
-        if(textView.length() > 0) {
-            //textView가 공백이 아닐때만
-            val textViewBitmap = Bitmap.createBitmap(textView.width, textView.height, Bitmap.Config.ARGB_8888)
-            val textViewCanvas = Canvas(textViewBitmap)
-            textView.draw(textViewCanvas)
-
-            val textViewLeft = ((width - textView.width) / 2).toFloat()
-            val textViewTop = imageView.height + margin
-
-            canvas.drawBitmap(textViewBitmap, textViewLeft, textViewTop, null)
-        }
+        canvas.drawBitmap(imageViewBitmap, 0F, 0F, null)
 
         return bitmap
     }
@@ -177,4 +154,8 @@ class ShareInstagram(private val context: Context) {
 //        }
     }
 
+    private fun dpToPx(dp: Int): Int{
+        val density = context.resources.displayMetrics.density
+        return (dp.toFloat() * density).roundToInt()
+    }
 }

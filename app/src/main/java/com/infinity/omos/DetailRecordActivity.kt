@@ -4,9 +4,8 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
@@ -68,36 +67,66 @@ class DetailRecordActivity : AppCompatActivity() {
                 toUserId = it.userId
 
                 // 좋아요 상태
-                heart = if (it.isLiked){
-                    binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_checked_heart))
+                heart = if (it.isLiked) {
+                    binding.imgHeart.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_checked_heart
+                        )
+                    )
                     binding.tvHeartCnt.setTextColor(ContextCompat.getColor(this, R.color.orange))
                     true
-                } else{
-                    binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_unchecked_heart))
+                } else {
+                    binding.imgHeart.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_unchecked_heart
+                        )
+                    )
                     binding.tvHeartCnt.setTextColor(ContextCompat.getColor(this, R.color.gray_03))
                     false
                 }
 
                 // 스크랩 상태
-                star = if (it.isScraped){
-                    binding.imgStar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_checked_star))
+                star = if (it.isScraped) {
+                    binding.imgStar.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_checked_star
+                        )
+                    )
                     binding.tvStarCnt.setTextColor(ContextCompat.getColor(this, R.color.orange))
                     true
-                } else{
-                    binding.imgStar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_unchecked_star))
+                } else {
+                    binding.imgStar.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_unchecked_star
+                        )
+                    )
                     binding.tvStarCnt.setTextColor(ContextCompat.getColor(this, R.color.gray_03))
                     false
                 }
 
                 // 공개/비공개 아이콘 변경
-                if (it.isPublic == null || it.isPublic == true){
-                    binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                if (it.isPublic == null || it.isPublic == true) {
+                    binding.btnPublic.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_public
+                        )
+                    )
                 } else {
-                    binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                    binding.btnPublic.setImageDrawable(
+                        ContextCompat.getDrawable(
+                            this,
+                            R.drawable.ic_private
+                        )
+                    )
                 }
 
                 // 한 줄 감상 구분
-                when(it.category){
+                when (it.category) {
                     "A_LINE" -> {
                         binding.tvAlineContents.visibility = View.VISIBLE
                         binding.tvRecordContents.visibility = View.GONE
@@ -114,10 +143,10 @@ class DetailRecordActivity : AppCompatActivity() {
                         val contentsList = changeList(it.recordContents)
                         val lyricsList = ArrayList<String>()
                         val interpretList = ArrayList<String>()
-                        for (i in 0 until contentsList.size - 1){
-                            if (i % 2 == 0){
+                        for (i in 0 until contentsList.size - 1) {
+                            if (i % 2 == 0) {
                                 lyricsList.add(contentsList[i])
-                            } else{
+                            } else {
                                 interpretList.add(contentsList[i])
                             }
                         }
@@ -139,23 +168,27 @@ class DetailRecordActivity : AppCompatActivity() {
                 }
 
                 // 내 레코드인지 확인
-                if (it.userId == userId){
+                if (it.userId == userId) {
                     binding.btnPublic.visibility = View.VISIBLE
                     binding.btnReport.visibility = View.GONE
                     actionInsta.isVisible = it.category == "A_LINE"
                     actionMore.isVisible = true
-                } else{
+                } else {
                     binding.btnPublic.visibility = View.GONE
                     binding.btnReport.visibility = View.VISIBLE
                     actionInsta.isVisible = false
                     actionMore.isVisible = false
                 }
+
+                // 데이터 바인딩 되지도 않았는데 클릭하는 문제 해결
+                actionInsta.isEnabled = true
+                actionMore.isEnabled = true
             }
         }
 
-        viewModel.getStateDetailRecord().observe(this) { state->
+        viewModel.getStateDetailRecord().observe(this) { state ->
             state?.let {
-                when(it){
+                when (it) {
                     Constant.ApiState.LOADING -> {
                         binding.linearLayout.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
@@ -175,10 +208,10 @@ class DetailRecordActivity : AppCompatActivity() {
 
         viewModel.getStateDeleteRecord().observe(this) { state ->
             state?.let {
-                if (it.state){
+                if (it.state) {
                     finish()
                     Toast.makeText(this, "삭제 완료", Toast.LENGTH_SHORT).show()
-                } else{
+                } else {
                     Toast.makeText(this, "삭제 실패", Toast.LENGTH_SHORT).show()
                 }
             }
@@ -186,13 +219,23 @@ class DetailRecordActivity : AppCompatActivity() {
 
         // 좋아요 클릭
         binding.btnHeart.setOnClickListener {
-            if (heart){
-                binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_unchecked_heart))
+            if (heart) {
+                binding.imgHeart.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_unchecked_heart
+                    )
+                )
                 binding.tvHeartCnt.setTextColor(ContextCompat.getColor(this, R.color.gray_03))
                 heartCnt -= 1
                 heart = false
-            } else{
-                binding.imgHeart.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_checked_heart))
+            } else {
+                binding.imgHeart.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_checked_heart
+                    )
+                )
                 binding.tvHeartCnt.setTextColor(ContextCompat.getColor(this, R.color.orange))
                 heartCnt += 1
                 heart = true
@@ -202,13 +245,23 @@ class DetailRecordActivity : AppCompatActivity() {
 
         // 스크랩 클릭
         binding.btnStar.setOnClickListener {
-            if (star){
-                binding.imgStar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_unchecked_star))
+            if (star) {
+                binding.imgStar.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_unchecked_star
+                    )
+                )
                 binding.tvStarCnt.setTextColor(ContextCompat.getColor(this, R.color.gray_03))
                 starCnt -= 1
                 star = false
-            } else{
-                binding.imgStar.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_checked_star))
+            } else {
+                binding.imgStar.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this,
+                        R.drawable.ic_checked_star
+                    )
+                )
                 binding.tvStarCnt.setTextColor(ContextCompat.getColor(this, R.color.orange))
                 starCnt += 1
                 star = true
@@ -229,7 +282,7 @@ class DetailRecordActivity : AppCompatActivity() {
             dlg.show("이 레코드를 신고하시겠어요?")
 
             dlg.setOnOkClickedListener { content ->
-                when(content){
+                when (content) {
                     "yes" -> {
                         Toast.makeText(this, "준비 중", Toast.LENGTH_SHORT).show()
                     }
@@ -240,7 +293,7 @@ class DetailRecordActivity : AppCompatActivity() {
         initToolBar()
     }
 
-    private fun initToolBar(){
+    private fun initToolBar() {
         toolbar.title = ""
         setSupportActionBar(toolbar) // 툴바 사용
 
@@ -251,14 +304,29 @@ class DetailRecordActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.appbar_action_record, menu)
         actionInsta = menu.findItem(R.id.action_insta)
         actionMore = menu.findItem(R.id.action_more)
+        actionInsta.isEnabled = false
+        actionMore.isEnabled = false
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             R.id.action_insta -> {
                 val insta = ShareInstagram(this)
-                insta.shareInsta(binding.imgAlbumCover, binding.tvRecordTitle)
+                // visible 이 늦게 되는 문제 해결 (gone 은 빨리되는데)
+                binding.imgLogo.viewTreeObserver.addOnGlobalLayoutListener(object :
+                    ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        insta.shareInsta(binding.linearLayout)
+                        binding.imgLogo.visibility = View.GONE
+                        binding.btnHeart.visibility = View.VISIBLE
+                        binding.btnStar.visibility = View.VISIBLE
+                        binding.imgLogo.viewTreeObserver.removeOnGlobalLayoutListener (this)
+                    }
+                })
+                binding.imgLogo.visibility = View.VISIBLE
+                binding.btnHeart.visibility = View.GONE
+                binding.btnStar.visibility = View.GONE
                 true
             }
             R.id.action_delete -> {
@@ -266,7 +334,7 @@ class DetailRecordActivity : AppCompatActivity() {
                 dlg.show("삭제하시겠어요?")
 
                 dlg.setOnOkClickedListener { content ->
-                    when(content){
+                    when (content) {
                         "yes" -> {
                             val intent = Intent("RECORD_UPDATE")
                             intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
@@ -294,18 +362,18 @@ class DetailRecordActivity : AppCompatActivity() {
         super.onDestroy()
 
         // 좋아요, 스크랩 처리
-        if (heart != prevHeart){
-            if (heart){
+        if (heart != prevHeart) {
+            if (heart) {
                 viewModel.saveLike(postId, userId)
-            } else{
+            } else {
                 viewModel.deleteLike(postId, userId)
             }
         }
 
-        if (star != prevStar){
-            if (star){
+        if (star != prevStar) {
+            if (star) {
                 viewModel.saveScrap(postId, userId)
-            } else{
+            } else {
                 viewModel.deleteScrap(postId, userId)
             }
         }

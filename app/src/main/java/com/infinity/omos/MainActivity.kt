@@ -23,6 +23,9 @@ import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.searchtab.AllFragment
 import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.utils.Height
+import com.infinity.omos.utils.Height.Companion.navigationHeight
+import com.infinity.omos.utils.Height.Companion.statusBarHeight
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
@@ -133,6 +136,8 @@ class MainActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
             WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
         )
+
+        binding.mainLayout.setPadding(0, 0, 0, this.navigationHeight())
 
         toolbar.title = ""
         setSupportActionBar(toolbar) // 툴바 사용

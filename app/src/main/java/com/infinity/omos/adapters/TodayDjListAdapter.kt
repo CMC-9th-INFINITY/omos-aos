@@ -53,6 +53,8 @@ class TodayDjListAdapter internal constructor(context: Context):
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
+            binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.dark)
+
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
