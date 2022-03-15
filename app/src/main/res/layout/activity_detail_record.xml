@@ -158,43 +158,58 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingHorizontal="16dp"
                     android:background="@color/deep_dark">
 
-                    <TextView
-                        android:id="@+id/tv_record_contents"
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="16dp"
-                        android:layout_marginBottom="30dp"
-                        android:text="@{data.recordContents}"
-                        android:textSize="16sp"
-                        android:textColor="@color/gray_02"
-                        android:maxLength="794"
-                        android:visibility="gone"/>
+                        android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_aline_contents"
-                        android:layout_width="wrap_content"
-                        android:layout_height="228dp"
-                        android:layout_gravity="center"
-                        android:paddingHorizontal="24dp"
-                        android:gravity="center"
-                        android:textSize="24sp"
-                        android:textColor="@color/gray_02"
-                        android:fontFamily="@font/cafe24oneprettynight"
-                        android:visibility="gone"/>
+                        <TextView
+                            android:id="@+id/tv_record_contents"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="16dp"
+                            android:layout_marginBottom="30dp"
+                            android:text="@{data.recordContents}"
+                            android:textSize="16sp"
+                            android:textColor="@color/gray_02"
+                            android:maxLength="794"
+                            android:visibility="gone"/>
+
+                        <TextView
+                            android:id="@+id/tv_aline_contents"
+                            android:layout_width="wrap_content"
+                            android:layout_height="228dp"
+                            android:layout_gravity="center"
+                            android:paddingHorizontal="40dp"
+                            android:gravity="center"
+                            android:textSize="24sp"
+                            android:textColor="@color/gray_02"
+                            android:fontFamily="@font/cafe24oneprettynight"
+                            android:visibility="gone"/>
+
+                        <androidx.recyclerview.widget.RecyclerView
+                            android:id="@+id/rv_lyrics"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:visibility="gone"/>
+
+                    </LinearLayout>
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="2px"
                         android:layout_gravity="center"
+                        android:layout_marginHorizontal="16dp"
                         android:background="@color/divide"/>
 
                     <androidx.constraintlayout.widget.ConstraintLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingVertical="10dp">
+                        android:paddingVertical="10dp"
+                        android:paddingHorizontal="16dp">
 
                         <LinearLayout
                             android:id="@+id/btn_dj"

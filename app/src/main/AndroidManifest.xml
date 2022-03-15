@@ -17,7 +17,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".InputLyricsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".WriteLyricsActivity"
             android:exported="false" />
@@ -45,7 +46,8 @@
 
         <activity
             android:name=".WriteRecordActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".SelectCategoryActivity"
             android:exported="false" />

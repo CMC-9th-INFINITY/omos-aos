@@ -16,13 +16,14 @@ import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Record
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
+import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListLyricsItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.list_lyrics_item.view.*
 
 class LyricsListAdapter internal constructor(context: Context) :
-    ListAdapter<String, LyricsListAdapter.ViewHolder>(
+    ListAdapter<String, RecyclerView.ViewHolder>(
         LyricsDiffUtil
     ) {
 
@@ -32,7 +33,10 @@ class LyricsListAdapter internal constructor(context: Context) :
     private var interpret = ArrayList<String>()
     private var lengthList = ArrayList<Int>()
     private var textLength = 0
-    private var currentPos = 0
+    private var isWrite = true
+
+    private val VIEW_TYPE_WRITE = 0
+    private val VIEW_TYPE_READ = 1
 
     private lateinit var itemClickListener: OnItemClickListener
     private lateinit var changeTextLengthListener: ChangeTextLengthListener
@@ -57,25 +61,39 @@ class LyricsListAdapter internal constructor(context: Context) :
         this.changeTextLengthListener = changeListener
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = ListLyricsItemBinding.inflate(inflater, parent, false)
-        return ViewHolder(binding, LyricsTextWatcher())
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val lyrics = lyrics[position]
+        return when(viewType){
+            VIEW_TYPE_WRITE -> {
+                val binding = ListLyricsItemBinding.inflate(inflater, parent, false)
+                WriteViewHolder(binding, LyricsTextWatcher())
+            }
 
-        if (position >= interpret.size) {
-            interpret.add(position, "")
-            lengthList.add(position, 0)
+            else -> {
+                val binding = ListLyricsItemBinding.inflate(inflater, parent, false)
+                ReadViewHolder(binding)
+            }
         }
-
-        holder.lyricsTextWatcher.updatePosition(position)
-        holder.itemView.et_interpret.setText(interpret[position])
-        holder.bind(lyrics)
     }
 
-    inner class ViewHolder(private val binding: ListLyricsItemBinding, val lyricsTextWatcher: LyricsTextWatcher)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if (holder is WriteViewHolder){
+            val lyrics = lyrics[position]
+            if (position >= interpret.size) {
+                interpret.add(position, "")
+                lengthList.add(position, 0)
+            }
+            holder.lyricsTextWatcher.updatePosition(position)
+            holder.itemView.et_interpret.setText(interpret[position])
+            holder.bind(lyrics)
+        } else if (holder is ReadViewHolder){
+            val lyrics = lyrics[position]
+            val interpret = interpret[position]
+            holder.bind(lyrics, interpret)
+        }
+    }
+
+    inner class WriteViewHolder(private val binding: ListLyricsItemBinding, val lyricsTextWatcher: LyricsTextWatcher)
         : RecyclerView.ViewHolder(binding.root) {
         fun bind(lyrics: String) {
             binding.lyrics = lyrics
@@ -92,9 +110,34 @@ class LyricsListAdapter internal constructor(context: Context) :
         }
     }
 
+    inner class ReadViewHolder(private val binding: ListLyricsItemBinding)
+        : RecyclerView.ViewHolder(binding.root) {
+        fun bind(lyrics: String, interpret: String) {
+            binding.lyrics = lyrics
+            binding.interpret = interpret
+            binding.etInterpret.isEnabled = false
+            binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
+
+            val pos = adapterPosition
+            if (pos != RecyclerView.NO_POSITION) {
+                itemView.setOnClickListener {
+
+                }
+            }
+        }
+    }
+
     internal fun setLyrics(lyrics: List<String>) {
+        isWrite = true
         this.lyrics.clear()
         this.lyrics.addAll(lyrics)
+        notifyDataSetChanged()
+    }
+
+    internal fun setInterpret(interpret: List<String>){
+        isWrite = false
+        this.interpret.clear()
+        this.interpret.addAll(interpret)
         notifyDataSetChanged()
     }
 
@@ -107,6 +150,14 @@ class LyricsListAdapter internal constructor(context: Context) :
         }
 
         return result
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return if (isWrite){
+            VIEW_TYPE_WRITE
+        } else{
+            VIEW_TYPE_READ
+        }
     }
 
     override fun getItemCount(): Int {
@@ -135,7 +186,6 @@ class LyricsListAdapter internal constructor(context: Context) :
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
         override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             val text = p0.toString()
-            Log.d("jaemin", "$position / $text")
             interpret[position] = text
             lengthList[position] = text.length
             textLength = lengthList.sum() // EditText 총 글자 수

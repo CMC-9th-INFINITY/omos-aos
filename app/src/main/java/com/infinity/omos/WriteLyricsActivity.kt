@@ -25,6 +25,7 @@ import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.ActivityWriteLyricsBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.etc.GlobalFunction.Companion.changeList
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.WriteLyricsViewModel
 import com.theartofdev.edmodo.cropper.CropImage
@@ -190,10 +191,6 @@ class WriteLyricsActivity : AppCompatActivity() {
                 binding.tvContentsCount.text = size.toString()
             }
         })
-    }
-
-    private fun changeList(text: String): List<String> {
-        return text.split("\n")
     }
 
     private fun cropImage(uri: Uri?){

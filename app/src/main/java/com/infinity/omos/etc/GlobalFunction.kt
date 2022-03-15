@@ -10,6 +10,11 @@ import com.infinity.omos.data.Artists
 
 class GlobalFunction {
     companion object{
+
+        fun changeList(text: String): List<String> {
+            return text.split("\n")
+        }
+
         fun categoryEngToKr(context: Context, category: String): String{
             var ctg = "ERROR"
             when(category){

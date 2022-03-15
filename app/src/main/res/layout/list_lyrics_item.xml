@@ -6,6 +6,10 @@
             name="lyrics"
             type="String" />
 
+        <variable
+            name="interpret"
+            type="String" />
+
     </data>
 
     <LinearLayout
@@ -32,6 +36,7 @@
             android:paddingHorizontal="16dp"
             android:paddingVertical="10dp"
             android:hint="가사해석을 적어주세요."
+            android:text="@{interpret}"
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textColorHint="@color/gray_07"

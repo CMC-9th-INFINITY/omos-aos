@@ -11,9 +11,12 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.etc.GlobalFunction.Companion.changeList
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.ShareInstagram
@@ -94,13 +97,45 @@ class DetailRecordActivity : AppCompatActivity() {
                 }
 
                 // 한 줄 감상 구분
-                if (it.category == "A_LINE"){
-                    binding.tvAlineContents.visibility = View.VISIBLE
-                    binding.tvRecordContents.visibility = View.GONE
-                    binding.tvAlineContents.text = "\"${it.recordContents}\""
-                } else {
-                    binding.tvRecordContents.visibility = View.VISIBLE
-                    binding.tvAlineContents.visibility = View.GONE
+                when(it.category){
+                    "A_LINE" -> {
+                        binding.tvAlineContents.visibility = View.VISIBLE
+                        binding.tvRecordContents.visibility = View.GONE
+                        binding.rvLyrics.visibility = View.GONE
+                        binding.tvAlineContents.text = "\"${it.recordContents}\""
+                    }
+
+                    "LYRICS" -> {
+                        binding.rvLyrics.visibility = View.VISIBLE
+                        binding.tvAlineContents.visibility = View.GONE
+                        binding.tvRecordContents.visibility = View.GONE
+
+                        // 가사, 해석 분리
+                        val contentsList = changeList(it.recordContents)
+                        val lyricsList = ArrayList<String>()
+                        val interpretList = ArrayList<String>()
+                        for (i in 0 until contentsList.size - 1){
+                            if (i % 2 == 0){
+                                lyricsList.add(contentsList[i])
+                            } else{
+                                interpretList.add(contentsList[i])
+                            }
+                        }
+
+                        val mAdapter = LyricsListAdapter(this)
+                        mAdapter.setLyrics(lyricsList)
+                        mAdapter.setInterpret(interpretList)
+                        binding.rvLyrics.apply {
+                            adapter = mAdapter
+                            layoutManager = LinearLayoutManager(context)
+                        }
+                    }
+
+                    else -> {
+                        binding.tvRecordContents.visibility = View.VISIBLE
+                        binding.tvAlineContents.visibility = View.GONE
+                        binding.rvLyrics.visibility = View.GONE
+                    }
                 }
 
                 // 내 레코드인지 확인
