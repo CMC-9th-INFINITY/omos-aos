@@ -80,17 +80,19 @@ class MainActivity : AppCompatActivity() {
 
         // EditText 초기화
         btn_remove.setOnClickListener {
-            et_search.setText("")
+            binding.etSearch.setText("")
         }
 
         // 검색 리스트 노출
-        et_search.addTextChangedListener(object : TextWatcher {
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (et_search.length() > 0 || searchTab.visibility == View.VISIBLE) {
+                if (binding.etSearch.length() > 0 || binding.searchTab.visibility == View.VISIBLE) {
                     if (isMusicSearch) {
                         // 검색어 노출
                         binding.lnRanking.visibility = View.GONE
                         binding.rvSearch.visibility = View.VISIBLE
+
+                        Log.d("jaemin/onText", p0.toString())
                     }
                 }
             }

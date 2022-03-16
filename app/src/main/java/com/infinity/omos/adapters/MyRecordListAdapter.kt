@@ -18,6 +18,7 @@ import com.infinity.omos.databinding.ListMyrecordItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
+import com.infinity.omos.utils.GlobalApplication
 
 class MyRecordListAdapter internal constructor(context: Context):
     ListAdapter<Record, RecyclerView.ViewHolder>(
@@ -32,6 +33,7 @@ class MyRecordListAdapter internal constructor(context: Context):
     private val VIEW_TYPE_LOADING = 1
 
     private lateinit var itemClickListener: OnItemClickListener
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     interface OnItemClickListener{
         fun onClick(v: View, position: Int)
@@ -95,10 +97,14 @@ class MyRecordListAdapter internal constructor(context: Context):
             binding.tvDate.text = setDate(record.createdDate)
             binding.tvCategory.text = setCategoryText(context, record.category)
 
-            if (record.isPublic == true){
-                binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_public))
-            } else {
+            if (record.isPublic == false){
                 binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_private))
+            } else {
+                binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_public))
+            }
+
+            if (userId != record.userId){
+                binding.btnPublic.visibility = View.GONE
             }
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩

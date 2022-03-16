@@ -109,18 +109,18 @@ class DetailRecordActivity : AppCompatActivity() {
                 }
 
                 // 공개/비공개 아이콘 변경
-                if (it.isPublic == null || it.isPublic == true) {
+                if (it.isPublic == false) {
                     binding.btnPublic.setImageDrawable(
                         ContextCompat.getDrawable(
                             this,
-                            R.drawable.ic_public
+                            R.drawable.ic_private
                         )
                     )
                 } else {
                     binding.btnPublic.setImageDrawable(
                         ContextCompat.getDrawable(
                             this,
-                            R.drawable.ic_private
+                            R.drawable.ic_public
                         )
                     )
                 }

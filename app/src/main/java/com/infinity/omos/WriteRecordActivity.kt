@@ -205,8 +205,6 @@ class WriteRecordActivity : AppCompatActivity() {
                 binding.tvContentsCount.text = binding.alineContents.length().toString()
             }
         })
-
-
     }
 
     private fun cropImage(uri: Uri?){
