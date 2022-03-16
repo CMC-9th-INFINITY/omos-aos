@@ -6,7 +6,8 @@
         android:id="@+id/action_insta"
         android:icon="@drawable/ic_insta"
         android:title="Instagram"
-        app:showAsAction="always"/>
+        app:showAsAction="always"
+        android:visible="false"/>
 
     <item
         android:id="@+id/action_more"
