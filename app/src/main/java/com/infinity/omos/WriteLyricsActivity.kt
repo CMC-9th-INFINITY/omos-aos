@@ -107,8 +107,7 @@ class WriteLyricsActivity : AppCompatActivity() {
 
         // 이미지 넣기
         btn_gallery.setOnClickListener {
-            val intent = Intent(Intent.ACTION_GET_CONTENT)
-            intent.type = "image/*"
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             result.launch(intent)
         }
 
@@ -199,8 +198,7 @@ class WriteLyricsActivity : AppCompatActivity() {
         val intent = CropImage
             .activity(uri)
             .setCropShape(CropImageView.CropShape.RECTANGLE)
-            .setMinCropResultSize(width, height)
-            .setMaxCropResultSize(width, height)
+            .setAspectRatio(width, height)
             .getIntent(this)
 
         cropResult.launch(intent)
