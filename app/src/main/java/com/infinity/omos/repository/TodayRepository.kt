@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.TodayService
+import com.infinity.omos.data.LovedMusic
 import com.infinity.omos.data.Music
 import com.infinity.omos.data.Profile
 import com.infinity.omos.data.SumRecord
@@ -64,15 +65,15 @@ class TodayRepository {
         })
     }
 
-    var loveMusic = MutableLiveData<Music>()
+    var loveMusic = MutableLiveData<LovedMusic>()
     var stateLoveMusic = MutableLiveData<Constant.ApiState>()
-    fun getMyLoveMusic(){
+    fun getMyLoveMusic(userId: Int){
         stateLoveMusic.value = Constant.ApiState.LOADING
-        todayApi.getMyLoveMusic().enqueue(object:
-            Callback<Music> {
+        todayApi.getMyLoveMusic(userId).enqueue(object:
+            Callback<LovedMusic> {
             override fun onResponse(
-                call: Call<Music>,
-                response: Response<Music>
+                call: Call<LovedMusic>,
+                response: Response<LovedMusic>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -85,7 +86,7 @@ class TodayRepository {
                     401 -> {
                         Log.d("MyLoveMusicAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        getMyLoveMusic()
+                        getMyLoveMusic(userId)
                     }
 
                     500 -> {
@@ -100,7 +101,7 @@ class TodayRepository {
                 }
             }
 
-            override fun onFailure(call: Call<Music>, t: Throwable) {
+            override fun onFailure(call: Call<LovedMusic>, t: Throwable) {
                 Log.d("MyLoveMusicAPI", t.message.toString())
                 t.stackTrace
             }

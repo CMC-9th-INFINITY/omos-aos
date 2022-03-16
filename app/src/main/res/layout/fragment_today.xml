@@ -14,7 +14,7 @@
 
         <variable
             name="love"
-            type="com.infinity.omos.data.Music" />
+            type="com.infinity.omos.data.LovedMusic" />
     </data>
 
     <FrameLayout
@@ -127,7 +127,7 @@
                             </FrameLayout>
 
                             <LinearLayout
-                                android:layout_width="wrap_content"
+                                android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="24dp"
                                 android:layout_gravity="center"
@@ -169,7 +169,6 @@
                                         android:layout_width="0dp"
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
-                                        android:gravity="center"
                                         android:text="@{today.albumTitle}"
                                         android:textSize="12sp"
                                         android:textColor="@color/gray_05"
@@ -212,12 +211,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:paddingHorizontal="16dp"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:paddingHorizontal="16dp"
                         android:text="OMOS 추천 DJ"
                         android:textSize="18sp"
                         android:textColor="@color/white"/>
@@ -226,7 +225,27 @@
                         android:id="@+id/rv_dj"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="6dp"/>
+                        android:layout_marginTop="4dp"
+                        android:paddingHorizontal="16dp"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:id="@+id/ln_nodj"
+                        android:layout_width="match_parent"
+                        android:layout_height="95dp"
+                        android:layout_marginTop="4dp"
+                        android:padding="16dp"
+                        android:orientation="vertical"
+                        android:background="@color/deep_dark">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="당신과 비슷한 취향의\nDJ를 찾아보세요."
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_03"/>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 
@@ -246,15 +265,17 @@
                         android:textColor="@color/white"/>
 
                     <FrameLayout
+                        android:id="@+id/fm_loved_music"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
+                        android:layout_height="wrap_content"
+                        android:visibility="gone">
 
                         <ImageView
                             android:id="@+id/img_record"
                             android:layout_width="match_parent"
                             android:layout_height="164dp"
                             android:scaleType="centerCrop"
-                            android:src="@drawable/img_main"/>
+                            app:categoryImageUrl="@{love.recordImageUrl}"/>
 
                         <LinearLayout
                             android:layout_width="match_parent"
@@ -283,13 +304,13 @@
                             android:paddingHorizontal="16dp"
                             android:paddingVertical="14dp">
 
-                            <ImageView
+                            <de.hdodenhof.circleimageview.CircleImageView
                                 android:id="@+id/img_album_cover"
                                 android:layout_width="65dp"
                                 android:layout_height="65dp"
                                 android:layout_marginBottom="10dp"
                                 android:src="@drawable/ic_record"
-                                app:imageUrl="@{love.albumImageUrl}"/>
+                                app:imageUrl="@{love.music.albumImageUrl}"/>
 
                             <LinearLayout
                                 android:layout_width="wrap_content"
@@ -298,20 +319,24 @@
 
                                 <TextView
                                     android:id="@+id/tv_music_title"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
-                                    android:text="@{love.musicTitle}"
+                                    android:text="@{love.music.musicTitle}"
                                     android:textSize="16sp"
-                                    android:textColor="@color/white"/>
+                                    android:textColor="@color/white"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
 
                                 <TextView
                                     android:id="@+id/tv_love_artist"
-                                    android:layout_width="wrap_content"
+                                    android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:layout_marginBottom="2dp"
                                     android:textSize="14sp"
-                                    android:textColor="@color/gray_03"/>
+                                    android:textColor="@color/gray_03"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
 
                                 <LinearLayout
                                     android:layout_width="match_parent"
@@ -327,12 +352,14 @@
 
                                     <TextView
                                         android:id="@+id/tv_album_title"
-                                        android:layout_width="wrap_content"
+                                        android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
                                         android:gravity="center"
-                                        android:text="@{love.albumTitle}"
+                                        android:text="@{love.music.albumTitle}"
                                         android:textSize="12sp"
-                                        android:textColor="@color/gray_05"/>
+                                        android:textColor="@color/gray_05"
+                                        android:maxLines="1"
+                                        android:ellipsize="end"/>
 
                                 </LinearLayout>
 
@@ -341,6 +368,47 @@
                         </LinearLayout>
 
                     </FrameLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ln_norecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="164dp"
+                        android:layout_marginBottom="55dp"
+                        android:orientation="vertical"
+                        android:padding="16dp"
+                        android:background="@color/deep_dark">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="당신이 사랑하는 노래를\n기록하러 가보실래요?"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_03"/>
+
+                        <LinearLayout
+                            android:id="@+id/btn_write_myrecord"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="MY 레코드 기록하러 가기"
+                                android:textSize="14sp"
+                                android:textColor="@color/orange"/>
+
+                            <ImageView
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_gravity="center"
+                                android:layout_marginStart="4dp"
+                                android:src="@drawable/ic_next"
+                                app:tint="@color/orange"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                 </LinearLayout>
 

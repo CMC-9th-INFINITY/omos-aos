@@ -32,10 +32,10 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     // 사랑했던 노래
-    fun setMyLoveMusic(){
-        todayRepository.getMyLoveMusic()
+    fun setMyLoveMusic(userId: Int){
+        todayRepository.getMyLoveMusic(userId)
     }
-    fun getMyLoveMusic(): LiveData<Music>{
+    fun getMyLoveMusic(): LiveData<LovedMusic>{
         return todayRepository.loveMusic
     }
     fun getStateLoveMusic(): LiveData<Constant.ApiState>{

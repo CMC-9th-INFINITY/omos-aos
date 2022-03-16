@@ -5,6 +5,7 @@ import android.app.PendingIntent
 import android.content.Context.ALARM_SERVICE
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,7 +23,9 @@ import com.infinity.omos.adapters.MyDjListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
 import com.infinity.omos.databinding.FragmentTodayBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.viewmodels.SharedViewModel
 import kotlinx.android.synthetic.main.activity_category.*
@@ -33,6 +36,8 @@ class TodayFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentTodayBinding
+
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,16 +91,67 @@ class TodayFragment : Fragment() {
         viewModel.getRecommendDj().observe(viewLifecycleOwner) { dj ->
             dj?.let {
                 dAdapter.setDj(it)
+
+                Log.d("jaemin", it.toString())
+                if (it.isEmpty()){
+                    binding.lnNodj.visibility = View.VISIBLE
+                    binding.rvDj.visibility = View.GONE
+                }
+            }
+        }
+        viewModel.getStateRecommendDj().observe(viewLifecycleOwner) { state ->
+            state?.let {
+                when (it) {
+                    Constant.ApiState.LOADING -> {
+                        binding.rvDj.visibility = View.GONE
+                        binding.lnNodj.visibility = View.VISIBLE
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.rvDj.visibility = View.VISIBLE
+                        binding.lnNodj.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+                        binding.lnNodj.visibility = View.VISIBLE
+                        binding.rvDj.visibility = View.GONE
+                    }
+                }
             }
         }
 
-//        // 내가 사랑했던 노래
-//        viewModel.setMyLoveMusic()
-//        viewModel.getMyLoveMusic().observe(viewLifecycleOwner) { music ->
-//            music?.let {
-//                binding.love = it
-//                binding.tvLoveArtist.text = GlobalFunction.setArtist(it.artists)
-//            }
-//        }
+        // 내가 사랑했던 노래
+        viewModel.setMyLoveMusic(userId)
+        viewModel.getMyLoveMusic().observe(viewLifecycleOwner) { music ->
+            music?.let {
+                binding.love = it
+                binding.tvLoveArtist.text = GlobalFunction.setArtist(it.music.artists)
+            }
+        }
+
+        viewModel.getStateLoveMusic().observe(viewLifecycleOwner) { state ->
+            state?.let {
+                when (it) {
+                    Constant.ApiState.LOADING -> {
+                        binding.fmLovedMusic.visibility = View.GONE
+                        binding.lnNorecord.visibility = View.VISIBLE
+                    }
+
+                    Constant.ApiState.DONE -> {
+                        binding.fmLovedMusic.visibility = View.VISIBLE
+                        binding.lnNorecord.visibility = View.GONE
+                    }
+
+                    Constant.ApiState.ERROR -> {
+                        binding.lnNorecord.visibility = View.VISIBLE
+                        binding.fmLovedMusic.visibility = View.GONE
+                    }
+                }
+            }
+        }
+
+        binding.btnWriteMyrecord.setOnClickListener {
+
+        }
     }
 }
