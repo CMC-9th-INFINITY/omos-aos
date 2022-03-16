@@ -2,8 +2,6 @@ package com.infinity.omos
 
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -15,17 +13,14 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.findFragment
 import com.google.android.material.tabs.TabLayoutMediator
-import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.searchtab.AllFragment
+import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.utils.Height
 import com.infinity.omos.utils.Height.Companion.navigationHeight
-import com.infinity.omos.utils.Height.Companion.statusBarHeight
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
@@ -387,6 +382,18 @@ class MainActivity : AppCompatActivity() {
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         inputMethodManager.hideSoftInputFromWindow(et_search.windowToken, 0)
+    }
+
+    // 뒤로가기 핸들러
+    private val backKeyHandler = BackKeyHandler(this)
+    override fun onBackPressed() {
+        if (binding.searchView.visibility == View.VISIBLE){
+            // 검색뷰 열려있으면 닫기
+            cancelSearch()
+        } else{
+            // 두번 뒤로가기 클릭 시 앱 종료
+            backKeyHandler.onBackPressed()
+        }
     }
 
     companion object {
