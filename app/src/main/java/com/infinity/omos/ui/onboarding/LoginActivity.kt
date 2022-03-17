@@ -1,9 +1,13 @@
 package com.infinity.omos.ui.onboarding
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -27,6 +31,7 @@ import com.infinity.omos.data.UserLogin
 import com.infinity.omos.data.UserSnsLogin
 import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.viewmodels.LoginViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
@@ -39,11 +44,13 @@ class LoginActivity : AppCompatActivity() {
     private val viewModel: LoginViewModel by viewModels()
 
     private var userId = ""
+    private lateinit var dlg: CustomDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         context = this
+        dlg = CustomDialog(this)
 
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
             R.layout.activity_login
@@ -173,23 +180,35 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
+        // 로그인 API 호출
+        btn_login.setOnClickListener {
+            showProgress()
+            viewModel.checkLogin(UserLogin(et_id.text.toString(), et_pw.text.toString()))
+        }
+
         // 로그인 상태
-        viewModel.getStateLogin().observe(this, Observer { status ->
+        viewModel.getStateLogin().observe(this) { status ->
             status?.let {
-                if (it == Constant.ApiState.DONE){
+                dismissProgress()
+                if (it == Constant.ApiState.DONE) {
                     var intent = Intent(this, MainActivity::class.java)
                     intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     startActivity(intent)
-                } else{
-                    showErrorMsg(et_id, tv_error_id, resources.getString(R.string.again_check), linear_id)
-                    showErrorMsg(et_pw, tv_error_pw, resources.getString(R.string.again_check), linear_pw)
+                } else {
+                    showErrorMsg(
+                        et_id,
+                        tv_error_id,
+                        resources.getString(R.string.again_check),
+                        linear_id
+                    )
+                    showErrorMsg(
+                        et_pw,
+                        tv_error_pw,
+                        resources.getString(R.string.again_check),
+                        linear_pw
+                    )
                 }
             }
-        })
-
-        // 로그인 API 호출
-        btn_login.setOnClickListener {
-            viewModel.checkLogin(UserLogin(et_id.text.toString(), et_pw.text.toString()))
         }
 
         // 카카오 소셜 로그인 페이지 이동
@@ -216,6 +235,24 @@ class LoginActivity : AppCompatActivity() {
         btn_find_pw.setOnClickListener {
             Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     companion object{

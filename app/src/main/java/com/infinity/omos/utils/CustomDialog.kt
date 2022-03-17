@@ -79,4 +79,17 @@ class CustomDialog(private val context : Context) {
             dlg.dismiss()
         }
     }
+
+    fun showProgress(){
+        dlg.setContentView(R.layout.dialog_progress)
+        dlg.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dlg.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dlg.setCanceledOnTouchOutside(false)
+        dlg.setCancelable(false)
+        dlg.show()
+    }
+
+    fun dismissProgress(){
+        dlg.dismiss()
+    }
 }

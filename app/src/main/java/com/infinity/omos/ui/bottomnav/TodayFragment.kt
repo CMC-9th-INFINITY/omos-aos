@@ -92,7 +92,6 @@ class TodayFragment : Fragment() {
             dj?.let {
                 dAdapter.setDj(it)
 
-                Log.d("jaemin", it.toString())
                 if (it.isEmpty()){
                     binding.lnNodj.visibility = View.VISIBLE
                     binding.rvDj.visibility = View.GONE

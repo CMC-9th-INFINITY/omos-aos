@@ -92,12 +92,14 @@ class OnBoardingRepository {
 
                     else -> {
                         Log.d("LoginAPI", "Code: $code")
+                        stateLogin.value = Constant.ApiState.ERROR
                     }
                 }
             }
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("LoginAPI", t.message.toString())
+                stateLogin.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })

@@ -86,8 +86,6 @@ class MainActivity : AppCompatActivity() {
                         // 검색어 노출
                         binding.lnRanking.visibility = View.GONE
                         binding.rvSearch.visibility = View.VISIBLE
-
-                        Log.d("jaemin/onText", p0.toString())
                     }
                 }
             }
