@@ -113,6 +113,7 @@
                                 android:layout_height="wrap_content">
 
                                 <de.hdodenhof.circleimageview.CircleImageView
+                                    android:id="@+id/btn_today_music"
                                     android:layout_width="78dp"
                                     android:layout_height="78dp"
                                     app:imageUrl="@{today.albumImageUrl}"/>
@@ -226,7 +227,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="4dp"
-                        android:paddingHorizontal="16dp"
                         android:visibility="gone"/>
 
                     <LinearLayout
@@ -354,7 +354,6 @@
                                         android:id="@+id/tv_album_title"
                                         android:layout_width="match_parent"
                                         android:layout_height="wrap_content"
-                                        android:gravity="center"
                                         android:text="@{love.music.albumTitle}"
                                         android:textSize="12sp"
                                         android:textColor="@color/gray_05"

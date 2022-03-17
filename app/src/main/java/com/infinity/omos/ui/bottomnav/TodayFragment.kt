@@ -9,12 +9,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.AlbumActivity
+import com.infinity.omos.DetailRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.SelectCategoryActivity
 import com.infinity.omos.adapters.CategoryListAdapter
@@ -38,6 +40,12 @@ class TodayFragment : Fragment() {
     private lateinit var binding: FragmentTodayBinding
 
     private val userId = GlobalApplication.prefs.getInt("userId")
+
+    private var musicId = ""
+    private var musicTitle = ""
+    private var artists = ""
+    private var albumImageUrl = ""
+    private var recordId = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,7 +72,11 @@ class TodayFragment : Fragment() {
         viewModel.getTodayMusic().observe(viewLifecycleOwner) { data ->
             data?.let {
                 binding.today = it
-                binding.tvTodayArtist.text = GlobalFunction.setArtist(it.artists)
+                this.artists = GlobalFunction.setArtist(it.artists)
+                binding.tvTodayArtist.text = this.artists
+                musicId = it.musicId
+                musicTitle = it.musicTitle
+                albumImageUrl = it.albumImageUrl
             }
         }
 
@@ -125,6 +137,7 @@ class TodayFragment : Fragment() {
             music?.let {
                 binding.love = it
                 binding.tvLoveArtist.text = GlobalFunction.setArtist(it.music.artists)
+                recordId = it.recordId
             }
         }
 
@@ -149,8 +162,25 @@ class TodayFragment : Fragment() {
             }
         }
 
-        binding.btnWriteMyrecord.setOnClickListener {
+        binding.btnTodayMusic.setOnClickListener {
+            val intent = Intent(context, SelectCategoryActivity::class.java)
+            intent.putExtra("musicId", musicId)
+            intent.putExtra("musicTitle", musicTitle)
+            intent.putExtra("artists", artists)
+            intent.putExtra("albumImageUrl", albumImageUrl)
+            startActivity(intent)
+        }
 
+        binding.fmLovedMusic.setOnClickListener {
+            if (recordId != -1){
+                val intent = Intent(context, DetailRecordActivity::class.java)
+                intent.putExtra("postId", recordId)
+                startActivity(intent)
+            }
+        }
+
+        binding.btnWriteMyrecord.setOnClickListener {
+            Toast.makeText(context, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
     }
 }
