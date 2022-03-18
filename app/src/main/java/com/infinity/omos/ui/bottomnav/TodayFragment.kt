@@ -47,6 +47,16 @@ class TodayFragment : Fragment() {
     private var albumImageUrl = ""
     private var recordId = -1
 
+    private lateinit var itemClickListener: OnItemClickListener
+
+    interface OnItemClickListener{
+        fun onClick()
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -180,7 +190,7 @@ class TodayFragment : Fragment() {
         }
 
         binding.btnWriteMyrecord.setOnClickListener {
-            Toast.makeText(context, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
+            itemClickListener.onClick()
         }
     }
 }

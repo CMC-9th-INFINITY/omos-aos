@@ -83,6 +83,13 @@ class MainActivity : AppCompatActivity() {
             binding.etSearch.setText("")
         }
 
+        fragmentToday.setItemClickListener(object: TodayFragment.OnItemClickListener{
+            override fun onClick() {
+                binding.btnFloating.visibility = View.GONE
+                onOptionsItemSelected(actionWrite)
+            }
+        })
+
         // 검색 리스트 노출
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
