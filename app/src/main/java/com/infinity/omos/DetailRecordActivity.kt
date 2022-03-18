@@ -80,10 +80,10 @@ class DetailRecordActivity : AppCompatActivity() {
 
                 stateCategory = it.category
                 recordTitle = it.recordTitle
+                recordContents = it.recordContents
                 isPublic = it.isPublic
                 albumImageUrl = it.music.albumImageUrl
                 musicTitle = it.music.musicTitle
-
 
                 // 좋아요 상태
                 heart = if (it.isLiked) {

@@ -77,10 +77,10 @@ class WriteLyricsActivity : AppCompatActivity() {
             recordTitle = intent.getStringExtra("recordTitle")!!
             binding.etRecordTitle.setText(recordTitle)
             binding.tvTitleCount.text = binding.etRecordTitle.length().toString()
+            postId = intent.getIntExtra("postId", -1)
         }
-        var interpret = intent.getStringExtra("interpret")
-        postId = intent.getIntExtra("postId", -1)
 
+        var interpret = intent.getStringExtra("interpret")
         var lyrics = intent.getStringExtra("lyrics")!!
         lyrics = lyrics.substring(0, lyrics.length - 2)
         mAdapter = LyricsListAdapter(this)

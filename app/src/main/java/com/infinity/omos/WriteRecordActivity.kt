@@ -24,6 +24,7 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.data.Update
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.etc.GlobalFunction
@@ -52,6 +53,10 @@ class WriteRecordActivity : AppCompatActivity() {
     private var recordContents = ""
     private var recordImageUrl = ""
     private var recordTitle = ""
+    private var postId = -1
+
+    private var isModify = false
+
     private var userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,33 +68,50 @@ class WriteRecordActivity : AppCompatActivity() {
 
         category = intent.getStringExtra("category")!!
         musicId = intent.getStringExtra("musicId")!!
-
         viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
         viewModel.artists.value = intent.getStringExtra("artists")
         viewModel.albumImageUrl.value = intent.getStringExtra("albumImageUrl")
+        viewModel.category.value = category
 
         var currentTime = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy MM dd", Locale.getDefault())
         viewModel.createdDate.value = dateFormat.format(currentTime)
 
-        viewModel.category.value = category
         if (viewModel.category.value == resources.getString(R.string.a_line)){
             record_contents.visibility = View.GONE
             aline_contents.visibility = View.VISIBLE
             binding.tvLimitContents.text = "/50"
         }
 
+        // 수정 데이터
+        isModify = intent.getBooleanExtra("modify", false)
+        if (isModify){
+            viewModel.isPublic.value = intent.getBooleanExtra("isPublic", false)
+            recordTitle = intent.getStringExtra("recordTitle")!!
+            recordContents = intent.getStringExtra("recordContents")!!
+            binding.etRecordTitle.setText(recordTitle)
+            binding.tvTitleCount.text = binding.etRecordTitle.length().toString()
+            binding.tvContentsCount.text = recordContents.length.toString()
+            postId = intent.getIntExtra("postId", -1)
+
+            if (viewModel.category.value == resources.getString(R.string.a_line)){
+                binding.alineContents.setText(recordContents)
+            } else{
+                binding.recordContents.setText(recordContents)
+            }
+        }
+
         initToolBar()
 
         // 공개/비공개 설정
-        viewModel.isPrivate.observe(this, Observer { state ->
+        viewModel.isPublic.observe(this, Observer { state ->
             state?.let {
                 isPublic = if (it){
-                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
-                    false
-                } else{
                     binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
                     true
+                } else{
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                    false
                 }
             }
         })
@@ -161,6 +183,15 @@ class WriteRecordActivity : AppCompatActivity() {
                 } else {
                     Toast.makeText(this, "저장 실패", Toast.LENGTH_SHORT).show()
                 }
+            }
+        }
+
+        viewModel.getStateUpdateRecord().observe(this) { state ->
+            state?.let {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
             }
         }
 
@@ -236,22 +267,34 @@ class WriteRecordActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_next -> {
-                category = GlobalFunction.categoryKrToEng(this, category)
-
-                // 한 줄 감상 내용인지 구분
-                recordContents = if (category == "A_LINE"){
+                recordTitle = binding.etRecordTitle.text.toString()
+                recordContents = if (category == resources.getString(R.string.a_line)){
+                    // 한 줄 감상 내용인지 구분
                     binding.alineContents.text.toString()
                 } else {
                     binding.recordContents.text.toString()
                 }
-                recordTitle = binding.etRecordTitle.text.toString()
-                viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
 
-                val intent = Intent("RECORD_UPDATE")
-                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                sendBroadcast(intent)
+                if (recordContents == "" || recordTitle == ""){
+                    Toast.makeText(this, "제목 또는 내용을 기입하세요.", Toast.LENGTH_SHORT).show()
+                } else{
+                    category = GlobalFunction.categoryKrToEng(this, category)
+                    if (!isModify){
+                        viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
 
-                Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                        val intent = Intent("RECORD_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                    } else{
+                        viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
+
+                        val intent = Intent("RECORD_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                    }
+
+                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                }
                 true
             }
             android.R.id.home -> {

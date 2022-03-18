@@ -9,18 +9,17 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.ResultState
+import com.infinity.omos.data.ResultUpdate
 import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.data.Update
 import com.infinity.omos.repository.MyRecordRepository
 
 class WriteRecordViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: MyRecordRepository = MyRecordRepository()
-    fun getStateSaveRecord(): LiveData<ResultState>{
-        return repository.stateSaveRecord
-    }
 
     var prevText = ""
-    var isPrivate = MutableLiveData<Boolean>()
+    var isPublic = MutableLiveData<Boolean>()
 
     var musicTitle = MutableLiveData<String>()
     var artists = MutableLiveData<String>()
@@ -29,15 +28,24 @@ class WriteRecordViewModel(application: Application): AndroidViewModel(applicati
     var category = MutableLiveData<String>()
 
     init {
-        isPrivate.value = false
+        isPublic.value = true
     }
 
     fun saveRecord(record: SaveRecord){
         repository.saveRecord(record)
     }
+    fun getStateSaveRecord(): LiveData<ResultState>{
+        return repository.stateSaveRecord
+    }
+    fun updateRecord(postId: Int, params: Update){
+        repository.updateRecord(postId, params)
+    }
+    fun getStateUpdateRecord(): LiveData<ResultUpdate>{
+        return repository.stateUpdateRecord
+    }
 
     fun changePrivate(){
-        isPrivate.value = isPrivate.value == false
+        isPublic.value = isPublic.value == false
     }
 
     fun setPrevText(et: EditText){

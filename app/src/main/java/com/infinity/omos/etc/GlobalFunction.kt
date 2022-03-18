@@ -19,7 +19,7 @@ class GlobalFunction {
             var ctg = "ERROR"
             when(category){
                 "A_LINE" -> {
-                    ctg = context.resources.getString(R.string.ost)
+                    ctg = context.resources.getString(R.string.a_line)
                 }
                 "OST" -> {
                     ctg = context.resources.getString(R.string.ost)
