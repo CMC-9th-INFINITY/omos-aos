@@ -71,7 +71,7 @@ class DjActivity : AppCompatActivity() {
         viewModel.setDjRecord(fromUserId, toUserId)
         viewModel.getDjRecord().observe(this) { record ->
             record?.let {
-                mAdapter.setRecord(it)
+                mAdapter.setDjRecord(it)
 
                 if (it.isEmpty()){
                     binding.lnNorecord.visibility = View.VISIBLE

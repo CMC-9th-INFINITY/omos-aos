@@ -1,9 +1,6 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.Category
-import com.infinity.omos.data.Record
-import com.infinity.omos.data.ResultState
-import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.data.*
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -62,4 +59,10 @@ interface RecordService {
         @Path("fromUserId") fromUserId: Int,
         @Path("toUserId") toUserId: Int
     ): Call<List<Record>>
+
+    @PUT("api/records/update/{postId}")
+    fun updateRecord(
+        @Path("postId") postId: Int,
+        @Body params: Update
+    ): Call<ResultUpdate>
 }

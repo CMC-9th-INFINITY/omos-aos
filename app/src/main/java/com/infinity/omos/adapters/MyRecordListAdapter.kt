@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,6 +29,7 @@ class MyRecordListAdapter internal constructor(context: Context):
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
     private var record = ArrayList<Record?>()
+    private var isDj = false
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -103,7 +105,8 @@ class MyRecordListAdapter internal constructor(context: Context):
                 binding.btnPublic.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.ic_public))
             }
 
-            if (userId != record.userId){
+            // DJ 레코드에서는 안보이게
+            if (isDj){
                 binding.btnPublic.visibility = View.GONE
             }
 
@@ -123,6 +126,13 @@ class MyRecordListAdapter internal constructor(context: Context):
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
     internal fun setRecord(rec: List<Record>) {
+        record.clear()
+        record.addAll(rec)
+        notifyDataSetChanged()
+    }
+
+    internal fun setDjRecord(rec: List<Record>) {
+        isDj = true
         record.clear()
         record.addAll(rec)
         notifyDataSetChanged()

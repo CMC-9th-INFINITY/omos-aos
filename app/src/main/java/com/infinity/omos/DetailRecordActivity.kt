@@ -41,6 +41,17 @@ class DetailRecordActivity : AppCompatActivity() {
     private var toUserId = -1
 
     private var postId = -1
+    private var stateCategory = ""
+
+    private var musicId = ""
+    private var musicTitle = ""
+    private var artists = ""
+    private var albumImageUrl = ""
+    private var lyrics = ""
+    private var interpret = ""
+    private var recordTitle = ""
+    private var recordContents = ""
+    private var isPublic: Boolean? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +65,8 @@ class DetailRecordActivity : AppCompatActivity() {
         viewModel.getDetailRecord().observe(this) { record ->
             record?.let {
                 binding.data = it
-                binding.tvArtist.text = GlobalFunction.setArtist(it.music.artists)
+                artists = GlobalFunction.setArtist(it.music.artists)
+                binding.tvArtist.text = artists
                 binding.tvDate.text = GlobalFunction.setDate(it.createdDate)
                 binding.tvCategory.text = GlobalFunction.categoryEngToKr(this, it.category)
                 binding.tvHeartCnt.text = String.format("%03d", it.likeCnt)
@@ -65,6 +77,13 @@ class DetailRecordActivity : AppCompatActivity() {
                 heartCnt = it.likeCnt
                 starCnt = it.scrapCnt
                 toUserId = it.userId
+
+                stateCategory = it.category
+                recordTitle = it.recordTitle
+                isPublic = it.isPublic
+                albumImageUrl = it.music.albumImageUrl
+                musicTitle = it.music.musicTitle
+
 
                 // 좋아요 상태
                 heart = if (it.isLiked) {
@@ -138,7 +157,6 @@ class DetailRecordActivity : AppCompatActivity() {
                         binding.rvLyrics.visibility = View.VISIBLE
                         binding.tvAlineContents.visibility = View.GONE
                         binding.tvRecordContents.visibility = View.GONE
-
                         // 가사, 해석 분리
                         val contentsList = changeList(it.recordContents)
                         val lyricsList = ArrayList<String>()
@@ -151,8 +169,16 @@ class DetailRecordActivity : AppCompatActivity() {
                             }
                         }
 
+                        for (i in lyricsList){
+                            lyrics += i + "\n"
+                        }
+
+                        for (i in interpretList){
+                            interpret += i + "\n"
+                        }
+
                         val mAdapter = LyricsListAdapter(this)
-                        mAdapter.setLyrics(lyricsList)
+                        mAdapter.setLyrics(lyricsList, false)
                         mAdapter.setInterpret(interpretList)
                         binding.rvLyrics.apply {
                             adapter = mAdapter
@@ -346,8 +372,39 @@ class DetailRecordActivity : AppCompatActivity() {
                 }
                 true
             }
-            R.id.action_delete -> {
+            R.id.action_modify -> {
+                when(stateCategory){
+                    "LYRICS" -> {
+                        val intent = Intent(this, WriteLyricsActivity::class.java)
+                        intent.putExtra("musicId", musicId)
+                        intent.putExtra("musicTitle", musicTitle)
+                        intent.putExtra("artists", artists)
+                        intent.putExtra("albumImageUrl", albumImageUrl)
+                        intent.putExtra("category", GlobalFunction.categoryEngToKr(this, stateCategory))
+                        intent.putExtra("modify", true)
+                        intent.putExtra("recordTitle", recordTitle)
+                        intent.putExtra("lyrics", lyrics)
+                        intent.putExtra("interpret", interpret)
+                        intent.putExtra("isPublic", isPublic)
+                        intent.putExtra("postId", postId)
+                        startActivity(intent)
+                    }
 
+                    else -> {
+                        val intent = Intent(this, WriteRecordActivity::class.java)
+                        intent.putExtra("musicId", musicId)
+                        intent.putExtra("musicTitle", musicTitle)
+                        intent.putExtra("artists", artists)
+                        intent.putExtra("albumImageUrl", albumImageUrl)
+                        intent.putExtra("category", GlobalFunction.categoryEngToKr(this, stateCategory))
+                        intent.putExtra("modify", true)
+                        intent.putExtra("recordTitle", recordTitle)
+                        intent.putExtra("recordContents", recordContents)
+                        intent.putExtra("isPublic", isPublic)
+                        intent.putExtra("postId", postId)
+                        startActivity(intent)
+                    }
+                }
                 true
             }
             android.R.id.home -> {

@@ -33,7 +33,7 @@ class LyricsListAdapter internal constructor(context: Context) :
     private var interpret = ArrayList<String>()
     private var lengthList = ArrayList<Int>()
     private var textLength = 0
-    private var isWrite = true
+    private var isWrite = false
 
     private val VIEW_TYPE_WRITE = 0
     private val VIEW_TYPE_READ = 1
@@ -81,22 +81,24 @@ class LyricsListAdapter internal constructor(context: Context) :
             val lyrics = lyrics[position]
             if (position >= interpret.size) {
                 interpret.add(position, "")
-                lengthList.add(position, 0)
+            }
+            if (position >= lengthList.size){
+                lengthList.add(position, interpret[position].length)
             }
             holder.lyricsTextWatcher.updatePosition(position)
             holder.itemView.et_interpret.setText(interpret[position])
-            holder.bind(lyrics)
+            holder.bind(lyrics, interpret[position])
         } else if (holder is ReadViewHolder){
             val lyrics = lyrics[position]
-            val interpret = interpret[position]
-            holder.bind(lyrics, interpret)
+            holder.bind(lyrics, interpret[position])
         }
     }
 
     inner class WriteViewHolder(private val binding: ListLyricsItemBinding, val lyricsTextWatcher: LyricsTextWatcher)
         : RecyclerView.ViewHolder(binding.root) {
-        fun bind(lyrics: String) {
+        fun bind(lyrics: String, interpret: String) {
             binding.lyrics = lyrics
+            binding.interpret = interpret
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
             binding.etInterpret.addTextChangedListener(lyricsTextWatcher)
@@ -127,15 +129,14 @@ class LyricsListAdapter internal constructor(context: Context) :
         }
     }
 
-    internal fun setLyrics(lyrics: List<String>) {
-        isWrite = true
+    internal fun setLyrics(lyrics: List<String>, state: Boolean) {
+        this.isWrite = state
         this.lyrics.clear()
         this.lyrics.addAll(lyrics)
         notifyDataSetChanged()
     }
 
     internal fun setInterpret(interpret: List<String>){
-        isWrite = false
         this.interpret.clear()
         this.interpret.addAll(interpret)
         notifyDataSetChanged()

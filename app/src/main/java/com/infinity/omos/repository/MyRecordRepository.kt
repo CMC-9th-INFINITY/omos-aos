@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
-import com.infinity.omos.data.Record
-import com.infinity.omos.data.ResultState
-import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -20,6 +18,44 @@ class MyRecordRepository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val recordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
+
+    var stateUpdateRecord = MutableLiveData<ResultUpdate>()
+    fun updateRecord(postId: Int, params: Update){
+        recordApi.updateRecord(postId, params).enqueue(object: Callback<ResultUpdate> {
+            override fun onResponse(
+                call: Call<ResultUpdate>,
+                response: Response<ResultUpdate>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("UpdateRecordAPI", "Success")
+                        stateUpdateRecord.postValue(body!!)
+                    }
+
+                    401 -> {
+                        Log.d("UpdateRecordAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        updateRecord(postId, params)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("UpdateRecordAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("UpdateRecordAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultUpdate>, t: Throwable) {
+                Log.d("UpdateRecordAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 
     var stateDeleteRecord = MutableLiveData<ResultState>()
     fun deleteRecord(postId: Int){

@@ -23,6 +23,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.data.Update
 import com.infinity.omos.databinding.ActivityWriteLyricsBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.changeList
@@ -48,6 +49,9 @@ class WriteLyricsActivity : AppCompatActivity() {
     private var recordContents = ""
     private var recordImageUrl = ""
     private var recordTitle = ""
+    private var postId = -1
+
+    private var isModify = false
 
     private lateinit var mAdapter: LyricsListAdapter
     private var userId = GlobalApplication.prefs.getInt("userId")
@@ -61,41 +65,52 @@ class WriteLyricsActivity : AppCompatActivity() {
 
         category = intent.getStringExtra("category")!!
         musicId = intent.getStringExtra("musicId")!!
+        viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
+        viewModel.artists.value = intent.getStringExtra("artists")
+        viewModel.albumImageUrl.value = intent.getStringExtra("albumImageUrl")
+        viewModel.category.value = category
 
-        val lyrics = intent.getStringExtra("lyrics")!!
+        // 수정 데이터
+        isModify = intent.getBooleanExtra("modify", false)
+        if (isModify){
+            viewModel.isPublic.value = intent.getBooleanExtra("isPublic", false)
+            recordTitle = intent.getStringExtra("recordTitle")!!
+            binding.etRecordTitle.setText(recordTitle)
+            binding.tvTitleCount.text = binding.etRecordTitle.length().toString()
+        }
+        var interpret = intent.getStringExtra("interpret")
+        postId = intent.getIntExtra("postId", -1)
+
+        var lyrics = intent.getStringExtra("lyrics")!!
+        lyrics = lyrics.substring(0, lyrics.length - 2)
         mAdapter = LyricsListAdapter(this)
-        mAdapter.setLyrics(changeList(lyrics))
+        mAdapter.setLyrics(changeList(lyrics), true)
         binding.rvLyrics.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
-        viewModel.artists.value = intent.getStringExtra("artists")
-        viewModel.albumImageUrl.value = intent.getStringExtra("albumImageUrl")
+        if (interpret != null){
+            mAdapter.setInterpret(changeList(interpret))
+            val text = interpret.replace("\n", "")
+            binding.tvContentsCount.text = text.length.toString()
+        }
 
-        var currentTime = System.currentTimeMillis()
+        val currentTime = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy MM dd", Locale.getDefault())
         viewModel.createdDate.value = dateFormat.format(currentTime)
 
-        viewModel.category.value = category
-        if (viewModel.category.value == resources.getString(R.string.a_line)){
-            record_contents.visibility = View.GONE
-            aline_contents.visibility = View.VISIBLE
-            binding.tvLimitContents.text = "/50"
-        }
-
         initToolBar()
 
-        viewModel.isPrivate.observe(this) { state ->
+        viewModel.isPublic.observe(this) { state ->
             state?.let {
                 state?.let {
                     isPublic = if (it){
-                        binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
-                        false
-                    } else{
                         binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
                         true
+                    } else{
+                        binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                        false
                     }
                 }
             }
@@ -171,6 +186,15 @@ class WriteLyricsActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getStateUpdateRecord().observe(this) { state ->
+            state?.let {
+                val intent = Intent(this, MainActivity::class.java)
+                intent.flags =
+                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(intent)
+            }
+        }
+
         binding.etRecordTitle.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
@@ -227,11 +251,20 @@ class WriteLyricsActivity : AppCompatActivity() {
                     Toast.makeText(this, "제목 또는 내용을 기입하세요.", Toast.LENGTH_SHORT).show()
                 } else{
                     category = GlobalFunction.categoryKrToEng(this, category)
-                    viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
 
-                    val intent = Intent("RECORD_UPDATE")
-                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                    sendBroadcast(intent)
+                    if (!isModify){
+                        viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
+
+                        val intent = Intent("RECORD_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                    } else{
+                        viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
+
+                        val intent = Intent("RECORD_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                    }
 
                     Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                 }
