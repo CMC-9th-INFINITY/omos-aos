@@ -1,6 +1,9 @@
 package com.infinity.omos
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -53,11 +56,15 @@ class DetailRecordActivity : AppCompatActivity() {
     private var recordContents = ""
     private var isPublic: Boolean? = null
 
+    lateinit var broadcastReceiver: BroadcastReceiver
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_detail_record)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        initializeBroadcastReceiver()
 
         postId = intent.getIntExtra("postId", -1)
 
@@ -434,5 +441,18 @@ class DetailRecordActivity : AppCompatActivity() {
                 viewModel.deleteScrap(postId, userId)
             }
         }
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                viewModel.setDetailRecord(postId, userId)
+            }
+        }
+
+        this.registerReceiver(
+            broadcastReceiver,
+            IntentFilter("RECORD_UPDATE")
+        )
     }
 }

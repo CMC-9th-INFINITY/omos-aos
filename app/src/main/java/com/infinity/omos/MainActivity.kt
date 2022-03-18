@@ -47,6 +47,11 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionSearch: MenuItem
     private lateinit var actionWrite: MenuItem
 
+    override fun onResume() {
+        super.onResume()
+        cancelSearch()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

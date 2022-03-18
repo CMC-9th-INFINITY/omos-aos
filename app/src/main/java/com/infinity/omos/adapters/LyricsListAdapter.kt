@@ -5,6 +5,7 @@ import android.content.Intent
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -101,7 +102,19 @@ class LyricsListAdapter internal constructor(context: Context) :
             binding.interpret = interpret
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
+            // 글자수 세기
             binding.etInterpret.addTextChangedListener(lyricsTextWatcher)
+
+            // 엔터키 막기
+            binding.etInterpret.setOnKeyListener { view, i, keyEvent ->
+                when(i){
+                    KeyEvent.KEYCODE_ENTER -> {
+                        true
+                    }
+
+                    else -> false
+                }
+            }
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION) {

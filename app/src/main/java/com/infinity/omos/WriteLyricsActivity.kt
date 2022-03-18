@@ -178,7 +178,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                 if (it.state) {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.flags =
-                        Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
                 } else {
                     Toast.makeText(this, "저장 실패", Toast.LENGTH_SHORT).show()
@@ -188,10 +188,7 @@ class WriteLyricsActivity : AppCompatActivity() {
 
         viewModel.getStateUpdateRecord().observe(this) { state ->
             state?.let {
-                val intent = Intent(this, MainActivity::class.java)
-                intent.flags =
-                    Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                startActivity(intent)
+                finish()
             }
         }
 
