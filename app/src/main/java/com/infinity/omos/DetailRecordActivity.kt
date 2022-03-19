@@ -305,6 +305,7 @@ class DetailRecordActivity : AppCompatActivity() {
         // DJ 클릭
         binding.btnDj.setOnClickListener {
             val intent = Intent(this, DjActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
             intent.putExtra("toUserId", toUserId)
             startActivity(intent)
         }

@@ -103,6 +103,7 @@ class TodayRepository {
 
             override fun onFailure(call: Call<LovedMusic>, t: Throwable) {
                 Log.d("MyLoveMusicAPI", t.message.toString())
+                stateLoveMusic.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })
