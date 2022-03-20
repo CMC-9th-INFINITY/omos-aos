@@ -371,10 +371,10 @@ class DetailRecordActivity : AppCompatActivity() {
                     when (content) {
                         "yes" -> {
                             val intent = Intent("RECORD_UPDATE")
+                            intent.putExtra("isDelete", true)
                             intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                             sendBroadcast(intent)
                             viewModel.deleteRecord(postId)
-                            finish()
                         }
                     }
                 }
@@ -447,7 +447,10 @@ class DetailRecordActivity : AppCompatActivity() {
     private fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                viewModel.setDetailRecord(postId, userId)
+                val isDelete = intent?.getBooleanExtra("isDelete", false)
+                if (isDelete != true){
+                    viewModel.setDetailRecord(postId, userId)
+                }
             }
         }
 

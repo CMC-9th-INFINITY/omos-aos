@@ -53,9 +53,18 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionSearch: MenuItem
     private lateinit var actionWrite: MenuItem
 
-    override fun onResume() {
-        super.onResume()
-        cancelSearch()
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        // 레코드 작성 시 검색뷰 사라지게 하기
+        // 뒤로가기 할 땐 남아있음
+        if (null != intent) {
+            val state = intent.getBooleanExtra("save", false)
+            if (state){
+                cancelSearch()
+            }
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
