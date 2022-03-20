@@ -98,6 +98,30 @@ class DjActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getStateSaveFollow().observe(this) { state ->
+            state?.let {
+                when(it){
+                    Constant.ApiState.DONE -> {
+                        val intent = Intent("PROFILE_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                    }
+                }
+            }
+        }
+
+        viewModel.getStateDeleteFollow().observe(this) { state ->
+            state?.let {
+                when(it){
+                    Constant.ApiState.DONE -> {
+                        val intent = Intent("PROFILE_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                    }
+                }
+            }
+        }
+
         binding.btnFollow.setOnClickListener {
             if (binding.btnFollow.text == "팔로우"){
                 setFollowing()

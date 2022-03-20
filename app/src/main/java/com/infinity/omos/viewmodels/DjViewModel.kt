@@ -25,9 +25,15 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
     fun saveFollow(fromUserId: Int, toUserId: Int){
         repository.saveFollow(fromUserId, toUserId)
     }
+    fun getStateSaveFollow(): LiveData<Constant.ApiState>{
+        return repository.stateSaveFollow
+    }
 
     fun deleteFollow(fromUserId: Int, toUserId: Int){
         repository.deleteFollow(fromUserId, toUserId)
+    }
+    fun getStateDeleteFollow(): LiveData<Constant.ApiState>{
+        return repository.stateDeleteFollow
     }
 
     fun setDjRecord(userId: Int){

@@ -176,6 +176,10 @@ class WriteRecordActivity : AppCompatActivity() {
         viewModel.getStateSaveRecord().observe(this) { record ->
             record?.let {
                 if (it.state) {
+                    val intent2 = Intent("PROFILE_UPDATE")
+                    intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent2)
+
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("save", true)
                     intent.flags =

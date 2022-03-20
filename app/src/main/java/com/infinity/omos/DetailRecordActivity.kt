@@ -242,6 +242,10 @@ class DetailRecordActivity : AppCompatActivity() {
         viewModel.getStateDeleteRecord().observe(this) { state ->
             state?.let {
                 if (it.state) {
+                    val intent = Intent("PROFILE_UPDATE")
+                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent)
+
                     finish()
                     Toast.makeText(this, "삭제 완료", Toast.LENGTH_SHORT).show()
                 } else {
@@ -374,6 +378,7 @@ class DetailRecordActivity : AppCompatActivity() {
                             intent.putExtra("isDelete", true)
                             intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                             sendBroadcast(intent)
+
                             viewModel.deleteRecord(postId)
                         }
                     }

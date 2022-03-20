@@ -62,6 +62,7 @@ class MyDjRepository {
         })
     }
 
+    var stateDeleteFollow = MutableLiveData<Constant.ApiState>()
     fun deleteFollow(postId: Int, userId: Int){
         followApi.deleteFollow(postId, userId).enqueue(object: Callback<ResultState> {
             override fun onResponse(
@@ -72,6 +73,7 @@ class MyDjRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("DeleteFollowAPI", "Success: ${body!!.state}")
+                        stateDeleteFollow.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -83,6 +85,7 @@ class MyDjRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("DeleteFollowAPI", errorBody!!.message)
+                        stateDeleteFollow.value = Constant.ApiState.DONE
                     }
 
                     else -> {
@@ -98,6 +101,7 @@ class MyDjRepository {
         })
     }
 
+    var stateSaveFollow = MutableLiveData<Constant.ApiState>()
     fun saveFollow(postId: Int, userId: Int){
         followApi.saveFollow(postId, userId).enqueue(object: Callback<ResultState> {
             override fun onResponse(
@@ -108,6 +112,7 @@ class MyDjRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("SaveFollowAPI", "Success: ${body!!.state}")
+                        stateSaveFollow.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -119,6 +124,7 @@ class MyDjRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("SaveFollowAPI", errorBody!!.message)
+                        stateSaveFollow.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
