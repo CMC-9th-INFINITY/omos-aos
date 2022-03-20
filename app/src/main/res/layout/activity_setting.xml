@@ -33,6 +33,7 @@
                 android:textColor="@color/orange"/>
 
             <TextView
+                android:id="@+id/btn_change_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp"
@@ -41,6 +42,7 @@
                 android:textColor="@color/white"/>
 
             <TextView
+                android:id="@+id/btn_change_pw"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp"
@@ -97,6 +99,7 @@
                 android:textColor="@color/white"/>
 
             <TextView
+                android:id="@+id/btn_delete_account"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="28dp"

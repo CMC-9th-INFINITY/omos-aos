@@ -33,8 +33,22 @@ class SettingActivity : AppCompatActivity() {
 
         initToolBar()
 
-        btn_logout.setOnClickListener {
+        binding.btnChangeProfile.setOnClickListener {
+            val intent = Intent(this, ChangeProfileActivity::class.java)
+            startActivity(intent)
+        }
 
+        binding.btnChangePw.setOnClickListener {
+            val intent = Intent(this, ChangePwActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnDeleteAccount.setOnClickListener {
+            val intent = Intent(this, DeleteAccountActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnLogout.setOnClickListener {
             val dlg = CustomDialog(this)
             dlg.show("정말 로그아웃 하시겠어요?", "로그아웃")
 
@@ -68,10 +82,10 @@ class SettingActivity : AppCompatActivity() {
 
         val state = GlobalApplication.prefs.getString("alarm")
         if (state == "on"){
-            btn_alarm.isChecked = true
+            binding.btnAlarm.isChecked = true
         }
 
-        btn_alarm.setOnCheckedChangeListener { _, b ->
+        binding.btnAlarm.setOnCheckedChangeListener { _, b ->
             val toastMessage = if (b) {
                 val repeatInterval = AlarmManager.INTERVAL_DAY
                 val calendar = Calendar.getInstance().apply {

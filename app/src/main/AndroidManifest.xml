@@ -16,6 +16,15 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DeleteAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangePwActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeProfileActivity"
+            android:exported="false" />
+        <activity
             android:name=".MyLikeRecordActivity"
             android:exported="false" />
         <activity
