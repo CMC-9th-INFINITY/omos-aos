@@ -20,7 +20,8 @@
             android:exported="false" />
         <activity
             android:name=".ui.setting.ChangePwActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.setting.ChangeProfileActivity"
             android:exported="false" />

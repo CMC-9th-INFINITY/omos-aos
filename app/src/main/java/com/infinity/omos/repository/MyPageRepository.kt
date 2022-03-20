@@ -57,7 +57,7 @@ class MyPageRepository {
         })
     }
 
-    var stateUpdateProfile = MutableLiveData<ResultState>()
+    var stateUpdateProfile = MutableLiveData<Constant.ApiState>()
     fun updateProfile(nickName: String, profileUrl: String, userId: Int){
         myPageApi.updateProfile(Profile(nickName, profileUrl, userId)).enqueue(object: Callback<ResultState> {
             override fun onResponse(
@@ -68,7 +68,11 @@ class MyPageRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("UpdateProfileAPI", "Success")
-                        stateUpdateProfile.postValue(body!!)
+                        if(body?.state == true){
+                            stateUpdateProfile.value = Constant.ApiState.DONE
+                        } else{
+                            stateUpdateProfile.value = Constant.ApiState.ERROR
+                        }
                     }
 
                     401 -> {
@@ -80,6 +84,7 @@ class MyPageRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("UpdateProfileAPI", errorBody!!.message)
+                        stateUpdateProfile.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -90,6 +95,7 @@ class MyPageRepository {
 
             override fun onFailure(call: Call<ResultState>, t: Throwable) {
                 Log.d("UpdateProfileAPI", t.message.toString())
+                stateUpdateProfile.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })

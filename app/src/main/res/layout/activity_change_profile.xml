@@ -64,7 +64,7 @@
                     android:id="@+id/et_nick"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="24dp"
+                    android:layout_marginBottom="8dp"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="14dp"
                     android:hint="닉네임을 입력해주세요."
@@ -73,6 +73,19 @@
                     android:textColorHint="@color/dark_gray"
                     android:maxLength="12"
                     android:background="@drawable/rectangle_box"/>
+
+                <TextView
+                    android:id="@+id/tv_error_nick"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="비밀번호 에러 메시지"
+                    android:textSize="12sp"
+                    android:textColor="@color/orange"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             </LinearLayout>
 

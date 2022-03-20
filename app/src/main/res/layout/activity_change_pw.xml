@@ -51,7 +51,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="20dp"
+                    android:layout_marginBottom="8dp"
                     android:background="@color/deep_dark">
 
                     <EditText
@@ -66,7 +66,6 @@
                         android:textColorHint="@color/dark_gray"
                         android:singleLine="true"
                         android:background="@drawable/rectangle_box"
-                        android:afterTextChanged="@{()->vm.checkInput(etPw)}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
@@ -86,6 +85,19 @@
                         app:layout_constraintBottom_toBottomOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <TextView
+                    android:id="@+id/tv_error_pw"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end"
+                    android:text="비밀번호 에러 메시지"
+                    android:textSize="12sp"
+                    android:textColor="@color/orange"
+                    android:visibility="invisible"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
             </LinearLayout>
 

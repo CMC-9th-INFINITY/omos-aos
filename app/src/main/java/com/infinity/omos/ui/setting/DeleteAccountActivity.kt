@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
+import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
 import com.infinity.omos.viewmodels.ChangePwViewModel
@@ -16,7 +17,8 @@ class DeleteAccountActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_delete_account)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_delete_account)
+        binding.lifecycleOwner = this
 
         initToolBar()
     }

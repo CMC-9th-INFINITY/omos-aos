@@ -14,6 +14,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
+import com.infinity.omos.etc.Constant
+import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import kotlinx.android.synthetic.main.activity_register.*
@@ -30,6 +32,7 @@ class ChangeProfileActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
+        binding.lifecycleOwner = this
 
         initToolBar()
 
@@ -39,15 +42,28 @@ class ChangeProfileActivity : AppCompatActivity() {
 
         viewModel.getStateUpdateProfile().observe(this) { state ->
             state?.let {
-                if(it.state){
-                    val intent = Intent("PROFILE_UPDATE")
-                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                    sendBroadcast(intent)
-                    finish()
+                when (it) {
+                    Constant.ApiState.DONE -> {
+                        val intent = Intent("PROFILE_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                        finish()
 
-                    Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
-                } else{
-                    Toast.makeText(this, "에러", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    }
+                    Constant.ApiState.ERROR -> {
+                        // 이미 있는 닉네임일 때,
+                        LoginActivity.showErrorMsg(
+                            this,
+                            binding.etNick,
+                            binding.tvErrorNick,
+                            resources.getString(R.string.exist_nick),
+                            binding.linearNick
+                        )
+                    }
+                    else -> {
+                        Toast.makeText(this, "에러", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

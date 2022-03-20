@@ -49,7 +49,6 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        context = this
         dlg = CustomDialog(this)
 
         val binding = DataBindingUtil.setContentView<ActivityLoginBinding>(this,
@@ -160,11 +159,11 @@ class LoginActivity : AppCompatActivity() {
                 val pattern: Pattern = Patterns.EMAIL_ADDRESS
 
                 if (et_id.length() == 0){
-                    showErrorMsg(et_id, tv_error_id, resources.getString(R.string.error_input_email), linear_id)
+                    showErrorMsg(this, et_id, tv_error_id, resources.getString(R.string.error_input_email), linear_id)
                 } else if (!pattern.matcher(et_id.text).matches()){
-                    showErrorMsg(et_id, tv_error_id, resources.getString(R.string.again_check), linear_id)
+                    showErrorMsg(this, et_id, tv_error_id, resources.getString(R.string.again_check), linear_id)
                 } else{
-                    hideErrorMsg(et_id, tv_error_id)
+                    hideErrorMsg(this, et_id, tv_error_id)
                 }
             }
         }
@@ -173,9 +172,9 @@ class LoginActivity : AppCompatActivity() {
         et_pw.setOnFocusChangeListener { view, b ->
             if (!b){
                 if (et_pw.length() == 0){
-                    showErrorMsg(et_pw, tv_error_pw, resources.getString(R.string.error_input_password), linear_pw)
+                    showErrorMsg(this, et_pw, tv_error_pw, resources.getString(R.string.error_input_password), linear_pw)
                 } else{
-                    hideErrorMsg(et_pw, tv_error_pw)
+                    hideErrorMsg(this, et_pw, tv_error_pw)
                 }
             }
         }
@@ -196,12 +195,14 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                 } else {
                     showErrorMsg(
+                        this,
                         et_id,
                         tv_error_id,
                         resources.getString(R.string.again_check),
                         linear_id
                     )
                     showErrorMsg(
+                        this,
                         et_pw,
                         tv_error_pw,
                         resources.getString(R.string.again_check),
@@ -256,9 +257,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     companion object{
-        lateinit var context: Context
 
-        fun showErrorMsg(et: EditText, tvMsg: TextView, msg: String, shakeLayout: LinearLayout){
+        fun showErrorMsg(context: Context, et: EditText, tvMsg: TextView, msg: String, shakeLayout: LinearLayout){
             et.background = ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.rectangle_stroke_box, null)
@@ -272,7 +272,7 @@ class LoginActivity : AppCompatActivity() {
                 .playOn(shakeLayout)
         }
 
-        fun hideErrorMsg(et: EditText, tvMsg: TextView){
+        fun hideErrorMsg(context: Context, et: EditText, tvMsg: TextView){
             et.background = ResourcesCompat.getDrawable(
                 context.resources,
                 R.drawable.rectangle_box, null)

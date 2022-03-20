@@ -81,6 +81,7 @@ class RegisterActivity : AppCompatActivity() {
             state?.let {
                 if (!state){
                     LoginActivity.showErrorMsg(
+                        this,
                         et_id,
                         tv_success_msg,
                         resources.getString(R.string.exist_email),
@@ -120,6 +121,7 @@ class RegisterActivity : AppCompatActivity() {
             if (!b){
                 if (et_id.length() == 0){
                     LoginActivity.showErrorMsg(
+                        this,
                         et_id,
                         tv_success_msg,
                         resources.getString(R.string.error_input_email),
@@ -127,6 +129,7 @@ class RegisterActivity : AppCompatActivity() {
                     )
                 } else if (!et_id.text.contains("@")){
                     LoginActivity.showErrorMsg(
+                        this,
                         et_id,
                         tv_success_msg,
                         resources.getString(R.string.again_check),
@@ -134,7 +137,7 @@ class RegisterActivity : AppCompatActivity() {
                     )
                 } else{
                     if (!idState){
-                        LoginActivity.hideErrorMsg(et_id, tv_success_msg)
+                        LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
                     }
                 }
             }
@@ -143,9 +146,10 @@ class RegisterActivity : AppCompatActivity() {
         et_pw.setOnFocusChangeListener { view, b ->
             if (!b){
                 if (Pattern.matches(pwPattern, et_pw.text.toString())){
-                    LoginActivity.hideErrorMsg(et_pw, tv_error_pw)
+                    LoginActivity.hideErrorMsg(this, et_pw, tv_error_pw)
                 } else{
                     LoginActivity.showErrorMsg(
+                        this,
                         et_pw,
                         tv_error_pw,
                         resources.getString(R.string.condition_password),
@@ -159,13 +163,14 @@ class RegisterActivity : AppCompatActivity() {
             if (!b){
                 if (et_pw.text.toString() != et_again_pw.text.toString()){
                     LoginActivity.showErrorMsg(
+                        this,
                         et_again_pw,
                         tv_error_again_pw,
                         resources.getString(R.string.no_match_password),
                         linear_again_pw
                     )
                 } else{
-                    LoginActivity.hideErrorMsg(et_again_pw, tv_error_again_pw)
+                    LoginActivity.hideErrorMsg(this, et_again_pw, tv_error_again_pw)
                 }
             }
         }
@@ -174,6 +179,7 @@ class RegisterActivity : AppCompatActivity() {
         btn_next.setOnClickListener {
             if (!idState){
                 LoginActivity.showErrorMsg(
+                    this,
                     et_id,
                     tv_success_msg,
                     resources.getString(R.string.again_check),
@@ -181,6 +187,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
             } else if (et_pw.length() < 8 || et_pw.length() > 16){
                 LoginActivity.showErrorMsg(
+                    this,
                     et_pw,
                     tv_error_pw,
                     resources.getString(R.string.condition_password),
@@ -188,6 +195,7 @@ class RegisterActivity : AppCompatActivity() {
                 )
             }else if (et_pw.text.toString() != et_again_pw.text.toString()){
                 LoginActivity.showErrorMsg(
+                    this,
                     et_again_pw,
                     tv_error_again_pw,
                     resources.getString(R.string.no_match_password),
@@ -208,6 +216,7 @@ class RegisterActivity : AppCompatActivity() {
 
             if (et_id.length() == 0){
                 LoginActivity.showErrorMsg(
+                    this,
                     et_id,
                     tv_success_msg,
                     resources.getString(R.string.error_input_email),
@@ -215,13 +224,14 @@ class RegisterActivity : AppCompatActivity() {
                 )
             } else if (!pattern.matcher(et_id.text).matches()){
                 LoginActivity.showErrorMsg(
+                    this,
                     et_id,
                     tv_success_msg,
                     resources.getString(R.string.again_check),
                     linear_id
                 )
             } else{
-                LoginActivity.hideErrorMsg(et_id, tv_success_msg)
+                LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
                 viewModel.checkDupEmail(et_id.text.toString())
             }
         }

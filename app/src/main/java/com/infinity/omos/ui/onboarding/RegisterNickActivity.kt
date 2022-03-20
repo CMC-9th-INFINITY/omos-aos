@@ -119,21 +119,26 @@ class RegisterNickActivity : AppCompatActivity() {
         // 회원가입 완료
         viewModel.getStateSignUp().observe(this, Observer { state ->
             state?.let {
-                if (it == Constant.ApiState.DONE){
-                    Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                    startActivity(intent)
-                } else if (it == Constant.ApiState.ERROR){
-                    // 이미 있는 닉네임일 때,
-                    LoginActivity.showErrorMsg(
-                        et_nick,
-                        tv_error_nick,
-                        resources.getString(R.string.exist_nick),
-                        linear_nick
-                    )
-                } else{
-                    Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
+                when (it) {
+                    Constant.ApiState.DONE -> {
+                        Toast.makeText(this, "회원가입 성공", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    }
+                    Constant.ApiState.ERROR -> {
+                        // 이미 있는 닉네임일 때,
+                        LoginActivity.showErrorMsg(
+                            this,
+                            et_nick,
+                            tv_error_nick,
+                            resources.getString(R.string.exist_nick),
+                            linear_nick
+                        )
+                    }
+                    else -> {
+                        Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })
@@ -148,6 +153,7 @@ class RegisterNickActivity : AppCompatActivity() {
                 } else if (it == Constant.ApiState.ERROR){
                     // 이미 있는 닉네임일 때,
                     LoginActivity.showErrorMsg(
+                        this,
                         et_nick,
                         tv_error_nick,
                         resources.getString(R.string.exist_nick),
