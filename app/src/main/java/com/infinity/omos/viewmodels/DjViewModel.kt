@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.DjProfile
 import com.infinity.omos.data.Profile
 import com.infinity.omos.data.Record
+import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyDjRepository
 
@@ -29,13 +30,13 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
         repository.deleteFollow(fromUserId, toUserId)
     }
 
-    fun setDjRecord(fromUserId: Int, toUserId: Int){
-        repository.getMyDjRecord(fromUserId, toUserId)
+    fun setDjRecord(userId: Int){
+        repository.getDjRecord(userId)
     }
-    fun getDjRecord(): LiveData<List<Record>>{
-        return repository.myDjRecord
+    fun getDjRecord(): LiveData<List<SimpleRecord>>{
+        return repository.djRecord
     }
     fun getStateDjRecord(): LiveData<Constant.ApiState>{
-        return repository.stateMyDjRecord
+        return repository.stateDjRecord
     }
 }

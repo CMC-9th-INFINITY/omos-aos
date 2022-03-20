@@ -133,14 +133,14 @@ class MyRecordRepository {
         })
     }
 
-    var myRecord = MutableLiveData<List<Record>>()
+    var myRecord = MutableLiveData<List<SimpleRecord>>()
     var stateMyRecord = MutableLiveData<Constant.ApiState>()
-    fun getMyRecord(userId: Int): MutableLiveData<List<Record>>{
+    fun getMyRecord(userId: Int): MutableLiveData<List<SimpleRecord>>{
         stateMyRecord.value = Constant.ApiState.LOADING
-        recordApi.getMyRecord(userId).enqueue(object: Callback<List<Record>> {
+        recordApi.getMyRecord(userId).enqueue(object: Callback<List<SimpleRecord>> {
             override fun onResponse(
-                call: Call<List<Record>>,
-                response: Response<List<Record>>
+                call: Call<List<SimpleRecord>>,
+                response: Response<List<SimpleRecord>>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -168,7 +168,7 @@ class MyRecordRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+            override fun onFailure(call: Call<List<SimpleRecord>>, t: Throwable) {
                 Log.d("MyRecordAPI", t.message.toString())
                 t.stackTrace
             }

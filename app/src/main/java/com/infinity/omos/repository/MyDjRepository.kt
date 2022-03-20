@@ -176,6 +176,48 @@ class MyDjRepository {
         })
     }
 
+    var djRecord = MutableLiveData<List<SimpleRecord>>()
+    var stateDjRecord = MutableLiveData<Constant.ApiState>()
+    fun getDjRecord(userId: Int){
+        stateDjRecord.value = Constant.ApiState.LOADING
+        myDjRecordApi.getMyRecord(userId).enqueue(object: Callback<List<SimpleRecord>> {
+            override fun onResponse(
+                call: Call<List<SimpleRecord>>,
+                response: Response<List<SimpleRecord>>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("DjRecordAPI", "Success")
+                        djRecord.postValue(body!!)
+                        stateDjRecord.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("DjRecordAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getDjRecord(userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("DjRecordAPI", errorBody!!.message)
+                        stateMyDjRecord.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("DjRecordAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<SimpleRecord>>, t: Throwable) {
+                Log.d("DjRecordAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     var myDjRecord = MutableLiveData<List<Record>>()
     var stateMyDjRecord = MutableLiveData<Constant.ApiState>()
     fun getMyDjRecord(fromUserId: Int, toUserId: Int){

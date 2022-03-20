@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="8dp"
+        android:background="@color/deep_dark">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_record"
+            android:layout_marginBottom="4dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="노래제목"
+            android:textColor="@color/white"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:text="가수이름"
+            android:textColor="@color/gray_02"
+            android:textSize="12sp"
+            android:maxLines="1"
+            android:ellipsize="end"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:text="레코드 제목"
+            android:textSize="16sp"
+            android:textColor="@color/white"
+            android:maxLines="2"
+            android:ellipsize="end"/>
+
+    </LinearLayout>
+
+</layout>

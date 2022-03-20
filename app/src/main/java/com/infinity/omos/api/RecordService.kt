@@ -8,7 +8,7 @@ interface RecordService {
     @GET("api/records/{userId}")
     fun getMyRecord(
         @Path("userId") userId: Int
-    ): Call<List<Record>>
+    ): Call<List<SimpleRecord>>
 
     @DELETE("api/records/delete/{postId}")
     fun deleteRecord(

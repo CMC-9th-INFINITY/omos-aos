@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DetailRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Record
+import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMyrecordItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
@@ -22,13 +23,13 @@ import com.infinity.omos.etc.GlobalFunction.Companion.setDate
 import com.infinity.omos.utils.GlobalApplication
 
 class MyRecordListAdapter internal constructor(context: Context):
-    ListAdapter<Record, RecyclerView.ViewHolder>(
+    ListAdapter<SimpleRecord, RecyclerView.ViewHolder>(
         MyRecordDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
-    private var record = ArrayList<Record?>()
+    private var record = ArrayList<SimpleRecord?>()
     private var isDj = false
 
     private val VIEW_TYPE_ITEM = 0
@@ -93,7 +94,7 @@ class MyRecordListAdapter internal constructor(context: Context):
     }
 
     inner class RecordViewHolder(private val binding: ListMyrecordItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(record: Record) {
+        fun bind(record: SimpleRecord) {
             binding.data = record
             binding.tvArtist.text = setArtist(record.music.artists)
             binding.tvDate.text = setDate(record.createdDate)
@@ -125,20 +126,20 @@ class MyRecordListAdapter internal constructor(context: Context):
 
     inner class LoadingViewHolder(private val binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root){}
 
-    internal fun setRecord(rec: List<Record>) {
+    internal fun setRecord(rec: List<SimpleRecord>) {
         record.clear()
         record.addAll(rec)
         notifyDataSetChanged()
     }
 
-    internal fun setDjRecord(rec: List<Record>) {
+    internal fun setDjRecord(rec: List<SimpleRecord>) {
         isDj = true
         record.clear()
         record.addAll(rec)
         notifyDataSetChanged()
     }
 
-    internal fun addRecord(rec: List<Record>) {
+    internal fun addRecord(rec: List<SimpleRecord>) {
         record.addAll(rec)
         record.add(null)
     }
@@ -159,13 +160,13 @@ class MyRecordListAdapter internal constructor(context: Context):
         return record.size
     }
 
-    companion object MyRecordDiffUtil: DiffUtil.ItemCallback<Record>(){
-        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
+    companion object MyRecordDiffUtil: DiffUtil.ItemCallback<SimpleRecord>(){
+        override fun areItemsTheSame(oldItem: SimpleRecord, newItem: SimpleRecord): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
+        override fun areContentsTheSame(oldItem: SimpleRecord, newItem: SimpleRecord): Boolean {
             return oldItem==newItem
         }
     }

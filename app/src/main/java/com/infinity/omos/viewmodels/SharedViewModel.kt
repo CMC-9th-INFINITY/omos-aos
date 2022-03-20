@@ -68,7 +68,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     fun setMyRecord(userId: Int){
         myRecordRepository.getMyRecord(userId)
     }
-    fun getMyRecord(): LiveData<List<Record>>{
+    fun getMyRecord(): LiveData<List<SimpleRecord>>{
         return myRecordRepository.myRecord
     }
     fun getStateMyRecord(): LiveData<Constant.ApiState>{
