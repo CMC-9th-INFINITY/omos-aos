@@ -68,7 +68,7 @@ class DjActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.setDjRecord(fromUserId)
+        viewModel.setDjRecord(toUserId)
         viewModel.getDjRecord().observe(this) { record ->
             record?.let {
                 mAdapter.setDjRecord(it)

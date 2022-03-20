@@ -119,13 +119,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingHorizontal="16dp"
             android:background="@color/deep_dark">
 
             <kr.co.prnd.readmore.ReadMoreTextView
                 android:id="@+id/tv_record_contents"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="30dp"
                 android:textSize="16sp"
@@ -140,21 +140,29 @@
                 android:layout_width="wrap_content"
                 android:layout_height="228dp"
                 android:layout_gravity="center"
-                android:paddingHorizontal="24dp"
+                android:paddingHorizontal="40dp"
                 android:gravity="center"
                 android:textSize="24sp"
                 android:textColor="@color/gray_02"
                 android:fontFamily="@font/cafe24oneprettynight"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_lyrics"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
                 android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
                 android:background="@color/divide"/>
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingHorizontal="16dp"
                 android:paddingVertical="10dp">
 
                 <LinearLayout

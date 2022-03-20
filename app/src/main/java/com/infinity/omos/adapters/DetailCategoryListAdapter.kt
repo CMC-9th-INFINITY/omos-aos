@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DjActivity
@@ -18,6 +19,7 @@ import com.infinity.omos.data.LikeScrap
 import com.infinity.omos.data.Record
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
+import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
@@ -87,14 +89,55 @@ class DetailCategoryListAdapter internal constructor(
             binding.tvCategory.text = setCategoryText(context, category.category)
             binding.tvDate.text = setDate(category.createdDate)
 
-            if (category.category == "A_LINE"){
-                binding.tvAlineContents.visibility = View.VISIBLE
-                binding.tvRecordContents.visibility = View.GONE
-                binding.tvAlineContents.text = "\"${category.recordContents}\""
-            } else {
-                binding.tvAlineContents.visibility = View.GONE
-                binding.tvRecordContents.visibility = View.VISIBLE
-                binding.tvRecordContents.text = category.recordContents
+            when (category.category) {
+                "A_LINE" -> {
+                    binding.tvAlineContents.visibility = View.VISIBLE
+                    binding.tvRecordContents.visibility = View.GONE
+                    binding.rvLyrics.visibility = View.GONE
+                    binding.tvAlineContents.text = "\"${category.recordContents}\""
+                }
+
+                "LYRICS" -> {
+                    binding.rvLyrics.visibility = View.VISIBLE
+                    binding.tvAlineContents.visibility = View.GONE
+                    binding.tvRecordContents.visibility = View.GONE
+                    // 가사, 해석 분리
+                    var lyrics = ""
+                    var interpret = ""
+                    val contentsList = GlobalFunction.changeList(category.recordContents)
+                    val lyricsList = ArrayList<String>()
+                    val interpretList = ArrayList<String>()
+                    for (i in 0 until contentsList.size - 1) {
+                        if (i % 2 == 0) {
+                            lyricsList.add(contentsList[i])
+                        } else {
+                            interpretList.add(contentsList[i])
+                        }
+                    }
+
+                    for (i in lyricsList){
+                        lyrics += i + "\n"
+                    }
+
+                    for (i in interpretList){
+                        interpret += i + "\n"
+                    }
+
+                    val mAdapter = LyricsListAdapter(context)
+                    mAdapter.setLyrics(lyricsList, false)
+                    mAdapter.setInterpret(interpretList)
+                    binding.rvLyrics.apply {
+                        adapter = mAdapter
+                        layoutManager = LinearLayoutManager(context)
+                    }
+                }
+
+                else -> {
+                    binding.tvRecordContents.visibility = View.VISIBLE
+                    binding.tvAlineContents.visibility = View.GONE
+                    binding.rvLyrics.visibility = View.GONE
+                    binding.tvRecordContents.text = category.recordContents
+                }
             }
 
             if (num >= heartStarList.size){
