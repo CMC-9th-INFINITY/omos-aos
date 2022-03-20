@@ -117,7 +117,7 @@ class DetailCategoryListAdapter internal constructor(
                 // 신고하기 클릭
                 itemView.btn_report.setOnClickListener {
                     val dlg = CustomDialog(context)
-                    dlg.show("이 레코드를 신고하시겠어요?")
+                    dlg.show("이 레코드를 신고하시겠어요?", "신고")
 
                     dlg.setOnOkClickedListener { content ->
                         when(content){

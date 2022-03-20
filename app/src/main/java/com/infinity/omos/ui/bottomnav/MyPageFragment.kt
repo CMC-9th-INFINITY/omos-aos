@@ -11,20 +11,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import com.infinity.omos.MyLikeRecordActivity
+import com.infinity.omos.MyScrapRecordActivity
 import com.infinity.omos.R
+import com.infinity.omos.SettingActivity
+import com.infinity.omos.databinding.FragmentMyPageBinding
+import com.infinity.omos.databinding.FragmentMyRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.Constant.Companion.NOTI_ID
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.utils.PreferenceUtil
+import com.infinity.omos.viewmodels.SharedViewModel
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.fragment_my_page.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MyPageFragment : Fragment() {
+
+    private val viewModel: SharedViewModel by viewModels()
+    private lateinit var binding: FragmentMyPageBinding
+
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,64 +47,37 @@ class MyPageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_my_page, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
+        activity?.let{
+            binding.lifecycleOwner = viewLifecycleOwner
+        }
+
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        btn_logout.setOnClickListener {
-            UserApiClient.instance.logout { error ->
-                if (error != null){
-                    Log.d("MyPage", "이메일 로그아웃")
-                } else{
-                    Log.d("MyPage", "카카오 로그아웃")
-                }
-
-                Toast.makeText(context, "로그아웃 성공", Toast.LENGTH_SHORT).show()
-                GlobalApplication.prefs.setUserToken(null, null, -1)
-                val intent = Intent(context, LoginActivity::class.java)
-                intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                startActivity(intent)
+        viewModel.setDjProfile(userId, userId)
+        viewModel.getDjProfile().observe(this) { profile ->
+            profile?.let {
+                binding.data = it
             }
         }
 
-        val alarmManager = context?.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-        val intent = Intent(context, MyReceiver::class.java)
-        val pendingIntent = PendingIntent.getBroadcast(
-            context, NOTI_ID, intent,
-            PendingIntent.FLAG_IMMUTABLE
-        )
-
-        val state = GlobalApplication.prefs.getString("alarm")
-        if (state == "on"){
-            btn_alarm.isChecked = true
+        binding.btnSetting.setOnClickListener {
+            val intent = Intent(context, SettingActivity::class.java)
+            startActivity(intent)
         }
 
-        btn_alarm.setOnCheckedChangeListener { _, b ->
-            val toastMessage = if (b) {
-                val repeatInterval = AlarmManager.INTERVAL_DAY
-                val calendar = Calendar.getInstance().apply {
-                    timeInMillis = System.currentTimeMillis()
-                    set(Calendar.HOUR_OF_DAY,21)
-                }
+        binding.btnAllScrap.setOnClickListener {
+            val intent = Intent(context, MyScrapRecordActivity::class.java)
+            startActivity(intent)
+        }
 
-                alarmManager.setInexactRepeating(
-                    AlarmManager.RTC_WAKEUP,
-                    calendar.timeInMillis,
-                    repeatInterval,
-                    pendingIntent
-                )
-
-                GlobalApplication.prefs.setString("alarm", "on")
-                "알림이 발생합니다."
-            } else {
-                alarmManager.cancel(pendingIntent)
-                GlobalApplication.prefs.setString("alarm", "off")
-                "알림 예약을 취소하였습니다."
-            }
-
-            Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
+        binding.btnAllLike.setOnClickListener {
+            val intent = Intent(context, MyLikeRecordActivity::class.java)
+            startActivity(intent)
         }
     }
 }

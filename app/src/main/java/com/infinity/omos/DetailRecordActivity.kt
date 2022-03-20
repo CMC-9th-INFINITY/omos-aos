@@ -313,7 +313,7 @@ class DetailRecordActivity : AppCompatActivity() {
         // 신고하기
         binding.btnReport.setOnClickListener {
             val dlg = CustomDialog(this)
-            dlg.show("이 레코드를 신고하시겠어요?")
+            dlg.show("이 레코드를 신고하시겠어요?", "신고")
 
             dlg.setOnOkClickedListener { content ->
                 when (content) {
@@ -365,7 +365,7 @@ class DetailRecordActivity : AppCompatActivity() {
             }
             R.id.action_delete -> {
                 val dlg = CustomDialog(this)
-                dlg.show("삭제하시겠어요?")
+                dlg.show("삭제하시겠어요?", "삭제")
 
                 dlg.setOnOkClickedListener { content ->
                     when (content) {

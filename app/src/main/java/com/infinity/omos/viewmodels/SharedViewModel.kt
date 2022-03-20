@@ -121,4 +121,14 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     fun getStateDjAllRecords(): LiveData<Constant.ApiState>{
         return myDjRepository.stateMyDjAllRecords
     }
+
+    // MY 페이지
+    private val repository: MyDjRepository = MyDjRepository()
+
+    fun setDjProfile(fromUserId: Int, toUserId: Int){
+        repository.getDjProfile(fromUserId, toUserId)
+    }
+    fun getDjProfile(): LiveData<DjProfile>{
+        return repository.djProfile
+    }
 }

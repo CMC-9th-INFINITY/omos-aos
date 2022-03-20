@@ -16,9 +16,18 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".MyLikeRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MyScrapRecordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".InputLyricsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".WriteLyricsActivity"
             android:exported="false" />
@@ -47,7 +56,7 @@
         <activity
             android:name=".WriteRecordActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".SelectCategoryActivity"
             android:exported="false" />
@@ -62,7 +71,8 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/MainStatusBarStyle" />
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">

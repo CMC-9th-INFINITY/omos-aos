@@ -36,14 +36,14 @@
                     android:id="@+id/ln_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="24dp"
+                    android:paddingTop="36dp"
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.Toolbar
                         android:id="@+id/toolbar"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@color/dark"
+                        android:background="@android:color/transparent"
                         app:titleTextColor="@color/white"/>
 
                     <View

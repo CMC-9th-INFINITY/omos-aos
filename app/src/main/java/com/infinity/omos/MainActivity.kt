@@ -24,6 +24,11 @@ import com.infinity.omos.utils.Height.Companion.navigationHeight
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.toolbar
+import android.view.WindowManager
+
+import android.os.Build
+import androidx.core.content.ContextCompat
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -137,14 +142,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initToolBar() {
-
-        // 상태바 제한 없애기
-        this.window.setFlags(
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-            WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-        )
-
-        binding.mainLayout.setPadding(0, 0, 0, this.navigationHeight())
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            window.setDecorFitsSystemWindows(false)
+        } else {
+            window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_FULLSCREEN
+        }
 
         toolbar.title = ""
         setSupportActionBar(toolbar) // 툴바 사용
@@ -182,6 +184,7 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         stateWrite = false
                         stateSearch = false
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
                         invalidateOptionsMenu()
                         changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
@@ -205,6 +208,10 @@ class MainActivity : AppCompatActivity() {
                         stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
+
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.divisor.visibility = View.VISIBLE
+
                         invalidateOptionsMenu()
                         changeFragment("MyRecord", fragmentMyRecord)
                         item.setIcon(R.drawable.ic_selected_myrecord)
@@ -225,6 +232,10 @@ class MainActivity : AppCompatActivity() {
                         stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
+
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.divisor.visibility = View.VISIBLE
+
                         invalidateOptionsMenu()
                         changeFragment("AllRecords", fragmentAllRecords)
                         item.setIcon(R.drawable.ic_selected_allrecords)
@@ -244,6 +255,10 @@ class MainActivity : AppCompatActivity() {
                         stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
+
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.divisor.visibility = View.VISIBLE
+
                         invalidateOptionsMenu()
                         changeFragment("MyDJ", fragmentMyDj)
                         item.setIcon(R.drawable.ic_selected_mydj)
@@ -264,6 +279,10 @@ class MainActivity : AppCompatActivity() {
                         stateSearch = false
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
+
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.deep_dark))
+                        binding.divisor.visibility = View.INVISIBLE
+
                         invalidateOptionsMenu()
                         changeFragment("MyPage", fragmentMyPage)
                         item.setIcon(R.drawable.ic_selected_mypage)
