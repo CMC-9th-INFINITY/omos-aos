@@ -19,6 +19,7 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.ArtistListAdapter
 import com.infinity.omos.databinding.FragmentArtistBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.utils.Height.Companion.navigationHeight
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_artist.*
 
@@ -49,6 +50,9 @@ class ArtistFragment : Fragment() {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
         }
+
+        // 밑에 짤리는 현상 해결
+        binding.recyclerView.setPadding(0, 0, 0, context!!.navigationHeight())
 
         return binding.root
     }

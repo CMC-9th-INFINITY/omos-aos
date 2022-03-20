@@ -94,6 +94,7 @@ class LoginActivity : AppCompatActivity() {
         // 이미 가입된 회원인지 확인
         viewModel.getStateSnsLogin().observe(this, Observer { state ->
             state?.let {
+                dismissProgress()
                 if (it == Constant.ApiState.DONE){
                     Log.d("LoginActivity", "이미 가입된 회원입니다.")
                     val intent = Intent(this, MainActivity::class.java)
@@ -154,7 +155,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // Id 입력란 포커스 잃었을 때,
-        et_id.setOnFocusChangeListener { view, b ->
+        et_id.setOnFocusChangeListener { _, b ->
             if (!b){
                 val pattern: Pattern = Patterns.EMAIL_ADDRESS
 
@@ -180,7 +181,7 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 로그인 API 호출
-        btn_login.setOnClickListener {
+        binding.btnLogin.setOnClickListener {
             showProgress()
             viewModel.checkLogin(UserLogin(et_id.text.toString(), et_pw.text.toString()))
         }
@@ -213,7 +214,8 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 카카오 소셜 로그인 페이지 이동
-        btn_kakao_login.setOnClickListener {
+        binding.btnKakaoLogin.setOnClickListener {
+            showProgress()
             if(UserApiClient.instance.isKakaoTalkLoginAvailable(this)){
                 UserApiClient.instance.loginWithKakaoTalk(this, callback = callback)
             }else{
@@ -222,18 +224,18 @@ class LoginActivity : AppCompatActivity() {
         }
 
         // 회원가입 페이지 이동
-        btn_register.setOnClickListener {
+        binding.btnRegister.setOnClickListener {
             var intent = Intent(this, RegisterActivity::class.java)
             startActivity(intent)
         }
 
         // 아이디 찾기 페이지 이동
-        btn_find_id.setOnClickListener {
+        binding.btnFindId.setOnClickListener {
             Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
 
         // 비밀번호 찾기 페이지 이동
-        btn_find_pw.setOnClickListener {
+        binding.btnFindPw.setOnClickListener {
             Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
         }
     }

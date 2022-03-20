@@ -28,6 +28,7 @@ import android.view.WindowManager
 
 import android.os.Build
 import androidx.core.content.ContextCompat
+import com.infinity.omos.utils.Height.Companion.statusBarHeight
 
 
 class MainActivity : AppCompatActivity() {
@@ -175,8 +176,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initNavigationBar() {
-        bottom_nav.itemIconTintList = null // 아이콘 변경 시 색상 적용되는 문제 해결
-        bottom_nav.run {
+        binding.bottomNav.itemIconTintList = null // 아이콘 변경 시 색상 적용되는 문제 해결
+        binding.bottomNav.run {
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
                     R.id.menu_today -> {

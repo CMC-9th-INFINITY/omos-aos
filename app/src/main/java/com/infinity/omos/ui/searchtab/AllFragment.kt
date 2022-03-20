@@ -21,6 +21,7 @@ import com.infinity.omos.adapters.ArtistListAdapter
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentAllBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.utils.Height.Companion.navigationHeight
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.fragment_all.*
 
@@ -57,6 +58,9 @@ class AllFragment : Fragment() {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
         }
+
+        // 밑에 짤리는 현상 해결
+        binding.scrollView.setPadding(0, 0, 0, context!!.navigationHeight())
 
         return binding.root
     }
