@@ -98,7 +98,7 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.btnAlarm.setOnCheckedChangeListener { _, b ->
-            val toastMessage = if (b) {
+            if (b) {
                 val repeatInterval = AlarmManager.INTERVAL_DAY
                 val calendar = Calendar.getInstance().apply {
                     timeInMillis = System.currentTimeMillis()
@@ -113,14 +113,10 @@ class SettingActivity : AppCompatActivity() {
                 )
 
                 GlobalApplication.prefs.setString("alarm", "on")
-                "알림이 발생합니다."
             } else {
                 alarmManager.cancel(pendingIntent)
                 GlobalApplication.prefs.setString("alarm", "off")
-                "알림 예약을 취소하였습니다."
             }
-
-            Toast.makeText(this, toastMessage, Toast.LENGTH_SHORT).show()
         }
     }
 

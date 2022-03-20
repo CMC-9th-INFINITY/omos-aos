@@ -24,6 +24,10 @@
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_stroke_box.xml" value="0.14895833333333333" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_stroke_box2.xml" value="0.1" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/selector_heart.xml" value="0.2" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_off.xml" value="0.19270833333333334" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_on.xml" value="0.19270833333333334" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_selector.xml" value="0.19270833333333334" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_thumb.xml" value="0.19270833333333334" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_album.xml" value="0.152" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_artist.xml" value="0.13858695652173914" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_category.xml" value="0.234375" />

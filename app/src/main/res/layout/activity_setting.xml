@@ -68,10 +68,13 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
 
-                <ToggleButton
+                <androidx.appcompat.widget.SwitchCompat
                     android:id="@+id/btn_alarm"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    app:track="@drawable/toggle_selector"
+                    android:thumb="@drawable/toggle_thumb"
+                    app:switchMinWidth="46dp"/>
 
             </LinearLayout>
 
