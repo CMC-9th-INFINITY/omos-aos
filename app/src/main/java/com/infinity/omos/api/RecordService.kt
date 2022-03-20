@@ -64,5 +64,5 @@ interface RecordService {
     fun updateRecord(
         @Path("postId") postId: Int,
         @Body params: Update
-    ): Call<ResultUpdate>
+    ): Call<ResultState>
 }

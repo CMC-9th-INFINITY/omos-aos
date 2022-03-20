@@ -40,7 +40,7 @@ class WriteRecordViewModel(application: Application): AndroidViewModel(applicati
     fun updateRecord(postId: Int, params: Update){
         repository.updateRecord(postId, params)
     }
-    fun getStateUpdateRecord(): LiveData<ResultUpdate>{
+    fun getStateUpdateRecord(): LiveData<ResultState>{
         return repository.stateUpdateRecord
     }
 

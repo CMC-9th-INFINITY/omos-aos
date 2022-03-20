@@ -19,12 +19,12 @@ class MyRecordRepository {
     private val recordApi = retrofit.create(RecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    var stateUpdateRecord = MutableLiveData<ResultUpdate>()
+    var stateUpdateRecord = MutableLiveData<ResultState>()
     fun updateRecord(postId: Int, params: Update){
-        recordApi.updateRecord(postId, params).enqueue(object: Callback<ResultUpdate> {
+        recordApi.updateRecord(postId, params).enqueue(object: Callback<ResultState> {
             override fun onResponse(
-                call: Call<ResultUpdate>,
-                response: Response<ResultUpdate>
+                call: Call<ResultState>,
+                response: Response<ResultState>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -50,7 +50,7 @@ class MyRecordRepository {
                 }
             }
 
-            override fun onFailure(call: Call<ResultUpdate>, t: Throwable) {
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
                 Log.d("UpdateRecordAPI", t.message.toString())
                 t.stackTrace
             }
