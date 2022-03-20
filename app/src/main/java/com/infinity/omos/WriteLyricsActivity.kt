@@ -177,6 +177,7 @@ class WriteLyricsActivity : AppCompatActivity() {
             record?.let {
                 if (it.state) {
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("save", true)
                     intent.flags =
                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
                     startActivity(intent)
