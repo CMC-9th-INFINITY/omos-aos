@@ -1,10 +1,11 @@
-package com.infinity.omos
+package com.infinity.omos.ui.setting
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
+import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityChangePwBinding
 import com.infinity.omos.viewmodels.ChangePwViewModel
 import kotlinx.android.synthetic.main.activity_register.*

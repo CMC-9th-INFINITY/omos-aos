@@ -1,46 +1,37 @@
 package com.infinity.omos.ui.bottomnav
 
-import android.app.AlarmManager
-import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
-import android.os.SystemClock
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import com.infinity.omos.MyLikeRecordActivity
 import com.infinity.omos.MyScrapRecordActivity
 import com.infinity.omos.R
-import com.infinity.omos.SettingActivity
+import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.databinding.FragmentMyPageBinding
-import com.infinity.omos.databinding.FragmentMyRecordBinding
-import com.infinity.omos.etc.Constant
-import com.infinity.omos.etc.Constant.Companion.NOTI_ID
-import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.utils.MyReceiver
-import com.infinity.omos.utils.PreferenceUtil
 import com.infinity.omos.viewmodels.SharedViewModel
-import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.fragment_my_page.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class MyPageFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyPageBinding
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeBroadcastReceiver()
     }
 
     override fun onCreateView(
@@ -79,5 +70,18 @@ class MyPageFragment : Fragment() {
             val intent = Intent(context, MyLikeRecordActivity::class.java)
             startActivity(intent)
         }
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                viewModel.setDjProfile(userId, userId)
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("PROFILE_UPDATE")
+        )
     }
 }

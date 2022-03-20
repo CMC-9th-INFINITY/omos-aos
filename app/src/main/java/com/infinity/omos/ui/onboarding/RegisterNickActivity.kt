@@ -129,7 +129,7 @@ class RegisterNickActivity : AppCompatActivity() {
                     LoginActivity.showErrorMsg(
                         et_nick,
                         tv_error_nick,
-                        resources.getString(R.string.exist_email),
+                        resources.getString(R.string.exist_nick),
                         linear_nick
                     )
                 } else{
@@ -150,7 +150,7 @@ class RegisterNickActivity : AppCompatActivity() {
                     LoginActivity.showErrorMsg(
                         et_nick,
                         tv_error_nick,
-                        resources.getString(R.string.exist_email),
+                        resources.getString(R.string.exist_nick),
                         linear_nick
                     )
                 } else{

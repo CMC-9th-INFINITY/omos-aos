@@ -16,13 +16,13 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".DeleteAccountActivity"
+            android:name=".ui.setting.DeleteAccountActivity"
             android:exported="false" />
         <activity
-            android:name=".ChangePwActivity"
+            android:name=".ui.setting.ChangePwActivity"
             android:exported="false" />
         <activity
-            android:name=".ChangeProfileActivity"
+            android:name=".ui.setting.ChangeProfileActivity"
             android:exported="false" />
         <activity
             android:name=".MyLikeRecordActivity"
@@ -31,7 +31,7 @@
             android:name=".MyScrapRecordActivity"
             android:exported="false" />
         <activity
-            android:name=".SettingActivity"
+            android:name=".ui.setting.SettingActivity"
             android:exported="false" />
         <activity
             android:name=".InputLyricsActivity"

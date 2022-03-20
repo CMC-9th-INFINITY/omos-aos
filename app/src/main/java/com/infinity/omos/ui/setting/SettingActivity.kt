@@ -1,15 +1,18 @@
-package com.infinity.omos
+package com.infinity.omos.ui.setting
 
 import android.app.AlarmManager
 import android.app.PendingIntent
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
+import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivitySettingBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.onboarding.LoginActivity
