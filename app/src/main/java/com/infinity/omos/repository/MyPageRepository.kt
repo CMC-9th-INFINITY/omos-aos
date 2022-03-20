@@ -19,6 +19,44 @@ class MyPageRepository {
     private val myPageApi = retrofit.create(MyPageService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
+    var stateLogout = MutableLiveData<ResultState>()
+    fun doLogout(userId: Int){
+        myPageApi.doLogout(userId).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("LogoutAPI", "Success")
+                        stateLogout.postValue(body!!)
+                    }
+
+                    401 -> {
+                        Log.d("LogoutAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        doLogout(userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("LogoutAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("LogoutAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("LogoutAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     var stateUpdatePw = MutableLiveData<ResultState>()
     fun updatePassword(password: String, userId: Int){
         myPageApi.updatePassword(Password(password, userId)).enqueue(object: Callback<ResultState> {

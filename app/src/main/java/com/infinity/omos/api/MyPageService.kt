@@ -5,10 +5,7 @@ import com.infinity.omos.data.Profile
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.data.SimpleRecord
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface MyPageService {
     @GET("/api/records/select/{userId}/liked-records")
@@ -29,5 +26,10 @@ interface MyPageService {
     @PUT("/api/user/update/password")
     fun updatePassword(
         @Body params: Password
+    ): Call<ResultState>
+
+    @DELETE("/api/auth/logout/{userId}")
+    fun doLogout(
+        @Path("userId") userId: Int
     ): Call<ResultState>
 }

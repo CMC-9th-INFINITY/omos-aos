@@ -11,6 +11,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivitySettingBinding
@@ -19,6 +20,7 @@ import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.MyReceiver
+import com.infinity.omos.viewmodels.SettingViewModel
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_setting.*
@@ -29,6 +31,9 @@ import java.util.*
 class SettingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySettingBinding
+    private val viewModel: SettingViewModel by viewModels()
+
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,16 +66,19 @@ class SettingActivity : AppCompatActivity() {
                     "yes" -> {
                         UserApiClient.instance.logout { error ->
                             if (error != null){
-                                Log.d("MyPage", "이메일 로그아웃")
+                                Log.d("SettingActivity", "이메일 로그아웃")
                             } else{
-                                Log.d("MyPage", "카카오 로그아웃")
+                                Log.d("SettingActivity", "카카오 로그아웃")
                             }
 
-                            Toast.makeText(this, "로그아웃 성공", Toast.LENGTH_SHORT).show()
+                            viewModel.doLogout(userId)
                             GlobalApplication.prefs.setUserToken(null, null, -1)
+
                             val intent = Intent(this, LoginActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
+
+                            Toast.makeText(this, "로그아웃 성공", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
