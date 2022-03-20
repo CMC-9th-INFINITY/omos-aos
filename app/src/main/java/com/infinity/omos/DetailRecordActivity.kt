@@ -433,6 +433,10 @@ class DetailRecordActivity : AppCompatActivity() {
             } else {
                 viewModel.deleteLike(postId, userId)
             }
+
+            val intent = Intent("LIKE_UPDATE")
+            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+            sendBroadcast(intent)
         }
 
         if (star != prevStar) {
@@ -441,6 +445,9 @@ class DetailRecordActivity : AppCompatActivity() {
             } else {
                 viewModel.deleteScrap(postId, userId)
             }
+            val intent = Intent("SCRAP_UPDATE")
+            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+            sendBroadcast(intent)
         }
     }
 

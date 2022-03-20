@@ -32,6 +32,8 @@ class MyPageFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         initializeBroadcastReceiver()
+        likeBroadcastReceiver()
+        scrapBroadcastReceiver()
     }
 
     override fun onCreateView(
@@ -82,6 +84,32 @@ class MyPageFragment : Fragment() {
         requireActivity().registerReceiver(
             broadcastReceiver,
             IntentFilter("PROFILE_UPDATE")
+        )
+    }
+
+    private fun likeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("LIKE_UPDATE")
+        )
+    }
+
+    private fun scrapBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("SCRAP_UPDATE")
         )
     }
 }

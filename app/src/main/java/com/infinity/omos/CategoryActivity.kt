@@ -1,5 +1,6 @@
 package com.infinity.omos
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -199,24 +200,41 @@ class CategoryActivity : AppCompatActivity() {
         super.onDestroy()
 
         // 좋아요, 스크랩 처리
+        var stateLike = false
         val saveHeartList = mAdapter.getSaveHeart()
         for (i in saveHeartList){
             viewModel.saveLike(i, userId)
+            stateLike = true
         }
 
         val deleteHeartList = mAdapter.getDeleteHeart()
         for (i in deleteHeartList){
             viewModel.deleteLike(i, userId)
+            stateLike = true
         }
 
+        var stateScrap = false
         val saveScrapList = mAdapter.getSaveScrap()
         for (i in saveScrapList){
             viewModel.saveScrap(i, userId)
+            stateScrap = true
         }
 
         val deleteScrapList = mAdapter.getDeleteScrap()
         for (i in deleteScrapList){
             viewModel.deleteScrap(i, userId)
+            stateScrap = true
+        }
+
+        if (stateLike){
+            val intent = Intent("LIKE_UPDATE")
+            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+            sendBroadcast(intent)
+        }
+        if (stateScrap){
+            val intent = Intent("SCRAP_UPDATE")
+            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+            sendBroadcast(intent)
         }
     }
 }

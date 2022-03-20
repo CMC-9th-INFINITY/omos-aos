@@ -1,5 +1,9 @@
 package com.infinity.omos
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -21,12 +25,14 @@ class MyLikeRecordActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMyLikeRecordBinding
     private val viewModel: MyLikeRecordViewModel by viewModels()
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_my_like_record)
+        likeBroadcastReceiver()
 
         initToolBar()
 
@@ -50,11 +56,13 @@ class MyLikeRecordActivity : AppCompatActivity() {
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
+                        binding.recyclerView.visibility = View.GONE
                         binding.lnNorecord.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                     }
 
                     Constant.ApiState.DONE -> {
+                        binding.recyclerView.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
 
@@ -92,5 +100,18 @@ class MyLikeRecordActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun likeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                viewModel.setLikeRecord(userId)
+            }
+        }
+
+        this.registerReceiver(
+            broadcastReceiver,
+            IntentFilter("LIKE_UPDATE")
+        )
     }
 }
