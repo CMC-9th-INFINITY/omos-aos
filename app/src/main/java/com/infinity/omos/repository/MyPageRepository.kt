@@ -19,6 +19,48 @@ class MyPageRepository {
     private val myPageApi = retrofit.create(MyPageService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
+    var myPageData = MutableLiveData<MyPage>()
+    var stateMyPageData = MutableLiveData<Constant.ApiState>()
+    fun getMyPageData(userId: Int){
+        stateMyPageData.value = Constant.ApiState.LOADING
+        myPageApi.getMyPageData(userId).enqueue(object: Callback<MyPage> {
+            override fun onResponse(
+                call: Call<MyPage>,
+                response: Response<MyPage>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("MyPageDataAPI", "Success")
+                        myPageData.postValue(body!!)
+                        stateMyPageData.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("MyPageDataAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        doLogout(userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("MyPageDataAPI", errorBody!!.message)
+                        stateMyPageData.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("MyPageDataAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<MyPage>, t: Throwable) {
+                Log.d("MyPageDataAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     var stateLogout = MutableLiveData<ResultState>()
     fun doLogout(userId: Int){
         myPageApi.doLogout(userId).enqueue(object: Callback<ResultState> {

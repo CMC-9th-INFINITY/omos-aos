@@ -1,13 +1,15 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.Password
-import com.infinity.omos.data.Profile
-import com.infinity.omos.data.ResultState
-import com.infinity.omos.data.SimpleRecord
+import com.infinity.omos.data.*
 import retrofit2.Call
 import retrofit2.http.*
 
 interface MyPageService {
+    @GET("/api/records/select/{userId}/my-recods")
+    fun getMyPageData(
+        @Path("userId") userId: Int
+    ): Call<MyPage>
+
     @GET("/api/records/select/{userId}/liked-records")
     fun getLikeRecord(
         @Path("userId") userId: Int

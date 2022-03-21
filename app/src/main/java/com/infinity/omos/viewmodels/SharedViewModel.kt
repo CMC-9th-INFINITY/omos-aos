@@ -6,10 +6,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.repository.AllRecordsRepository
-import com.infinity.omos.repository.MyDjRepository
-import com.infinity.omos.repository.MyRecordRepository
-import com.infinity.omos.repository.TodayRepository
+import com.infinity.omos.repository.*
 import com.infinity.omos.utils.GlobalApplication
 
 class SharedViewModel(application: Application): AndroidViewModel(application) {
@@ -18,6 +15,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     private val myRecordRepository: MyRecordRepository = MyRecordRepository()
     private val allRecordsRepository: AllRecordsRepository = AllRecordsRepository()
     private val myDjRepository: MyDjRepository = MyDjRepository()
+    private val myPageRepository: MyPageRepository = MyPageRepository()
 
     // Today
     // 인기있는 레코드
@@ -125,10 +123,22 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     // MY 페이지
     private val repository: MyDjRepository = MyDjRepository()
 
+    // 내 프로필
     fun setDjProfile(fromUserId: Int, toUserId: Int){
         repository.getDjProfile(fromUserId, toUserId)
     }
     fun getDjProfile(): LiveData<DjProfile>{
         return repository.djProfile
+    }
+
+    // 스크랩, 공감 레코드
+    fun setMyPageData(userId: Int){
+        myPageRepository.getMyPageData(userId)
+    }
+    fun getMyPageData(): LiveData<MyPage>{
+        return myPageRepository.myPageData
+    }
+    fun getStateMyPageData(): LiveData<Constant.ApiState>{
+        return myPageRepository.stateMyPageData
     }
 }
