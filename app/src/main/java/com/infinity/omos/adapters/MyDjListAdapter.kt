@@ -64,8 +64,8 @@ class MyDjListAdapter internal constructor(context: Context):
 
                 Glide.with(binding.imgAlbumCover.context)
                     .load(dj.profileUrl)
-                    .error(R.drawable.ic_record)
-                    .fallback(R.drawable.ic_record)
+                    .error(R.drawable.ic_profile_gray)
+                    .fallback(R.drawable.ic_profile_gray)
                     .into(binding.imgAlbumCover)
             }
 

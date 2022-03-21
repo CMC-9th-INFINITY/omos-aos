@@ -19,6 +19,16 @@ object ImageBindingAdapter {
             .into(imageView)
     }
 
+    @BindingAdapter("profileImageUrl")
+    @JvmStatic
+    fun loadProfileImage(imageView: ImageView, url: String?){
+        Glide.with(imageView.context)
+            .load(url)
+            .error(R.drawable.ic_profile_gray)
+            .fallback(R.drawable.ic_profile_gray)
+            .into(imageView)
+    }
+
     // recordImageUrl 이 null 일 때, 빈 이미지 보여주기 위함
     @BindingAdapter("categoryImageUrl")
     @JvmStatic

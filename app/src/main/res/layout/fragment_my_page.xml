@@ -88,7 +88,7 @@
                     android:id="@+id/img_profile"
                     android:layout_width="70dp"
                     android:layout_height="70dp"
-                    app:imageUrl="@{data.profile.profileUrl}"
+                    app:profileImageUrl="@{data.profile.profileUrl}"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>

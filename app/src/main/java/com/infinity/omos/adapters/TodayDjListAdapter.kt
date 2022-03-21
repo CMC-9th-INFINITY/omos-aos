@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.infinity.omos.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.*
@@ -52,6 +53,12 @@ class TodayDjListAdapter internal constructor(context: Context):
         fun bind(dj: Profile) {
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
+
+            Glide.with(binding.imgAlbumCover.context)
+                .load(dj.profileUrl)
+                .error(R.drawable.ic_profile_gray)
+                .fallback(R.drawable.ic_profile_gray)
+                .into(binding.imgAlbumCover)
 
             binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.dark)
 
