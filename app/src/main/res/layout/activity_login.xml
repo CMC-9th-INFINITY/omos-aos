@@ -182,14 +182,16 @@
                     android:layout_height="wrap_content"
                     android:text="아이디 찾기"
                     android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
+                    android:textColor="@color/light_gray"
+                    android:visibility="invisible"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="  |  "
                     android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
+                    android:textColor="@color/light_gray"
+                    android:visibility="invisible"/>
 
                 <TextView
                     android:id="@+id/btn_find_pw"
@@ -197,7 +199,8 @@
                     android:layout_height="wrap_content"
                     android:text="비밀번호 찾기"
                     android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
+                    android:textColor="@color/light_gray"
+                    android:visibility="invisible"/>
 
                 <View
                     android:layout_width="wrap_content"

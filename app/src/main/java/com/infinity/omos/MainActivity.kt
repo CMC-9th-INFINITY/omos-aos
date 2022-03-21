@@ -215,7 +215,7 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = true
-                        stateSearch = true
+                        stateSearch = false
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
@@ -262,7 +262,7 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY DJ"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
-                        stateSearch = true
+                        stateSearch = false
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
