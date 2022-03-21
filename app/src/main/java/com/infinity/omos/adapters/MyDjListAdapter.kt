@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.infinity.omos.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.*
@@ -60,6 +61,12 @@ class MyDjListAdapter internal constructor(context: Context):
 
             if (num >= isChecked.size){
                 isChecked.add(num, false)
+
+                Glide.with(binding.imgAlbumCover.context)
+                    .load(dj.profileUrl)
+                    .error(R.drawable.ic_record)
+                    .fallback(R.drawable.ic_record)
+                    .into(binding.imgAlbumCover)
             }
 
             if (isChecked[num]){
