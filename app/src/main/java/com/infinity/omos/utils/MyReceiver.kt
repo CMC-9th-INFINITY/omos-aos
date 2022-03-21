@@ -27,7 +27,7 @@ class MyReceiver : BroadcastReceiver() {
 
     private fun createNotification(context: Context) {
         val builder = NotificationCompat.Builder(context, CHANNEL_ID)
-        builder.setSmallIcon(R.mipmap.ic_launcher)
+        builder.setSmallIcon(R.mipmap.ic_launcher_omos_round)
         builder.setContentTitle("omos")
         builder.setContentText("오늘 하루, 당신의 음악은 무엇이었나요?")
         builder.setAutoCancel(true)

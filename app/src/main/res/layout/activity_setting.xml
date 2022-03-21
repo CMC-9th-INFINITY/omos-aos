@@ -74,7 +74,7 @@
                     android:layout_height="wrap_content"
                     app:track="@drawable/toggle_selector"
                     android:thumb="@drawable/toggle_thumb"
-                    app:switchMinWidth="46dp"/>
+                    app:switchMinWidth="10dp"/>
 
             </LinearLayout>
 
