@@ -56,6 +56,7 @@ class MyPageFragment : Fragment() {
         viewModel.getDjProfile().observe(this) { profile ->
             profile?.let {
                 binding.data = it
+                myNickName = it.profile.nickName
             }
         }
 
@@ -112,5 +113,9 @@ class MyPageFragment : Fragment() {
             broadcastReceiver,
             IntentFilter("SCRAP_UPDATE")
         )
+    }
+
+    companion object{
+        var myNickName = ""
     }
 }

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
+import android.text.InputFilter
 import android.text.TextWatcher
 import android.view.MenuItem
 import android.widget.Toast
@@ -163,6 +164,17 @@ class RegisterNickActivity : AppCompatActivity() {
                     Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
                 }
             }
+        })
+
+        // 특수문자 띄어쓰기 입력 제한
+        binding.etNick.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])) {
+                    Toast.makeText(this, "특수문자 및 공백은 입력이 제한됩니다.", Toast.LENGTH_SHORT).show()
+                    return@InputFilter ""
+                }
+            }
+            null
         })
 
         // 회원가입 완료

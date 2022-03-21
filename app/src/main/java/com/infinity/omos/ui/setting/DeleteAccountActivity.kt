@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
+import com.infinity.omos.ui.bottomnav.MyPageFragment
 import com.infinity.omos.viewmodels.ChangePwViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -19,6 +20,7 @@ class DeleteAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delete_account)
         binding.lifecycleOwner = this
+        binding.tvNick.text = MyPageFragment.myNickName
 
         initToolBar()
     }

@@ -15,12 +15,19 @@ import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.ui.bottomnav.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
 import kotlinx.android.synthetic.main.activity_register_nick.*
+import android.text.Spanned
+
+import android.text.InputFilter
+
+
+
 
 class ChangeProfileActivity : AppCompatActivity() {
 
@@ -33,11 +40,23 @@ class ChangeProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
+        binding.etNick.setText(MyPageFragment.myNickName)
 
         initToolBar()
 
         binding.btnComplete.setOnClickListener {
-            viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
+            if (binding.etNick.text.toString() == MyPageFragment.myNickName){
+                // 기존과 동일한 닉네임일 때,
+                LoginActivity.showErrorMsg(
+                    this,
+                    binding.etNick,
+                    binding.tvErrorNick,
+                    "기존과 동일한 닉네임입니다.",
+                    binding.linearNick
+                )
+            } else{
+                viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
+            }
         }
 
         viewModel.getStateUpdateProfile().observe(this) { state ->
@@ -67,6 +86,17 @@ class ChangeProfileActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // 특수문자 띄어쓰기 입력 제한
+        binding.etNick.filters = arrayOf(InputFilter { source, start, end, dest, dstart, dend ->
+            for (i in start until end) {
+                if (!Character.isLetterOrDigit(source[i])) {
+                    Toast.makeText(this, "특수문자 및 공백은 입력이 제한됩니다.", Toast.LENGTH_SHORT).show()
+                    return@InputFilter ""
+                }
+            }
+            null
+        })
 
         // 완료버튼 활성화
         binding.etNick.addTextChangedListener(object: TextWatcher{
