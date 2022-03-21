@@ -49,12 +49,11 @@ class MusicRecordActivity : AppCompatActivity() {
         viewModel.setMusicRecord(musicId!!, null, pageSize, "date", userId)
         viewModel.getMusicRecord().observe(this) { category ->
             category?.let {
-                mAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
-                    mAdapter.deleteLoading()
-                    mAdapter.notifyItemRemoved(mAdapter.itemCount - 1)
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount)
                     true
                 } else {
+                    mAdapter.addCategory(it)
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     postId = it[it.lastIndex].recordId
                     false

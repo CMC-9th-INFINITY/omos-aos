@@ -62,12 +62,11 @@ class ArtistAlbumFragment : Fragment() {
         viewModel.setArtistAlbum(artistId, pageSize, 0)
         viewModel.getArtistAlbum().observe(viewLifecycleOwner, Observer { album ->
             album?.let {
-                mAdapter.setRecord(it)
                 isLoading = if (it.isEmpty()) {
-                    mAdapter.deleteLoading()
-                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount)
                     true
                 } else {
+                    mAdapter.setRecord(it)
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }

@@ -107,12 +107,11 @@ class MyDjFragment : Fragment() {
         viewModel.setDjAllRecords(fromUserId, null, pageSize)
         viewModel.getDjAllRecords().observe(viewLifecycleOwner) { record ->
             record?.let {
-                rAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
-                    rAdapter.deleteLoading()
-                    rAdapter.notifyItemRemoved(rAdapter.itemCount-1)
+                    rAdapter.notifyItemRemoved(rAdapter.itemCount)
                     true
                 } else {
+                    rAdapter.addCategory(it)
                     rAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     postId = it[it.lastIndex].recordId
                     false

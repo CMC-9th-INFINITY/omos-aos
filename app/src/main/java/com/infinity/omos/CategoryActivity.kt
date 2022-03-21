@@ -91,12 +91,11 @@ class CategoryActivity : AppCompatActivity() {
         viewModel.setCategoryRecord(ctg, null, pageSize, "date", userId)
         viewModel.getCategoryRecord().observe(this, Observer { category ->
             category?.let {
-                mAdapter.addCategory(it)
                 isLoading = if (it.isEmpty()) {
-                    mAdapter.deleteLoading()
-                    mAdapter.notifyItemRemoved(mAdapter.itemCount-1)
+                    mAdapter.notifyItemRemoved(mAdapter.itemCount)
                     true
                 } else {
+                    mAdapter.addCategory(it)
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     postId = it[it.lastIndex].recordId
                     false
