@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import com.infinity.omos.DetailRecordActivity
 import com.infinity.omos.MyLikeRecordActivity
 import com.infinity.omos.MyScrapRecordActivity
 import com.infinity.omos.R
@@ -30,6 +31,11 @@ class MyPageFragment : Fragment() {
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = GlobalApplication.prefs.getInt("userId")
+
+    private var scrap1 = -1
+    private var scrap2 = -1
+    private var like1 = -1
+    private var like2 = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,6 +79,9 @@ class MyPageFragment : Fragment() {
                         binding.scrap2 = it.scrappedRecords[1]
                         binding.tvArtistScrap1.text = GlobalFunction.setArtist(it.scrappedRecords[0].music.artists)
                         binding.tvArtistScrap2.text = GlobalFunction.setArtist(it.scrappedRecords[1].music.artists)
+
+                        scrap1 = it.scrappedRecords[0].recordId
+                        scrap2 = it.scrappedRecords[1].recordId
                     }
 
                     1 -> {
@@ -81,6 +90,8 @@ class MyPageFragment : Fragment() {
                         binding.lnScrap2.visibility = View.INVISIBLE
                         binding.scrap1 = it.scrappedRecords[0]
                         binding.tvArtistScrap1.text = GlobalFunction.setArtist(it.scrappedRecords[0].music.artists)
+
+                        scrap1 = it.scrappedRecords[0].recordId
                     }
 
                     0 -> {
@@ -99,6 +110,9 @@ class MyPageFragment : Fragment() {
                         binding.like2 = it.likedRecords[1]
                         binding.tvArtistLike1.text = GlobalFunction.setArtist(it.likedRecords[0].music.artists)
                         binding.tvArtistLike2.text = GlobalFunction.setArtist(it.likedRecords[1].music.artists)
+
+                        like1 = it.likedRecords[0].recordId
+                        like2 = it.likedRecords[1].recordId
                     }
 
                     1 -> {
@@ -107,6 +121,8 @@ class MyPageFragment : Fragment() {
                         binding.lnLike2.visibility = View.INVISIBLE
                         binding.like1 = it.likedRecords[0]
                         binding.tvArtistLike1.text = GlobalFunction.setArtist(it.likedRecords[0].music.artists)
+
+                        like1 = it.likedRecords[0].recordId
                     }
 
                     0 -> {
@@ -128,8 +144,32 @@ class MyPageFragment : Fragment() {
             startActivity(intent)
         }
 
+        binding.lnScrap1.setOnClickListener {
+            val intent = Intent(context, DetailRecordActivity::class.java)
+            intent.putExtra("postId", scrap1)
+            startActivity(intent)
+        }
+
+        binding.lnScrap2.setOnClickListener {
+            val intent = Intent(context, DetailRecordActivity::class.java)
+            intent.putExtra("postId", scrap2)
+            startActivity(intent)
+        }
+
         binding.btnAllLike.setOnClickListener {
             val intent = Intent(context, MyLikeRecordActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.lnLike1.setOnClickListener {
+            val intent = Intent(context, DetailRecordActivity::class.java)
+            intent.putExtra("postId", like1)
+            startActivity(intent)
+        }
+
+        binding.lnLike2.setOnClickListener {
+            val intent = Intent(context, DetailRecordActivity::class.java)
+            intent.putExtra("postId", like2)
             startActivity(intent)
         }
     }
@@ -150,7 +190,7 @@ class MyPageFragment : Fragment() {
     private fun likeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-
+                viewModel.setMyPageData(userId)
             }
         }
 
@@ -163,7 +203,7 @@ class MyPageFragment : Fragment() {
     private fun scrapBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-
+                viewModel.setMyPageData(userId)
             }
         }
 

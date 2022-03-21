@@ -263,6 +263,11 @@ class DetailCategoryListAdapter internal constructor(
 
     internal fun clearCategory(){
         this.category.clear()
+        this.heartStarList = ArrayList()
+        this.saveHeartList = ArrayList()
+        this.deleteHeartList = ArrayList()
+        this.saveScrapList = ArrayList()
+        this.deleteScrapList = ArrayList()
         notifyDataSetChanged()
     }
 

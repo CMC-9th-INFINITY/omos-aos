@@ -44,7 +44,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="작성된 레코드가 없어요!"
+                    android:text="공감한 레코드가 없어요!"
                     android:textSize="18sp"
                     android:textColor="@color/gray_03"/>
 
