@@ -25,14 +25,16 @@
             android:background="@color/dark">
 
             <FrameLayout
+                android:id="@+id/btn_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="32dp"
                 android:layout_gravity="center">
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:src="@drawable/ic_profile"/>
 
                 <ImageView

@@ -2,8 +2,13 @@ package com.infinity.omos.ui.setting
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.ImageDecoder
+import android.graphics.drawable.BitmapDrawable
+import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -25,14 +30,19 @@ import kotlinx.android.synthetic.main.activity_register_nick.*
 import android.text.Spanned
 
 import android.text.InputFilter
-
-
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
+import kotlinx.android.synthetic.main.activity_write_record.*
 
 
 class ChangeProfileActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChangeProfileBinding
     private val viewModel: ChangeProfileViewModel by viewModels()
+    private lateinit var result: ActivityResultLauncher<Intent>
+    private lateinit var cropResult: ActivityResultLauncher<Intent>
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -43,6 +53,58 @@ class ChangeProfileActivity : AppCompatActivity() {
         binding.etNick.setText(MyPageFragment.myNickName)
 
         initToolBar()
+
+        binding.btnProfile.setOnClickListener {
+            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+            result.launch(intent)
+        }
+
+        // 콜백
+        result = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            when(it.resultCode){
+                RESULT_OK -> {
+                    cropImage(it.data?.data)
+                }
+
+                RESULT_CANCELED ->{
+                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+                }
+
+                else -> {
+                    Log.d("WriteRecord","error")
+                }
+            }
+        }
+
+        cropResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()){
+            when(it.resultCode){
+                RESULT_OK -> {
+                    CropImage.getActivityResult(it.data)?.let { cropResult ->
+                        if(Build.VERSION.SDK_INT < 28) {
+                            val bitmap = MediaStore.Images.Media.getBitmap(
+                                this.contentResolver,
+                                cropResult.uri
+                            )
+                            val bd = BitmapDrawable(resources, bitmap)
+                            binding.imgProfile.setImageDrawable(bd)
+                        } else {
+                            val source = ImageDecoder.createSource(this.contentResolver, cropResult.uri)
+                            val bitmap = ImageDecoder.decodeBitmap(source)
+                            val bd = BitmapDrawable(resources, bitmap)
+                            binding.imgProfile.setImageDrawable(bd)
+                        }
+                    }
+                }
+
+                RESULT_CANCELED ->{
+                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+                }
+
+                else -> {
+                    Log.d("WriteRecord","error")
+                }
+            }
+        }
 
         binding.btnComplete.setOnClickListener {
             if (binding.etNick.text.toString() == MyPageFragment.myNickName){
@@ -120,6 +182,18 @@ class ChangeProfileActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    private fun cropImage(uri: Uri?){
+        var width = binding.btnProfile.measuredWidth
+        var height = binding.btnProfile.measuredHeight
+        val intent = CropImage
+            .activity(uri)
+            .setCropShape(CropImageView.CropShape.OVAL)
+            .setAspectRatio(width, height)
+            .getIntent(this)
+
+        cropResult.launch(intent)
     }
 
     private fun initToolBar(){

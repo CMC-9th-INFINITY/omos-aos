@@ -6,6 +6,9 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.*
 import android.widget.LinearLayout
@@ -30,6 +33,7 @@ class DetailRecordActivity : AppCompatActivity() {
 
     private val viewModel: DetailRecordViewModel by viewModels()
     private lateinit var binding: ActivityDetailRecordBinding
+    private lateinit var dlg: CustomDialog
 
     private val userId = GlobalApplication.prefs.getInt("userId")
     private lateinit var actionInsta: MenuItem
@@ -64,6 +68,7 @@ class DetailRecordActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
+        dlg = CustomDialog(this)
         initializeBroadcastReceiver()
 
         postId = intent.getIntExtra("postId", -1)
@@ -241,10 +246,16 @@ class DetailRecordActivity : AppCompatActivity() {
 
         viewModel.getStateDeleteRecord().observe(this) { state ->
             state?.let {
+                dismissProgress()
                 if (it.state) {
-                    val intent = Intent("PROFILE_UPDATE")
+                    val intent = Intent("RECORD_UPDATE")
+                    intent.putExtra("isDelete", true)
                     intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                     sendBroadcast(intent)
+
+                    val intent2 = Intent("PROFILE_UPDATE")
+                    intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent2)
 
                     finish()
                     Toast.makeText(this, "삭제 완료", Toast.LENGTH_SHORT).show()
@@ -374,12 +385,8 @@ class DetailRecordActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener { content ->
                     when (content) {
                         "yes" -> {
-                            val intent = Intent("RECORD_UPDATE")
-                            intent.putExtra("isDelete", true)
-                            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                            sendBroadcast(intent)
-
                             viewModel.deleteRecord(postId)
+                            showProgress()
                         }
                     }
                 }
@@ -454,6 +461,24 @@ class DetailRecordActivity : AppCompatActivity() {
             intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
             sendBroadcast(intent)
         }
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     private fun initializeBroadcastReceiver() {

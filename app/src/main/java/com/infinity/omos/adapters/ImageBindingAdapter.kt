@@ -14,7 +14,7 @@ object ImageBindingAdapter {
     fun loadImage(imageView: ImageView, url: String?){
         Glide.with(imageView.context)
             .load(url)
-            .error(R.drawable.ic_launcher_background)
+            .error(R.drawable.ic_record)
             .fallback(R.drawable.ic_record)
             .into(imageView)
     }
