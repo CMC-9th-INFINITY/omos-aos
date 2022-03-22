@@ -5,6 +5,11 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface MyPageService {
+    @DELETE("/api/auth/signout/{userId}")
+    fun signOut(
+        @Path("userId") userId: Int
+    ): Call<ResultState>
+
     @GET("/api/records/select/{userId}/my-records")
     fun getMyPageData(
         @Path("userId") userId: Int

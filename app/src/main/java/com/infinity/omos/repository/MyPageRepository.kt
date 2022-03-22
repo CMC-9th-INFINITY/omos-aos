@@ -39,7 +39,7 @@ class MyPageRepository {
                     401 -> {
                         Log.d("MyPageDataAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        doLogout(userId)
+                        getMyPageData(userId)
                     }
 
                     500 -> {
@@ -56,6 +56,44 @@ class MyPageRepository {
 
             override fun onFailure(call: Call<MyPage>, t: Throwable) {
                 Log.d("MyPageDataAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
+    var stateSignOut = MutableLiveData<ResultState>()
+    fun signOut(userId: Int){
+        myPageApi.signOut(userId).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("SignOutAPI", "Success")
+                        stateSignOut.postValue(body!!)
+                    }
+
+                    401 -> {
+                        Log.d("SignOutAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        signOut(userId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("SignOutAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("SignOutAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("SignOutAPI", t.message.toString())
                 t.stackTrace
             }
         })

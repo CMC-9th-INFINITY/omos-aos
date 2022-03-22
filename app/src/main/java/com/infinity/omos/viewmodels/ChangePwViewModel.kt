@@ -21,6 +21,7 @@ class ChangePwViewModel(application: Application): AndroidViewModel(application)
         visibleEye.value = visibleEye.value != true
     }
 
+    // 프로필 변경
     fun updatePassword(password: String, userId: Int){
         repository.updatePassword(password, userId)
     }
