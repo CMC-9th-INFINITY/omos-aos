@@ -138,8 +138,8 @@ class MyPageRepository {
     }
 
     var stateUpdateProfile = MutableLiveData<Constant.ApiState>()
-    fun updateProfile(nickName: String, profileUrl: String, userId: Int){
-        myPageApi.updateProfile(Profile(nickName, profileUrl, userId)).enqueue(object: Callback<ResultState> {
+    fun updateProfile(nickname: String, profileUrl: String, userId: Int){
+        myPageApi.updateProfile(Profile(nickname, profileUrl, userId)).enqueue(object: Callback<ResultState> {
             override fun onResponse(
                 call: Call<ResultState>,
                 response: Response<ResultState>
@@ -158,7 +158,7 @@ class MyPageRepository {
                     401 -> {
                         Log.d("UpdateProfileAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        updateProfile(nickName, profileUrl, userId)
+                        updateProfile(nickname, profileUrl, userId)
                     }
 
                     500 -> {

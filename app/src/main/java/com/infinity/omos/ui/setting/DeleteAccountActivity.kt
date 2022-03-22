@@ -20,7 +20,7 @@ class DeleteAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delete_account)
         binding.lifecycleOwner = this
-        binding.tvNick.text = MyPageFragment.myNickName
+        binding.tvNick.text = MyPageFragment.myNickname
 
         initToolBar()
     }

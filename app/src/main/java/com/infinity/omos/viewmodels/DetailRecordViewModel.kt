@@ -48,4 +48,8 @@ class DetailRecordViewModel(application: Application): AndroidViewModel(applicat
     fun getStateDeleteRecord(): LiveData<ResultState>{
         return myRecordRepository.stateDeleteRecord
     }
+
+    fun reportRecord(postId: Int){
+        repository.reportRecord(postId)
+    }
 }

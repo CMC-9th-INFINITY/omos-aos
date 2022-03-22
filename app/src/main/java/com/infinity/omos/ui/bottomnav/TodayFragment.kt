@@ -173,12 +173,14 @@ class TodayFragment : Fragment() {
         }
 
         binding.btnTodayMusic.setOnClickListener {
-            val intent = Intent(context, SelectCategoryActivity::class.java)
-            intent.putExtra("musicId", musicId)
-            intent.putExtra("musicTitle", musicTitle)
-            intent.putExtra("artists", artists)
-            intent.putExtra("albumImageUrl", albumImageUrl)
-            startActivity(intent)
+            if (musicId != ""){
+                val intent = Intent(context, SelectCategoryActivity::class.java)
+                intent.putExtra("musicId", musicId)
+                intent.putExtra("musicTitle", musicTitle)
+                intent.putExtra("artists", artists)
+                intent.putExtra("albumImageUrl", albumImageUrl)
+                startActivity(intent)
+            }
         }
 
         binding.fmLovedMusic.setOnClickListener {

@@ -28,7 +28,7 @@
             android:layout_width="66dp"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="@{dj.nickName}"
+            android:text="@{dj.nickname}"
             android:textSize="12sp"
             android:textColor="@color/white"
             android:maxLines="1"

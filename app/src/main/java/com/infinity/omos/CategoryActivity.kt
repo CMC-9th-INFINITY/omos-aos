@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
@@ -83,8 +84,18 @@ class CategoryActivity : AppCompatActivity() {
         }
 
         mAdapter.setItemClickListener(object: DetailCategoryListAdapter.OnItemClickListener{
-            override fun onClick(itemView: View, position: Int) {
-                mAdapter.changeState(position)
+            override fun onClick(v: View, position: Int, postId: Int) {
+                val dlg = CustomDialog(context)
+                dlg.show("이 레코드를 신고하시겠어요?", "신고")
+
+                dlg.setOnOkClickedListener { content ->
+                    when(content){
+                        "yes" -> {
+                            viewModel.reportRecord(postId)
+                            Toast.makeText(context, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
             }
         })
 

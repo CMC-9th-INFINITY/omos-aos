@@ -19,10 +19,46 @@ import retrofit2.Retrofit
 class RecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val detailRecordApi = retrofit.create(RecordService::class.java)
+    private val recordApi = retrofit.create(RecordService::class.java)
     private val likeApi = retrofit.create(LikeService::class.java)
     private val scrapApi = retrofit.create(ScrapService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
+
+    fun reportRecord(postId: Int){
+        recordApi.reportRecord(postId).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("ReportAPI", "Success: ${body!!.state}")
+                    }
+
+                    401 -> {
+                        Log.d("ReportAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        reportRecord(postId)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("ReportAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("ReportAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("ReportAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 
     fun saveScrap(postId: Int, userId: Int){
         scrapApi.saveScrap(postId, userId).enqueue(object: Callback<ResultState> {
@@ -172,7 +208,7 @@ class RecordRepository {
     val stateDetailRecord = MutableLiveData<Constant.ApiState>()
     fun getDetailRecord(postId: Int, userId: Int){
         stateDetailRecord.value = Constant.ApiState.LOADING
-        detailRecordApi.getDetailRecord(postId, userId).enqueue(object: Callback<Record> {
+        recordApi.getDetailRecord(postId, userId).enqueue(object: Callback<Record> {
             override fun onResponse(
                 call: Call<Record>,
                 response: Response<Record>

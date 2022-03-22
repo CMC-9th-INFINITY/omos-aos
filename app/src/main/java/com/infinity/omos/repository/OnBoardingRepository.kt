@@ -242,6 +242,7 @@ class OnBoardingRepository {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
+                        Log.d("checkDupEmailAPI", "Success")
                         stateDupEmail.postValue(body?.state)
                     }
 

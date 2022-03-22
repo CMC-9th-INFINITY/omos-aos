@@ -11,8 +11,8 @@ class ChangeProfileViewModel(application: Application): AndroidViewModel(applica
 
     private val repository = MyPageRepository()
 
-    fun updateProfile(nickName: String, profileUrl: String, userId: Int){
-        repository.updateProfile(nickName, profileUrl, userId)
+    fun updateProfile(nickname: String, profileUrl: String, userId: Int){
+        repository.updateProfile(nickname, profileUrl, userId)
     }
     fun getStateUpdateProfile(): LiveData<Constant.ApiState>{
         return repository.stateUpdateProfile

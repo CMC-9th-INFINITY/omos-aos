@@ -50,7 +50,7 @@ class DetailCategoryListAdapter internal constructor(
     private var deleteScrapList = ArrayList<Int>()
 
     interface OnItemClickListener{
-        fun onClick(v: View, position: Int)
+        fun onClick(v: View, position: Int, postId: Int)
     }
 
     interface OnItemLongClickListener{
@@ -159,16 +159,7 @@ class DetailCategoryListAdapter internal constructor(
 
                 // 신고하기 클릭
                 itemView.btn_report.setOnClickListener {
-                    val dlg = CustomDialog(context)
-                    dlg.show("이 레코드를 신고하시겠어요?", "신고")
-
-                    dlg.setOnOkClickedListener { content ->
-                        when(content){
-                            "yes" -> {
-                                Toast.makeText(context, "준비 중", Toast.LENGTH_SHORT).show()
-                            }
-                        }
-                    }
+                    itemClickListener.onClick(itemView, pos, category.recordId)
                 }
 
                 // 좋아요 클릭
@@ -254,11 +245,6 @@ class DetailCategoryListAdapter internal constructor(
 
     internal fun getDeleteScrap(): List<Int>{
         return deleteScrapList
-    }
-
-    internal fun changeState(position: Int){
-        category[position]?.isLiked = category[position]?.isLiked != true
-        notifyItemChanged(position)
     }
 
     internal fun clearCategory(){

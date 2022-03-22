@@ -269,7 +269,7 @@
                         android:id="@+id/fm_loved_music"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="55dp"
+                        android:layout_marginBottom="40dp"
                         android:visibility="gone">
 
                         <ImageView
@@ -374,7 +374,7 @@
                         android:id="@+id/ln_norecord"
                         android:layout_width="match_parent"
                         android:layout_height="164dp"
-                        android:layout_marginBottom="55dp"
+                        android:layout_marginBottom="40dp"
                         android:orientation="vertical"
                         android:padding="16dp"
                         android:background="@color/deep_dark">

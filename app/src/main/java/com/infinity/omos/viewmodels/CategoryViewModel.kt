@@ -38,4 +38,8 @@ class CategoryViewModel(application: Application): AndroidViewModel(application)
     fun deleteScrap(postId: Int, userId: Int){
         recordRepository.deleteScrap(postId, userId)
     }
+
+    fun reportRecord(postId: Int){
+        recordRepository.reportRecord(postId)
+    }
 }

@@ -50,7 +50,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
-        binding.etNick.setText(MyPageFragment.myNickName)
+        binding.etNick.setText(MyPageFragment.myNickname)
 
         initToolBar()
 
@@ -107,7 +107,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         binding.btnComplete.setOnClickListener {
-            if (binding.etNick.text.toString() == MyPageFragment.myNickName){
+            if (binding.etNick.text.toString() == MyPageFragment.myNickname){
                 // 기존과 동일한 닉네임일 때,
                 LoginActivity.showErrorMsg(
                     this,

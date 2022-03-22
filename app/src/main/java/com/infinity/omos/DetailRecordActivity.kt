@@ -333,7 +333,8 @@ class DetailRecordActivity : AppCompatActivity() {
             dlg.setOnOkClickedListener { content ->
                 when (content) {
                     "yes" -> {
-                        Toast.makeText(this, "준비 중", Toast.LENGTH_SHORT).show()
+                        viewModel.reportRecord(postId)
+                        Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

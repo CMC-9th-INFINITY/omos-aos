@@ -63,7 +63,7 @@ class MyPageFragment : Fragment() {
         viewModel.getDjProfile().observe(this) { profile ->
             profile?.let {
                 binding.data = it
-                myNickName = it.profile.nickName
+                myNickname = it.profile.nickname
             }
         }
 
@@ -214,6 +214,6 @@ class MyPageFragment : Fragment() {
     }
 
     companion object{
-        var myNickName = ""
+        var myNickname = ""
     }
 }

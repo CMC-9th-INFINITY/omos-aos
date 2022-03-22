@@ -5,6 +5,11 @@ import retrofit2.Call
 import retrofit2.http.*
 
 interface RecordService {
+    @PUT("api/records/{postId}/report")
+    fun reportRecord(
+        @Path("postId") postId: Int
+    ): Call<ResultState>
+
     @GET("api/records/{userId}")
     fun getMyRecord(
         @Path("userId") userId: Int
