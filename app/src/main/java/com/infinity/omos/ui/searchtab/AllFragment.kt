@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -59,8 +60,10 @@ class AllFragment : Fragment() {
             binding.lifecycleOwner = viewLifecycleOwner
         }
 
-        // 밑에 짤리는 현상 해결
-        binding.scrollView.setPadding(0, 0, 0, context!!.navigationHeight())
+        // 풀스크린 시 밑에 짤리는 현상 해결
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.scrollView.setPadding(0, 0, 0, context!!.navigationHeight())
+        }
 
         return binding.root
     }

@@ -21,9 +21,9 @@ class AllRecordsRepository {
     private val onBoardingRepository = OnBoardingRepository()
 
     var stateAllRecords = MutableLiveData<Constant.ApiState>()
-    fun setAllRecords(): MutableLiveData<Category>{
+    var allRecords = MutableLiveData<Category>()
+    fun setAllRecords(){
         stateAllRecords.value = Constant.ApiState.LOADING
-        var allRecords = MutableLiveData<Category>()
         recordApi.setAllRecords().enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val body = response.body()
@@ -57,8 +57,6 @@ class AllRecordsRepository {
                 t.stackTrace
             }
         })
-
-        return allRecords
     }
 
     var _category = MutableLiveData<List<Record>>()

@@ -74,12 +74,11 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     // 전체 레코드
-    private var allRecords = MutableLiveData<Category>()
     fun setAllRecords(){
-        allRecords = allRecordsRepository.setAllRecords()
+        allRecordsRepository.setAllRecords()
     }
     fun getAllRecords(): LiveData<Category>{
-        return allRecords
+        return allRecordsRepository.allRecords
     }
     fun getStateAllRecords(): LiveData<Constant.ApiState>{
         return allRecordsRepository.stateAllRecords

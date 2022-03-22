@@ -176,6 +176,10 @@ class WriteRecordActivity : AppCompatActivity() {
         viewModel.getStateSaveRecord().observe(this) { record ->
             record?.let {
                 if (it.state) {
+                    val intent1 = Intent("RECORD_UPDATE")
+                    intent1.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent1)
+
                     val intent2 = Intent("PROFILE_UPDATE")
                     intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                     sendBroadcast(intent2)
@@ -193,6 +197,9 @@ class WriteRecordActivity : AppCompatActivity() {
 
         viewModel.getStateUpdateRecord().observe(this) { state ->
             state?.let {
+                val intent = Intent("RECORD_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent)
                 finish()
             }
         }
@@ -283,16 +290,8 @@ class WriteRecordActivity : AppCompatActivity() {
                     category = GlobalFunction.categoryKrToEng(this, category)
                     if (!isModify){
                         viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
-
-                        val intent = Intent("RECORD_UPDATE")
-                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                        sendBroadcast(intent)
                     } else{
                         viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
-
-                        val intent = Intent("RECORD_UPDATE")
-                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                        sendBroadcast(intent)
                     }
 
                     Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()

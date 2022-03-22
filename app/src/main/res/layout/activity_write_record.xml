@@ -194,7 +194,6 @@
                     android:layout_height="match_parent"
                     android:gravity="top"
                     android:paddingVertical="16dp"
-                    android:layout_marginBottom="30dp"
                     android:hint="레코드 내용을 입력해주세요."
                     android:textColorHint="@color/dark_gray"
                     android:textColor="@color/white"

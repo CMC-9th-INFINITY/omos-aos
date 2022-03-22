@@ -105,6 +105,7 @@
                         android:textSize="16sp"
                         android:textColor="@color/gray_02"
                         android:textColorHint="@color/dark_gray"
+                        android:singleLine="true"
                         android:background="@drawable/rectangle_box"
                         android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"/>
 

@@ -4,6 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -52,8 +53,9 @@ class ArtistFragment : Fragment() {
         }
 
         // 밑에 짤리는 현상 해결
-        binding.recyclerView.setPadding(0, 0, 0, context!!.navigationHeight())
-
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.recyclerView.setPadding(0, 0, 0, context!!.navigationHeight())
+        }
         return binding.root
     }
 

@@ -98,7 +98,8 @@
                     android:scheme="kakao${KAKAO_OAUTH_KEY}" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.onboarding.LoginActivity" />
+        <activity
+            android:name=".ui.onboarding.LoginActivity"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true">

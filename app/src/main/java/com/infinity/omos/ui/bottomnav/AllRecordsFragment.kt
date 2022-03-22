@@ -1,5 +1,9 @@
 package com.infinity.omos.ui.bottomnav
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,9 +25,11 @@ class AllRecordFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentAllRecordsBinding
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeBroadcastReceiver()
     }
 
     override fun onCreateView(
@@ -84,6 +90,19 @@ class AllRecordFragment : Fragment() {
             AllRecords(resources.getString(R.string.story), category.story),
             AllRecords(resources.getString(R.string.lyrics), category.lyrics),
             AllRecords(resources.getString(R.string.free), category.free)
+        )
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                viewModel.setAllRecords()
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("RECORD_UPDATE")
         )
     }
 }
