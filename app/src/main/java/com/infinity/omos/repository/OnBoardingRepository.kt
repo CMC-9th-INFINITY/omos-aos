@@ -82,6 +82,7 @@ class OnBoardingRepository {
 
                     401 -> {
                         Log.d("LoginAPI", "Unauthorized")
+                        stateLogin.value = Constant.ApiState.ERROR
                     }
 
                     500 -> {
