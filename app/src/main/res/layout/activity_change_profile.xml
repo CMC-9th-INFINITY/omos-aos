@@ -107,10 +107,9 @@
                     android:layout_marginBottom="20dp"
                     android:text="완료"
                     android:textSize="16sp"
-                    android:textColor="@color/dark_gray"
+                    android:textColor="@color/white"
                     android:background="@drawable/rectangle_box"
-                    android:backgroundTint="@color/light_gray"
-                    android:enabled="false"
+                    android:backgroundTint="@color/orange"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"/>

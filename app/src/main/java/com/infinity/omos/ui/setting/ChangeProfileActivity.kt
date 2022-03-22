@@ -107,24 +107,14 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         binding.btnComplete.setOnClickListener {
-            if (binding.etNick.text.toString() == MyPageFragment.myNickname){
-                // 기존과 동일한 닉네임일 때,
-                LoginActivity.showErrorMsg(
-                    this,
-                    binding.etNick,
-                    binding.tvErrorNick,
-                    "기존과 동일한 닉네임입니다.",
-                    binding.linearNick
-                )
-            } else{
-                viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
-            }
+            viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
         }
 
         viewModel.getStateUpdateProfile().observe(this) { state ->
             state?.let {
                 when (it) {
                     Constant.ApiState.DONE -> {
+                        MyPageFragment.myNickname = binding.etNick.text.toString()
                         val intent = Intent("PROFILE_UPDATE")
                         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent)
