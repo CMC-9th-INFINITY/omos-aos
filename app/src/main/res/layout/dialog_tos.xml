@@ -18,12 +18,12 @@
     <TextView
         android:id="@+id/tv_tos"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:text="@string/tos"
         android:textColor="@color/dark_gray"
-        android:scrollbars="vertical"
         app:layout_constraintTop_toBottomOf="@+id/btn_exit"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

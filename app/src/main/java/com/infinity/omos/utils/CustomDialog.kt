@@ -57,7 +57,7 @@ class CustomDialog(private val context : Context) {
 
     fun showTosDialog(){
         dlg.setContentView(R.layout.dialog_tos)
-        dlg.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dlg.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
         dlg.setCanceledOnTouchOutside(true)
         dlg.setCancelable(true)
         dlg.show()
@@ -70,7 +70,7 @@ class CustomDialog(private val context : Context) {
 
     fun showPPDialog(){
         dlg.setContentView(R.layout.dialog_pp)
-        dlg.window!!.setLayout(WindowManager.LayoutParams.WRAP_CONTENT, WindowManager.LayoutParams.WRAP_CONTENT)
+        dlg.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)
         dlg.setCanceledOnTouchOutside(true)
         dlg.setCancelable(true)
         dlg.show()
