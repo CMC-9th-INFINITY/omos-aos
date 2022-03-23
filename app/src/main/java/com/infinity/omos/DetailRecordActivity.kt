@@ -238,7 +238,11 @@ class DetailRecordActivity : AppCompatActivity() {
                     }
 
                     Constant.ApiState.ERROR -> {
-
+                        Toast.makeText(this, "삭제된 레코드입니다.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent("RECORD_UPDATE")
+                        intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent)
+                        finish()
                     }
                 }
             }
