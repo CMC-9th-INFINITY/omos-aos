@@ -29,6 +29,7 @@ import android.view.WindowManager
 import android.os.Build
 import androidx.core.content.ContextCompat
 import com.infinity.omos.utils.Height.Companion.statusBarHeight
+import java.util.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -108,12 +109,13 @@ class MainActivity : AppCompatActivity() {
         // 검색 리스트 노출
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.etSearch.length() > 0 || binding.searchTab.visibility == View.VISIBLE) {
-                    if (isMusicSearch) {
-                        // 검색어 노출
-                        binding.lnRanking.visibility = View.GONE
-                        binding.rvSearch.visibility = View.VISIBLE
-                    }
+                if (binding.etSearch.length() > 0 && isMusicSearch) {
+                    // 검색어 노출
+                    binding.lnRanking.visibility = View.GONE
+                    binding.rvSearch.visibility = View.VISIBLE
+                } else{
+                    // MY 레코드 검색 (필터기능)
+                    fragmentMyRecord.mAdapter.filter.filter(p0.toString())
                 }
             }
 
@@ -215,7 +217,7 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = true
-                        stateSearch = false
+                        stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
@@ -262,7 +264,7 @@ class MainActivity : AppCompatActivity() {
                         toolbar.title = "MY DJ"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
-                        stateSearch = false
+                        stateSearch = true
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 

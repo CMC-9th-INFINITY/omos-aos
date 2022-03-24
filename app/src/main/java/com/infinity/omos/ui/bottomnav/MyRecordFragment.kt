@@ -5,12 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.findFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +24,7 @@ import com.infinity.omos.databinding.FragmentMyRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.fragment_my_record.*
 
 class MyRecordFragment : Fragment() {
@@ -28,6 +32,7 @@ class MyRecordFragment : Fragment() {
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyRecordBinding
     lateinit var broadcastReceiver: BroadcastReceiver
+    lateinit var mAdapter: MyRecordListAdapter
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -52,7 +57,7 @@ class MyRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = MyRecordListAdapter(requireContext())
+        mAdapter = MyRecordListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
