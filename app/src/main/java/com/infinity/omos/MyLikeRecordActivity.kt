@@ -6,9 +6,12 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +22,9 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.MyLikeRecordViewModel
 import com.infinity.omos.viewmodels.MyScrapRecordViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
+import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class MyLikeRecordActivity : AppCompatActivity() {
 
@@ -72,6 +77,38 @@ class MyLikeRecordActivity : AppCompatActivity() {
                 }
             }
         }
+
+        // 검색뷰 취소 버튼 클릭 시
+        binding.btnCancel.setOnClickListener {
+            cancelSearch()
+        }
+
+        // EditText 초기화
+        binding.btnRemove.setOnClickListener {
+            binding.etSearch.setText("")
+        }
+
+        // 검색 리스트 노출
+        binding.etSearch.addTextChangedListener(object : TextWatcher {
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                mAdapter.filter.filter(p0.toString())
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
+            override fun afterTextChanged(p0: Editable?) {}
+        })
+    }
+
+    private fun cancelSearch() {
+        binding.searchView.visibility = View.GONE
+        binding.toolbar.visibility = View.VISIBLE
+
+        binding.etSearch.setText("")
+
+        // 키보드 내리기
+        val inputMethodManager =
+            getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
 
     private fun initToolBar(){
@@ -96,6 +133,8 @@ class MyLikeRecordActivity : AppCompatActivity() {
             }
 
             R.id.action_search -> {
+                binding.toolbar.visibility = View.GONE
+                binding.searchView.visibility = View.VISIBLE
                 true
             }
             else -> super.onOptionsItemSelected(item)

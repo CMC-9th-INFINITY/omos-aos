@@ -162,7 +162,7 @@ class MyRecordListAdapter internal constructor(context: Context):
                         } else{
                             if (recordTitle.contains(search)){
                                 resultList.add(row)
-                            } else if (musicTitle.contains(charSearch)){
+                            } else if (musicTitle.contains(search)){
                                 resultList.add(row)
                             }
                         }
@@ -196,8 +196,9 @@ class MyRecordListAdapter internal constructor(context: Context):
 
     internal fun setDjRecord(rec: List<SimpleRecord>) {
         isDj = true
-        record.clear()
-        record.addAll(rec)
+        recordAll.clear()
+        recordAll.addAll(rec)
+        record.addAll(recordAll)
         notifyDataSetChanged()
     }
 

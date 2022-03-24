@@ -10,7 +10,6 @@
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_gradient_main.xml" value="0.2225" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.18958333333333333" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_rounded_rectangle_deep_dark.xml" value="0.19479166666666667" />
-        <entry key="..\:/git/OMOS/app/src/main/res/drawable/circle_check_box.xml" value="0.22135416666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_bell.xml" value="0.2225" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_bell1.xml" value="0.2225" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_bell2.xml" value="0.221" />
@@ -25,31 +24,23 @@
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_stroke_box.xml" value="0.14895833333333333" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/rectangle_stroke_box2.xml" value="0.1" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/selector_heart.xml" value="0.2" />
-        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_off.xml" value="0.19270833333333334" />
-        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_on.xml" value="0.19270833333333334" />
-        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_selector.xml" value="0.19270833333333334" />
-        <entry key="..\:/git/OMOS/app/src/main/res/drawable/toggle_thumb.xml" value="0.19270833333333334" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_album.xml" value="0.152" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_artist.xml" value="0.13858695652173914" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_category.xml" value="0.234375" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_change_profile.xml" value="0.15677083333333333" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_change_pw.xml" value="0.15677083333333333" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_delete_account.xml" value="0.15677083333333333" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_detail_record.xml" value="0.24635416666666668" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_dj.xml" value="0.176" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_input_lyrics.xml" value="0.24635416666666668" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_login.xml" value="0.12" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_main.xml" value="0.136" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_my_like_record.xml" value="0.1734375" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_my_like_record.xml" value="0.24635416666666668" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_my_record_detail.xml" value="0.23324275362318841" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_my_scrap_record.xml" value="0.1734375" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_my_scrap_record.xml" value="0.2140625" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_record_detail.xml" value="0.22" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_record_oneline.xml" value="0.536" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_register.xml" value="0.16" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_register_nick.xml" value="0.26506024096385544" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_register_nick.xml" value="0.1875" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_search_music.xml" value="0.2453125" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_select_category.xml" value="0.2" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_setting.xml" value="0.264" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_user_record_detail.xml" value="0.23324275362318841" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_write_lyrics.xml" value="0.24635416666666668" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/activity_write_record.xml" value="0.152" />
@@ -69,7 +60,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_blank_b.xml" value="0.2259963768115942" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_music.xml" value="0.17708333333333334" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_dj.xml" value="0.152" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_page.xml" value="0.3229166666666667" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_page.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_record.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_today.xml" value="0.3068893528183716" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_album_detail_item.xml" value="0.18070652173913043" />
@@ -83,11 +74,9 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_loading_item.xml" value="0.1082427536231884" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_lyrics_item.xml" value="0.22916666666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_music_item.xml" value="0.152" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_mydj_item.xml" value="0.2" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_mydj_item.xml" value="0.536" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_myrecord_item.xml" value="0.26666666666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_oneline_category_item.xml" value="0.4" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_scrap_item.xml" value="0.15677083333333333" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/list_scrap_like_item.xml" value="0.1734375" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_top_rank_item.xml" value="0.2140625" />
         <entry key="..\:/git/OMOS/app/src/main/res/menu/appbar_action.xml" value="0.165625" />
         <entry key="..\:/git/OMOS/app/src/main/res/menu/appbar_action_filter.xml" value="0.176" />
@@ -95,9 +84,6 @@
         <entry key="..\:/git/OMOS/app/src/main/res/menu/appbar_action_next.xml" value="0.12552083333333333" />
         <entry key="..\:/git/OMOS/app/src/main/res/menu/appbar_action_record.xml" value="0.171875" />
         <entry key="..\:/git/OMOS/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.152" />
-        <entry key="..\:/git/OMOS/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1625" />
-        <entry key="..\:/git/OMOS/app/src/main/res/mipmap-anydpi-v26/ic_launcher_omos.xml" value="0.16510416666666666" />
-        <entry key="..\:/git/OMOS/app/src/main/res/mipmap-anydpi-v26/ic_launcher_omos_round.xml" value="0.16510416666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/xml/path.xml" value="0.20520833333333333" />
       </map>
     </option>
