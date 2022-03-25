@@ -182,6 +182,7 @@ class MyRecordListAdapter internal constructor(context: Context):
     }
 
     internal fun setRecord(rec: List<SimpleRecord>) {
+        record.clear()
         recordAll.clear()
         recordAll.addAll(rec)
         record.addAll(recordAll)
