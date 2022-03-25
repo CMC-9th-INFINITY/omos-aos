@@ -21,18 +21,21 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.Update
 import com.infinity.omos.databinding.ActivityWriteLyricsBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.changeList
+import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.WriteLyricsViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_write_record.*
 import kotlinx.android.synthetic.main.activity_write_record.toolbar
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -55,6 +58,8 @@ class WriteLyricsActivity : AppCompatActivity() {
 
     private lateinit var mAdapter: LyricsListAdapter
     private var userId = GlobalApplication.prefs.getInt("userId")
+    private var imageFile: File? = null
+    lateinit var awsConnector: AWSConnector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -62,6 +67,8 @@ class WriteLyricsActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_write_lyrics)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        awsConnector = AWSConnector(this)
 
         category = intent.getStringExtra("category")!!
         musicId = intent.getStringExtra("musicId")!!
@@ -78,6 +85,12 @@ class WriteLyricsActivity : AppCompatActivity() {
             binding.etRecordTitle.setText(recordTitle)
             binding.tvTitleCount.text = binding.etRecordTitle.length().toString()
             postId = intent.getIntExtra("postId", -1)
+
+            // 글 대표 이미지
+            recordImageUrl = intent.getStringExtra("recordImageUrl")!!
+            Glide.with(binding.imgRecordTitle.context)
+                .load(recordImageUrl)
+                .into(binding.imgRecordTitle)
         }
 
         var interpret = intent.getStringExtra("interpret")

@@ -17,6 +17,7 @@ import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant

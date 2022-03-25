@@ -76,16 +76,10 @@ class WriteRecordActivity : AppCompatActivity() {
 
         category = intent.getStringExtra("category")!!
         musicId = intent.getStringExtra("musicId")!!
-        recordImageUrl = intent.getStringExtra("recordImageUrl")!!
         viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
         viewModel.artists.value = intent.getStringExtra("artists")
         viewModel.albumImageUrl.value = intent.getStringExtra("albumImageUrl")
         viewModel.category.value = category
-
-        // 글 대표 이미지
-        Glide.with(binding.imgRecordTitle.context)
-            .load(recordImageUrl)
-            .into(binding.imgRecordTitle)
 
         var currentTime = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy MM dd", Locale.getDefault())
@@ -107,6 +101,13 @@ class WriteRecordActivity : AppCompatActivity() {
             binding.tvTitleCount.text = binding.etRecordTitle.length().toString()
             binding.tvContentsCount.text = recordContents.length.toString()
             postId = intent.getIntExtra("postId", -1)
+
+            // 글 대표 이미지
+            recordImageUrl = intent.getStringExtra("recordImageUrl")!!
+            Glide.with(binding.imgRecordTitle.context)
+                .load(recordImageUrl)
+                .into(binding.imgRecordTitle)
+
 
             if (viewModel.category.value == resources.getString(R.string.a_line)){
                 binding.alineContents.setText(recordContents)
@@ -294,11 +295,6 @@ class WriteRecordActivity : AppCompatActivity() {
                     Toast.makeText(this, "제목 또는 내용을 기입하세요.", Toast.LENGTH_SHORT).show()
                 } else{
                     category = GlobalFunction.categoryKrToEng(this, category)
-
-                    if (imageFile != null){
-                        // 이미지 파일 s3 업로드
-                        awsConnector.uploadFile("profile/$userId.png", imageFile!!)
-                    }
 
                     if (!isModify){
                         viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
