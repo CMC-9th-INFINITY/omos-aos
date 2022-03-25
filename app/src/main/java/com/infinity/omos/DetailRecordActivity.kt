@@ -58,6 +58,7 @@ class DetailRecordActivity : AppCompatActivity() {
     private var interpret = ""
     private var recordTitle = ""
     private var recordContents = ""
+    private var recordImageUrl = ""
     private var isPublic: Boolean? = null
 
     lateinit var broadcastReceiver: BroadcastReceiver
@@ -93,6 +94,7 @@ class DetailRecordActivity : AppCompatActivity() {
                 stateCategory = it.category
                 recordTitle = it.recordTitle
                 recordContents = it.recordContents
+                recordImageUrl = it.recordImageUrl
                 isPublic = it.isPublic
                 albumImageUrl = it.music.albumImageUrl
                 musicTitle = it.music.musicTitle
@@ -408,6 +410,7 @@ class DetailRecordActivity : AppCompatActivity() {
                         intent.putExtra("category", GlobalFunction.categoryEngToKr(this, stateCategory))
                         intent.putExtra("modify", true)
                         intent.putExtra("recordTitle", recordTitle)
+                        intent.putExtra("recordImageUrl", recordImageUrl)
                         intent.putExtra("lyrics", lyrics)
                         intent.putExtra("interpret", interpret)
                         intent.putExtra("isPublic", isPublic)
@@ -425,6 +428,7 @@ class DetailRecordActivity : AppCompatActivity() {
                         intent.putExtra("modify", true)
                         intent.putExtra("recordTitle", recordTitle)
                         intent.putExtra("recordContents", recordContents)
+                        intent.putExtra("recordImageUrl", recordImageUrl)
                         intent.putExtra("isPublic", isPublic)
                         intent.putExtra("postId", postId)
                         startActivity(intent)

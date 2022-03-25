@@ -145,6 +145,7 @@ class OnBoardingRepository {
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("SnsLoginAPI", t.message.toString())
+                stateSnsLogin.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })

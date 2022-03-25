@@ -21,13 +21,16 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.bumptech.glide.Glide
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.Update
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
 import com.infinity.omos.viewmodels.WriteRecordViewModel
@@ -37,6 +40,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 import kotlinx.android.synthetic.main.activity_write_record.*
+import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -58,6 +62,8 @@ class WriteRecordActivity : AppCompatActivity() {
     private var isModify = false
 
     private var userId = GlobalApplication.prefs.getInt("userId")
+    private var imageFile: File? = null
+    lateinit var awsConnector: AWSConnector
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,12 +72,20 @@ class WriteRecordActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
+        awsConnector = AWSConnector(this)
+
         category = intent.getStringExtra("category")!!
         musicId = intent.getStringExtra("musicId")!!
+        recordImageUrl = intent.getStringExtra("recordImageUrl")!!
         viewModel.musicTitle.value = intent.getStringExtra("musicTitle")
         viewModel.artists.value = intent.getStringExtra("artists")
         viewModel.albumImageUrl.value = intent.getStringExtra("albumImageUrl")
         viewModel.category.value = category
+
+        // 글 대표 이미지
+        Glide.with(binding.imgRecordTitle.context)
+            .load(recordImageUrl)
+            .into(binding.imgRecordTitle)
 
         var currentTime = System.currentTimeMillis()
         val dateFormat = SimpleDateFormat("yyyy MM dd", Locale.getDefault())
@@ -121,7 +135,7 @@ class WriteRecordActivity : AppCompatActivity() {
         }
 
         // 이미지 넣기
-        btn_gallery.setOnClickListener {
+        binding.btnGallery.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
             result.launch(intent)
         }
@@ -147,19 +161,11 @@ class WriteRecordActivity : AppCompatActivity() {
             when(it.resultCode){
                 RESULT_OK -> {
                     CropImage.getActivityResult(it.data)?.let { cropResult ->
-                        if(Build.VERSION.SDK_INT < 28) {
-                            val bitmap = MediaStore.Images.Media.getBitmap(
-                                this.contentResolver,
-                                cropResult.uri
-                            )
-                            val bd = BitmapDrawable(resources, bitmap)
-                            img_record_title.setImageDrawable(bd)
-                        } else {
-                            val source = ImageDecoder.createSource(this.contentResolver, cropResult.uri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            val bd = BitmapDrawable(resources, bitmap)
-                            img_record_title.setImageDrawable(bd)
-                        }
+                        val imageUri = cropResult.uri
+                        Glide.with(binding.imgRecordTitle.context)
+                            .load(imageUri)
+                            .into(binding.imgRecordTitle)
+                        imageFile = imageUri.toFile()
                     }
                 }
 
@@ -288,6 +294,12 @@ class WriteRecordActivity : AppCompatActivity() {
                     Toast.makeText(this, "제목 또는 내용을 기입하세요.", Toast.LENGTH_SHORT).show()
                 } else{
                     category = GlobalFunction.categoryKrToEng(this, category)
+
+                    if (imageFile != null){
+                        // 이미지 파일 s3 업로드
+                        awsConnector.uploadFile("profile/$userId.png", imageFile!!)
+                    }
+
                     if (!isModify){
                         viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
                     } else{
