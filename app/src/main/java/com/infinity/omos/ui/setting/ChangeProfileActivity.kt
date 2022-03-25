@@ -31,6 +31,7 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
+import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.bottomnav.MyPageFragment
@@ -64,16 +65,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
-        binding.etNick.setText(MyPageFragment.myNickname)
-
-        // 프로필 이미지
-        Glide.with(binding.imgProfile.context)
-            .load(MyPageFragment.myProfileUrl)
-            .error(R.drawable.ic_profile)
-            .fallback(R.drawable.ic_profile)
-            .into(binding.imgProfile)
-
-        val awsConnector = AWSConnector(this)
+        binding.data = Profile(MyPageFragment.myNickname, MyPageFragment.myProfileUrl, userId)
 
         initToolBar()
 
@@ -90,7 +82,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                 }
 
                 RESULT_CANCELED -> {
-                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+
                 }
 
                 else -> {
@@ -123,6 +115,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             }
         }
 
+        val awsConnector = AWSConnector(this)
         binding.btnComplete.setOnClickListener {
             if (imageFile != null){
                 // 이미지 파일 s3 업로드

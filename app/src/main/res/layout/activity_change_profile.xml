@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="data"
+            type="com.infinity.omos.data.Profile" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -34,7 +40,8 @@
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/img_profile"
                     android:layout_width="96dp"
-                    android:layout_height="96dp"/>
+                    android:layout_height="96dp"
+                    app:profileImageUrl="@{data.profileUrl}"/>
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -68,6 +75,7 @@
                     android:layout_marginBottom="8dp"
                     android:paddingHorizontal="16dp"
                     android:paddingVertical="14dp"
+                    android:text="@{data.nickname}"
                     android:hint="닉네임을 입력해주세요."
                     android:textSize="16sp"
                     android:textColor="@color/gray_02"
