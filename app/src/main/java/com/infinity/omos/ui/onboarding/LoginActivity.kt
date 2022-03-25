@@ -148,7 +148,7 @@ class LoginActivity : AppCompatActivity() {
             }
             else if (token != null) {
                 // 소셜 로그인 인증 성공 시 이미 가입된 회원인지 확인
-                UserApiClient.instance.me { user, error ->
+                UserApiClient.instance.me { user, _ ->
                     userId = user?.id.toString()+"@kakao.com"
                     viewModel.checkSnsLogin(UserSnsLogin(userId))
                 }
