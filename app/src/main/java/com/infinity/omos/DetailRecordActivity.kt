@@ -86,6 +86,8 @@ class DetailRecordActivity : AppCompatActivity() {
                 binding.tvHeartCnt.text = String.format("%03d", it.likeCnt)
                 binding.tvStarCnt.text = String.format("%03d", it.scrapCnt)
 
+                Log.d("jaemin", it.recordImageUrl)
+
                 prevHeart = it.isLiked
                 prevStar = it.isScraped
                 heartCnt = it.likeCnt

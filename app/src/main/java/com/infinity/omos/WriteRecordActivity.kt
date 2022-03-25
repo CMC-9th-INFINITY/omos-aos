@@ -297,8 +297,27 @@ class WriteRecordActivity : AppCompatActivity() {
                     category = GlobalFunction.categoryKrToEng(this, category)
 
                     if (!isModify){
-                        viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, recordImageUrl, recordTitle, userId))
+
+                        val currentTime = System.currentTimeMillis()
+                        if (imageFile != null){
+                            // 이미지 파일 s3 업로드
+                            awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
+                        }
+
+                        viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
                     } else{
+
+                        if (imageFile != null){
+                            // 이미지 파일 s3 업로드
+                            if (recordImageUrl == ""){
+                                val currentTime = System.currentTimeMillis()
+                                awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
+                                recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
+                            } else{
+                                awsConnector.uploadFile(recordImageUrl, imageFile!!)
+                            }
+                        }
+
                         viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
                     }
 
