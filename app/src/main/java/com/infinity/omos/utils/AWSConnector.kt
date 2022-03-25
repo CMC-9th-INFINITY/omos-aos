@@ -2,11 +2,15 @@ package com.infinity.omos.utils
 
 import android.app.Activity
 import android.util.Log
+import com.amazonaws.auth.BasicAWSCredentials
 import com.amazonaws.mobile.client.AWSMobileClient
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
+import com.amazonaws.regions.Region
+import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3Client
+import com.infinity.omos.BuildConfig
 import java.io.File
 
 class AWSConnector constructor(val activity: Activity) {
@@ -63,7 +67,7 @@ class AWSConnector constructor(val activity: Activity) {
             val transferUtility = TransferUtility.builder()
                 .context(activity)
                 .awsConfiguration(AWSMobileClient.getInstance().configuration)
-                .s3Client(AmazonS3Client(AWSMobileClient.getInstance().credentialsProvider))
+                .s3Client(AmazonS3Client(BasicAWSCredentials(BuildConfig.IAM_ACCESS_KEY, BuildConfig.IAM_SECRET_KEY), Region.getRegion(Regions.AP_NORTHEAST_2)))
                 .build()
             job(transferUtility)
         }.execute()

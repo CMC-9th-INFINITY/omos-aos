@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.database.Cursor
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.ImageDecoder
 import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
@@ -23,8 +24,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
+import com.bumptech.glide.Glide
+import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
@@ -32,7 +37,6 @@ import com.infinity.omos.ui.bottomnav.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.utils.Test
 import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -54,13 +58,20 @@ class ChangeProfileActivity : AppCompatActivity() {
     private lateinit var cropResult: ActivityResultLauncher<Intent>
 
     private val userId = GlobalApplication.prefs.getInt("userId")
-    private lateinit var listener: TransferListener
+    private var imageFile: File? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
         binding.etNick.setText(MyPageFragment.myNickname)
+
+        // 프로필 이미지
+        Glide.with(binding.imgProfile.context)
+            .load(MyPageFragment.myProfileUrl)
+            .error(R.drawable.ic_profile)
+            .fallback(R.drawable.ic_profile)
+            .into(binding.imgProfile)
 
         val awsConnector = AWSConnector(this)
 
@@ -92,34 +103,13 @@ class ChangeProfileActivity : AppCompatActivity() {
             when (it.resultCode) {
                 RESULT_OK -> {
                     CropImage.getActivityResult(it.data)?.let { cropResult ->
-                        if (Build.VERSION.SDK_INT < 28) {
-                            val bitmap = MediaStore.Images.Media.getBitmap(
-                                this.contentResolver,
-                                cropResult.uri
-                            )
-                            val bd = BitmapDrawable(resources, bitmap)
-                            binding.imgProfile.setImageDrawable(bd)
-
-                            // 이미지 파일 s3 업로드
-                            val imageUri = getImageUri(this, bitmap)
-                            val path = getPathFromUri(imageUri)
-                            val file = File(path)
-
-                            awsConnector.uploadFile("aws1.png", file)
-                        } else {
-                            val source =
-                                ImageDecoder.createSource(this.contentResolver, cropResult.uri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            val bd = BitmapDrawable(resources, bitmap)
-                            binding.imgProfile.setImageDrawable(bd)
-
-                            // 이미지 파일 s3 업로드
-                            val imageUri = getImageUri(this, bitmap)
-                            val path = getPathFromUri(imageUri)
-                            val file = File(path)
-
-                            awsConnector.uploadFile("aws1.png", file)
-                        }
+                        val imageUri = cropResult.uri
+                        Glide.with(binding.imgProfile.context)
+                            .load(imageUri)
+                            .error(R.drawable.ic_profile)
+                            .fallback(R.drawable.ic_profile)
+                            .into(binding.imgProfile)
+                        imageFile = imageUri.toFile()
                     }
                 }
 
@@ -134,7 +124,12 @@ class ChangeProfileActivity : AppCompatActivity() {
         }
 
         binding.btnComplete.setOnClickListener {
-            viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
+            if (imageFile != null){
+                // 이미지 파일 s3 업로드
+                awsConnector.uploadFile("profile/$userId.png", imageFile!!)
+            }
+
+            viewModel.updateProfile(binding.etNick.text.toString(), "${BuildConfig.S3_BASE_URL}profile/${userId}.png", userId)
         }
 
         viewModel.getStateUpdateProfile().observe(this) { state ->
@@ -142,6 +137,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                 when (it) {
                     Constant.ApiState.DONE -> {
                         MyPageFragment.myNickname = binding.etNick.text.toString()
+                        MyPageFragment.myProfileUrl = "${BuildConfig.S3_BASE_URL}profile/${userId}.png"
                         val intent = Intent("PROFILE_UPDATE")
                         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent)
@@ -213,35 +209,6 @@ class ChangeProfileActivity : AppCompatActivity() {
                 }
             }
         })
-    }
-
-    fun bitmapToFile(bitmap: Bitmap, path: String): File {
-        var file = File(path)
-        var out: OutputStream? = null
-        try {
-            file.createNewFile()
-            out = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 80, out)
-        } finally {
-            out?.close()
-        }
-
-        return file
-    }
-
-    fun getImageUri(inContext: Context, inImage: Bitmap): Uri? {
-        val bytes = ByteArrayOutputStream()
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
-        val path = Images.Media.insertImage(inContext.contentResolver, inImage, "Title", null)
-        return Uri.parse(path)
-    }
-
-    private fun getPathFromUri(uri: Uri?): String {
-        val cursor: Cursor? = contentResolver.query(uri!!, null, null, null, null)
-        cursor!!.moveToNext()
-        val path: String = cursor.getString(cursor.getColumnIndexOrThrow("_data"))
-        cursor.close()
-        return path
     }
 
     private fun cropImage(uri: Uri?) {

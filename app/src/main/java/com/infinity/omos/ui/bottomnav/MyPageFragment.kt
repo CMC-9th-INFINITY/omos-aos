@@ -64,6 +64,7 @@ class MyPageFragment : Fragment() {
             profile?.let {
                 binding.data = it
                 myNickname = it.profile.nickname
+                myProfileUrl = it.profile.profileUrl
             }
         }
 
@@ -215,5 +216,6 @@ class MyPageFragment : Fragment() {
 
     companion object{
         var myNickname = ""
+        var myProfileUrl = ""
     }
 }
