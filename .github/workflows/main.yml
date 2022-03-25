@@ -72,14 +72,13 @@ jobs:
       with:
         slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
         channels: ${{ secrets.SLACK_CHANNEL_DEPLOY }}
-        file_path: 'app/debug/app-debug.apk'
+        file_path: 'app/build/outputs/apk/debug/app-debug.apk'
         file_name: 'app-debug.apk'
         file_type: 'apk'
         initial_comment: 'OMOS 최신 빌드 앱 배포(Android) - ${{github.event.head_commit.message}}'
-
        
     - name: apk upload
       uses: actions/upload-artifact@v2
       with:
         name: app-debug.apk
-        path: app/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
