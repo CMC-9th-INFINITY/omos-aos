@@ -114,7 +114,6 @@ class LoginActivity : AppCompatActivity() {
         // 소셜 로그인 콜백
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
-                Log.d("jaemin", "test1")
                 when {
                     error.toString() == AccessDenied.toString() -> {
                         Toast.makeText(this, "접근이 거부 됨(동의 취소)", Toast.LENGTH_SHORT).show()
@@ -148,7 +147,6 @@ class LoginActivity : AppCompatActivity() {
                 }
             }
             else if (token != null) {
-                Log.d("jaemin", "test2")
                 // 소셜 로그인 인증 성공 시 이미 가입된 회원인지 확인
                 UserApiClient.instance.me { user, error ->
                     userId = user?.id.toString()+"@kakao.com"
