@@ -35,7 +35,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(keystoreProperties['RELEASE_STORE_FILE'])
+            storeFile file("keystore\\jaeminKey.jks")
             storePassword keystoreProperties['RELEASE_STORE_PASSWORD']
             keyAlias keystoreProperties['RELEASE_KEY_ALIAS']
             keyPassword keystoreProperties['RELEASE_KEY_PASSWORD']
