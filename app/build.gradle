@@ -30,7 +30,7 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(properties['RELEASE_STORE_FILE'])
+            storeFile file(RELEASE_STORE_FILE)
             storePassword properties['RELEASE_STORE_PASSWORD']
             keyAlias properties['RELEASE_KEY_ALIAS']
             keyPassword properties['RELEASE_KEY_PASSWORD']
