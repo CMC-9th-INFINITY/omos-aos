@@ -23,55 +23,79 @@ jobs:
           java-version: '11'
           java-package: jdk
 
-      - name: Decode BASE URL
+#      - name: Decode BASE URL
+#        env:
+#          BASE_URL: ${{secrets.BASE_URL}}
+#        run: echo base_url="$BASE_URL" >> ./local.properties
+#
+#      - name: Decode KAKAO NATIVE APP KEY
+#        env:
+#          KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
+#        run: echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
+#
+#      - name: Decode KAKAO OAUTH KEY
+#        env:
+#          KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
+#        run: echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
+#
+#      - name: Decode AWS IAM ACCESS KEY
+#        env:
+#          IAM_ACCESS_KEY: ${{secrets.IAM_ACCESS_KEY}}
+#        run: echo iam_access_key="$IAM_ACCESS_KEY" >> ./local.properties
+#
+#      - name: Decode AWS IAM SECRET KEY
+#        env:
+#          IAM_SECRET_KEY: ${{secrets.IAM_SECRET_KEY}}
+#        run: echo iam_secret_key="$IAM_SECRET_KEY" >> ./local.properties
+#
+#      - name: Decode S3 BASE URL
+#        env:
+#          S3_BASE_URL: ${{secrets.S3_BASE_URL}}
+#        run: echo s3_base_url="$S3_BASE_URL" >> ./local.properties
+#
+#      - name: Decode RELEASE STORE FILE
+#        env:
+#          RELEASE_STORE_FILE: ${{secrets.RELEASE_STORE_FILE}}
+#        run: echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
+#
+#      - name: Decode RELEASE STORE PASSWORD
+#        env:
+#          RELEASE_STORE_PASSWORD: ${{secrets.RELEASE_STORE_PASSWORD}}
+#        run: echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
+#
+#      - name: Decode RELEASE KEY ALIAS
+#        env:
+#          RELEASE_KEY_ALIAS: ${{secrets.RELEASE_KEY_ALIAS}}
+#        run: echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
+#
+#      - name: Decode RELEASE KEY PASSWORD
+#        env:
+#          RELEASE_KEY_PASSWORD: ${{secrets.RELEASE_KEY_PASSWORD}}
+#        run: echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
+
+      - name: Decode Secret Action (local.properties)
         env:
           BASE_URL: ${{secrets.BASE_URL}}
-        run: echo base_url="$BASE_URL" >> ./local.properties
-
-      - name: Decode KAKAO NATIVE APP KEY
-        env:
           KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
-        run: echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
-
-      - name: Decode KAKAO OAUTH KEY
-        env:
           KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
-        run: echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
-
-      - name: Decode AWS IAM ACCESS KEY
-        env:
           IAM_ACCESS_KEY: ${{secrets.IAM_ACCESS_KEY}}
-        run: echo iam_access_key="$IAM_ACCESS_KEY" >> ./local.properties
-
-      - name: Decode AWS IAM SECRET KEY
-        env:
           IAM_SECRET_KEY: ${{secrets.IAM_SECRET_KEY}}
-        run: echo iam_secret_key="$IAM_SECRET_KEY" >> ./local.properties
-
-      - name: Decode S3 BASE URL
-        env:
           S3_BASE_URL: ${{secrets.S3_BASE_URL}}
-        run: echo s3_base_url="$S3_BASE_URL" >> ./local.properties
-
-      - name: Decode RELEASE STORE FILE
-        env:
           RELEASE_STORE_FILE: ${{secrets.RELEASE_STORE_FILE}}
-        run: echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
-
-      - name: Decode RELEASE STORE PASSWORD
-        env:
           RELEASE_STORE_PASSWORD: ${{secrets.RELEASE_STORE_PASSWORD}}
-        run: echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
-
-      - name: Decode RELEASE KEY ALIAS
-        env:
           RELEASE_KEY_ALIAS: ${{secrets.RELEASE_KEY_ALIAS}}
-        run: echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
-
-      - name: Decode RELEASE KEY PASSWORD
-        env:
           RELEASE_KEY_PASSWORD: ${{secrets.RELEASE_KEY_PASSWORD}}
-        run: echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
+        run: |
+          echo base_url="$BASE_URL" >> ./local.properties
+          echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
+          echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
+          echo iam_access_key="$IAM_ACCESS_KEY" >> ./local.properties
+          echo iam_secret_key="$IAM_SECRET_KEY" >> ./local.properties
+          echo s3_base_url="$S3_BASE_URL" >> ./local.properties
+          echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
+          echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
+          echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
+          echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
 
       - name: Generate Keystore file from Github Secrets
         env:
