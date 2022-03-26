@@ -19,6 +19,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
+import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
@@ -160,19 +161,11 @@ class WriteLyricsActivity : AppCompatActivity() {
             when(it.resultCode){
                 RESULT_OK -> {
                     CropImage.getActivityResult(it.data)?.let { cropResult ->
-                        if(Build.VERSION.SDK_INT < 28) {
-                            val bitmap = MediaStore.Images.Media.getBitmap(
-                                this.contentResolver,
-                                cropResult.uri
-                            )
-                            val bd = BitmapDrawable(resources, bitmap)
-                            img_record_title.setImageDrawable(bd)
-                        } else {
-                            val source = ImageDecoder.createSource(this.contentResolver, cropResult.uri)
-                            val bitmap = ImageDecoder.decodeBitmap(source)
-                            val bd = BitmapDrawable(resources, bitmap)
-                            img_record_title.setImageDrawable(bd)
-                        }
+                        val imageUri = cropResult.uri
+                        Glide.with(binding.imgRecordTitle.context)
+                            .load(imageUri)
+                            .into(binding.imgRecordTitle)
+                        imageFile = imageUri.toFile()
                     }
                 }
 
