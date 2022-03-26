@@ -61,8 +61,9 @@ class MyPageRepository {
         })
     }
 
-    var stateSignOut = MutableLiveData<ResultState>()
+    var stateSignOut = MutableLiveData<Constant.ApiState>()
     fun signOut(userId: Int){
+        stateSignOut.value = Constant.ApiState.LOADING
         myPageApi.signOut(userId).enqueue(object: Callback<ResultState> {
             override fun onResponse(
                 call: Call<ResultState>,
@@ -71,8 +72,8 @@ class MyPageRepository {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
-                        Log.d("SignOutAPI", "Success")
-                        stateSignOut.postValue(body!!)
+                        Log.d("SignOutAPI", "Success: ${body!!.state}")
+                        stateSignOut.value = Constant.ApiState.DONE
                     }
 
                     401 -> {
@@ -84,6 +85,7 @@ class MyPageRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("SignOutAPI", errorBody!!.message)
+                        stateSignOut.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -94,6 +96,7 @@ class MyPageRepository {
 
             override fun onFailure(call: Call<ResultState>, t: Throwable) {
                 Log.d("SignOutAPI", t.message.toString())
+                stateSignOut.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
         })

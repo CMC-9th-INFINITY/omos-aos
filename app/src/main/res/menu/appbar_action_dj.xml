@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_report"
+        android:icon="@drawable/ic_report"
+        android:title="Report"
+        app:showAsAction="always"/>
+
+</menu>

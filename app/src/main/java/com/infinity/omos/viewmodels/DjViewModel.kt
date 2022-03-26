@@ -4,16 +4,15 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.data.DjProfile
-import com.infinity.omos.data.Profile
-import com.infinity.omos.data.Record
-import com.infinity.omos.data.SimpleRecord
+import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyDjRepository
+import com.infinity.omos.repository.MyPageRepository
 
 class DjViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: MyDjRepository = MyDjRepository()
+    private val myPageRepository: MyPageRepository = MyPageRepository()
 
     fun setDjProfile(fromUserId: Int, toUserId: Int){
         repository.getDjProfile(fromUserId, toUserId)
@@ -44,5 +43,13 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getStateDjRecord(): LiveData<Constant.ApiState>{
         return repository.stateDjRecord
+    }
+
+    // 계정탈퇴
+    fun signOut(userId: Int){
+        myPageRepository.signOut(userId)
+    }
+    fun getStateSignOut(): LiveData<Constant.ApiState> {
+        return myPageRepository.stateSignOut
     }
 }

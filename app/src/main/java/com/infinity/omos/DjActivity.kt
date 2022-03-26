@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
@@ -19,6 +20,7 @@ import com.infinity.omos.databinding.ActivityDjBinding
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.onboarding.LoginActivity
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.DjViewModel
 import kotlinx.android.synthetic.main.activity_dj.*
@@ -33,6 +35,7 @@ class DjActivity : AppCompatActivity() {
     private val fromUserId = GlobalApplication.prefs.getInt("userId")
     private var toUserId = -1
     private var isClickFollow = false
+    lateinit var dlg: CustomDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -122,6 +125,30 @@ class DjActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getStateSignOut().observe(this) { state ->
+            state?.let {
+                dlg.dismissProgress()
+                val intent1 = Intent("RECORD_UPDATE")
+                intent1.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent1)
+
+                val intent2 = Intent("DJ_UPDATE")
+                intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent2)
+
+                val intent3 = Intent("LIKE_UPDATE")
+                intent3.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent3)
+
+                val intent4 = Intent("SCRAP_UPDATE")
+                intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent4)
+
+                finish()
+                Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.btnFollow.setOnClickListener {
             if (binding.btnFollow.text == "팔로우"){
                 setFollowing()
@@ -155,12 +182,34 @@ class DjActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.appbar_action_dj, menu)
+
+        return true
+    }
+
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             android.R.id.home -> {
                 finish()
                 true
             }
+
+            R.id.action_report -> {
+                dlg = CustomDialog(this)
+                dlg.show("이 DJ를 신고하시겠어요?", "신고")
+
+                dlg.setOnOkClickedListener { content ->
+                    when(content){
+                        "yes" -> {
+                            viewModel.signOut(toUserId)
+                            dlg.showProgress()
+                        }
+                    }
+                }
+                true
+            }
+
             else -> super.onOptionsItemSelected(item)
         }
     }

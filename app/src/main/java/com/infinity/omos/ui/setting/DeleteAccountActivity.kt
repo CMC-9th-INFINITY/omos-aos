@@ -4,11 +4,13 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.bottomnav.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
@@ -34,14 +36,21 @@ class DeleteAccountActivity : AppCompatActivity() {
 
         viewModel.getStateSignOut().observe(this) { state ->
             state?.let {
-                if (it.state){
-                    GlobalApplication.prefs.setUserToken(null, null, -1)
+                when(it){
 
-                    val intent = Intent(this, LoginActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
+                    Constant.ApiState.DONE -> {
+                        GlobalApplication.prefs.setUserToken(null, null, -1)
 
-                    Toast.makeText(this, "계정이 탈퇴되었습니다.", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(this, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+
+                        Toast.makeText(this, "계정이 탈퇴되었습니다.", Toast.LENGTH_SHORT).show()
+                    }
+
+                    Constant.ApiState.ERROR -> {
+                        Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }

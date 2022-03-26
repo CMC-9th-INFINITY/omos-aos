@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.infinity.omos.data.ResultState
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyPageRepository
 
 class DeleteAccountViewModel(application: Application): AndroidViewModel(application) {
@@ -14,7 +15,7 @@ class DeleteAccountViewModel(application: Application): AndroidViewModel(applica
     fun signOut(userId: Int){
         repository.signOut(userId)
     }
-    fun getStateSignOut(): LiveData<ResultState> {
+    fun getStateSignOut(): LiveData<Constant.ApiState> {
         return repository.stateSignOut
     }
 }
