@@ -56,22 +56,22 @@ jobs:
       - name: Decode RELEASE STORE FILE
         env:
           S3_BASE_URL: ${{secrets.RELEASE_STORE_FILE}}
-        run: echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
+        run: echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./keystore.properties
 
       - name: Decode RELEASE STORE PASSWORD
         env:
           S3_BASE_URL: ${{secrets.RELEASE_STORE_PASSWORD}}
-        run: echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
+        run: echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./keystore.properties
 
       - name: Decode RELEASE KEY ALIAS
         env:
           S3_BASE_URL: ${{secrets.RELEASE_KEY_ALIAS}}
-        run: echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
+        run: echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./keystore.properties
 
       - name: Decode RELEASE KEY PASSWORD
         env:
           S3_BASE_URL: ${{secrets.RELEASE_KEY_PASSWORD}}
-        run: echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
+        run: echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./keystore.properties
 
       - name: Generate Keystore file from Github Secrets
         env:
