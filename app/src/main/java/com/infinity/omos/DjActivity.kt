@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -127,25 +128,33 @@ class DjActivity : AppCompatActivity() {
 
         viewModel.getStateSignOut().observe(this) { state ->
             state?.let {
-                dlg.dismissProgress()
-                val intent1 = Intent("RECORD_UPDATE")
-                intent1.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                sendBroadcast(intent1)
+                when(it){
+                    Constant.ApiState.DONE -> {
+                        dlg.dismissProgress()
+                        val intent1 = Intent("RECORD_UPDATE")
+                        intent1.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent1)
 
-                val intent2 = Intent("DJ_UPDATE")
-                intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                sendBroadcast(intent2)
+                        val intent2 = Intent("DJ_UPDATE")
+                        intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent2)
 
-                val intent3 = Intent("LIKE_UPDATE")
-                intent3.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                sendBroadcast(intent3)
+                        val intent3 = Intent("LIKE_UPDATE")
+                        intent3.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent3)
 
-                val intent4 = Intent("SCRAP_UPDATE")
-                intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                sendBroadcast(intent4)
+                        val intent4 = Intent("SCRAP_UPDATE")
+                        intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent4)
 
-                finish()
-                Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        finish()
+                        Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                    }
+
+                    Constant.ApiState.ERROR -> {
+                        Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
 
@@ -184,7 +193,11 @@ class DjActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action_dj, menu)
-
+        val actionReport = menu.findItem(R.id.action_report)
+        if (fromUserId == toUserId){
+            // 내 프로필이면 신고버튼 안뜨게
+            actionReport.isVisible = false
+        }
         return true
     }
 
@@ -202,6 +215,7 @@ class DjActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
+                            Log.d("SignOutAPI", toUserId.toString())
                             viewModel.signOut(toUserId)
                             dlg.showProgress()
                         }
