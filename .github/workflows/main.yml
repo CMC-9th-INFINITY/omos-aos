@@ -56,22 +56,22 @@ jobs:
       - name: Decode RELEASE STORE FILE
         env:
           RELEASE_STORE_FILE: ${{secrets.RELEASE_STORE_FILE}}
-        run: echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./keystore.properties
+        run: echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
 
       - name: Decode RELEASE STORE PASSWORD
         env:
           RELEASE_STORE_PASSWORD: ${{secrets.RELEASE_STORE_PASSWORD}}
-        run: echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./keystore.properties
+        run: echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
 
       - name: Decode RELEASE KEY ALIAS
         env:
           RELEASE_KEY_ALIAS: ${{secrets.RELEASE_KEY_ALIAS}}
-        run: echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./keystore.properties
+        run: echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
 
       - name: Decode RELEASE KEY PASSWORD
         env:
           RELEASE_KEY_PASSWORD: ${{secrets.RELEASE_KEY_PASSWORD}}
-        run: echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./keystore.properties
+        run: echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
 
       - name: Generate Keystore file from Github Secrets
         env:

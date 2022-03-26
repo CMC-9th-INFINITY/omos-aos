@@ -8,11 +8,6 @@ plugins {
 Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
-// Keystore Security
-def keystorePropertiesFile = rootProject.file("keystore.properties")
-def keystoreProperties = new Properties()
-keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
-
 android {
     compileSdk 32
 
@@ -35,10 +30,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(RELEASE_STORE_FILE)
-            storePassword keystoreProperties['RELEASE_STORE_PASSWORD']
-            keyAlias keystoreProperties['RELEASE_KEY_ALIAS']
-            keyPassword keystoreProperties['RELEASE_KEY_PASSWORD']
+            storeFile file(properties['RELEASE_STORE_FILE'])
+            storePassword properties['RELEASE_STORE_PASSWORD']
+            keyAlias properties['RELEASE_KEY_ALIAS']
+            keyPassword properties['RELEASE_KEY_PASSWORD']
         }
     }
 
