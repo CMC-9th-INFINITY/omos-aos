@@ -53,11 +53,6 @@ jobs:
           S3_BASE_URL: ${{secrets.S3_BASE_URL}}
         run: echo s3_base_url="$S3_BASE_URL" >> ./local.properties
 
-      - name: Decode RELEASE STORE FILE
-        env:
-          S3_BASE_URL: ${{secrets.RELEASE_STORE_FILE}}
-        run: echo release_store_file="$RELEASE_STORE_FILE" >> ./gradle.properties
-
       - name: Decode RELEASE STORE PASSWORD
         env:
           S3_BASE_URL: ${{secrets.RELEASE_STORE_PASSWORD}}
@@ -76,7 +71,14 @@ jobs:
       - name: Generate Keystore file from Github Secrets
         env:
           BASE_64_KEYSTORE: ${{secrets.BASE_64_KEYSTORE}}
-        run: echo $BASE_64_KEYSTORE | base64 -d > ./app/keystore/jaeminKey.jks
+        run: |
+          echo "$BASE_64_KEYSTORE" > ./app/keystore/keystore.b64
+          base64 -d -i ./app/keystore/keystore.b64 > ./app/keystore/jaeminKey.jks
+
+      - name: Decode RELEASE STORE FILE
+        env:
+          S3_BASE_URL: ${{secrets.RELEASE_STORE_FILE}}
+        run: echo release_store_file="$RELEASE_STORE_FILE" >> ./gradle.properties
 
       - name: Change gradlew permissions
         run: chmod +x ./gradlew
