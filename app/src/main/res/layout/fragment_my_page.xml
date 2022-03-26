@@ -237,108 +237,132 @@
                     android:paddingHorizontal="16dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/ln_scrap1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_marginEnd="8dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:background="@color/deep_dark">
+                        android:layout_weight="1">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            app:imageUrl="@{scrap1.music.albumImageUrl}"
-                            android:layout_marginBottom="4dp"/>
-
-                        <TextView
+                        <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{scrap1.music.musicTitle}"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:categoryImageUrl="@{scrap1.recordImageUrl}"/>
 
-                        <TextView
-                            android:id="@+id/tv_artist_scrap1"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/gray_02"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_gradient_mypage">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                app:imageUrl="@{scrap1.music.albumImageUrl}"
+                                android:layout_marginBottom="4dp"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:text="@{scrap1.recordTitle}"
-                            android:textSize="16sp"
-                            android:textColor="@color/white"
-                            android:maxLines="2"
-                            android:ellipsize="end"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{scrap1.music.musicTitle}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_artist_scrap1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:textColor="@color/gray_02"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
-                    <LinearLayout
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="@{scrap1.recordTitle}"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/ln_scrap2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:background="@color/deep_dark">
+                        android:layout_weight="1">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            app:imageUrl="@{scrap2.music.albumImageUrl}"
-                            android:layout_marginBottom="4dp"/>
-
-                        <TextView
+                        <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{scrap2.music.musicTitle}"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:categoryImageUrl="@{scrap2.recordImageUrl}"/>
 
-                        <TextView
-                            android:id="@+id/tv_artist_scrap2"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/gray_02"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_gradient_mypage">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                app:imageUrl="@{scrap2.music.albumImageUrl}"
+                                android:layout_marginBottom="4dp"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:text="@{scrap2.recordTitle}"
-                            android:textSize="16sp"
-                            android:textColor="@color/white"
-                            android:maxLines="2"
-                            android:ellipsize="end"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{scrap2.music.musicTitle}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_artist_scrap2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:textColor="@color/gray_02"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="@{scrap2.recordTitle}"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
 
                 </LinearLayout>
 
@@ -428,108 +452,132 @@
                     android:paddingHorizontal="16dp"
                     android:orientation="horizontal">
 
-                    <LinearLayout
+                    <FrameLayout
                         android:id="@+id/ln_like1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:background="@color/deep_dark">
+                        android:layout_marginEnd="8dp">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            app:imageUrl="@{like1.music.albumImageUrl}"
-                            android:layout_marginBottom="4dp"/>
-
-                        <TextView
+                        <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{like1.music.musicTitle}"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:categoryImageUrl="@{like1.recordImageUrl}"/>
 
-                        <TextView
-                            android:id="@+id/tv_artist_like1"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/gray_02"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_gradient_mypage">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                app:imageUrl="@{like1.music.albumImageUrl}"
+                                android:layout_marginBottom="4dp"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:text="@{like1.recordTitle}"
-                            android:textSize="16sp"
-                            android:textColor="@color/white"
-                            android:maxLines="2"
-                            android:ellipsize="end"/>
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{like1.music.musicTitle}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_artist_like1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:textColor="@color/gray_02"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
-                    <LinearLayout
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:text="@{like1.recordTitle}"
+                                android:textSize="16sp"
+                                android:textColor="@color/white"
+                                android:maxLines="2"
+                                android:ellipsize="end"/>
+
+                        </LinearLayout>
+
+                    </FrameLayout>
+
+                    <FrameLayout
                         android:id="@+id/ln_like2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:orientation="vertical"
-                        android:padding="8dp"
-                        android:background="@color/deep_dark">
+                        android:layout_weight="1">
 
-                        <de.hdodenhof.circleimageview.CircleImageView
-                            android:layout_width="36dp"
-                            android:layout_height="36dp"
-                            android:layout_marginBottom="4dp"
-                            app:imageUrl="@{like2.music.albumImageUrl}"/>
-
-                        <TextView
+                        <ImageView
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@{like2.music.musicTitle}"
-                            android:textColor="@color/white"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:scaleType="centerCrop"
+                            app:categoryImageUrl="@{like2.recordImageUrl}"/>
 
-                        <TextView
-                            android:id="@+id/tv_artist_like2"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="20dp"
-                            android:textColor="@color/gray_02"
-                            android:textSize="12sp"
-                            android:maxLines="1"
-                            android:ellipsize="end"/>
+                            android:layout_height="match_parent"
+                            android:orientation="vertical"
+                            android:padding="8dp"
+                            android:background="@drawable/bg_gradient_mypage">
 
-                        <View
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"/>
+                            <de.hdodenhof.circleimageview.CircleImageView
+                                android:layout_width="36dp"
+                                android:layout_height="36dp"
+                                android:layout_marginBottom="4dp"
+                                app:imageUrl="@{like2.music.albumImageUrl}"/>
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="4dp"
-                            android:ellipsize="end"
-                            android:maxLines="2"
-                            android:text="@{like2.recordTitle}"
-                            android:textColor="@color/white"
-                            android:textSize="16sp" />
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="@{like2.music.musicTitle}"
+                                android:textColor="@color/white"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_artist_like2"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="20dp"
+                                android:textColor="@color/gray_02"
+                                android:textSize="12sp"
+                                android:maxLines="1"
+                                android:ellipsize="end"/>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginBottom="4dp"
+                                android:ellipsize="end"
+                                android:maxLines="2"
+                                android:text="@{like2.recordTitle}"
+                                android:textColor="@color/white"
+                                android:textSize="16sp" />
+
+                        </LinearLayout>
+
+                    </FrameLayout>
 
                 </LinearLayout>
 

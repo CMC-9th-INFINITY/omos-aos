@@ -8,6 +8,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_follow.xml" value="0.1415" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_gradient.xml" value="0.19479166666666667" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_gradient_main.xml" value="0.2225" />
+        <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_gradient_mypage.xml" value="0.169" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.18958333333333333" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/bg_rounded_rectangle_deep_dark.xml" value="0.19479166666666667" />
         <entry key="..\:/git/OMOS/app/src/main/res/drawable/ic_bell.xml" value="0.2225" />
@@ -61,7 +62,7 @@
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_blank_b.xml" value="0.2259963768115942" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_music.xml" value="0.17708333333333334" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_dj.xml" value="0.152" />
-        <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_page.xml" value="0.12604166666666666" />
+        <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_page.xml" value="0.33" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_my_record.xml" value="0.12604166666666666" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/fragment_today.xml" value="0.3068893528183716" />
         <entry key="..\:/git/OMOS/app/src/main/res/layout/list_album_detail_item.xml" value="0.18070652173913043" />
