@@ -73,6 +73,13 @@ jobs:
           S3_BASE_URL: ${{secrets.RELEASE_KEY_PASSWORD}}
         run: echo release_key_password="$RELEASE_KEY_PASSWORD" >> ./gradle.properties
 
+      - name: Generate Keystore file from Github Secrets
+        run: |
+          echo "$KEYSTORE" > ./app/keystore/keystore.b64
+          base64 -d -i ./app/keystore/keystore.b64 > ./app/keystore/jaeminKey.jks
+        env:
+          KEYSTORE: ${{ secrets.BASE_64_KEYSTORE }}
+
       - name: Change gradlew permissions
         run: chmod +x ./gradlew
 
@@ -82,13 +89,6 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-
-      - name: Generate Keystore file from Github Secrets
-        run: |
-          echo "$KEYSTORE" > ./app/keystore/keystore.b64
-          base64 -d -i ./app/keystore/keystore.b64 > ./app/keystore/jaeminKey.jks
-        env:
-          KEYSTORE: ${{ secrets.BASE_64_KEYSTORE }}
 
       - name: Build APK
         run: bash ./gradlew assembleDebug --warning-mode all --stacktrace
