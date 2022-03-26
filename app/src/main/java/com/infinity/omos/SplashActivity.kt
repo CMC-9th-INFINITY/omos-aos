@@ -84,6 +84,6 @@ class SplashActivity : AppCompatActivity() {
             0xD2.toByte(), 0xD6.toByte(), 0xF1.toByte(), 0xA1.toByte(), 0x3B.toByte(), 0x66.toByte(), 0x21.toByte(),
             0x33.toByte(), 0x8B.toByte()
         )
-        Log.i("jaemin", "getReleaseHashKey : " + Base64.encodeToString(sha1, Base64.NO_WRAP))
+        Log.i("jaemin", "getReleaseHashKey: " + Base64.encodeToString(sha1, Base64.NO_WRAP))
     }
 }
