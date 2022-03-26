@@ -15,70 +15,97 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v1
+      - uses: actions/checkout@v1
 
-    - name: Set up JDK 11
-      uses: actions/setup-java@v1
-      with:
-        java-version: '11'
-        java-package: jdk
+      - name: Set up JDK 11
+        uses: actions/setup-java@v1
+        with:
+          java-version: '11'
+          java-package: jdk
 
-    - name: Decode BASE URL
-      env:
-        BASE_URL: ${{secrets.BASE_URL}}
-      run: echo base_url="$BASE_URL" >> ./local.properties
+      - name: Decode BASE URL
+        env:
+          BASE_URL: ${{secrets.BASE_URL}}
+        run: echo base_url="$BASE_URL" >> ./local.properties
 
-    - name: Decode KAKAO NATIVE APP KEY
-      env:
-        KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
-      run: echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
+      - name: Decode KAKAO NATIVE APP KEY
+        env:
+          KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
+        run: echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
 
-    - name: Decode KAKAO OAUTH KEY
-      env:
-        KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
-      run: echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
+      - name: Decode KAKAO OAUTH KEY
+        env:
+          KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
+        run: echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
 
-    - name: Decode AWS IAM ACCESS KEY
-      env:
-        IAM_ACCESS_KEY: ${{secrets.IAM_ACCESS_KEY}}
-      run: echo iam_access_key="$IAM_ACCESS_KEY" >> ./local.properties
+      - name: Decode AWS IAM ACCESS KEY
+        env:
+          IAM_ACCESS_KEY: ${{secrets.IAM_ACCESS_KEY}}
+        run: echo iam_access_key="$IAM_ACCESS_KEY" >> ./local.properties
 
-    - name: Decode AWS IAM SECRET KEY
-      env:
-        IAM_SECRET_KEY: ${{secrets.IAM_SECRET_KEY}}
-      run: echo iam_secret_key="$IAM_SECRET_KEY" >> ./local.properties
+      - name: Decode AWS IAM SECRET KEY
+        env:
+          IAM_SECRET_KEY: ${{secrets.IAM_SECRET_KEY}}
+        run: echo iam_secret_key="$IAM_SECRET_KEY" >> ./local.properties
 
-    - name: Decode S3 BASE URL
-      env:
-        S3_BASE_URL: ${{secrets.S3_BASE_URL}}
-      run: echo s3_base_url="$S3_BASE_URL" >> ./local.properties
+      - name: Decode S3 BASE URL
+        env:
+          S3_BASE_URL: ${{secrets.S3_BASE_URL}}
+        run: echo s3_base_url="$S3_BASE_URL" >> ./local.properties
 
-    - name: Change gradlew permissions
-      run: chmod +x ./gradlew
+      - name: Decode RELEASE STORE FILE
+        env:
+          S3_BASE_URL: ${{secrets.RELEASE_STORE_FILE}}
+        run: echo release_store_file="$RELEASE_STORE_FILE" >> ./gradle.properties
 
-    - name: Build with Gradle
-      run: ./gradlew build --warning-mode all --stacktrace
-       
-    - name: Get current date
-      id: date
-      run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
-     
-    - name: Build APK
-      run: bash ./gradlew assembleDebug --warning-mode all --stacktrace
-     
-     
-    - run: './gradlew assembleDebug'
-    - uses: MeilCli/slack-upload-file@v1
-      with:
-        slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
-        channels: ${{ secrets.SLACK_CHANNEL_DEPLOY }}
-        file_path: 'app/build/outputs/apk/debug/app-debug.apk'
-        file_name: 'app-debug.apk'
-        file_type: 'apk'
-        initial_comment: 'OMOS 최신 빌드 앱 배포(Android) - ${{github.event.head_commit.message}}'
-       
-    - name: apk upload
-      uses: actions/upload-artifact@v2
-      with:
-        name: app-debug.apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+      - name: Decode RELEASE STORE PASSWORD
+        env:
+          S3_BASE_URL: ${{secrets.RELEASE_STORE_PASSWORD}}
+        run: echo release_store_password="$RELEASE_STORE_PASSWORD" >> ./gradle.properties
+
+      - name: Decode RELEASE KEY ALIAS
+        env:
+          S3_BASE_URL: ${{secrets.RELEASE_KEY_ALIAS}}
+        run: echo release_key_alias="$RELEASE_KEY_ALIAS" >> ./gradle.properties
+
+      - name: Decode RELEASE KEY PASSWORD
+        env:
+          S3_BASE_URL: ${{secrets.RELEASE_KEY_PASSWORD}}
+        run: echo release_key_password="$RELEASE_KEY_PASSWORD" >> ./gradle.properties
+
+      - name: Change gradlew permissions
+        run: chmod +x ./gradlew
+
+      - name: Build with Gradle
+        run: ./gradlew build --warning-mode all --stacktrace
+
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+      - name: Generate Keystore file from Github Secrets
+        run: |
+          echo "$KEYSTORE" > ./app/keystore/keystore.b64
+          base64 -d -i ./app/keystore/keystore.b64 > ./app/keystore/jaeminKey.jks
+        env:
+          KEYSTORE: ${{ secrets.BASE_64_KEYSTORE }}
+
+      - name: Build APK
+        run: bash ./gradlew assembleDebug --warning-mode all --stacktrace
+
+
+      - run: './gradlew assembleDebug'
+      - uses: MeilCli/slack-upload-file@v1
+        with:
+          slack_token: ${{ secrets.SLACK_READ_WRITE_TOKEN }}
+          channels: ${{ secrets.SLACK_CHANNEL_DEPLOY }}
+          file_path: 'app/build/outputs/apk/debug/app-debug.apk'
+          file_name: 'app-debug.apk'
+          file_type: 'apk'
+          initial_comment: 'OMOS 최신 빌드 앱 배포(Android) - ${{github.event.head_commit.message}}'
+
+      - name: apk upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: app-debug.apk
+          path: app/build/outputs/apk/debug/app-debug.apk

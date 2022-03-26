@@ -28,6 +28,7 @@ import android.view.WindowManager
 
 import android.os.Build
 import androidx.core.content.ContextCompat
+import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.utils.Height.Companion.statusBarHeight
 import java.util.*
 
@@ -54,6 +55,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionSearch: MenuItem
     private lateinit var actionWrite: MenuItem
 
+    lateinit var permission: PermissionSupport
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -79,6 +81,7 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "rToken: ${GlobalApplication.prefs.getString("refreshToken")}")
         Log.d("MainActivity", "userId: ${GlobalApplication.prefs.getInt("userId")}")
 
+        permissionCheck()
         initToolBar()
         initNavigationBar()
         initTabLayout()
@@ -434,6 +437,29 @@ class MainActivity : AppCompatActivity() {
         } else{
             // 두번 뒤로가기 클릭 시 앱 종료
             backKeyHandler.onBackPressed()
+        }
+    }
+
+    private fun permissionCheck(){
+        // SDK 23버전 이하에서는 Permission 필요 x
+        if (Build.VERSION.SDK_INT >= 23) {
+            permission = PermissionSupport(this, this)
+            if (!permission.checkPermission()) {
+                // 권한이 없으면,
+                permission.requestPermission() // 권한 요청
+            }
+        }
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String?>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (!permission.permissionResult(requestCode, permissions, grantResults)) {
+            Toast.makeText(this, "권한 설정에서 권한을 허용하십시오.", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
