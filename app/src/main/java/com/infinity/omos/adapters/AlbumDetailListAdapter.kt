@@ -30,7 +30,7 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var music = ArrayList<Music?>()
-    private var albumImageUrl: String? = ""
+    private var albumImageUrl: String = ""
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -94,7 +94,7 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
                         intent.putExtra("musicId", music.musicId)
                         intent.putExtra("musicTitle", music.musicTitle)
                         intent.putExtra("artists", binding.tvArtist.text.toString())
-                        intent.putExtra("albumImageUrl", music.albumImageUrl)
+                        intent.putExtra("albumImageUrl", albumImageUrl)
                         context.startActivity(intent)
                     } else {
                         val intent = Intent(context, MusicRecordActivity::class.java)
@@ -109,7 +109,9 @@ class AlbumDetailListAdapter internal constructor(private val context: Context):
     inner class LoadingViewHolder(binding: ListLoadingItemBinding): RecyclerView.ViewHolder(binding.root)
 
     internal fun setImageUrl(url: String?) {
-        albumImageUrl = url
+        if (url != null){
+            albumImageUrl = url
+        }
     }
 
     internal fun setRecord(ab: List<Music>) {
