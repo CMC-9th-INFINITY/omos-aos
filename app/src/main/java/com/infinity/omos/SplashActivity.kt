@@ -74,16 +74,4 @@ class SplashActivity : AppCompatActivity() {
             }
         }, SPLASH_TIME)
     }
-
-    private fun getReleaseHashKey() {
-        val sha1 = byteArrayOf(
-            0xEA.toByte(),
-            0x43.toByte(),
-            0xC1.toByte(), 0x5C.toByte(),
-            0x2A.toByte(), 0x07.toByte(), 0xDB.toByte(), 0x45.toByte(), 0x0C.toByte(), 0xEC.toByte(), 0x58.toByte(),
-            0xD2.toByte(), 0xD6.toByte(), 0xF1.toByte(), 0xA1.toByte(), 0x3B.toByte(), 0x66.toByte(), 0x21.toByte(),
-            0x33.toByte(), 0x8B.toByte()
-        )
-        Log.i("jaemin", "getReleaseHashKey : " + Base64.encodeToString(sha1, Base64.NO_WRAP))
-    }
 }

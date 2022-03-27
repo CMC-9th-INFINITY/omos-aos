@@ -94,9 +94,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                 .into(binding.imgRecordTitle)
         }
 
-        var interpret = intent.getStringExtra("interpret")
         var lyrics = intent.getStringExtra("lyrics")!!
-        lyrics = lyrics.substring(0, lyrics.length - 2)
         mAdapter = LyricsListAdapter(this)
         mAdapter.setLyrics(changeList(lyrics), true)
         binding.rvLyrics.apply {
@@ -104,6 +102,7 @@ class WriteLyricsActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
+        var interpret = intent.getStringExtra("interpret")
         if (interpret != null){
             mAdapter.setInterpret(changeList(interpret))
             val text = interpret.replace("\n", "")
@@ -286,8 +285,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                                 recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
                             } else{
                                 val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "")
-                                Log.d("jaemin", s3Url)
-                                awsConnector.uploadFile(recordImageUrl, imageFile!!)
+                                awsConnector.uploadFile(s3Url, imageFile!!)
                             }
                         }
 

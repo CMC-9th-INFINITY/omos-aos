@@ -315,7 +315,6 @@ class WriteRecordActivity : AppCompatActivity() {
                                 recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
                             } else{
                                 val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "")
-                                Log.d("jaemin", s3Url)
                                 awsConnector.uploadFile(s3Url, imageFile!!)
                             }
                         }

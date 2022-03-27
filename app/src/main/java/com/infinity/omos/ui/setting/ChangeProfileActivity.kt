@@ -65,7 +65,6 @@ class ChangeProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
-        Log.d("jaemin", MyPageFragment.myProfileUrl)
         binding.data = Profile(MyPageFragment.myNickname, MyPageFragment.myProfileUrl, userId)
 
         initToolBar()

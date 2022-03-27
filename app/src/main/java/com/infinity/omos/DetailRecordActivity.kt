@@ -86,8 +86,6 @@ class DetailRecordActivity : AppCompatActivity() {
                 binding.tvHeartCnt.text = String.format("%03d", it.likeCnt)
                 binding.tvStarCnt.text = String.format("%03d", it.scrapCnt)
 
-                Log.d("jaemin", it.recordImageUrl)
-
                 prevHeart = it.isLiked
                 prevStar = it.isScraped
                 heartCnt = it.likeCnt
@@ -178,7 +176,7 @@ class DetailRecordActivity : AppCompatActivity() {
                         val contentsList = changeList(it.recordContents)
                         val lyricsList = ArrayList<String>()
                         val interpretList = ArrayList<String>()
-                        for (i in 0 until contentsList.size - 1) {
+                        for (i in contentsList.indices) {
                             if (i % 2 == 0) {
                                 lyricsList.add(contentsList[i])
                             } else {

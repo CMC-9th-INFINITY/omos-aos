@@ -36,7 +36,15 @@ class GlobalFunction {
         }
 
         fun changeList(text: String): List<String> {
-            return text.split("\n")
+            val tmp = text.split("\n")
+            val resultList = ArrayList<String>()
+
+            for (i in tmp){
+                if (i != ""){
+                    resultList.add(i)
+                }
+            }
+            return resultList
         }
 
         fun categoryEngToKr(context: Context, category: String): String{
