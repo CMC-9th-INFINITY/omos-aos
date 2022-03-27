@@ -148,7 +148,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                 }
 
                 RESULT_CANCELED ->{
-                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+
                 }
 
                 else -> {
@@ -170,7 +170,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                 }
 
                 RESULT_CANCELED ->{
-                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+
                 }
 
                 else -> {
@@ -272,7 +272,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                         val currentTime = System.currentTimeMillis()
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
-                            awsConnector.uploadFile("profile/$userId$currentTime.png", imageFile!!)
+                            awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
                         }
 
                         viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
@@ -285,6 +285,8 @@ class WriteLyricsActivity : AppCompatActivity() {
                                 awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
                                 recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
                             } else{
+                                val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "")
+                                Log.d("jaemin", s3Url)
                                 awsConnector.uploadFile(recordImageUrl, imageFile!!)
                             }
                         }

@@ -149,7 +149,7 @@ class WriteRecordActivity : AppCompatActivity() {
                 }
 
                 RESULT_CANCELED ->{
-                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+
                 }
 
                 else -> {
@@ -171,7 +171,7 @@ class WriteRecordActivity : AppCompatActivity() {
                 }
 
                 RESULT_CANCELED ->{
-                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+
                 }
 
                 else -> {
@@ -314,7 +314,9 @@ class WriteRecordActivity : AppCompatActivity() {
                                 awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
                                 recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
                             } else{
-                                awsConnector.uploadFile(recordImageUrl, imageFile!!)
+                                val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "")
+                                Log.d("jaemin", s3Url)
+                                awsConnector.uploadFile(s3Url, imageFile!!)
                             }
                         }
 

@@ -22,6 +22,7 @@ class AWSConnector constructor(val activity: Activity) {
         }
         override fun onStateChanged(id: Int, state: TransferState?) {
             if (TransferState.COMPLETED == state) {
+
             }
         }
         override fun onError(id: Int, ex: java.lang.Exception?) {

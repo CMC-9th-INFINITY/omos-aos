@@ -107,7 +107,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                 }
 
                 RESULT_CANCELED -> {
-                    Toast.makeText(this, "취소", Toast.LENGTH_LONG).show()
+
                 }
 
                 else -> {

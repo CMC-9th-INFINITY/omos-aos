@@ -3,6 +3,9 @@ package com.infinity.omos.adapters
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
 import com.infinity.omos.R
 
 /**
@@ -26,6 +29,8 @@ object ImageBindingAdapter {
             .load(url)
             .error(R.drawable.ic_profile_gray)
             .fallback(R.drawable.ic_profile_gray)
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(imageView)
     }
 
@@ -35,6 +40,8 @@ object ImageBindingAdapter {
     fun loadCategoryImage(imageView: ImageView, url: String?){
         Glide.with(imageView.context)
             .load(url)
+            .skipMemoryCache(true)
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(imageView)
     }
 }

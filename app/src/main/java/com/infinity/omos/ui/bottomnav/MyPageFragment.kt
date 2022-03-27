@@ -67,6 +67,8 @@ class MyPageFragment : Fragment() {
 
                 if (it.profile.profileUrl != null){
                     myProfileUrl = it.profile.profileUrl
+                } else{
+                    myProfileUrl = ""
                 }
             }
         }
