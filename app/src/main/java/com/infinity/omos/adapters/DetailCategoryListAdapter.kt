@@ -258,6 +258,7 @@ class DetailCategoryListAdapter internal constructor(
     }
 
     internal fun setCategory(category: List<Record>){
+        clearCategory()
         this.category.clear()
         this.category.addAll(category)
         notifyDataSetChanged()
