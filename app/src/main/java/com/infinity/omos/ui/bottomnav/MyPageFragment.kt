@@ -65,11 +65,7 @@ class MyPageFragment : Fragment() {
                 binding.data = it
                 myNickname = it.profile.nickname
 
-                if (it.profile.profileUrl != null){
-                    myProfileUrl = it.profile.profileUrl
-                } else{
-                    myProfileUrl = ""
-                }
+                myProfileUrl = it.profile.profileUrl ?: ""
             }
         }
 

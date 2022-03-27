@@ -107,7 +107,7 @@ class DetailCategoryListAdapter internal constructor(
                     val contentsList = GlobalFunction.changeList(category.recordContents)
                     val lyricsList = ArrayList<String>()
                     val interpretList = ArrayList<String>()
-                    for (i in 0 until contentsList.size - 1) {
+                    for (i in contentsList.indices) {
                         if (i % 2 == 0) {
                             lyricsList.add(contentsList[i])
                         } else {
