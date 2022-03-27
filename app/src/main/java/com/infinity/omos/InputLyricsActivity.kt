@@ -14,6 +14,7 @@ import com.infinity.omos.data.Music
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.ActivityInputLyricsBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.activity_register_nick.*
 
@@ -94,7 +95,19 @@ class InputLyricsActivity : AppCompatActivity() {
                 true
             }
             android.R.id.home -> {
-                finish()
+                if (binding.etLyrics.text.isNotEmpty()){
+                    val dlg = CustomDialog(this)
+                    dlg.show("작성 중인 내용이 삭제됩니다.\n그래도 그만하시겠습니까?", "확인")
+                    dlg.setOnOkClickedListener {
+                        when(it){
+                            "yes" -> {
+                                finish()
+                            }
+                        }
+                    }
+                } else{
+                    finish()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

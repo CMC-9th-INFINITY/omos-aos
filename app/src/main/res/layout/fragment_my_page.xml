@@ -25,586 +25,593 @@
             type="com.infinity.omos.data.SumRecord" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipeRefreshLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/dark"
-        tools:context=".ui.bottomnav.MyPageFragment">
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/ln_profile"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingTop="17dp"
-            android:orientation="vertical"
-            android:background="@color/deep_dark"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
+            android:layout_height="match_parent"
+            android:background="@color/dark"
+            tools:context=".ui.bottomnav.MyPageFragment">
 
             <LinearLayout
+                android:id="@+id/ln_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center"
-                android:layout_marginBottom="10dp"
-                android:paddingHorizontal="18dp">
+                android:paddingTop="17dp"
+                android:orientation="vertical"
+                android:background="@color/deep_dark"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="DJ"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"/>
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginBottom="10dp"
+                    android:paddingHorizontal="18dp">
 
-                <TextView
-                    android:id="@+id/tv_nick"
-                    android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="DJ"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"/>
+
+                    <TextView
+                        android:id="@+id/tv_nick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="6dp"
+                        android:text="@{data.profile.nickname}"
+                        android:textSize="18sp"
+                        android:textColor="@color/white"/>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <ImageView
+                        android:id="@+id/btn_setting"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_setting"/>
+
+                </LinearLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="6dp"
-                    android:text="@{data.profile.nickname}"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"/>
+                    android:paddingHorizontal="16dp">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/img_profile"
+                        android:layout_width="70dp"
+                        android:layout_height="70dp"
+                        app:profileImageUrl="@{data.profile.profileUrl}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <LinearLayout
+                        android:id="@+id/dj_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/img_profile"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/dj_follower">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="레코드"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_03"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@{String.valueOf(data.count.recordsCount)}"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dj_follower"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/dj_record"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/dj_following">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="팔로워"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_03"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@{String.valueOf(data.count.followerCount)}"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/dj_following"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="33dp"
+                        android:orientation="vertical"
+                        android:layout_gravity="center"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="팔로잉"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_03"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="@{String.valueOf(data.count.followingCount)}"
+                            android:textSize="16sp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-                <ImageView
-                    android:id="@+id/btn_setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/ic_setting"/>
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:layout_marginTop="24dp"
+                    android:background="@color/black_02"/>
 
             </LinearLayout>
 
-            <androidx.constraintlayout.widget.ConstraintLayout
+            <LinearLayout
+                android:id="@+id/ln_scrap"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp">
-
-                <de.hdodenhof.circleimageview.CircleImageView
-                    android:id="@+id/img_profile"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    app:profileImageUrl="@{data.profile.profileUrl}"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:paddingVertical="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/ln_profile"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/divisor">
 
                 <LinearLayout
-                    android:id="@+id/dj_record"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/img_profile"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/dj_follower">
+                    android:paddingHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="레코드"
-                        android:textSize="14sp"
-                        android:textColor="@color/gray_03"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@{String.valueOf(data.count.recordsCount)}"
-                        android:textSize="16sp"
+                        android:text="스크랩한 레코드"
+                        android:textSize="18sp"
                         android:textColor="@color/white"/>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/btn_all_scrap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전체보기"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_03"/>
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/dj_follower"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/dj_record"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/dj_following">
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="팔로워"
-                        android:textSize="14sp"
-                        android:textColor="@color/gray_03"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="16dp"
+                        android:orientation="horizontal">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@{String.valueOf(data.count.followerCount)}"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"/>
+                        <FrameLayout
+                            android:id="@+id/ln_scrap1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginEnd="8dp"
+                            android:layout_weight="1">
 
-                </LinearLayout>
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:categoryImageUrl="@{scrap1.recordImageUrl}"/>
 
-                <LinearLayout
-                    android:id="@+id/dj_following"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="33dp"
-                    android:orientation="vertical"
-                    android:layout_gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="8dp"
+                                android:background="@drawable/bg_gradient_mypage">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="팔로잉"
-                        android:textSize="14sp"
-                        android:textColor="@color/gray_03"/>
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    app:imageUrl="@{scrap1.music.albumImageUrl}"
+                                    android:layout_marginBottom="4dp"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:text="@{String.valueOf(data.count.followingCount)}"
-                        android:textSize="16sp"
-                        android:textColor="@color/white"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{scrap1.music.musicTitle}"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
 
-                </LinearLayout>
+                                <TextView
+                                    android:id="@+id/tv_artist_scrap1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="20dp"
+                                    android:textColor="@color/gray_02"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="@{scrap1.recordTitle}"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/white"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"/>
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/ln_scrap2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:categoryImageUrl="@{scrap2.recordImageUrl}"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="8dp"
+                                android:background="@drawable/bg_gradient_mypage">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    app:imageUrl="@{scrap2.music.albumImageUrl}"
+                                    android:layout_marginBottom="4dp"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{scrap2.music.musicTitle}"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
+
+                                <TextView
+                                    android:id="@+id/tv_artist_scrap2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="20dp"
+                                    android:textColor="@color/gray_02"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="@{scrap2.recordTitle}"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/white"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"/>
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ln_norecord_scrap"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="18dp"
+                        android:orientation="horizontal"
+                        android:background="@color/deep_dark"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="아직 스크랩한\n레코드가 없어요!"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                </FrameLayout>
+
+            </LinearLayout>
 
             <View
+                android:id="@+id/divisor"
                 android:layout_width="match_parent"
-                android:layout_height="4dp"
-                android:layout_marginTop="24dp"
-                android:background="@color/black_02"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ln_scrap"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:paddingVertical="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/ln_profile"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@+id/divisor">
+                android:layout_height="2px"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:background="@color/divide2"
+                app:layout_constraintTop_toBottomOf="@+id/ln_scrap"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/ln_like"/>
 
             <LinearLayout
+                android:id="@+id/ln_like"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="스크랩한 레코드"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"/>
-
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-
-                <TextView
-                    android:id="@+id/btn_all_scrap"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전체보기"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_03"/>
-
-            </LinearLayout>
-
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="0dp"
+                android:orientation="vertical"
+                android:paddingVertical="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/divisor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:paddingHorizontal="16dp"
+                    android:layout_marginBottom="10dp"
                     android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:id="@+id/ln_scrap1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginEnd="8dp"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            app:categoryImageUrl="@{scrap1.recordImageUrl}"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:padding="8dp"
-                            android:background="@drawable/bg_gradient_mypage">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                app:imageUrl="@{scrap1.music.albumImageUrl}"
-                                android:layout_marginBottom="4dp"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{scrap1.music.musicTitle}"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <TextView
-                                android:id="@+id/tv_artist_scrap1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:textColor="@color/gray_02"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="4dp"
-                                android:text="@{scrap1.recordTitle}"
-                                android:textSize="16sp"
-                                android:textColor="@color/white"
-                                android:maxLines="2"
-                                android:ellipsize="end"/>
-
-                        </LinearLayout>
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/ln_scrap2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            app:categoryImageUrl="@{scrap2.recordImageUrl}"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:padding="8dp"
-                            android:background="@drawable/bg_gradient_mypage">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                app:imageUrl="@{scrap2.music.albumImageUrl}"
-                                android:layout_marginBottom="4dp"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{scrap2.music.musicTitle}"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <TextView
-                                android:id="@+id/tv_artist_scrap2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:textColor="@color/gray_02"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="4dp"
-                                android:text="@{scrap2.recordTitle}"
-                                android:textSize="16sp"
-                                android:textColor="@color/white"
-                                android:maxLines="2"
-                                android:ellipsize="end"/>
-
-                        </LinearLayout>
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ln_norecord_scrap"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="18dp"
-                    android:orientation="horizontal"
-                    android:background="@color/deep_dark"
-                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="아직 스크랩한\n레코드가 없어요!"
-                        android:textSize="14sp"
+                        android:text="공감한 레코드"
+                        android:textSize="18sp"
                         android:textColor="@color/white"/>
+
+                    <View
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+
+                    <TextView
+                        android:id="@+id/btn_all_like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="전체보기"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_03"/>
 
                 </LinearLayout>
 
-            </FrameLayout>
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
-        </LinearLayout>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="16dp"
+                        android:orientation="horizontal">
 
-        <View
-            android:id="@+id/divisor"
-            android:layout_width="match_parent"
-            android:layout_height="2px"
-            android:layout_gravity="center"
-            android:layout_marginHorizontal="16dp"
-            android:background="@color/divide2"
-            app:layout_constraintTop_toBottomOf="@+id/ln_scrap"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/ln_like"/>
+                        <FrameLayout
+                            android:id="@+id/ln_like1"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp">
 
-        <LinearLayout
-            android:id="@+id/ln_like"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:orientation="vertical"
-            android:paddingVertical="16dp"
-            app:layout_constraintTop_toBottomOf="@+id/divisor"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent">
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:categoryImageUrl="@{like1.recordImageUrl}"/>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="16dp"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="8dp"
+                                android:background="@drawable/bg_gradient_mypage">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="공감한 레코드"
-                    android:textSize="18sp"
-                    android:textColor="@color/white"/>
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    app:imageUrl="@{like1.music.albumImageUrl}"
+                                    android:layout_marginBottom="4dp"/>
 
-                <View
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{like1.music.musicTitle}"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
 
-                <TextView
-                    android:id="@+id/btn_all_like"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="전체보기"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_03"/>
+                                <TextView
+                                    android:id="@+id/tv_artist_like1"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="20dp"
+                                    android:textColor="@color/gray_02"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:text="@{like1.recordTitle}"
+                                    android:textSize="16sp"
+                                    android:textColor="@color/white"
+                                    android:maxLines="2"
+                                    android:ellipsize="end"/>
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                        <FrameLayout
+                            android:id="@+id/ln_like2"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:scaleType="centerCrop"
+                                app:categoryImageUrl="@{like2.recordImageUrl}"/>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical"
+                                android:padding="8dp"
+                                android:background="@drawable/bg_gradient_mypage">
+
+                                <de.hdodenhof.circleimageview.CircleImageView
+                                    android:layout_width="36dp"
+                                    android:layout_height="36dp"
+                                    android:layout_marginBottom="4dp"
+                                    app:imageUrl="@{like2.music.albumImageUrl}"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="@{like2.music.musicTitle}"
+                                    android:textColor="@color/white"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
+
+                                <TextView
+                                    android:id="@+id/tv_artist_like2"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="20dp"
+                                    android:textColor="@color/gray_02"
+                                    android:textSize="12sp"
+                                    android:maxLines="1"
+                                    android:ellipsize="end"/>
+
+                                <View
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="4dp"
+                                    android:ellipsize="end"
+                                    android:maxLines="2"
+                                    android:text="@{like2.recordTitle}"
+                                    android:textColor="@color/white"
+                                    android:textSize="16sp" />
+
+                            </LinearLayout>
+
+                        </FrameLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/ln_norecord_like"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:paddingHorizontal="24dp"
+                        android:paddingVertical="18dp"
+                        android:orientation="horizontal"
+                        android:background="@color/deep_dark"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="bottom"
+                            android:text="아직 공감한\n레코드가 없어요!"
+                            android:textSize="14sp"
+                            android:textColor="@color/white"/>
+
+                    </LinearLayout>
+
+                </FrameLayout>
 
             </LinearLayout>
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="16dp"
-                    android:orientation="horizontal">
-
-                    <FrameLayout
-                        android:id="@+id/ln_like1"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:layout_marginEnd="8dp">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            app:categoryImageUrl="@{like1.recordImageUrl}"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:padding="8dp"
-                            android:background="@drawable/bg_gradient_mypage">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                app:imageUrl="@{like1.music.albumImageUrl}"
-                                android:layout_marginBottom="4dp"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{like1.music.musicTitle}"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <TextView
-                                android:id="@+id/tv_artist_like1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:textColor="@color/gray_02"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="4dp"
-                                android:text="@{like1.recordTitle}"
-                                android:textSize="16sp"
-                                android:textColor="@color/white"
-                                android:maxLines="2"
-                                android:ellipsize="end"/>
-
-                        </LinearLayout>
-
-                    </FrameLayout>
-
-                    <FrameLayout
-                        android:id="@+id/ln_like2"
-                        android:layout_width="0dp"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1">
-
-                        <ImageView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:scaleType="centerCrop"
-                            app:categoryImageUrl="@{like2.recordImageUrl}"/>
-
-                        <LinearLayout
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:orientation="vertical"
-                            android:padding="8dp"
-                            android:background="@drawable/bg_gradient_mypage">
-
-                            <de.hdodenhof.circleimageview.CircleImageView
-                                android:layout_width="36dp"
-                                android:layout_height="36dp"
-                                android:layout_marginBottom="4dp"
-                                app:imageUrl="@{like2.music.albumImageUrl}"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="@{like2.music.musicTitle}"
-                                android:textColor="@color/white"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <TextView
-                                android:id="@+id/tv_artist_like2"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="20dp"
-                                android:textColor="@color/gray_02"
-                                android:textSize="12sp"
-                                android:maxLines="1"
-                                android:ellipsize="end"/>
-
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_weight="1"/>
-
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:layout_marginBottom="4dp"
-                                android:ellipsize="end"
-                                android:maxLines="2"
-                                android:text="@{like2.recordTitle}"
-                                android:textColor="@color/white"
-                                android:textSize="16sp" />
-
-                        </LinearLayout>
-
-                    </FrameLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/ln_norecord_like"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingHorizontal="24dp"
-                    android:paddingVertical="18dp"
-                    android:orientation="horizontal"
-                    android:background="@color/deep_dark"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="bottom"
-                        android:text="아직 공감한\n레코드가 없어요!"
-                        android:textSize="14sp"
-                        android:textColor="@color/white"/>
-
-                </LinearLayout>
-
-            </FrameLayout>
-
-        </LinearLayout>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </layout>

@@ -154,6 +154,12 @@ class CategoryActivity : AppCompatActivity() {
                 }
             }
         })
+
+        // 스와이프 기능
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            setSortRecord("date")
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initToolBar(category: String){

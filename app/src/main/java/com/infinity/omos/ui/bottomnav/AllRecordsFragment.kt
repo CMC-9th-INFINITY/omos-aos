@@ -85,6 +85,12 @@ class AllRecordFragment : Fragment() {
                 }
             }
         })
+
+        // 스와이프 기능
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.setAllRecords()
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun addCategory(category: Category): List<AllRecords> {

@@ -31,6 +31,7 @@ import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.AWSConnector
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
 import com.infinity.omos.viewmodels.WriteRecordViewModel
@@ -327,7 +328,27 @@ class WriteRecordActivity : AppCompatActivity() {
                 true
             }
             android.R.id.home -> {
-                finish()
+                recordTitle = binding.etRecordTitle.text.toString()
+                recordContents = if (category == resources.getString(R.string.a_line)){
+                    // 한 줄 감상 내용인지 구분
+                    binding.alineContents.text.toString()
+                } else {
+                    binding.recordContents.text.toString()
+                }
+
+                if (recordContents != "" || recordTitle != ""){
+                    val dlg = CustomDialog(this)
+                    dlg.show("작성 중인 내용이 삭제됩니다.\n그래도 그만하시겠습니까?", "확인")
+                    dlg.setOnOkClickedListener {
+                        when(it){
+                            "yes" -> {
+                                finish()
+                            }
+                        }
+                    }
+                } else{
+                    finish()
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)

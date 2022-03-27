@@ -40,6 +40,7 @@ class MyDjFragment : Fragment() {
     private var isFirst = true
 
     private var postId = -1
+    private var tmpUserId = -1
     private lateinit var mAdapter: MyDjListAdapter
     private lateinit var rAdapter: DetailCategoryListAdapter
 
@@ -176,6 +177,7 @@ class MyDjFragment : Fragment() {
                     setFirst()
                 } else {
                     isFirst = false
+                    tmpUserId = toUserId
                     viewModel.setMyDjRecord(fromUserId, toUserId)
                 }
                 binding.rvRecord.scrollToPosition(0)
@@ -201,6 +203,18 @@ class MyDjFragment : Fragment() {
             }
         })
 
+        // 스와이프 기능
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            if (tmpUserId == -1){
+                setFirst()
+            } else {
+                isFirst = false
+                viewModel.setMyDjRecord(fromUserId, tmpUserId)
+            }
+            binding.rvRecord.scrollToPosition(0)
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
+
         return binding.root
     }
 
@@ -208,6 +222,7 @@ class MyDjFragment : Fragment() {
         page = 0
         isLoading = false
         isFirst = true
+        tmpUserId = -1
         rAdapter.clearCategory()
         viewModel.setDjAllRecords(fromUserId, null, pageSize)
     }

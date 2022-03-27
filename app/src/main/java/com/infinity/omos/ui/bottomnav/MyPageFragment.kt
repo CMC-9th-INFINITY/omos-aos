@@ -174,6 +174,13 @@ class MyPageFragment : Fragment() {
             intent.putExtra("postId", like2)
             startActivity(intent)
         }
+
+        // 스와이프 기능
+        binding.swipeRefreshLayout.setOnRefreshListener {
+            viewModel.setDjProfile(userId, userId)
+            viewModel.setMyPageData(userId)
+            binding.swipeRefreshLayout.isRefreshing = false
+        }
     }
 
     private fun initializeBroadcastReceiver() {

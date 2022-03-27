@@ -26,47 +26,54 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
-            <FrameLayout
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipeRefreshLayout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_record"
+                <FrameLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_detail_category_item"/>
+                    android:layout_height="match_parent">
 
-                <LinearLayout
-                    android:id="@+id/ln_norecord"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:visibility="gone">
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rv_record"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:listitem="@layout/list_detail_category_item"/>
 
-                    <ImageView
+                    <LinearLayout
+                        android:id="@+id/ln_norecord"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:gravity="center"
+                        android:visibility="gone">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="18dp"
+                            android:src="@drawable/ic_norecord"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="작성된 레코드가 없어요!"
+                            android:textSize="18sp"
+                            android:textColor="@color/gray_03"/>
+
+                    </LinearLayout>
+
+                    <ProgressBar
+                        android:id="@+id/progressBar"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="18dp"
-                        android:src="@drawable/ic_norecord"/>
+                        android:layout_gravity="center"
+                        android:visibility="gone"/>
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="작성된 레코드가 없어요!"
-                        android:textSize="18sp"
-                        android:textColor="@color/gray_03"/>
+                </FrameLayout>
 
-                </LinearLayout>
-
-                <ProgressBar
-                    android:id="@+id/progressBar"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:visibility="gone"/>
-
-            </FrameLayout>
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </LinearLayout>
 
