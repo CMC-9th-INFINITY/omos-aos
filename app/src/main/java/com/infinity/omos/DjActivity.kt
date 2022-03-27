@@ -36,6 +36,7 @@ class DjActivity : AppCompatActivity() {
     private val fromUserId = GlobalApplication.prefs.getInt("userId")
     private var toUserId = -1
     private var isClickFollow = false
+    private var followerCnt = 0
     lateinit var dlg: CustomDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,9 +65,13 @@ class DjActivity : AppCompatActivity() {
         viewModel.getDjProfile().observe(this) { profile ->
             profile?.let {
                 binding.data = it
+                followerCnt = it.count.followerCount
+
                 if (it.isFollowed){
+                    followerCnt -= 1
                     setFollowing()
                 } else{
+                    followerCnt += 1
                     setFollow()
                 }
             }
@@ -175,6 +180,8 @@ class DjActivity : AppCompatActivity() {
         binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.white))
         binding.btnFollow.background =
             ResourcesCompat.getDrawable(resources, R.drawable.bg_follow, null)
+        followerCnt -= 1
+        binding.tvFollowerCount.text = followerCnt.toString()
     }
 
     private fun setFollowing(){
@@ -182,6 +189,8 @@ class DjActivity : AppCompatActivity() {
         binding.btnFollow.setTextColor(ContextCompat.getColor(this, R.color.gray_04))
         binding.btnFollow.background =
             ResourcesCompat.getDrawable(resources, R.drawable.bg_following, null)
+        followerCnt += 1
+        binding.tvFollowerCount.text = followerCnt.toString()
     }
 
     private fun initToolBar(){
