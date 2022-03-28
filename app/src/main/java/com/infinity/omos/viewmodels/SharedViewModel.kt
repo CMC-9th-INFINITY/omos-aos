@@ -16,6 +16,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     private val allRecordsRepository: AllRecordsRepository = AllRecordsRepository()
     private val myDjRepository: MyDjRepository = MyDjRepository()
     private val myPageRepository: MyPageRepository = MyPageRepository()
+    private val recordRepository: RecordRepository = RecordRepository()
 
     // Today
     // 인기있는 레코드
@@ -139,5 +140,22 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getStateMyPageData(): LiveData<Constant.ApiState>{
         return myPageRepository.stateMyPageData
+    }
+
+    // 스크랩, 공감 클릭
+    fun saveLike(postId: Int, userId: Int){
+        recordRepository.saveLike(postId, userId)
+    }
+
+    fun deleteLike(postId: Int, userId: Int){
+        recordRepository.deleteLike(postId, userId)
+    }
+
+    fun saveScrap(postId: Int, userId: Int){
+        recordRepository.saveScrap(postId, userId)
+    }
+
+    fun deleteScrap(postId: Int, userId: Int){
+        recordRepository.deleteScrap(postId, userId)
     }
 }

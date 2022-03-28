@@ -241,4 +241,54 @@ class MyDjFragment : Fragment() {
             IntentFilter("DJ_UPDATE")
         )
     }
+
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+
+        if (hidden){
+            // 좋아요, 스크랩 처리
+            var stateLike = false
+            val saveHeartList = rAdapter.getSaveHeart()
+            for (i in saveHeartList){
+                viewModel.saveLike(i, fromUserId)
+                stateLike = true
+            }
+
+            val deleteHeartList = rAdapter.getDeleteHeart()
+            for (i in deleteHeartList){
+                viewModel.deleteLike(i, fromUserId)
+                stateLike = true
+            }
+
+            var stateScrap = false
+            val saveScrapList = rAdapter.getSaveScrap()
+            for (i in saveScrapList){
+                viewModel.saveScrap(i, fromUserId)
+                stateScrap = true
+            }
+
+            val deleteScrapList = rAdapter.getDeleteScrap()
+            for (i in deleteScrapList){
+                viewModel.deleteScrap(i, fromUserId)
+                stateScrap = true
+            }
+
+            if (stateLike){
+                val intent = Intent("LIKE_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                context?.sendBroadcast(intent)
+            }
+            if (stateScrap){
+                val intent = Intent("SCRAP_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                context?.sendBroadcast(intent)
+            }
+
+            if (stateLike || stateScrap){
+                setFirst()
+                viewModel.setMyDj(fromUserId)
+                binding.rvRecord.scrollToPosition(0)
+            }
+        }
+    }
 }
