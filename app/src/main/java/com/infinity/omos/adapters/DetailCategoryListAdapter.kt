@@ -102,8 +102,6 @@ class DetailCategoryListAdapter internal constructor(
                     binding.tvAlineContents.visibility = View.GONE
                     binding.tvRecordContents.visibility = View.GONE
                     // 가사, 해석 분리
-                    var lyrics = ""
-                    var interpret = ""
                     val contentsList = GlobalFunction.changeList(category.recordContents)
                     val lyricsList = ArrayList<String>()
                     val interpretList = ArrayList<String>()
@@ -113,14 +111,6 @@ class DetailCategoryListAdapter internal constructor(
                         } else {
                             interpretList.add(contentsList[i])
                         }
-                    }
-
-                    for (i in lyricsList){
-                        lyrics += i + "\n"
-                    }
-
-                    for (i in interpretList){
-                        interpret += i + "\n"
                     }
 
                     val mAdapter = LyricsListAdapter(context)

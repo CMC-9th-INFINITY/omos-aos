@@ -175,7 +175,7 @@ class LyricsListAdapter internal constructor(context: Context) :
     }
 
     override fun getItemCount(): Int {
-        return lyrics.size
+        return interpret.size
     }
 
     companion object LyricsDiffUtil : DiffUtil.ItemCallback<String>() {
