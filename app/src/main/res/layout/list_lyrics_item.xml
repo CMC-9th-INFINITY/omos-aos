@@ -40,9 +40,7 @@
             android:textColor="@color/white"
             android:textSize="16sp"
             android:textColorHint="@color/gray_07"
-            android:inputType="text"
-            android:maxLines="1"
-            android:imeOptions="actionNext"
+            android:inputType="textMultiLine"
             android:scrollHorizontally="false"
             android:background="@color/dark"/>
 

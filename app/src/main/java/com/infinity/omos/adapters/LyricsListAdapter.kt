@@ -3,12 +3,14 @@ package com.infinity.omos.adapters
 import android.content.Context
 import android.content.Intent
 import android.text.Editable
+import android.text.InputType
 import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -88,6 +90,11 @@ class LyricsListAdapter internal constructor(context: Context) :
             }
             holder.lyricsTextWatcher.updatePosition(position)
             holder.itemView.et_interpret.setText(interpret[position])
+
+            // Multi-line EditText with Done(Next) action button - Stack Overflow
+            holder.itemView.et_interpret.imeOptions = EditorInfo.IME_ACTION_NEXT
+            holder.itemView.et_interpret.setRawInputType(InputType.TYPE_CLASS_TEXT)
+
             holder.bind(lyrics, interpret[position])
         } else if (holder is ReadViewHolder){
             val lyrics = lyrics[position]
