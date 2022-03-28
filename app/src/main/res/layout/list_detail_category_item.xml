@@ -171,7 +171,8 @@
                 android:id="@+id/rv_lyrics"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:nestedScrollingEnabled="false"/>
 
             <View
                 android:layout_width="match_parent"

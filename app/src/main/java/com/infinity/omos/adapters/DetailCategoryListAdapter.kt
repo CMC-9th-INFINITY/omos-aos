@@ -2,12 +2,9 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.content.res.ColorStateList
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -23,7 +20,6 @@ import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
-import com.infinity.omos.utils.CustomDialog
 import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailCategoryListAdapter internal constructor(
@@ -101,6 +97,7 @@ class DetailCategoryListAdapter internal constructor(
                     binding.rvLyrics.visibility = View.VISIBLE
                     binding.tvAlineContents.visibility = View.GONE
                     binding.tvRecordContents.visibility = View.GONE
+
                     // 가사, 해석 분리
                     val contentsList = GlobalFunction.changeList(category.recordContents)
                     val lyricsList = ArrayList<String>()
