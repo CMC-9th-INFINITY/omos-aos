@@ -1,21 +1,17 @@
 package com.infinity.omos
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import com.infinity.omos.data.Music
-import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.databinding.ActivityInputLyricsBinding
-import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class InputLyricsActivity : AppCompatActivity() {

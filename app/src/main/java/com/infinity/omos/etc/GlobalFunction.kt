@@ -3,7 +3,6 @@ package com.infinity.omos.etc
 import android.content.Context
 import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
-import android.util.Log
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.infinity.omos.R

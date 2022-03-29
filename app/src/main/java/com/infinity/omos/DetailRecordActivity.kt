@@ -4,20 +4,20 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
-import android.view.*
-import android.widget.LinearLayout
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import android.view.ViewTreeObserver
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.bumptech.glide.Glide
 import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant
@@ -28,7 +28,6 @@ import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.ShareInstagram
 import com.infinity.omos.viewmodels.DetailRecordViewModel
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 
 class DetailRecordActivity : AppCompatActivity() {
 

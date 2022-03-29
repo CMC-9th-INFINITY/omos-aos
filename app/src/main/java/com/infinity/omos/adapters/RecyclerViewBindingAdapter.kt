@@ -2,7 +2,8 @@ package com.infinity.omos.adapters
 
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.data.*
+import com.infinity.omos.data.Profile
+import com.infinity.omos.data.SimpleRecord
 
 object RecyclerViewBindingAdapter {
     @BindingAdapter("myRecordListData")

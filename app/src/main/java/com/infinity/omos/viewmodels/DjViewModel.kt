@@ -3,8 +3,8 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.data.*
+import com.infinity.omos.data.DjProfile
+import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyDjRepository
 import com.infinity.omos.repository.MyPageRepository

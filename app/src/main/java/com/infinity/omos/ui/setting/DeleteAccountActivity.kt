@@ -1,12 +1,11 @@
 package com.infinity.omos.ui.setting
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
@@ -15,7 +14,6 @@ import com.infinity.omos.ui.bottomnav.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.viewmodels.ChangePwViewModel
 import com.infinity.omos.viewmodels.DeleteAccountViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 

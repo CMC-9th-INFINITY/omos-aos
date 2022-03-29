@@ -1,11 +1,11 @@
 package com.infinity.omos.adapters
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.infinity.omos.ui.searchtab.*
+import com.infinity.omos.ui.searchtab.ArtistAlbumFragment
+import com.infinity.omos.ui.searchtab.ArtistMusicFragment
 
 class ArtistViewPagerAdapter(fragmentActivity: FragmentActivity, private val artistId: String) :
     FragmentStateAdapter(fragmentActivity) {

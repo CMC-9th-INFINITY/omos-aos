@@ -1,8 +1,6 @@
 package com.infinity.omos.viewmodels
 
 import android.app.Application
-import android.util.Log
-import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

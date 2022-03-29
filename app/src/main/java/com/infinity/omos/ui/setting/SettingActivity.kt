@@ -2,16 +2,14 @@ package com.infinity.omos.ui.setting
 
 import android.app.AlarmManager
 import android.app.PendingIntent
-import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivitySettingBinding
@@ -22,10 +20,7 @@ import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.viewmodels.SettingViewModel
 import com.kakao.sdk.user.UserApiClient
-import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.android.synthetic.main.activity_setting.*
-import kotlinx.android.synthetic.main.activity_setting.toolbar
-import kotlinx.android.synthetic.main.fragment_my_page.*
 import java.util.*
 
 class SettingActivity : AppCompatActivity() {

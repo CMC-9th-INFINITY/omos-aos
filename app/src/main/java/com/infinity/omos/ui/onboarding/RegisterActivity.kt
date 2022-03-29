@@ -16,15 +16,7 @@ import androidx.lifecycle.Observer
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityRegisterBinding
 import com.infinity.omos.viewmodels.RegisterViewModel
-import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_register.et_id
-import kotlinx.android.synthetic.main.activity_register.et_pw
-import kotlinx.android.synthetic.main.activity_register.linear_id
-import kotlinx.android.synthetic.main.activity_register.linear_pw
-import kotlinx.android.synthetic.main.activity_register.toolbar
-import kotlinx.android.synthetic.main.activity_register.tv_error_pw
 import java.util.regex.Pattern
 
 class RegisterActivity : AppCompatActivity() {

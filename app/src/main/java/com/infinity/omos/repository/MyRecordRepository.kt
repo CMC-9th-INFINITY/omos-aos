@@ -4,7 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
-import com.infinity.omos.data.*
+import com.infinity.omos.data.ResultState
+import com.infinity.omos.data.SaveRecord
+import com.infinity.omos.data.SimpleRecord
+import com.infinity.omos.data.Update
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.NetworkUtil

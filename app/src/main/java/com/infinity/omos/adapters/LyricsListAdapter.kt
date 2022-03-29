@@ -1,11 +1,9 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.text.Editable
 import android.text.InputType
 import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
@@ -14,15 +12,7 @@ import android.view.inputmethod.EditorInfo
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.DetailRecordActivity
-import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Record
-import com.infinity.omos.data.SumRecord
-import com.infinity.omos.databinding.ListCategoryItemBinding
-import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListLyricsItemBinding
-import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
-import com.infinity.omos.utils.GlobalApplication
 import kotlinx.android.synthetic.main.list_lyrics_item.view.*
 
 class LyricsListAdapter internal constructor(context: Context) :

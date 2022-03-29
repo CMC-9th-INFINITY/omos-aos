@@ -11,7 +11,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.CategoryActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
-import com.infinity.omos.data.Record
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor

@@ -3,7 +3,6 @@ package com.infinity.omos.utils
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
-import android.widget.ImageView
 import com.infinity.omos.R
 
 

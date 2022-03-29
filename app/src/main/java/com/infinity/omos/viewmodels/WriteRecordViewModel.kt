@@ -2,14 +2,10 @@ package com.infinity.omos.viewmodels
 
 import android.app.Application
 import android.widget.EditText
-import android.widget.ImageView
-import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.ResultState
-import com.infinity.omos.data.ResultUpdate
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.Update
 import com.infinity.omos.repository.MyRecordRepository

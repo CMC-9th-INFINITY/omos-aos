@@ -7,13 +7,11 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Context.NOTIFICATION_SERVICE
 import android.content.Intent
-import android.graphics.Color
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
-import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.Constant.Companion.CHANNEL_ID
 import com.infinity.omos.etc.Constant.Companion.NOTI_ID
 

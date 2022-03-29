@@ -5,7 +5,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.infinity.omos.data.Record
 import com.infinity.omos.data.ResultState
-import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyRecordRepository
 import com.infinity.omos.repository.RecordRepository

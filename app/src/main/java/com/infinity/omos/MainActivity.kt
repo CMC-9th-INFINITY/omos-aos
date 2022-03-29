@@ -2,36 +2,33 @@ package com.infinity.omos
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.*
+import android.view.KeyEvent
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
+import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.searchtab.AllFragment
 import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.utils.Height.Companion.navigationHeight
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.toolbar
-import android.view.WindowManager
-
-import android.os.Build
-import androidx.core.content.ContextCompat
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.infinity.omos.support.PermissionSupport
-import com.infinity.omos.utils.Height.Companion.statusBarHeight
-import java.util.*
 
 
 class MainActivity : AppCompatActivity() {

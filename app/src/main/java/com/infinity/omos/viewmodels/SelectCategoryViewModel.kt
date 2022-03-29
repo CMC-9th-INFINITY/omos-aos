@@ -1,14 +1,9 @@
 package com.infinity.omos.viewmodels
 
 import android.app.Application
-import android.content.Context
-import android.content.res.ColorStateList
-import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.R
 
 class SelectCategoryViewModel(application: Application): AndroidViewModel(application) {
 

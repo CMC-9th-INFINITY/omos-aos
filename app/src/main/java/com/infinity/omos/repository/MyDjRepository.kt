@@ -1,9 +1,10 @@
 package com.infinity.omos.repository
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.*
+import com.infinity.omos.api.FollowService
+import com.infinity.omos.api.RecordService
+import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication

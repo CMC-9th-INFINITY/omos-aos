@@ -3,11 +3,9 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.Album
 import com.infinity.omos.data.Artists
 import com.infinity.omos.data.Music
-import com.infinity.omos.data.Record
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.SearchRepository
 

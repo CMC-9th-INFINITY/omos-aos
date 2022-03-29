@@ -1,18 +1,10 @@
 package com.infinity.omos.ui.setting
 
-import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.provider.MediaStore.Images
 import android.text.Editable
 import android.text.InputFilter
 import android.text.TextWatcher
@@ -24,10 +16,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
-import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
@@ -43,13 +33,7 @@ import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 import kotlinx.android.synthetic.main.activity_register.*
-import kotlinx.android.synthetic.main.activity_register.toolbar
-import kotlinx.android.synthetic.main.activity_register_nick.*
-import kotlinx.android.synthetic.main.activity_write_record.*
-import java.io.ByteArrayOutputStream
 import java.io.File
-import java.io.FileOutputStream
-import java.io.OutputStream
 
 
 class ChangeProfileActivity : AppCompatActivity() {

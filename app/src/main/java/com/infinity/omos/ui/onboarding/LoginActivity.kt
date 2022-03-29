@@ -1,6 +1,5 @@
 package com.infinity.omos.ui.onboarding
 
-import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
 import android.content.res.ColorStateList

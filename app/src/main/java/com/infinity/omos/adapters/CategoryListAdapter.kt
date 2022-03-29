@@ -9,8 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.DetailRecordActivity
-import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Record
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListCategoryItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist

@@ -2,24 +2,17 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.*
 import com.infinity.omos.MainActivity.Companion.isWrite
-import com.infinity.omos.MainActivity.Companion.keyword
+import com.infinity.omos.MusicRecordActivity
+import com.infinity.omos.SelectCategoryActivity
 import com.infinity.omos.data.ArtistMusic
-import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Music
 import com.infinity.omos.databinding.ListArtistMusicItemBinding
-import com.infinity.omos.databinding.ListLoadingItemBinding
-import com.infinity.omos.databinding.ListMusicItemBinding
-import com.infinity.omos.etc.GlobalFunction
-import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 
 class ArtistMusicListAdapter internal constructor(private val context: Context):
     ListAdapter<ArtistMusic, ArtistMusicListAdapter.MusicViewHolder>(

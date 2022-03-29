@@ -1,21 +1,17 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.infinity.omos.DjActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.*
+import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ListMydjItemBinding
-import de.hdodenhof.circleimageview.CircleImageView
 
 class MyDjListAdapter internal constructor(context: Context):
     ListAdapter<Profile, MyDjListAdapter.ViewHolder>(

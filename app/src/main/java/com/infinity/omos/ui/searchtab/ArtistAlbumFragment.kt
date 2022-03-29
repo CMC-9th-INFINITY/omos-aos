@@ -1,17 +1,15 @@
 package com.infinity.omos.ui.searchtab
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.databinding.FragmentArtistAlbumBinding

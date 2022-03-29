@@ -4,7 +4,6 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -13,18 +12,15 @@ import android.view.MenuItem
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityMyLikeRecordBinding
-import com.infinity.omos.databinding.ActivityMyScrapRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.MyLikeRecordViewModel
-import com.infinity.omos.viewmodels.MyScrapRecordViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
-import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class MyLikeRecordActivity : AppCompatActivity() {
 

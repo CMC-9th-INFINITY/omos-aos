@@ -5,7 +5,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,13 +15,11 @@ import com.infinity.omos.DetailRecordActivity
 import com.infinity.omos.MyLikeRecordActivity
 import com.infinity.omos.MyScrapRecordActivity
 import com.infinity.omos.R
-import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
-import kotlinx.android.synthetic.main.fragment_my_page.*
-import java.util.*
 
 class MyPageFragment : Fragment() {
 
