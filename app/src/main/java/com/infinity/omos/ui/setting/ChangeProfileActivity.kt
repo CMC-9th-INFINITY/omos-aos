@@ -37,6 +37,7 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.bottomnav.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.AWSConnector
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import com.theartofdev.edmodo.cropper.CropImage
@@ -60,18 +61,41 @@ class ChangeProfileActivity : AppCompatActivity() {
 
     private val userId = GlobalApplication.prefs.getInt("userId")
     private var imageFile: File? = null
+    private var tempImageUrl = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
         binding.data = Profile(MyPageFragment.myNickname, MyPageFragment.myProfileUrl, userId)
-
+        tempImageUrl = MyPageFragment.myProfileUrl
         initToolBar()
 
         binding.btnProfile.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            result.launch(intent)
+            if (tempImageUrl == ""){
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                result.launch(intent)
+            } else{
+                val dlg = CustomDialog(this)
+                dlg.showImageDialog()
+                dlg.setOnOkClickedListener {
+                    when(it){
+                        "yes" -> {
+                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            result.launch(intent)
+                        }
+
+                        "no" -> {
+                            tempImageUrl = ""
+                            Glide.with(binding.imgProfile.context)
+                                .load(R.drawable.ic_profile_gray)
+                                .error(R.drawable.ic_profile_gray)
+                                .fallback(R.drawable.ic_profile_gray)
+                                .into(binding.imgProfile)
+                        }
+                    }
+                }
+            }
         }
 
         // 콜백
@@ -98,10 +122,11 @@ class ChangeProfileActivity : AppCompatActivity() {
                         val imageUri = cropResult.uri
                         Glide.with(binding.imgProfile.context)
                             .load(imageUri)
-                            .error(R.drawable.ic_profile)
-                            .fallback(R.drawable.ic_profile)
+                            .error(R.drawable.ic_profile_gray)
+                            .fallback(R.drawable.ic_profile_gray)
                             .into(binding.imgProfile)
                         imageFile = imageUri.toFile()
+                        tempImageUrl = "exist"
                     }
                 }
 
@@ -122,7 +147,13 @@ class ChangeProfileActivity : AppCompatActivity() {
                 awsConnector.uploadFile("profile/$userId.png", imageFile!!)
             }
 
-            viewModel.updateProfile(binding.etNick.text.toString(), "${BuildConfig.S3_BASE_URL}profile/${userId}.png", userId)
+            if (tempImageUrl == ""){
+                viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
+                MyPageFragment.myProfileUrl = ""
+            } else{
+                viewModel.updateProfile(binding.etNick.text.toString(), "${BuildConfig.S3_BASE_URL}profile/${userId}.png", userId)
+                MyPageFragment.myProfileUrl = "${BuildConfig.S3_BASE_URL}profile/${userId}.png"
+            }
         }
 
         viewModel.getStateUpdateProfile().observe(this) { state ->
@@ -130,7 +161,6 @@ class ChangeProfileActivity : AppCompatActivity() {
                 when (it) {
                     Constant.ApiState.DONE -> {
                         MyPageFragment.myNickname = binding.etNick.text.toString()
-                        MyPageFragment.myProfileUrl = "${BuildConfig.S3_BASE_URL}profile/${userId}.png"
                         val intent = Intent("PROFILE_UPDATE")
                         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent)

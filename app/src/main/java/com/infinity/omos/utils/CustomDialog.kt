@@ -55,6 +55,28 @@ class CustomDialog(private val context : Context) {
         fun onOkClicked(context: String)
     }
 
+    fun showImageDialog(){
+        dlg.requestWindowFeature(Window.FEATURE_NO_TITLE)   //타이틀바 제거
+        dlg.setContentView(R.layout.dialog_image)
+        dlg.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        dlg.setCancelable(true) //다이얼로그의 바깥 화면을 눌렀을 때 다이얼로그가 닫히지 않도록 함
+
+        var result = ""
+        dlg.btn_ok.setOnClickListener {
+            result = "yes"
+            listener.onOkClicked(result)
+            dlg.dismiss()
+        }
+
+
+        dlg.btn_cancel.setOnClickListener {
+            result = "no"
+            listener.onOkClicked(result)
+            dlg.dismiss()
+        }
+        dlg.show()
+    }
+
     fun showTosDialog(){
         dlg.setContentView(R.layout.dialog_tos)
         dlg.window!!.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT)

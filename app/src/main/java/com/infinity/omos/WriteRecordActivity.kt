@@ -57,6 +57,7 @@ class WriteRecordActivity : AppCompatActivity() {
     private var musicId = ""
     private var recordContents = ""
     private var recordImageUrl = ""
+    private var tempImageUrl = ""
     private var recordTitle = ""
     private var postId = -1
 
@@ -105,6 +106,7 @@ class WriteRecordActivity : AppCompatActivity() {
 
             // 글 대표 이미지
             recordImageUrl = intent.getStringExtra("recordImageUrl")!!
+            tempImageUrl = recordImageUrl
             Glide.with(binding.imgRecordTitle.context)
                 .load(recordImageUrl)
                 .into(binding.imgRecordTitle)
@@ -138,8 +140,28 @@ class WriteRecordActivity : AppCompatActivity() {
 
         // 이미지 넣기
         binding.btnGallery.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            result.launch(intent)
+            if (tempImageUrl == ""){
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                result.launch(intent)
+            } else{
+                val dlg = CustomDialog(this)
+                dlg.showImageDialog()
+                dlg.setOnOkClickedListener {
+                    when(it){
+                        "yes" -> {
+                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            result.launch(intent)
+                        }
+
+                        "no" -> {
+                            tempImageUrl = ""
+                            Glide.with(binding.imgRecordTitle.context)
+                                .load(tempImageUrl)
+                                .into(binding.imgRecordTitle)
+                        }
+                    }
+                }
+            }
         }
 
         // 콜백
@@ -168,6 +190,7 @@ class WriteRecordActivity : AppCompatActivity() {
                             .load(imageUri)
                             .into(binding.imgRecordTitle)
                         imageFile = imageUri.toFile()
+                        tempImageUrl = "exist"
                     }
                 }
 

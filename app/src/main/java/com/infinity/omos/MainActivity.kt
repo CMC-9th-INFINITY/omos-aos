@@ -28,6 +28,7 @@ import android.view.WindowManager
 
 import android.os.Build
 import androidx.core.content.ContextCompat
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.utils.Height.Companion.statusBarHeight
 import java.util.*
@@ -85,6 +86,7 @@ class MainActivity : AppCompatActivity() {
         initToolBar()
         initNavigationBar()
         initTabLayout()
+        bottomNav = binding.bottomNav
 
         // 플로팅 버튼
         binding.btnFloating.setOnClickListener {
@@ -466,5 +468,6 @@ class MainActivity : AppCompatActivity() {
     companion object {
         var keyword = ""
         var isWrite = false
+        lateinit var bottomNav: BottomNavigationView
     }
 }
