@@ -7,11 +7,16 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface OnBoardingService {
+interface AuthService {
     @GET("api/auth/check-email")
     fun checkDupEmail(
         @Query("email") email: String
     ): Call<ResultState>
+
+    @POST("api/auth/email")
+    fun getEmailCode(
+        @Body params: Email
+    ): Call<Code>
 
     @POST("api/auth/login")
     fun getResultLogin(

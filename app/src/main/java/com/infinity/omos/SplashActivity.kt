@@ -59,9 +59,16 @@ class SplashActivity : AppCompatActivity() {
                     if (GlobalApplication.prefs.getInt("userId") == -1 && !stateToken){
                         // 소셜 로그인하고 닉네임 입력 안한 상황
                         Log.d("SplashActivity", "토큰 불러오기 실패")
-                        val intent = Intent(this, RegisterNickActivity::class.java)
-                        intent.putExtra("sns", true)
-                        intent.putExtra("userId", tokenInfo.id.toString()+"@kakao.com")
+
+                        UserApiClient.instance.logout { error ->
+                            if (error != null){
+                                Log.d("SplashActivity", "카카오 에러")
+                            } else{
+                                Log.d("SplashActivity", "카카오 로그아웃")
+                            }
+                        }
+
+                        val intent = Intent(this, LoginActivity::class.java)
                         startActivity(intent)
                     } else{
                         Log.d("SplashActivity", "토큰 불러오기 성공")

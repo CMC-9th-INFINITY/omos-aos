@@ -59,14 +59,36 @@ class RegisterActivity : AppCompatActivity() {
                 if (it){
                     ic_eye2.setImageResource(R.drawable.ic_visible_eye)
                     et_again_pw.transformationMethod = HideReturnsTransformationMethod.getInstance()
-                    et_pw.setSelection(et_pw.length())
+                    et_again_pw.setSelection(et_again_pw.length())
                 } else{
                     ic_eye2.setImageResource(R.drawable.ic_invisible_eye)
                     et_again_pw.transformationMethod = PasswordTransformationMethod.getInstance()
-                    et_pw.setSelection(et_pw.length())
+                    et_again_pw.setSelection(et_again_pw.length())
                 }
             }
         })
+
+        // 비밀번호 표시 ON/OFF
+        viewModel.visibleEye3.observe(this, Observer { state ->
+            state?.let {
+                if (it){
+                    binding.icEye3.setImageResource(R.drawable.ic_visible_eye)
+                    binding.etCode.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    binding.etCode.setSelection(binding.etCode.length())
+                } else{
+                    binding.icEye3.setImageResource(R.drawable.ic_invisible_eye)
+                    binding.etCode.transformationMethod = PasswordTransformationMethod.getInstance()
+                    binding.etCode.setSelection(binding.etCode.length())
+                }
+            }
+        })
+
+        // 이메일 인증코드
+        viewModel.getCode().observe(this) { code ->
+            code?.let {
+                
+            }
+        }
 
         // 이메일 중복 확인
         viewModel.getStateDupEmail().observe(this, Observer { state ->

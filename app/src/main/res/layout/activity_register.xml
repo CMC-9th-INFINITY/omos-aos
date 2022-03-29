@@ -4,293 +4,375 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="vm"
-            type="com.infinity.omos.viewmodels.RegisterViewModel"/>
+            type="com.infinity.omos.viewmodels.RegisterViewModel" />
     </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:titleTextColor="@color/white"
             android:background="@color/dark"
-            android:theme="@style/ToolbarColoredBackArrow"/>
+            android:theme="@style/ToolbarColoredBackArrow"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:titleTextColor="@color/white" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".ui.onboarding.RegisterActivity"
-            android:paddingHorizontal="16dp"
-            android:background="@color/dark">
+            android:layout_height="wrap_content">
 
-
-            <ImageView
-                android:id="@+id/main_logo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_omos"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
-
-            <LinearLayout
-                android:id="@+id/linear1"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginTop="35dp"
-                app:layout_constraintTop_toBottomOf="@+id/main_logo"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
+                android:background="@color/dark"
+                android:paddingHorizontal="16dp"
+                tools:context=".ui.onboarding.RegisterActivity">
 
-                <TextView
+
+                <ImageView
+                    android:id="@+id/main_logo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="26dp"
-                    android:text="회원가입"
-                    android:textSize="22sp"
-                    android:textColor="@color/orange"/>
+                    android:src="@drawable/ic_omos"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
 
                 <LinearLayout
-                    android:id="@+id/linear_id"
+                    android:id="@+id/linear1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginTop="35dp"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/main_logo">
 
-                    <androidx.constraintlayout.widget.ConstraintLayout
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="26dp"
+                        android:text="회원가입"
+                        android:textColor="@color/orange"
+                        android:textSize="22sp" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                        android:orientation="vertical">
 
-                        <TextView
-                            android:layout_width="wrap_content"
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="이메일"
-                            android:textSize="14sp"
-                            android:textColor="@color/ivory"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            android:layout_marginBottom="8dp">
 
-                        <TextView
-                            android:id="@+id/tv_success_msg"
-                            android:layout_width="wrap_content"
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="이메일"
+                                android:textColor="@color/ivory"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_success_msg"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="이메일 에러 메시지"
+                                android:textColor="@color/orange"
+                                android:textSize="12sp"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <EditText
+                            android:id="@+id/et_id"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="이메일 에러 메시지"
-                            android:textSize="12sp"
-                            android:textColor="@color/orange"
-                            android:visibility="invisible"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
+                            android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"
+                            android:background="@drawable/rectangle_box"
+                            android:hint="이메일(아이디)을 입력해주세요."
+                            android:paddingHorizontal="16dp"
+                            android:paddingVertical="14dp"
+                            android:singleLine="true"
+                            android:textColor="@color/gray_02"
+                            android:textColorHint="@color/dark_gray"
+                            android:textSize="16sp" />
 
-                    </androidx.constraintlayout.widget.ConstraintLayout>
+                    </LinearLayout>
 
-                    <EditText
-                        android:id="@+id/et_id"
+                    <TextView
+                        android:id="@+id/btn_send_auth_mail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="right"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/send_auth_mail"
+                        android:textColor="@color/light_gray"
+                        android:textSize="14sp" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_auth_mail"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:paddingHorizontal="16dp"
-                        android:paddingVertical="14dp"
-                        android:hint="이메일(아이디)을 입력해주세요."
-                        android:textSize="16sp"
-                        android:textColor="@color/gray_02"
-                        android:textColorHint="@color/dark_gray"
-                        android:singleLine="true"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="이메일 인증코드"
+                                android:textColor="@color/ivory"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_error_auth_mail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="인증코드가 일치하지 않아요."
+                                android:textColor="@color/orange"
+                                android:textSize="12sp"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:background="@color/deep_dark">
+
+                            <EditText
+                                android:id="@+id/et_code"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:background="@drawable/rectangle_box"
+                                android:hint="인증코드를 입력해주세요."
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="14dp"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_02"
+                                android:textColorHint="@color/dark_gray"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <ImageView
+                                android:id="@+id/ic_eye3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->vm.eye3Click()}"
+                                android:padding="13dp"
+                                android:src="@drawable/ic_visible_eye"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_pw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="16dp"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호"
+                                android:textColor="@color/ivory"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_error_pw"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호 에러 메시지"
+                                android:textColor="@color/orange"
+                                android:textSize="12sp"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="16dp"
+                            android:background="@color/deep_dark">
+
+                            <EditText
+                                android:id="@+id/et_pw"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"
+                                android:background="@drawable/rectangle_box"
+                                android:hint="비밀번호를 입력해주세요."
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="14dp"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_02"
+                                android:textColorHint="@color/dark_gray"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <ImageView
+                                android:id="@+id/ic_eye1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->vm.eye1Click()}"
+                                android:padding="13dp"
+                                android:src="@drawable/ic_visible_eye"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linear_again_pw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="8dp">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호 재확인"
+                                android:textColor="@color/ivory"
+                                android:textSize="14sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                            <TextView
+                                android:id="@+id/tv_error_again_pw"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="비밀번호 재확인 에러 메시지"
+                                android:textColor="@color/orange"
+                                android:textSize="12sp"
+                                android:visibility="invisible"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                        <androidx.constraintlayout.widget.ConstraintLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/deep_dark">
+
+                            <EditText
+                                android:id="@+id/et_again_pw"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"
+                                android:background="@drawable/rectangle_box"
+                                android:hint="비밀번호를 다시 입력해주세요."
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="14dp"
+                                android:singleLine="true"
+                                android:textColor="@color/gray_02"
+                                android:textColorHint="@color/dark_gray"
+                                android:textSize="16sp"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintHorizontal_bias="0.0"
+                                app:layout_constraintStart_toStartOf="parent"
+                                app:layout_constraintTop_toTopOf="parent"
+                                app:layout_constraintVertical_bias="0.0" />
+
+                            <ImageView
+                                android:id="@+id/ic_eye2"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{()->vm.eye2Click()}"
+                                android:padding="13dp"
+                                android:src="@drawable/ic_visible_eye"
+                                app:layout_constraintBottom_toBottomOf="parent"
+                                app:layout_constraintEnd_toEndOf="parent"
+                                app:layout_constraintTop_toTopOf="parent" />
+
+                        </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    </LinearLayout>
+
+                    <Button
+                        android:id="@+id/btn_next"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="36dp"
+                        android:layout_marginBottom="36dp"
                         android:background="@drawable/rectangle_box"
-                        android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"/>
+                        android:backgroundTint="@color/light_gray"
+                        android:enabled="false"
+                        android:text="다음"
+                        android:textColor="@color/dark_gray"
+                        android:textSize="16sp" />
 
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/btn_send_auth_mail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:layout_gravity="right"
-                    android:text="@string/send_auth_mail"
-                    android:textSize="14sp"
-                    android:textColor="@color/light_gray"/>
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-                <LinearLayout
-                    android:id="@+id/linear_pw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="비밀번호"
-                            android:textSize="14sp"
-                            android:textColor="@color/ivory"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                        <TextView
-                            android:id="@+id/tv_error_pw"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="비밀번호 에러 메시지"
-                            android:textSize="12sp"
-                            android:textColor="@color/orange"
-                            android:visibility="invisible"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="16dp"
-                        android:background="@color/deep_dark">
-
-                        <EditText
-                            android:id="@+id/et_pw"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="비밀번호를 입력해주세요."
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="14dp"
-                            android:textSize="16sp"
-                            android:textColor="@color/gray_02"
-                            android:textColorHint="@color/dark_gray"
-                            android:singleLine="true"
-                            android:background="@drawable/rectangle_box"
-                            android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <ImageView
-                            android:id="@+id/ic_eye1"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="13dp"
-                            android:src="@drawable/ic_visible_eye"
-                            android:onClick="@{()->vm.eye1Click()}"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/linear_again_pw"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="비밀번호 재확인"
-                            android:textSize="14sp"
-                            android:textColor="@color/ivory"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                        <TextView
-                            android:id="@+id/tv_error_again_pw"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="비밀번호 재확인 에러 메시지"
-                            android:textSize="12sp"
-                            android:textColor="@color/orange"
-                            android:visibility="invisible"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                    <androidx.constraintlayout.widget.ConstraintLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@color/deep_dark">
-
-                        <EditText
-                            android:id="@+id/et_again_pw"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="비밀번호를 다시 입력해주세요."
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="14dp"
-                            android:textSize="16sp"
-                            android:textColor="@color/gray_02"
-                            android:textColorHint="@color/dark_gray"
-                            android:singleLine="true"
-                            android:background="@drawable/rectangle_box"
-                            android:afterTextChanged="@{()->vm.checkInput(etId, etPw, etAgainPw)}"
-                            app:layout_constraintBottom_toBottomOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintHorizontal_bias="0.0"
-                            app:layout_constraintStart_toStartOf="parent"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintVertical_bias="0.0" />
-
-                        <ImageView
-                            android:id="@+id/ic_eye2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:padding="13dp"
-                            android:src="@drawable/ic_visible_eye"
-                            android:onClick="@{()->vm.eye2Click()}"
-                            app:layout_constraintTop_toTopOf="parent"
-                            app:layout_constraintEnd_toEndOf="parent"
-                            app:layout_constraintBottom_toBottomOf="parent"/>
-
-                    </androidx.constraintlayout.widget.ConstraintLayout>
-
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_next"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="36dp"
-                android:text="다음"
-                android:textSize="16sp"
-                android:textColor="@color/dark_gray"
-                android:background="@drawable/rectangle_box"
-                android:backgroundTint="@color/light_gray"
-                android:enabled="false"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </ScrollView>
 
     </LinearLayout>
 </layout>

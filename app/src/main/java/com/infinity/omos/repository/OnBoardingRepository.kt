@@ -2,7 +2,7 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.OnBoardingService
+import com.infinity.omos.api.AuthService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
@@ -16,7 +16,48 @@ import retrofit2.Retrofit
 class OnBoardingRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val onBoardingApi = retrofit.create(OnBoardingService::class.java)
+    private val onBoardingApi = retrofit.create(AuthService::class.java)
+
+    var stateGetCode = MutableLiveData<Constant.ApiState>()
+    var emailCode = MutableLiveData<String>()
+    fun getEmailCode(email: String){
+        stateGetCode.value = Constant.ApiState.LOADING
+        onBoardingApi.getEmailCode(Email(email)).enqueue(object: Callback<Code> {
+            override fun onResponse(
+                call: Call<Code>,
+                response: Response<Code>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("GetEmailCodeAPI", "Success")
+                        emailCode.postValue(body?.code)
+                        stateGetCode.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("GetEmailCodeAPI", "Unauthorized")
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("GetEmailCodeAPI", errorBody!!.message)
+                        stateGetCode.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("GetEmailCodeAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<Code>, t: Throwable) {
+                Log.d("GetEmailCodeAPI", t.message.toString())
+                stateGetCode.value = Constant.ApiState.ERROR
+                t.stackTrace
+            }
+        })
+    }
 
     var stateToken = MutableLiveData<Constant.ApiState>()
     fun getUserToken(userInfo: UserToken){

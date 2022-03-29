@@ -5,6 +5,7 @@ import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
 
 class RegisterViewModel(application: Application): AndroidViewModel(application)  {
@@ -19,10 +20,12 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
 
     var visibleEye1 = MutableLiveData<Boolean>()
     var visibleEye2 = MutableLiveData<Boolean>()
+    var visibleEye3 = MutableLiveData<Boolean>()
 
     init {
         visibleEye1.value = false
         visibleEye2.value = false
+        visibleEye3.value = false
     }
 
     fun eye1Click(){
@@ -33,11 +36,23 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
         visibleEye2.value = visibleEye2.value != true
     }
 
+    fun eye3Click(){
+        visibleEye3.value = visibleEye3.value != true
+    }
+
     fun checkInput(id: EditText, pw: EditText, pwAgain: EditText){
         stateInput.value = id.length() > 0 && pw.length() > 0 && pwAgain.length() > 0
     }
 
     fun checkDupEmail(email: String){
         repository.checkDupEmail(email)
+    }
+
+    // 이메일 인증 코드
+    fun sendEmailAuth(email: String){
+        repository.getEmailCode(email)
+    }
+    fun getCode(): LiveData<String>{
+        return repository.emailCode
     }
 }
