@@ -188,8 +188,6 @@ class MyDjFragment : Fragment() {
 
         // 무한 스크롤
         binding.rvRecord.addOnScrollListener(object: RecyclerView.OnScrollListener(){
-            var lastFirstVisibleItem = 0
-
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
 
@@ -204,19 +202,6 @@ class MyDjFragment : Fragment() {
                     rAdapter.deleteLoading()
                     viewModel.setDjAllRecords(fromUserId, postId, pageSize)
                 }
-
-                val firstVisibleItem = (recyclerView.layoutManager as LinearLayoutManager?)!!.findFirstVisibleItemPosition()
-                if (lastFirstVisibleItem < firstVisibleItem) {
-                    // Down
-                    myDjSlideUp(binding.rvMydj)
-                    bottomNavSlideDown(bottomNav)
-                }
-                if (lastFirstVisibleItem > firstVisibleItem) {
-                    // Up
-                    myDjSlideDown(binding.rvMydj)
-                    bottomNavSlideUp(bottomNav)
-                }
-                lastFirstVisibleItem = firstVisibleItem
             }
         })
 
@@ -307,29 +292,5 @@ class MyDjFragment : Fragment() {
                 binding.rvRecord.scrollToPosition(0)
             }
         }
-    }
-
-    private fun bottomNavSlideUp(child: BottomNavigationView) {
-        child.clearAnimation()
-        child.animate().translationY(0f).duration = 200
-    }
-
-    private fun bottomNavSlideDown(child: BottomNavigationView) {
-        bottomNav.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        val height = bottomNav.measuredHeight
-        child.clearAnimation()
-        child.animate().translationY(height.toFloat()).duration = 200
-    }
-
-    private fun myDjSlideUp(child: RecyclerView) {
-        child.measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
-        val height = child.measuredHeight
-        child.clearAnimation()
-        child.animate().translationY(-height.toFloat()).duration = 200
-    }
-
-    private fun myDjSlideDown(child: RecyclerView) {
-        child.clearAnimation()
-        child.animate().translationY(0f).duration = 200
     }
 }
