@@ -24,16 +24,16 @@ class AWSConnector(private val context: Context){
     }
 
     private fun createTransferUtility() {
+        val awsConfiguration = AWSConfiguration(context)
         val credentialsProvider = CognitoCachingCredentialsProvider(
             context,
-            BuildConfig.POOL_ID,
-            Regions.AP_NORTHEAST_2
+            awsConfiguration
         )
 
         val s3Client = AmazonS3Client(credentialsProvider, Region.getRegion(Regions.AP_NORTHEAST_2))
         transferUtility = TransferUtility.builder()
             .context(context)
-            .awsConfiguration(AWSConfiguration(context))
+            .awsConfiguration(awsConfiguration)
             .s3Client(s3Client)
             .build()
     }

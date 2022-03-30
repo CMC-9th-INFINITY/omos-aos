@@ -15,14 +15,13 @@ android {
         applicationId "com.infinity.omos"
         minSdk 21
         targetSdk 32
-        versionCode 2
-        versionName "2.0"
+        versionCode 3
+        versionName "3.0"
 
         buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
         manifestPlaceholders["KAKAO_OAUTH_KEY"] = properties['kakao_oauth_key']
         buildConfigField "String", "S3_BASE_URL", properties['s3_base_url']
-        buildConfigField "String", "POOL_ID", properties['pool_id']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
