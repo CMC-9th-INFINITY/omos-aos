@@ -28,9 +28,8 @@ jobs:
           BASE_URL: ${{secrets.BASE_URL}}
           KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
           KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
-          IAM_ACCESS_KEY: ${{secrets.IAM_ACCESS_KEY}}
-          IAM_SECRET_KEY: ${{secrets.IAM_SECRET_KEY}}
           S3_BASE_URL: ${{secrets.S3_BASE_URL}}
+          POOL_ID: ${{secrets.POOL_ID}}
           RELEASE_STORE_FILE: ${{secrets.RELEASE_STORE_FILE}}
           RELEASE_STORE_PASSWORD: ${{secrets.RELEASE_STORE_PASSWORD}}
           RELEASE_KEY_ALIAS: ${{secrets.RELEASE_KEY_ALIAS}}
@@ -39,9 +38,8 @@ jobs:
           echo base_url="$BASE_URL" >> ./local.properties
           echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
           echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
-          echo iam_access_key="$IAM_ACCESS_KEY" >> ./local.properties
-          echo iam_secret_key="$IAM_SECRET_KEY" >> ./local.properties
           echo s3_base_url="$S3_BASE_URL" >> ./local.properties
+          echo pool_id="$POOL_ID" >> ./local.properties
           echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
           echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
           echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties

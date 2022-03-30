@@ -21,9 +21,8 @@ android {
         buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
         manifestPlaceholders["KAKAO_OAUTH_KEY"] = properties['kakao_oauth_key']
-        buildConfigField "String", "IAM_ACCESS_KEY", properties['iam_access_key']
-        buildConfigField "String", "IAM_SECRET_KEY", properties['iam_secret_key']
         buildConfigField "String", "S3_BASE_URL", properties['s3_base_url']
+        buildConfigField "String", "POOL_ID", properties['pool_id']
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -115,9 +114,7 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // s3
-    implementation 'com.amazonaws:aws-android-sdk-mobile-client:2.13.5'
-    implementation 'com.amazonaws:aws-android-sdk-cognito:2.13.5'
-    implementation 'com.amazonaws:aws-android-sdk-s3:2.13.5'
+    implementation 'com.amazonaws:aws-android-sdk-s3:2.43.0'
 
     // SwipeRefreshLayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"

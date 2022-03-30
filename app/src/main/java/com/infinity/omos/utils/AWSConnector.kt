@@ -1,10 +1,11 @@
 package com.infinity.omos.utils
 
-import android.app.Activity
+import android.content.Context
 import android.util.Log
-import com.amazonaws.auth.BasicAWSCredentials
-import com.amazonaws.mobile.client.AWSMobileClient
+import com.amazonaws.auth.CognitoCachingCredentialsProvider
+import com.amazonaws.mobile.config.AWSConfiguration
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
+import com.amazonaws.mobileconnectors.s3.transferutility.TransferObserver
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferState
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
 import com.amazonaws.regions.Region
@@ -13,67 +14,74 @@ import com.amazonaws.services.s3.AmazonS3Client
 import com.infinity.omos.BuildConfig
 import java.io.File
 
-class AWSConnector constructor(val activity: Activity) {
-    private class Listener() : TransferListener {
-        override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {
-            val percentDoneFloat = bytesCurrent.toFloat() / bytesTotal.toFloat() * 100
-            val percentDone = percentDoneFloat.toInt()
-            Log.d("AWS", "percent: $percentDone")
-        }
-        override fun onStateChanged(id: Int, state: TransferState?) {
-            if (TransferState.COMPLETED == state) {
 
+class AWSConnector(private val context: Context){
+
+    private lateinit var transferUtility: TransferUtility
+
+    init {
+        createTransferUtility()
+    }
+
+    private fun createTransferUtility() {
+        val credentialsProvider = CognitoCachingCredentialsProvider(
+            context,
+            BuildConfig.POOL_ID,
+            Regions.AP_NORTHEAST_2
+        )
+
+        val s3Client = AmazonS3Client(credentialsProvider, Region.getRegion(Regions.AP_NORTHEAST_2))
+        transferUtility = TransferUtility.builder()
+            .context(context)
+            .awsConfiguration(AWSConfiguration(context))
+            .s3Client(s3Client)
+            .build()
+    }
+
+    fun uploadFile(objectKey: String, file: File) {
+        val transferObserver: TransferObserver = transferUtility.upload(
+            "omos-image",
+            objectKey,
+            file
+        )
+        transferObserver.setTransferListener(object : TransferListener {
+            override fun onStateChanged(id: Int, state: TransferState) {
+                Log.d("AWSConnector", "onStateChanged: $state")
+                if (TransferState.COMPLETED == state) {
+                    Log.d("AWSConnector", "Image Upload!")
+                }
             }
-        }
-        override fun onError(id: Int, ex: java.lang.Exception?) {
 
-        }
+            override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
+            override fun onError(id: Int, ex: Exception) {
+                Log.e("AWSConnector", "onError: ", ex)
+            }
+        })
     }
-    /**
-     * 주어진 키(S3의 상대경로) 에 위치한 파일을 다운로드 합니다.
-     * [File] 파라미터는 유효해야 하며, 폴더는 지원하지 않습니다.
-     * 해당 파일이 이미 있을 경우에는 덮어쓰기 됩니다.
-     *
-     * @param key S3의 상대경로
-     * @param file 다운로드 될 경로
-     * @param callback mode: [AWSConnector.Mode] 참고
-     * int: Done Progress Percent
-     * Exception: not-null if mode = ERROR
-     */
-    fun downloadFile(key: String, file: File) {
-        initializeAWSMobileClient {
-            val observer = it.download(key, file)
-            observer.setTransferListener(Listener())
-        }
-    }
-    /**
-     * 주어진 키(S3의 상대경로) 에 주어진 파일을 업로드 합니다.
-     * [File] 파라미터는 유효해야 하며, 폴더는 지원하지 않습니다.
-     * 해당 파일이 이미 있을 경우에는 덮어쓰기 됩니다.
-     *
-     * @param key S3의 상대경로
-     * @param file 업로드 할 경로
-     * @param callback mode: [AWSConnector.Mode] 참고
-     * int: Done Progress Percent
-     * Exception: not-null if mode = ERROR
-     */
-    fun uploadFile(key: String, file: File) {
-        initializeAWSMobileClient {
-            val observer = it.upload(key, file)
-            observer.setTransferListener(Listener())
-        }
-    }
-    private fun initializeAWSMobileClient(job: (TransferUtility) -> Unit) {
-        AWSMobileClient.getInstance().initialize(activity) {
-            val transferUtility = TransferUtility.builder()
-                .context(activity)
-                .awsConfiguration(AWSMobileClient.getInstance().configuration)
-                .s3Client(AmazonS3Client(BasicAWSCredentials(BuildConfig.IAM_ACCESS_KEY, BuildConfig.IAM_SECRET_KEY), Region.getRegion(Regions.AP_NORTHEAST_2)))
-                .build()
-            job(transferUtility)
-        }.execute()
-    }
-    enum class Mode {
-        Progress, Error, Done
-    }
+
+//    fun download(objectKey: String?) {
+//        val fileDownload = File(getCacheDir(), objectKey)
+//        val transferObserver: TransferObserver = transferUtility.download(
+//            BUCKET_NAME,
+//            objectKey,
+//            fileDownload
+//        )
+//        transferObserver.setTransferListener(object : TransferListener {
+//            override fun onStateChanged(id: Int, state: TransferState) {
+//                Log.d("AWSConnector", "onStateChanged: $state")
+//                if (TransferState.COMPLETED.equals(state)) {
+//                    imageViewDownload.setImageBitmap(BitmapFactory.decodeFile(fileDownload.getAbsolutePath()))
+//                    progressDialogDownload.dismiss()
+//                    Toast.makeText(this@MainActivity, "Image downloaded", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//
+//            override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
+//            override fun onError(id: Int, ex: Exception) {
+//                progressDialogDownload.dismiss()
+//                Log.e("AWSConnector", "onError: ", ex)
+//                Toast.makeText(this@MainActivity, "Error: " + ex.message, Toast.LENGTH_SHORT).show()
+//            }
+//        })
+//    }
 }
