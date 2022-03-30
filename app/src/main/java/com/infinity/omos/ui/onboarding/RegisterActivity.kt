@@ -2,12 +2,16 @@ package com.infinity.omos.ui.onboarding
 
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.graphics.Paint
+import android.os.Build
 import android.os.Bundle
+import android.text.Html
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -15,6 +19,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityRegisterBinding
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.viewmodels.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Pattern
@@ -26,6 +31,7 @@ class RegisterActivity : AppCompatActivity() {
     private var idState = false
     private val pwPattern =
         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{8,16}$" // 영문, 숫자, 특수문자 하나씩 포함, 8~16자
+    private var emailCode = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,7 +92,12 @@ class RegisterActivity : AppCompatActivity() {
         // 이메일 인증코드
         viewModel.getCode().observe(this) { code ->
             code?.let {
-                
+                binding.linearAuthMail.visibility = View.VISIBLE
+                emailCode = it
+
+                binding.btnSendAuthMail.text = resources.getString(R.string.send_again_auth_mail)
+                binding.btnSendAuthMail.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+                binding.btnSendAuthMail.isEnabled = true
             }
         }
 
@@ -102,12 +113,7 @@ class RegisterActivity : AppCompatActivity() {
                         linear_id
                     )
                 } else{
-                    idState = true
-                    tv_success_msg.text = resources.getString(R.string.success_auth)
-                    tv_success_msg.setTextColor(ContextCompat.getColor(this, R.color.gray_05))
-                    tv_success_msg.visibility = View.VISIBLE
-                    btn_send_auth_mail.visibility = View.GONE
-                    et_id.isEnabled = false
+                    viewModel.sendEmailAuth(binding.etId.text.toString())
                 }
             }
         })
@@ -153,6 +159,29 @@ class RegisterActivity : AppCompatActivity() {
                     if (!idState){
                         LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
                     }
+                }
+            }
+        }
+
+        binding.etCode.setOnFocusChangeListener { view, b ->
+            if (!b){
+                if (emailCode == binding.etCode.text.toString()){
+                    idState = true
+                    binding.tvSuccessMsg.text = resources.getString(R.string.success_auth)
+                    binding.tvSuccessMsg.setTextColor(ContextCompat.getColor(this, R.color.gray_05))
+                    binding.tvSuccessMsg.visibility = View.VISIBLE
+                    binding.btnSendAuthMail.visibility = View.GONE
+                    binding.etId.isEnabled = false
+                    binding.etCode.isEnabled = false
+                    LoginActivity.hideErrorMsg(this, binding.etCode, binding.tvErrorAuthMail)
+                } else{
+                    LoginActivity.showErrorMsg(
+                        this,
+                        binding.etCode,
+                        binding.tvErrorAuthMail,
+                        resources.getString(R.string.no_match_code),
+                        binding.linearAuthMail
+                    )
                 }
             }
         }
@@ -225,7 +254,7 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         // 인증메일 전송
-        btn_send_auth_mail.setOnClickListener {
+        binding.btnSendAuthMail.setOnClickListener {
             val pattern: Pattern = Patterns.EMAIL_ADDRESS
 
             if (et_id.length() == 0){
@@ -245,8 +274,19 @@ class RegisterActivity : AppCompatActivity() {
                     linear_id
                 )
             } else{
-                LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
-                viewModel.checkDupEmail(et_id.text.toString())
+                val dlg = CustomDialog(this)
+                dlg.show("인증메일을 전송하시겠습니까?", "전송")
+                dlg.setOnOkClickedListener {
+                    when(it){
+                        "yes" -> {
+                            binding.btnSendAuthMail.text = "전송 중..."
+                            binding.btnSendAuthMail.paintFlags = 0
+                            binding.btnSendAuthMail.isEnabled = false
+                            LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
+                            viewModel.checkDupEmail(et_id.text.toString())
+                        }
+                    }
+                }
             }
         }
     }

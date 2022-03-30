@@ -14,7 +14,9 @@
     <string name="success_auth">인증을 성공했어요.</string>
     <string name="condition_password">8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요.</string>
     <string name="no_match_password">비밀번호가 일치하지 않아요.</string>
+    <string name="no_match_code">인즏코드가 일치하지 않아요.</string>
     <string name="send_auth_mail"><u>인증메일 보내기</u></string>
+    <string name="send_again_auth_mail">인증메일 재전송</string>
     <string name="look"><u>보기</u></string>
 
     <string name="_ing">서비스 준비 중</string>
