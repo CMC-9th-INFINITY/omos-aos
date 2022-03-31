@@ -61,7 +61,6 @@ class OnBoardingRepository {
 
     var stateToken = MutableLiveData<Constant.ApiState>()
     fun getUserToken(userInfo: UserToken){
-        stateToken.value = Constant.ApiState.LOADING
         onBoardingApi.getToken(userInfo).enqueue(object: Callback<UserToken> {
             override fun onResponse(
                 call: Call<UserToken>,

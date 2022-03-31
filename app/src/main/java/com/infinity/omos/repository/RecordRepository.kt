@@ -241,7 +241,7 @@ class RecordRepository {
 
             override fun onFailure(call: Call<Record>, t: Throwable) {
                 Log.d("DetailRecordAPI", t.message.toString())
-                stateDetailRecord.value = Constant.ApiState.ERROR
+                stateDetailRecord.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
