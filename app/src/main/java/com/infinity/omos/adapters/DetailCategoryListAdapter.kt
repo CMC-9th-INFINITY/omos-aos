@@ -110,6 +110,10 @@ class DetailCategoryListAdapter internal constructor(
                         }
                     }
 
+                    if (contentsList.size % 2 == 1){
+                        interpretList.add("")
+                    }
+
                     val mAdapter = LyricsListAdapter(context)
                     mAdapter.setLyrics(lyricsList, false)
                     mAdapter.setInterpret(interpretList)

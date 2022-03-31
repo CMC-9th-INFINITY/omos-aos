@@ -79,7 +79,7 @@
                             android:layout_height="20dp"
                             android:layout_gravity="center"
                             android:layout_marginRight="8dp"
-                            android:src="@drawable/ic_search2" />
+                            android:src="@drawable/ic_search_view" />
 
                         <EditText
                             android:id="@+id/et_search"

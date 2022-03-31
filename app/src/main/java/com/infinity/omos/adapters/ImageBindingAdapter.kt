@@ -25,8 +25,8 @@ object ImageBindingAdapter {
     fun loadProfileImage(imageView: ImageView, url: String?){
         Glide.with(imageView.context)
             .load(url)
-            .error(R.drawable.ic_profile_gray)
-            .fallback(R.drawable.ic_profile_gray)
+            .error(R.drawable.ic_profile)
+            .fallback(R.drawable.ic_profile)
             .skipMemoryCache(true)
             .diskCacheStrategy(DiskCacheStrategy.NONE)
             .into(imageView)

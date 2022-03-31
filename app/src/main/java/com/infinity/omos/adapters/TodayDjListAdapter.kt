@@ -56,8 +56,8 @@ class TodayDjListAdapter internal constructor(context: Context):
 
             Glide.with(binding.imgAlbumCover.context)
                 .load(dj.profileUrl)
-                .error(R.drawable.ic_profile_gray)
-                .fallback(R.drawable.ic_profile_gray)
+                .error(R.drawable.ic_profile)
+                .fallback(R.drawable.ic_profile)
                 .into(binding.imgAlbumCover)
 
             binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.dark)

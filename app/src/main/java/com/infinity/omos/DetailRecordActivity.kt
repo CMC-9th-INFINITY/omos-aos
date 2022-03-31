@@ -191,6 +191,10 @@ class DetailRecordActivity : AppCompatActivity() {
                             interpret += i + "\n"
                         }
 
+                        if (contentsList.size % 2 == 1){
+                            interpretList.add("")
+                        }
+
                         val mAdapter = LyricsListAdapter(this)
                         mAdapter.setLyrics(lyricsList, false)
                         mAdapter.setInterpret(interpretList)

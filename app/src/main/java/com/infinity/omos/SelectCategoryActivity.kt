@@ -5,6 +5,7 @@ import android.content.res.ColorStateList
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -20,7 +21,7 @@ import kotlinx.android.synthetic.main.activity_select_category.*
 class SelectCategoryActivity : AppCompatActivity() {
 
     private val viewModel: SelectCategoryViewModel by viewModels()
-    private var prevLayout: LinearLayout? = null
+    private var prevLayout: FrameLayout? = null
 
     private var musicId: String? = ""
     private var musicTitle: String? = ""
@@ -45,7 +46,7 @@ class SelectCategoryActivity : AppCompatActivity() {
             state?.let {
                 when (it) {
                     resources.getString(R.string.a_line) -> {
-                        changeState(btn_oneline)
+                        changeState(btn_aline)
                     }
                     resources.getString(R.string.ost) -> {
                         changeState(btn_myost)
@@ -64,7 +65,7 @@ class SelectCategoryActivity : AppCompatActivity() {
         })
     }
 
-    private fun changeState(layout: LinearLayout){
+    private fun changeState(layout: FrameLayout){
         if (prevLayout != null){
             prevLayout!!.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
             prevLayout!!.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))

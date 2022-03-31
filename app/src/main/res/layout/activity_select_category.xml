@@ -48,171 +48,240 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
-            <LinearLayout
-                android:id="@+id/btn_oneline"
+            <FrameLayout
+                android:id="@+id/btn_aline"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_rectangle"
-                android:backgroundTint="@color/deep_dark"
-                android:onClick="@{()->vm.clickBox(tvOneline)}"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/btn_myost"
                 app:layout_constraintBottom_toTopOf="@+id/btn_mystory">
 
-                <TextView
-                    android:id="@+id/tv_oneline"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
-                    android:text="한 줄 감상"
-                    android:textSize="16sp"
-                    android:textColor="@color/gray_01"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_rounded_rectangle"
+                    android:backgroundTint="@color/deep_dark"
+                    android:onClick="@{()->vm.clickBox(tvOneline)}">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="당신의 노래를 한 줄로\n표현한다면?"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_05"/>
+                    <TextView
+                        android:id="@+id/tv_oneline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="한 줄 감상"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_01"/>
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="당신의 노래를 한 줄로\n표현한다면?"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_05"/>
 
-            <LinearLayout
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="87dp"
+                    android:layout_height="86dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="4dp"
+                    android:layout_gravity="bottom|end"
+                    android:src="@drawable/ic_aline_sticker"/>
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/btn_myost"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_rectangle"
-                android:backgroundTint="@color/deep_dark"
-                android:onClick="@{()->vm.clickBox(tvMyost)}"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toEndOf="@id/btn_oneline"
+                app:layout_constraintStart_toEndOf="@id/btn_aline"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/btn_interpret">
 
-                <TextView
-                    android:id="@+id/tv_myost"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_rounded_rectangle"
+                    android:backgroundTint="@color/deep_dark"
+                    android:onClick="@{()->vm.clickBox(tvMyost)}">
+
+                    <TextView
+                        android:id="@+id/tv_myost"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="내 인생의 OST"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_01"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="당신의 인생곡을\n들려주세요."
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_05"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="111dp"
+                    android:layout_height="94dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="5dp"
                     android:layout_marginBottom="6dp"
-                    android:text="내 인생의 OST"
-                    android:textSize="16sp"
-                    android:textColor="@color/gray_01"/>
+                    android:src="@drawable/ic_ost_sticker"/>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="당신의 인생곡을\n들려주세요."
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_05"/>
+            </FrameLayout>
 
-            </LinearLayout>
-
-            <LinearLayout
+            <FrameLayout
                 android:id="@+id/btn_mystory"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginRight="16dp"
                 android:layout_marginBottom="16dp"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_rectangle"
-                android:backgroundTint="@color/deep_dark"
-                android:onClick="@{()->vm.clickBox(tvMystory)}"
-                app:layout_constraintTop_toBottomOf="@+id/btn_oneline"
+                app:layout_constraintTop_toBottomOf="@+id/btn_aline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/btn_interpret"
                 app:layout_constraintBottom_toTopOf="@+id/btn_free">
 
-                <TextView
-                    android:id="@+id/tv_mystory"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
-                    android:text="노래 속 나의 이야기"
-                    android:textSize="16sp"
-                    android:textColor="@color/gray_01"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_rounded_rectangle"
+                    android:backgroundTint="@color/deep_dark"
+                    android:onClick="@{()->vm.clickBox(tvMystory)}">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="노래로 떠올려보는\n나의 이야기"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_05"/>
+                    <TextView
+                        android:id="@+id/tv_mystory"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="노래 속 나의 이야기"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_01"/>
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="노래로 떠올려보는\n나의 이야기"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_05"/>
 
-            <LinearLayout
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="95dp"
+                    android:layout_height="107dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginBottom="8dp"
+                    android:src="@drawable/ic_story_sticker"/>
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/btn_interpret"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_marginBottom="16dp"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_rectangle"
-                android:backgroundTint="@color/deep_dark"
-                android:onClick="@{()->vm.clickBox(tvInterpret)}"
                 app:layout_constraintTop_toBottomOf="@+id/btn_myost"
                 app:layout_constraintStart_toEndOf="@+id/btn_mystory"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/btn_free">
 
-                <TextView
-                    android:id="@+id/tv_interpret"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
-                    android:text="나만의 가사해석"
-                    android:textSize="16sp"
-                    android:textColor="@color/gray_01"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_rounded_rectangle"
+                    android:backgroundTint="@color/deep_dark"
+                    android:onClick="@{()->vm.clickBox(tvInterpret)}">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="노래에 담긴 깊은 뜻을\n살펴볼까요?"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_05"/>
+                    <TextView
+                        android:id="@+id/tv_interpret"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="나만의 가사해석"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_01"/>
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="노래에 담긴 깊은 뜻을\n살펴볼까요?"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_05"/>
 
-            <LinearLayout
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="82dp"
+                    android:layout_height="57dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginEnd="15dp"
+                    android:layout_marginBottom="18dp"
+                    android:src="@drawable/ic_lyrics_sticker"/>
+
+            </FrameLayout>
+
+            <FrameLayout
                 android:id="@+id/btn_free"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:orientation="vertical"
-                android:padding="10dp"
-                android:background="@drawable/bg_rounded_rectangle"
-                android:backgroundTint="@color/deep_dark"
-                android:onClick="@{()->vm.clickBox(tvFree)}"
                 app:layout_constraintTop_toBottomOf="@+id/btn_mystory"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent">
 
-                <TextView
-                    android:id="@+id/tv_free"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="6dp"
-                    android:text="자유 공간"
-                    android:textSize="16sp"
-                    android:textColor="@color/gray_01"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:background="@drawable/bg_rounded_rectangle"
+                    android:backgroundTint="@color/deep_dark"
+                    android:onClick="@{()->vm.clickBox(tvFree)}">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="당신이 노래를 통해 표현하고 싶은\n모든 것을 써내려가는 공간"
-                    android:textSize="12sp"
-                    android:textColor="@color/gray_05"/>
+                    <TextView
+                        android:id="@+id/tv_free"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="6dp"
+                        android:text="자유 공간"
+                        android:textSize="16sp"
+                        android:textColor="@color/gray_01"/>
 
-            </LinearLayout>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="당신이 노래를 통해 표현하고 싶은\n모든 것을 써내려가는 공간"
+                        android:textSize="12sp"
+                        android:textColor="@color/gray_05"/>
+
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="133dp"
+                    android:layout_height="112dp"
+                    android:layout_gravity="bottom|end"
+                    android:layout_marginBottom="11dp"
+                    android:src="@drawable/ic_free_sticker"/>
+
+            </FrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -72,9 +72,9 @@ class ChangeProfileActivity : AppCompatActivity() {
                         "no" -> {
                             tempImageUrl = ""
                             Glide.with(binding.imgProfile.context)
-                                .load(R.drawable.ic_profile_gray)
-                                .error(R.drawable.ic_profile_gray)
-                                .fallback(R.drawable.ic_profile_gray)
+                                .load(R.drawable.ic_profile)
+                                .error(R.drawable.ic_profile)
+                                .fallback(R.drawable.ic_profile)
                                 .into(binding.imgProfile)
                         }
                     }
@@ -106,8 +106,8 @@ class ChangeProfileActivity : AppCompatActivity() {
                         val imageUri = cropResult.uri
                         Glide.with(binding.imgProfile.context)
                             .load(imageUri)
-                            .error(R.drawable.ic_profile_gray)
-                            .fallback(R.drawable.ic_profile_gray)
+                            .error(R.drawable.ic_profile)
+                            .fallback(R.drawable.ic_profile)
                             .into(binding.imgProfile)
                         imageFile = imageUri.toFile()
                         tempImageUrl = "exist"
