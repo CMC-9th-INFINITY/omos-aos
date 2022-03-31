@@ -294,4 +294,43 @@ class SearchRepository {
             }
         })
     }
+
+    var searchMusic = MutableLiveData<List<Music>>()
+    var stateSearchMusic = MutableLiveData<Constant.ApiState>()
+    fun getSearchMusic(keyword: String, limit: Int, offset: Int){
+        stateSearchMusic.value = Constant.ApiState.LOADING
+        searchApi.getMusic(keyword, limit, offset).enqueue(object: Callback<List<Music>>{
+            override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("SearchMusicAPI", "Success")
+                        searchMusic.postValue(body!!)
+                        stateSearchMusic.value = Constant.ApiState.DONE
+                    }
+
+                    401 -> {
+                        Log.d("SearchMusicAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        getSearchMusic(keyword, limit, offset)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("SearchMusicAPI", errorBody!!.message)
+                        stateSearchMusic.value = Constant.ApiState.ERROR
+                    }
+
+                    else -> {
+                        Log.d("SearchMusicAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<List<Music>>, t: Throwable) {
+                Log.d("SearchMusicAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 }

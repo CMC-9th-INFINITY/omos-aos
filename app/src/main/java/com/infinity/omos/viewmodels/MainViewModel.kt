@@ -48,4 +48,15 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun getStateArtist(): LiveData<Constant.ApiState>{
         return repository.stateArtist
     }
+
+    // 자동 완성
+    fun setSearchMusic(keyword: String, limit: Int, offset: Int){
+        repository.getSearchMusic(keyword, limit, offset)
+    }
+    fun getSearchMusic(): LiveData<List<Music>> {
+        return repository.searchMusic
+    }
+    fun getStateSearchMusic(): LiveData<Constant.ApiState> {
+        return repository.stateSearchMusic
+    }
 }

@@ -4,6 +4,8 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -18,8 +20,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.infinity.omos.adapters.SearchListAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.support.PermissionSupport
@@ -54,6 +58,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var actionWrite: MenuItem
 
     lateinit var permission: PermissionSupport
+
+    private var lastChange = 0L
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
@@ -108,13 +114,48 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
+        val sAdapter = SearchListAdapter(this)
+        binding.rvSearch.apply {
+            adapter = sAdapter
+            layoutManager = LinearLayoutManager(context)
+        }
+
+        // 노래 리스트 클릭 시 editText 셋팅
+        sAdapter.setItemClickListener(object: SearchListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int, title: String) {
+                binding.etSearch.setText(title)
+            }
+        })
+
+        viewModel.getSearchMusic().observe(this) { data ->
+            data?.let {
+                sAdapter.setMusicTitle(it)
+            }
+        }
+
         // 검색 리스트 노출
         binding.etSearch.addTextChangedListener(object : TextWatcher {
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.etSearch.length() > 0 && isMusicSearch) {
-                    // 검색어 노출
-                    binding.lnRanking.visibility = View.GONE
-                    binding.rvSearch.visibility = View.VISIBLE
+                if (isMusicSearch) {
+                    if (binding.etSearch.length() > 0){
+                        // 검색어 노출
+                        binding.lnRanking.visibility = View.GONE
+                        binding.rvSearch.visibility = View.VISIBLE
+
+                        val handler = Handler(Looper.getMainLooper())
+                        handler.postDelayed({
+                            if (System.currentTimeMillis() - lastChange >= 300){
+                                keyword = binding.etSearch.text.toString()
+                                viewModel.setSearchMusic(p0.toString(), 10, 0)
+                            }
+                        }, 300)
+                        lastChange = System.currentTimeMillis()
+                    } else{
+                        binding.lnRanking.visibility = View.VISIBLE
+                        binding.rvSearch.visibility = View.GONE
+                        sAdapter.clearSearch()
+                    }
+                    binding.searchTab.visibility = View.GONE
                 } else{
                     // MY 레코드 검색 (필터기능)
                     fragmentMyRecord.mAdapter.filter.filter(p0.toString())
