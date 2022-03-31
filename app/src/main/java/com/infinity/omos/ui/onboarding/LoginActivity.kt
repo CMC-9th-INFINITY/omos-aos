@@ -94,18 +94,26 @@ class LoginActivity : AppCompatActivity() {
         viewModel.getStateSnsLogin().observe(this, Observer { state ->
             state?.let {
                 dismissProgress()
-                if (it == Constant.ApiState.DONE){
-                    Log.d("LoginActivity", "이미 가입된 회원입니다.")
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                } else{
-                    Log.d("LoginActivity", "회원가입이 필요합니다.")
-                    val intent = Intent(this, RegisterNickActivity::class.java)
-                    intent.putExtra("sns", true)
-                    intent.putExtra("userId", userId)
-                    startActivity(intent)
-                    finish()
+                when(it){
+                    Constant.ApiState.DONE -> {
+                        Log.d("LoginActivity", "이미 가입된 회원입니다.")
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+
+                    Constant.ApiState.NETWORK -> {
+                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                    else -> {
+                        Log.d("LoginActivity", "회원가입이 필요합니다.")
+                        val intent = Intent(this, RegisterNickActivity::class.java)
+                        intent.putExtra("sns", true)
+                        intent.putExtra("userId", userId)
+                        startActivity(intent)
+                        finish()
+                    }
                 }
             }
         })
@@ -190,25 +198,33 @@ class LoginActivity : AppCompatActivity() {
         viewModel.getStateLogin().observe(this) { status ->
             status?.let {
                 dismissProgress()
-                if (it == Constant.ApiState.DONE) {
-                    var intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                } else {
-                    showErrorMsg(
-                        this,
-                        et_id,
-                        tv_error_id,
-                        resources.getString(R.string.again_check),
-                        linear_id
-                    )
-                    showErrorMsg(
-                        this,
-                        et_pw,
-                        tv_error_pw,
-                        resources.getString(R.string.again_check),
-                        linear_pw
-                    )
+                when(it){
+                    Constant.ApiState.DONE -> {
+                        var intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+
+                    Constant.ApiState.NETWORK -> {
+                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                    else -> {
+                        showErrorMsg(
+                            this,
+                            et_id,
+                            tv_error_id,
+                            resources.getString(R.string.again_check),
+                            linear_id
+                        )
+                        showErrorMsg(
+                            this,
+                            et_pw,
+                            tv_error_pw,
+                            resources.getString(R.string.again_check),
+                            linear_pw
+                        )
+                    }
                 }
             }
         }

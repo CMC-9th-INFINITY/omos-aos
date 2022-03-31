@@ -8,10 +8,12 @@ import android.os.Bundle
 import android.text.Html
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
+import android.util.Log
 import android.util.Patterns
 import android.view.MenuItem
 import android.view.View
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -19,6 +21,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityRegisterBinding
+import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.viewmodels.RegisterViewModel
 import kotlinx.android.synthetic.main.activity_register.*
@@ -100,23 +103,52 @@ class RegisterActivity : AppCompatActivity() {
                 binding.btnSendAuthMail.isEnabled = true
             }
         }
-
-        // 이메일 중복 확인
-        viewModel.getStateDupEmail().observe(this, Observer { state ->
+        viewModel.getStateGetCode().observe(this) { state ->
             state?.let {
-                if (!state){
-                    LoginActivity.showErrorMsg(
-                        this,
-                        et_id,
-                        tv_success_msg,
-                        resources.getString(R.string.exist_email),
-                        linear_id
-                    )
-                } else{
-                    viewModel.sendEmailAuth(binding.etId.text.toString())
+                when(it){
+                    Constant.ApiState.NETWORK -> {
+                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                    else -> {
+                        Log.d("RegisterActivity", "이메일 인증 코드 오류")
+                    }
                 }
             }
-        })
+        }
+
+        // 이메일 중복 확인
+        viewModel.getStateDupEmail().observe(this) { state ->
+            state?.let {
+                when (it) {
+                    Constant.ApiState.DONE -> {
+                        binding.btnSendAuthMail.text = "전송 중..."
+                        binding.btnSendAuthMail.paintFlags = 0
+                        binding.btnSendAuthMail.isEnabled = false
+                        LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
+                        viewModel.sendEmailAuth(binding.etId.text.toString())
+                    }
+
+                    Constant.ApiState.ERROR -> {
+                        LoginActivity.showErrorMsg(
+                            this,
+                            et_id,
+                            tv_success_msg,
+                            resources.getString(R.string.exist_email),
+                            linear_id
+                        )
+                    }
+
+                    Constant.ApiState.NETWORK -> {
+                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                    }
+
+                    else -> {
+                        Log.d("RegisterActivity", "이메일 중복 오류")
+                    }
+                }
+            }
+        }
 
         // 로그인 버튼 활성화
         viewModel.stateInput.observe(this, Observer { state ->
@@ -279,10 +311,6 @@ class RegisterActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener {
                     when(it){
                         "yes" -> {
-                            binding.btnSendAuthMail.text = "전송 중..."
-                            binding.btnSendAuthMail.paintFlags = 0
-                            binding.btnSendAuthMail.isEnabled = false
-                            LoginActivity.hideErrorMsg(this, et_id, tv_success_msg)
                             viewModel.checkDupEmail(et_id.text.toString())
                         }
                     }

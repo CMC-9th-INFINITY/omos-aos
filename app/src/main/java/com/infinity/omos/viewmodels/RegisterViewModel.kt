@@ -14,10 +14,6 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
 
     var stateInput = MutableLiveData<Boolean>()
 
-    fun getStateDupEmail(): LiveData<Boolean>{
-        return repository.stateDupEmail
-    }
-
     var visibleEye1 = MutableLiveData<Boolean>()
     var visibleEye2 = MutableLiveData<Boolean>()
     var visibleEye3 = MutableLiveData<Boolean>()
@@ -47,6 +43,9 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     fun checkDupEmail(email: String){
         repository.checkDupEmail(email)
     }
+    fun getStateDupEmail(): LiveData<Constant.ApiState>{
+        return repository.stateDupEmail
+    }
 
     // 이메일 인증 코드
     fun sendEmailAuth(email: String){
@@ -54,5 +53,8 @@ class RegisterViewModel(application: Application): AndroidViewModel(application)
     }
     fun getCode(): LiveData<String>{
         return repository.emailCode
+    }
+    fun getStateGetCode(): LiveData<Constant.ApiState>{
+        return repository.stateGetCode
     }
 }

@@ -16,13 +16,6 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
     var visibleEye = MutableLiveData<Boolean>()
     var stateInput = MutableLiveData<Boolean>()
 
-    fun getStateLogin(): LiveData<Constant.ApiState>{
-        return repository.stateLogin
-    }
-    fun getStateSnsLogin(): LiveData<Constant.ApiState>{
-        return repository.stateSnsLogin
-    }
-
     init {
         visibleEye.value = false
         stateInput.value = false
@@ -39,8 +32,14 @@ class LoginViewModel(application: Application): AndroidViewModel(application) {
     fun checkLogin(userLogin: UserLogin){
         repository.checkLogin(userLogin)
     }
+    fun getStateLogin(): LiveData<Constant.ApiState>{
+        return repository.stateLogin
+    }
 
     fun checkSnsLogin(userSnsLogin: UserSnsLogin){
         repository.checkSnsLogin(userSnsLogin)
+    }
+    fun getStateSnsLogin(): LiveData<Constant.ApiState>{
+        return repository.stateSnsLogin
     }
 }

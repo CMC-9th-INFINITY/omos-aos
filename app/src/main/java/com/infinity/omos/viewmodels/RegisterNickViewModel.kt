@@ -17,13 +17,6 @@ class RegisterNickViewModel(application: Application): AndroidViewModel(applicat
     var checkBoxPP = MutableLiveData<Boolean>()
     var allState = MutableLiveData<Boolean>()
 
-    fun getStateSignUp(): LiveData<Constant.ApiState> {
-        return repository.stateSignUp
-    }
-    fun getStateSnsSignUp(): LiveData<Constant.ApiState> {
-        return repository.stateSnsSignUp
-    }
-
     init {
         checkBoxTos.value = false
         checkBoxPP.value = false
@@ -47,8 +40,14 @@ class RegisterNickViewModel(application: Application): AndroidViewModel(applicat
     fun signUp(userInfo: UserSignUp){
         repository.signUp(userInfo)
     }
+    fun getStateSignUp(): LiveData<Constant.ApiState> {
+        return repository.stateSignUp
+    }
 
     fun snsSignUp(userInfo: UserSnsSignUp){
         repository.snsSignUp(userInfo)
+    }
+    fun getStateSnsSignUp(): LiveData<Constant.ApiState> {
+        return repository.stateSnsSignUp
     }
 }

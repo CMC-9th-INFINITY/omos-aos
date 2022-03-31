@@ -136,6 +136,9 @@ class RegisterNickActivity : AppCompatActivity() {
                             linear_nick
                         )
                     }
+                    Constant.ApiState.NETWORK -> {
+                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                    }
                     else -> {
                         Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
                     }
@@ -146,21 +149,28 @@ class RegisterNickActivity : AppCompatActivity() {
         // 회원가입 완료
         viewModel.getStateSnsSignUp().observe(this, Observer { state ->
             state?.let {
-                if (it == Constant.ApiState.DONE){
-                    val intent = Intent(this, MainActivity::class.java)
-                    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                    startActivity(intent)
-                } else if (it == Constant.ApiState.ERROR){
-                    // 이미 있는 닉네임일 때,
-                    LoginActivity.showErrorMsg(
-                        this,
-                        et_nick,
-                        tv_error_nick,
-                        resources.getString(R.string.exist_nick),
-                        linear_nick
-                    )
-                } else{
-                    Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
+                when (it) {
+                    Constant.ApiState.DONE -> {
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                    }
+                    Constant.ApiState.ERROR -> {
+                        // 이미 있는 닉네임일 때,
+                        LoginActivity.showErrorMsg(
+                            this,
+                            et_nick,
+                            tv_error_nick,
+                            resources.getString(R.string.exist_nick),
+                            linear_nick
+                        )
+                    }
+                    Constant.ApiState.NETWORK -> {
+                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                    }
+                    else -> {
+                        Toast.makeText(this, "회원가입 오류", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         })

@@ -53,7 +53,7 @@ class OnBoardingRepository {
 
             override fun onFailure(call: Call<Code>, t: Throwable) {
                 Log.d("GetEmailCodeAPI", t.message.toString())
-                stateGetCode.value = Constant.ApiState.ERROR
+                stateGetCode.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
@@ -96,8 +96,8 @@ class OnBoardingRepository {
             }
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
-                Log.d("ReissueAPI", t.message.toString())
-                stateToken.value = Constant.ApiState.ERROR
+                Log.d("ReissueAPI fail", t.message.toString())
+                stateToken.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
@@ -123,6 +123,7 @@ class OnBoardingRepository {
                     }
 
                     401 -> {
+                        // 아이디만 맞고 비밀번호는 틀릴 경우
                         Log.d("LoginAPI", "Unauthorized")
                         stateLogin.value = Constant.ApiState.ERROR
                     }
@@ -142,7 +143,7 @@ class OnBoardingRepository {
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("LoginAPI", t.message.toString())
-                stateLogin.value = Constant.ApiState.ERROR
+                stateLogin.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
@@ -169,25 +170,25 @@ class OnBoardingRepository {
 
                     401 -> {
                         Log.d("SnsLoginAPI", "Unauthorized")
+                        stateSnsLogin.value = Constant.ApiState.ERROR
                     }
 
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("SnsLoginAPI", errorBody!!.message)
-                        if (errorBody.message == "해당하는 유저가 존재하지 않습니다"){
-                            stateSnsLogin.value = Constant.ApiState.ERROR
-                        }
+                        stateSnsLogin.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
                         Log.d("SnsLoginAPI", "Code: $code")
+                        stateSnsLogin.value = Constant.ApiState.ERROR
                     }
                 }
             }
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("SnsLoginAPI", t.message.toString())
-                stateSnsLogin.value = Constant.ApiState.ERROR
+                stateSnsLogin.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
@@ -222,12 +223,14 @@ class OnBoardingRepository {
 
                     else -> {
                         Log.d("signUpAPI", "Code: $code")
+                        stateSignUp.value = Constant.ApiState.ERROR
                     }
                 }
             }
 
             override fun onFailure(call: Call<ResultState>, t: Throwable) {
                 Log.d("signUpAPI", t.message.toString())
+                stateSignUp.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
@@ -265,18 +268,20 @@ class OnBoardingRepository {
 
                     else -> {
                         Log.d("signUpAPI", "Code: $code")
+                        stateSnsSignUp.value = Constant.ApiState.ERROR
                     }
                 }
             }
 
             override fun onFailure(call: Call<UserToken>, t: Throwable) {
                 Log.d("signUpAPI", t.message.toString())
+                stateSnsSignUp.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
     }
 
-    var stateDupEmail = MutableLiveData<Boolean>()
+    var stateDupEmail = MutableLiveData<Constant.ApiState>()
     fun checkDupEmail(email: String){
         onBoardingApi.checkDupEmail(email).enqueue(object: Callback<ResultState>{
             override fun onResponse(
@@ -287,7 +292,11 @@ class OnBoardingRepository {
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("checkDupEmailAPI", "Success")
-                        stateDupEmail.postValue(body?.state)
+                        if (body?.state == true){
+                            stateDupEmail.value = Constant.ApiState.DONE
+                        } else{
+                            stateDupEmail.value = Constant.ApiState.ERROR
+                        }
                     }
 
                     401 -> {
@@ -297,6 +306,7 @@ class OnBoardingRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("checkDupEmailAPI", errorBody!!.message)
+                        stateDupEmail.value = Constant.ApiState.ERROR
                     }
 
                     else -> {
@@ -307,6 +317,7 @@ class OnBoardingRepository {
 
             override fun onFailure(call: Call<ResultState>, t: Throwable) {
                 Log.d("checkDupEmailAPI", t.message.toString())
+                stateDupEmail.value = Constant.ApiState.NETWORK
                 t.stackTrace
             }
         })
