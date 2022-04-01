@@ -1,31 +1,58 @@
 package com.infinity.omos
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
+import android.content.IntentSender.SendIntentException
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
+import com.google.android.play.core.appupdate.AppUpdateInfo
+import com.google.android.play.core.appupdate.AppUpdateManager
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory
+import com.google.android.play.core.install.model.AppUpdateType
+import com.google.android.play.core.install.model.UpdateAvailability
+import com.google.android.play.core.tasks.OnSuccessListener
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
 import com.infinity.omos.ui.onboarding.LoginActivity
-import com.infinity.omos.ui.onboarding.RegisterNickActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.kakao.sdk.user.UserApiClient
 
 
 class SplashActivity : AppCompatActivity() {
 
-    private val SPLASH_TIME: Long = 1500 // (ms)초 간 Splash 화면 띄움
+    private val SPLASH_TIME: Long = 2000 // (ms)초 간 Splash 화면 띄움
     private val repository = OnBoardingRepository()
+
+    // 인앱 업데이트
+    private lateinit var appUpdateManager: AppUpdateManager
+    private val REQUEST_CODE_UPDATE = 100
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        appUpdateManager = AppUpdateManagerFactory.create(this)
+        val appUpdateInfoTask = appUpdateManager.appUpdateInfo
+
+        // 인앱 업데이트
+        appUpdateManager.let {
+            it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
+                    && appUpdateInfo.isUpdateTypeAllowed(AppUpdateType.IMMEDIATE)) {
+                    // or AppUpdateType.FLEXIBLE
+                    appUpdateManager.startUpdateFlowForResult(
+                        appUpdateInfo,
+                        AppUpdateType.IMMEDIATE, // or AppUpdateType.FLEXIBLE
+                        this,
+                        REQUEST_CODE_UPDATE
+                    )
+                }
+            }
+        }
 
         // 토큰 정보 확인
         val token = GlobalApplication.prefs.getUserToken()
@@ -46,8 +73,48 @@ class SplashActivity : AppCompatActivity() {
                         Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
                         finish()
                     }
-                    else -> {
+
+                    Constant.ApiState.DONE -> {
                         moveActivity(this)
+                    }
+
+                    else -> {
+                        GlobalApplication.prefs.setUserToken(null, null, -1)
+                        moveActivity(this)
+                    }
+                }
+            }
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            if (resultCode != RESULT_OK) {
+                Log.d("AppUpdate", "Update flow failed! Result code: $resultCode") // 로그로 코드 확인
+                Toast.makeText(this, "업데이트를 진행해주세요.", Toast.LENGTH_LONG).show()
+                finishAffinity(); // 앱 종료
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdateManager.let {
+            it.appUpdateInfo.addOnSuccessListener { appUpdateInfo ->
+                if (appUpdateInfo.updateAvailability()
+                    == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS
+                ) {
+                    // 인 앱 업데이트가 이미 실행중이었다면 계속해서 진행하도록
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(
+                            appUpdateInfo,
+                            AppUpdateType.IMMEDIATE,
+                            this,
+                            REQUEST_CODE_UPDATE
+                        )
+                    } catch (e: SendIntentException) {
+                        e.printStackTrace()
                     }
                 }
             }

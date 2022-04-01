@@ -196,9 +196,11 @@ class DjActivity : AppCompatActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.appbar_action_dj, menu)
         val actionReport = menu.findItem(R.id.action_report)
+        val actionBlock = menu.findItem(R.id.action_block)
         if (fromUserId == toUserId){
-            // 내 프로필이면 신고버튼 안뜨게
+            // 내 프로필이면 신고/차단 버튼 안뜨게
             actionReport.isVisible = false
+            actionBlock.isVisible = false
         }
         return true
     }
