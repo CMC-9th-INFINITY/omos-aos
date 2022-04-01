@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/action_block"
+        android:icon="@drawable/ic_block"
+        android:title="Block"
+        app:showAsAction="always"/>
+
+    <item
         android:id="@+id/action_report"
         android:icon="@drawable/ic_report"
         android:title="Report"

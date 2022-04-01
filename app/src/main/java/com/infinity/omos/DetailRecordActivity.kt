@@ -252,7 +252,7 @@ class DetailRecordActivity : AppCompatActivity() {
                     }
 
                     Constant.ApiState.NETWORK -> {
-                        Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
+                        // Toast.makeText(this, "네트워크 상태가 불안정합니다.", Toast.LENGTH_LONG).show()
                     }
                 }
             }

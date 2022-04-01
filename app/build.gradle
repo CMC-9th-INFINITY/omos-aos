@@ -15,8 +15,8 @@ android {
         applicationId "com.infinity.omos"
         minSdk 21
         targetSdk 32
-        versionCode 5
-        versionName "5.0"
+        versionCode 6
+        versionName "6.0"
 
         buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
@@ -117,4 +117,7 @@ dependencies {
 
     // SwipeRefreshLayout
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+
+    // Play store core (in app update)
+    implementation 'com.google.android.play:core:1.10.3'
 }

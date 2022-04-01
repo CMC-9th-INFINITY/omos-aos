@@ -146,7 +146,7 @@ class DjActivity : AppCompatActivity() {
                         sendBroadcast(intent4)
 
                         finish()
-                        Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                     }
 
                     Constant.ApiState.ERROR -> {
@@ -210,9 +210,25 @@ class DjActivity : AppCompatActivity() {
                 true
             }
 
+            R.id.action_block -> {
+                dlg = CustomDialog(this)
+                dlg.show("이 DJ를 차단 하시겠어요?", "차단")
+
+                dlg.setOnOkClickedListener { content ->
+                    when(content){
+                        "yes" -> {
+                            Log.d("SignOutAPI", toUserId.toString())
+                            viewModel.signOut(toUserId)
+                            dlg.showProgress()
+                        }
+                    }
+                }
+                true
+            }
+
             R.id.action_report -> {
                 dlg = CustomDialog(this)
-                dlg.show("이 DJ를 신고하시겠어요?", "신고")
+                dlg.show("이 DJ를 신고 하시겠어요?", "신고")
 
                 dlg.setOnOkClickedListener { content ->
                     when(content){
