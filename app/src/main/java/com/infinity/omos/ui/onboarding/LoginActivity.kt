@@ -31,6 +31,7 @@ import com.infinity.omos.data.UserSnsLogin
 import com.infinity.omos.databinding.ActivityLoginBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
+import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.LoginViewModel
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.AuthErrorCause.*
@@ -45,8 +46,31 @@ class LoginActivity : AppCompatActivity() {
     private var userId = ""
     private lateinit var dlg: CustomDialog
 
+    private lateinit var inAppUpdate: InAppUpdate
+    private val REQUEST_CODE_UPDATE = 100
+
+    override fun onResume() {
+        super.onResume()
+        inAppUpdate.checkInProgress()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            if (resultCode != RESULT_OK) {
+                Log.d("AppUpdate", "Update flow failed! Result code: $resultCode") // 로그로 코드 확인
+                Toast.makeText(this, "업데이트를 진행해주세요.", Toast.LENGTH_LONG).show()
+                finishAffinity(); // 앱 종료
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        inAppUpdate = InAppUpdate(this)
+        inAppUpdate.checkInAppUpdate()
 
         dlg = CustomDialog(this)
 

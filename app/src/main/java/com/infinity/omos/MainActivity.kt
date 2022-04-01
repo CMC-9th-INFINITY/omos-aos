@@ -31,6 +31,7 @@ import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.searchtab.AllFragment
 import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -61,6 +62,9 @@ class MainActivity : AppCompatActivity() {
 
     private var lastChange = 0L
 
+    private lateinit var inAppUpdate: InAppUpdate
+    private val REQUEST_CODE_UPDATE = 100
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
@@ -70,6 +74,23 @@ class MainActivity : AppCompatActivity() {
             val state = intent.getBooleanExtra("save", false)
             if (state){
                 cancelSearch()
+            }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        inAppUpdate.checkInProgress()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_CODE_UPDATE) {
+            if (resultCode != RESULT_OK) {
+                Log.d("AppUpdate", "Update flow failed! Result code: $resultCode") // 로그로 코드 확인
+                Toast.makeText(this, "업데이트를 진행해주세요.", Toast.LENGTH_LONG).show()
+                finishAffinity(); // 앱 종료
             }
         }
     }
@@ -84,6 +105,9 @@ class MainActivity : AppCompatActivity() {
         Log.d("MainActivity", "aToken: ${GlobalApplication.prefs.getString("accessToken")}")
         Log.d("MainActivity", "rToken: ${GlobalApplication.prefs.getString("refreshToken")}")
         Log.d("MainActivity", "userId: ${GlobalApplication.prefs.getInt("userId")}")
+
+        inAppUpdate = InAppUpdate(this)
+        inAppUpdate.checkInAppUpdate()
 
         permissionCheck()
         initToolBar()
