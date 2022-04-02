@@ -148,6 +148,7 @@ class MainActivity : AppCompatActivity() {
         sAdapter.setItemClickListener(object: SearchListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, title: String) {
                 binding.etSearch.setText(title)
+                binding.etSearch.setSelection(title.length)
             }
         })
 
