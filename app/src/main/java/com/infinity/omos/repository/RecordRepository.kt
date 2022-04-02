@@ -24,6 +24,7 @@ class RecordRepository {
     private val scrapApi = retrofit.create(ScrapService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
+    var stateReportRecord = MutableLiveData<ResultState>()
     fun reportRecord(postId: Int){
         recordApi.reportRecord(postId).enqueue(object: Callback<ResultState> {
             override fun onResponse(
@@ -33,7 +34,8 @@ class RecordRepository {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
-                        Log.d("ReportAPI", "Success: ${body!!.state}")
+                        Log.d("ReportAPI", "Success")
+                        stateReportRecord.postValue(body!!)
                     }
 
                     401 -> {

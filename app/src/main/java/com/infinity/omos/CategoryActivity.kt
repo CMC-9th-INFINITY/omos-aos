@@ -1,6 +1,9 @@
 package com.infinity.omos
 
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -35,12 +38,9 @@ class CategoryActivity : AppCompatActivity() {
     private var postId = -1
     private lateinit var mAdapter: DetailCategoryListAdapter
 
-    private var saveHeartList = ArrayList<Int>()
-    private var deleteHeartList = ArrayList<Int>()
-
-    private var stateHeart = false
-
     private val userId = GlobalApplication.prefs.getInt("userId")
+
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +53,7 @@ class CategoryActivity : AppCompatActivity() {
 
         var category = intent.getStringExtra("category")
         initToolBar(category!!)
+        initializeBroadcastReceiver()
 
         // 카테고리 Record 가져오기
         when (category) {
@@ -87,6 +88,11 @@ class CategoryActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
+                            val intent = Intent("RECORD_UPDATE")
+                            intent.putExtra("isDelete", true)
+                            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                            sendBroadcast(intent)
+
                             viewModel.reportRecord(postId)
                             Toast.makeText(context, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
                         }
@@ -156,6 +162,20 @@ class CategoryActivity : AppCompatActivity() {
             setSortRecord("date")
             binding.swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                setSortRecord("date")
+                binding.swipeRefreshLayout.isRefreshing = false
+            }
+        }
+
+        this.registerReceiver(
+            broadcastReceiver,
+            IntentFilter("RECORD_UPDATE")
+        )
     }
 
     private fun initToolBar(category: String){

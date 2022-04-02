@@ -279,6 +279,23 @@ class DetailRecordActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getStateReportRecord().observe(this) { state ->
+            state?.let {
+                dismissProgress()
+                if (it.state) {
+                    val intent = Intent("RECORD_UPDATE")
+                    intent.putExtra("isDelete", true)
+                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent)
+
+                    finish()
+                    Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         // 좋아요 클릭
         binding.btnHeart.setOnClickListener {
             if (heart) {
@@ -348,7 +365,7 @@ class DetailRecordActivity : AppCompatActivity() {
                 when (content) {
                     "yes" -> {
                         viewModel.reportRecord(postId)
-                        Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                        showProgress()
                     }
                 }
             }

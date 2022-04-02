@@ -51,4 +51,7 @@ class DetailRecordViewModel(application: Application): AndroidViewModel(applicat
     fun reportRecord(postId: Int){
         repository.reportRecord(postId)
     }
+    fun getStateReportRecord(): LiveData<ResultState>{
+        return repository.stateReportRecord
+    }
 }
