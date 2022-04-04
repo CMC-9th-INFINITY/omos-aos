@@ -269,14 +269,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-        // 아이디 찾기 페이지 이동
-        binding.btnFindId.setOnClickListener {
-            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
-        }
-
         // 비밀번호 찾기 페이지 이동
         binding.btnFindPw.setOnClickListener {
-            Toast.makeText(this, resources.getString(R.string._ing), Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, FindPwActivity::class.java)
+            startActivity(intent)
         }
     }
 

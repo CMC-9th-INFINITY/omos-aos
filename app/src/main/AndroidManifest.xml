@@ -3,7 +3,7 @@
     package="com.infinity.omos">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
@@ -17,12 +17,15 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.onboarding.FindPwActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.setting.DeleteAccountActivity"
             android:exported="false" />
         <activity
             android:name=".ui.setting.ChangePwActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize"/>
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.setting.ChangeProfileActivity"
             android:exported="false" />
@@ -42,7 +45,7 @@
         <activity
             android:name=".WriteLyricsActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".DetailRecordActivity"
             android:exported="false" />
@@ -80,7 +83,7 @@
             android:exported="false" />
         <activity
             android:name=".ui.onboarding.RegisterActivity"
-            android:exported="false"/>
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="false"
@@ -100,8 +103,7 @@
                     android:scheme="kakao${KAKAO_OAUTH_KEY}" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.onboarding.LoginActivity" />
+        <activity android:name=".ui.onboarding.LoginActivity" />
         <activity
             android:name=".SplashActivity"
             android:exported="true">
