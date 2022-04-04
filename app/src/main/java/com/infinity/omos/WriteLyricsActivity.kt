@@ -48,6 +48,7 @@ class WriteLyricsActivity : AppCompatActivity() {
     private var musicId = ""
     private var recordContents = ""
     private var recordImageUrl = ""
+    private var tempImageUrl = ""
     private var recordTitle = ""
     private var postId = -1
 
@@ -85,6 +86,7 @@ class WriteLyricsActivity : AppCompatActivity() {
 
             // 글 대표 이미지
             recordImageUrl = intent.getStringExtra("recordImageUrl")!!
+            tempImageUrl = recordImageUrl
             Glide.with(binding.imgRecordTitle.context)
                 .load(recordImageUrl)
                 .into(binding.imgRecordTitle)
@@ -130,9 +132,30 @@ class WriteLyricsActivity : AppCompatActivity() {
         }
 
         // 이미지 넣기
-        btn_gallery.setOnClickListener {
-            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-            result.launch(intent)
+        binding.btnGallery.setOnClickListener {
+            if (tempImageUrl == ""){
+                val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                result.launch(intent)
+            } else{
+                val dlg = CustomDialog(this)
+                dlg.showImageDialog()
+                dlg.setOnOkClickedListener {
+                    when(it){
+                        "yes" -> {
+                            val intent = Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
+                            result.launch(intent)
+                        }
+
+                        "no" -> {
+                            tempImageUrl = ""
+                            Glide.with(binding.imgRecordTitle.context)
+                                .load(tempImageUrl)
+                                .into(binding.imgRecordTitle)
+                        }
+                    }
+                }
+            }
+
         }
 
         // 콜백
@@ -161,6 +184,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                             .load(imageUri)
                             .into(binding.imgRecordTitle)
                         imageFile = imageUri.toFile()
+                        tempImageUrl = "exist"
                     }
                 }
 
@@ -268,10 +292,13 @@ class WriteLyricsActivity : AppCompatActivity() {
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
                             awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
+                            viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
+                        } else{
+                            // 레코드 이미지 없을 때,
+                            viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "", recordTitle, userId))
                         }
-
-                        viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
                     } else{
+                        // 레코드 수정 상태
 
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
@@ -285,7 +312,13 @@ class WriteLyricsActivity : AppCompatActivity() {
                             }
                         }
 
-                        viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
+                        // 이미지 삭제 시
+                        if (tempImageUrl == ""){
+                            viewModel.updateRecord(postId, Update(recordContents, isPublic, "", recordTitle))
+                            // TODO: 삭제 API 구현
+                        } else {
+                            viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
+                        }
                     }
 
                     Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()

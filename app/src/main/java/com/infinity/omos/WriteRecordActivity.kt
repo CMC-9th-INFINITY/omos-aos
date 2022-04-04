@@ -312,15 +312,19 @@ class WriteRecordActivity : AppCompatActivity() {
                     category = GlobalFunction.categoryKrToEng(this, category)
 
                     if (!isModify){
+                        // 레코드 저장 상태
 
                         val currentTime = System.currentTimeMillis()
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
                             awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
+                            viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
+                        } else{
+                            // 레코드 이미지 없을 때,
+                            viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "", recordTitle, userId))
                         }
-
-                        viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
                     } else{
+                        // 레코드 수정 상태
 
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
@@ -334,7 +338,13 @@ class WriteRecordActivity : AppCompatActivity() {
                             }
                         }
 
-                        viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
+                        // 이미지 삭제 시
+                        if (tempImageUrl == ""){
+                            viewModel.updateRecord(postId, Update(recordContents, isPublic, "", recordTitle))
+                            // TODO: 삭제 API 구현
+                        } else {
+                            viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
+                        }
                     }
 
                     Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()

@@ -53,7 +53,7 @@ class ArtistFragment : Fragment() {
 
         // 밑에 짤리는 현상 해결
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.recyclerView.setPadding(0, 0, 0, context!!.navigationHeight())
+            binding.recyclerView.setPadding(0, 0, 0, requireContext().navigationHeight())
         }
         return binding.root
     }

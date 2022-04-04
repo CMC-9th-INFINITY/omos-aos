@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.tabs.TabLayoutMediator
 import com.infinity.omos.adapters.ArtistViewPagerAdapter
 import com.infinity.omos.databinding.ActivityArtistBinding
@@ -38,8 +39,8 @@ class ArtistActivity : AppCompatActivity() {
         binding.tvArtistName.text = name
         binding.tvArtistGenres.text = genres
         Glide.with(binding.imgProfile.context)
-            .load(url).error(R.drawable.ic_launcher_background)
-            .error(R.drawable.ic_launcher_background)
+            .load(url)
+            .error(R.drawable.ic_record)
             .fallback(R.drawable.ic_record)
             .into(binding.imgProfile)
     }
