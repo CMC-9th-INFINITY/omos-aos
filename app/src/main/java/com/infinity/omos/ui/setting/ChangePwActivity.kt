@@ -38,6 +38,38 @@ class ChangePwActivity : AppCompatActivity() {
 
         initToolBar()
 
+        binding.etPw.setOnFocusChangeListener { view, b ->
+            if (!b){
+                if (Pattern.matches(pwPattern, binding.etPw.text.toString())){
+                    LoginActivity.hideErrorMsg(this, binding.etPw, binding.tvErrorPw)
+                } else{
+                    LoginActivity.showErrorMsg(
+                        this,
+                        binding.etPw,
+                        binding.tvErrorPw,
+                        resources.getString(R.string.condition_password),
+                        binding.linearPw
+                    )
+                }
+            }
+        }
+
+        binding.etPwAgain.setOnFocusChangeListener { view, b ->
+            if (!b){
+                if (et_pw.text.toString() != binding.etPwAgain.text.toString()){
+                    LoginActivity.showErrorMsg(
+                        this,
+                        binding.etPwAgain,
+                        binding.tvErrorAgainPw,
+                        resources.getString(R.string.no_match_password),
+                        binding.linearPwAgain
+                    )
+                } else{
+                    LoginActivity.hideErrorMsg(this, binding.etPwAgain, binding.tvErrorAgainPw)
+                }
+            }
+        }
+
         binding.btnComplete.setOnClickListener {
             if (!Pattern.matches(pwPattern, binding.etPw.text.toString())){
                 LoginActivity.showErrorMsg(
@@ -46,6 +78,14 @@ class ChangePwActivity : AppCompatActivity() {
                     binding.tvErrorPw,
                     resources.getString(R.string.condition_password),
                     binding.linearPw
+                )
+            } else if (binding.etPw.text.toString() != binding.etPwAgain.text.toString()){
+                LoginActivity.showErrorMsg(
+                    this,
+                    binding.etPwAgain,
+                    binding.tvErrorAgainPw,
+                    resources.getString(R.string.no_match_password),
+                    binding.linearPwAgain
                 )
             } else{
                 viewModel.updatePassword(binding.etPw.text.toString(), userId)
@@ -65,38 +105,49 @@ class ChangePwActivity : AppCompatActivity() {
         }
 
         // 비밀번호 표시 ON/OFF
-        viewModel.visibleEye.observe(this, Observer { state ->
+        viewModel.visibleEye1.observe(this, Observer { state ->
             state?.let {
                 if (it){
-                    binding.icEye.setImageResource(R.drawable.ic_visible_eye)
+                    binding.icEye1.setImageResource(R.drawable.ic_visible_eye)
                     binding.etPw.transformationMethod = HideReturnsTransformationMethod.getInstance()
                     binding.etPw.setSelection(binding.etPw.length())
                 } else{
-                    binding.icEye.setImageResource(R.drawable.ic_invisible_eye)
+                    binding.icEye1.setImageResource(R.drawable.ic_invisible_eye)
                     binding.etPw.transformationMethod = PasswordTransformationMethod.getInstance()
                     binding.etPw.setSelection(binding.etPw.length())
                 }
             }
         })
 
-        // 완료버튼 활성화
-        binding.etPw.addTextChangedListener(object: TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {}
-            override fun afterTextChanged(p0: Editable?) {}
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-                if (binding.etPw.length() > 0){
-                    binding.btnComplete.backgroundTintList = ColorStateList.valueOf(
-                        ContextCompat.getColor(this@ChangePwActivity,
-                            R.color.orange
-                        ))
-                    binding.btnComplete.setTextColor(ContextCompat.getColor(this@ChangePwActivity, R.color.white))
+        // 비밀번호 표시 ON/OFF
+        viewModel.visibleEye2.observe(this, Observer { state ->
+            state?.let {
+                if (it){
+                    binding.icEye2.setImageResource(R.drawable.ic_visible_eye)
+                    binding.etPwAgain.transformationMethod = HideReturnsTransformationMethod.getInstance()
+                    binding.etPwAgain.setSelection(binding.etPwAgain.length())
+                } else{
+                    binding.icEye2.setImageResource(R.drawable.ic_invisible_eye)
+                    binding.etPwAgain.transformationMethod = PasswordTransformationMethod.getInstance()
+                    binding.etPwAgain.setSelection(binding.etPwAgain.length())
+                }
+            }
+        })
+
+        // 완료 버튼 활성화
+        viewModel.stateInput.observe(this, Observer { state ->
+            state?.let {
+                if (it){
+                    binding.btnComplete.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this,
+                        R.color.orange
+                    ))
+                    binding.btnComplete.setTextColor(ContextCompat.getColor(this, R.color.white))
                     binding.btnComplete.isEnabled = true
                 } else{
-                    binding.btnComplete.backgroundTintList = ColorStateList.valueOf(
-                        ContextCompat.getColor(this@ChangePwActivity,
-                            R.color.light_gray
-                        ))
-                    binding.btnComplete.setTextColor(ContextCompat.getColor(this@ChangePwActivity, R.color.dark_gray))
+                    binding.btnComplete.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this,
+                        R.color.light_gray
+                    ))
+                    binding.btnComplete.setTextColor(ContextCompat.getColor(this, R.color.dark_gray))
                     binding.btnComplete.isEnabled = false
                 }
             }
