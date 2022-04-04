@@ -2,6 +2,7 @@ package com.infinity.omos.ui.bottomnav
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.infinity.omos.DetailRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.SelectCategoryActivity
@@ -19,6 +21,7 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
+import java.util.*
 
 class TodayFragment : Fragment() {
 
@@ -62,6 +65,9 @@ class TodayFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // 요일별 이미지 설정
+        setMainImage()
 
         // 오늘의 노래
         viewModel.setTodayMusic()
@@ -180,5 +186,14 @@ class TodayFragment : Fragment() {
         binding.btnWriteMyrecord.setOnClickListener {
             itemClickListener.onClick()
         }
+    }
+
+    private fun setMainImage(){
+        val calendar = Calendar.getInstance()
+        val day = calendar.get(Calendar.DAY_OF_WEEK)
+
+        Glide.with(binding.imgMain.context)
+            .load("https://omos-image.s3.ap-northeast-2.amazonaws.com/main/$day.png")
+            .into(binding.imgMain)
     }
 }
