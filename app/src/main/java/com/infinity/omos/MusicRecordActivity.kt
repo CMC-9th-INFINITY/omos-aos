@@ -133,7 +133,7 @@ class MusicRecordActivity : AppCompatActivity() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount-1
 
                 // 스크롤이 끝에 도달했는지 확인
-                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && itemTotalCount > -1) {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page++
@@ -206,8 +206,8 @@ class MusicRecordActivity : AppCompatActivity() {
 
     private fun setSortRecord(sortType: String){
         page = 0
-        isLoading = false
         postId = -1
+        isLoading = false
         binding.recyclerView.scrollToPosition(0)
         mAdapter.clearCategory()
         viewModel.setMusicRecord(musicId, null, pageSize, sortType, userId)

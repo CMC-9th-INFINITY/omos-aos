@@ -189,7 +189,7 @@ class MyDjFragment : Fragment() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount-1
 
                 // 스크롤이 끝에 도달했는지 확인
-                if (!binding.rvRecord.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && isFirst) {
+                if (!binding.rvRecord.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && isFirst && itemTotalCount > -1) {
                     isLoading = true
                     page ++
                     rAdapter.deleteLoading()

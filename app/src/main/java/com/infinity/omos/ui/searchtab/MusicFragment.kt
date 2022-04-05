@@ -119,7 +119,7 @@ class MusicFragment : Fragment() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount-1
 
                 // 스크롤이 끝에 도달했는지 확인
-                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && itemTotalCount > -1) {
                     isLoading = true
                     mAdapter.deleteLoading()
                     viewModel.loadMoreMusic(MainActivity.keyword, pageSize, ++page*pageSize)

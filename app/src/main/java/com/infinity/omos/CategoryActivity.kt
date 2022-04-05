@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -148,7 +149,7 @@ class CategoryActivity : AppCompatActivity() {
                 val itemTotalCount = recyclerView.adapter!!.itemCount-1
 
                 // 스크롤이 끝에 도달했는지 확인
-                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading) {
+                if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && itemTotalCount > -1) {
                     isLoading = true
                     mAdapter.deleteLoading()
                     page ++
@@ -221,8 +222,8 @@ class CategoryActivity : AppCompatActivity() {
 
     private fun setSortRecord(sortType: String){
         page = 0
-        isLoading = false
         postId = -1
+        isLoading = false
         binding.recyclerView.scrollToPosition(0)
         mAdapter.clearCategory()
         viewModel.setCategoryRecord(ctg, null, pageSize, sortType, userId)
