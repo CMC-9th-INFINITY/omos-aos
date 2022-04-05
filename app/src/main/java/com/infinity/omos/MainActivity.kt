@@ -23,9 +23,11 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.messaging.FirebaseMessaging
 import com.infinity.omos.adapters.SearchListAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
+import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.searchtab.AllFragment
@@ -114,6 +116,14 @@ class MainActivity : AppCompatActivity() {
         initNavigationBar()
         initTabLayout()
         bottomNav = binding.bottomNav
+
+        // FCM
+        val fcm = Intent(this, MyFirebaseMessagingService::class.java)
+        startService(fcm)
+
+        FirebaseMessaging.getInstance().token.addOnSuccessListener {
+            Log.d("MainActivity", "Firebase Token: $it")
+        }
 
         // 플로팅 버튼
         binding.btnFloating.setOnClickListener {

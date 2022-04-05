@@ -3,6 +3,7 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-android-extensions'
     id 'kotlin-kapt'
+    id 'com.google.gms.google-services'
 }
 
 Properties properties = new Properties()
@@ -15,8 +16,8 @@ android {
         applicationId "com.infinity.omos"
         minSdk 21
         targetSdk 32
-        versionCode 17
-        versionName "17.0"
+        versionCode 18
+        versionName "18.0"
 
         buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
@@ -120,4 +121,8 @@ dependencies {
 
     // Play store core (in app update)
     implementation 'com.google.android.play:core:1.10.3'
+
+    // FCM
+    implementation 'com.google.firebase:firebase-bom:29.3.0'
+    implementation 'com.google.firebase:firebase-messaging:23.0.2'
 }
