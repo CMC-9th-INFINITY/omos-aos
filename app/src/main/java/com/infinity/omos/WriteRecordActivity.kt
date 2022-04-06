@@ -338,7 +338,7 @@ class WriteRecordActivity : AppCompatActivity() {
                         }
 
                         // 이미지 삭제 시
-                        if (tempImageUrl == ""){
+                        if (tempImageUrl == "" && recordImageUrl != ""){
                             val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "").split("/")
                             viewModel.deleteS3Image(s3Url[0], s3Url[1])
                             viewModel.updateRecord(postId, Update(recordContents, isPublic, "", recordTitle))

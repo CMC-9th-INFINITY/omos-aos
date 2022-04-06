@@ -5,6 +5,9 @@ import android.content.res.ColorStateList
 import android.graphics.Paint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
@@ -30,6 +33,7 @@ class FindPwActivity : AppCompatActivity() {
     private val viewModel: FindPwViewModel by viewModels()
     private var emailCode = ""
     private var idState = false
+    private lateinit var dlg: CustomDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +43,7 @@ class FindPwActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
+        dlg = CustomDialog(this)
         initToolBar()
 
         // 인증코드 표시 ON/OFF
@@ -196,6 +201,7 @@ class FindPwActivity : AppCompatActivity() {
                 binding.etCode.isEnabled = false
                 LoginActivity.hideErrorMsg(this, binding.etCode, binding.tvErrorAuthMail)
 
+                // TODO: userId 가져오는 API 구현ㅗ
                 val intent = Intent(this, ChangePwActivity::class.java)
                 startActivity(intent)
             } else{
@@ -241,6 +247,24 @@ class FindPwActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     private fun initToolBar(){

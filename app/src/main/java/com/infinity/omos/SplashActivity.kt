@@ -31,17 +31,16 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
 
-        // 토큰 정보 확인
-        val token = GlobalApplication.prefs.getUserToken()
-        if (token != null) {
-            repository.getUserToken(token)
-        } else {
-            // x초 뒤 Activity 이동
-            val handler = Handler(Looper.getMainLooper())
-            handler.postDelayed({
+        // x초 뒤 Activity 이동
+        val handler = Handler(Looper.getMainLooper())
+        handler.postDelayed({
+            val token = GlobalApplication.prefs.getUserToken()
+            if (token != null){
+                repository.getUserToken(token)
+            } else{
                 moveActivity(this)
-            }, SPLASH_TIME)
-        }
+            }
+        }, SPLASH_TIME)
 
         repository.stateToken.observe(this) { state ->
             state?.let {
