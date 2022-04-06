@@ -44,4 +44,9 @@ interface AuthService {
     fun updatePassword(
         @Body params: Password
     ): Call<ResultState>
+
+    @GET("api/auth/{email}")
+    fun getUserIdFromEmail(
+        @Path("email") email: String
+    ): Call<UserId>
 }

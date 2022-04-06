@@ -5,6 +5,7 @@ import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.data.UserId
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
 
@@ -42,5 +43,13 @@ class FindPwViewModel(application: Application): AndroidViewModel(application) {
     }
     fun getStateGetCode(): LiveData<Constant.ApiState> {
         return repository.stateGetCode
+    }
+
+    // userId 가져오기
+    fun setUserIdFromEmail(email: String){
+        repository.getUserIdFromEmail(email)
+    }
+    fun getUserIdFromEmail(): LiveData<UserId>{
+        return repository.getUserId
     }
 }

@@ -119,6 +119,15 @@ class FindPwActivity : AppCompatActivity() {
             }
         }
 
+        viewModel.getUserIdFromEmail().observe(this) { id ->
+            id?.let {
+                dismissProgress()
+                val intent = Intent(this, ChangePwActivity::class.java)
+                intent.putExtra("userId", it.userId)
+                startActivity(intent)
+            }
+        }
+
         // 로그인 버튼 활성화
         viewModel.stateInput.observe(this, Observer { state ->
             state?.let {
@@ -200,10 +209,8 @@ class FindPwActivity : AppCompatActivity() {
                 binding.etId.isEnabled = false
                 binding.etCode.isEnabled = false
                 LoginActivity.hideErrorMsg(this, binding.etCode, binding.tvErrorAuthMail)
-
-                // TODO: userId 가져오는 API 구현ㅗ
-                val intent = Intent(this, ChangePwActivity::class.java)
-                startActivity(intent)
+                viewModel.setUserIdFromEmail(binding.etId.text.toString()) // userId 가져오기
+                showProgress()
             } else{
                 LoginActivity.showErrorMsg(
                     this,

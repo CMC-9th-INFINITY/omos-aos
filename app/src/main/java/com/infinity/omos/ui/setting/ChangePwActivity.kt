@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.setting
 
+import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
 import android.text.Editable
@@ -26,7 +27,8 @@ class ChangePwActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChangePwBinding
     private val viewModel: ChangePwViewModel by viewModels()
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private var userId = GlobalApplication.prefs.getInt("userId")
+    private var isFindPw = false
 
     private val pwPattern =
         "^(?=.*[A-Za-z])(?=.*[0-9])(?=.*[$@$!%*#?&.])[A-Za-z[0-9]$@$!%*#?&.]{8,16}$" // 영문, 숫자, 특수문자 하나씩 포함, 8~16자
@@ -38,6 +40,12 @@ class ChangePwActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         initToolBar()
+
+        val id = intent.getIntExtra("userId", -1)
+        if (id != -1){
+            isFindPw = true
+            userId = id
+        }
 
         binding.etPw.setOnFocusChangeListener { view, b ->
             if (!b){
@@ -96,7 +104,14 @@ class ChangePwActivity : AppCompatActivity() {
         viewModel.getStateUpdatePw().observe(this) { state ->
             state?.let {
                 if(it.state){
-                    finish()
+                    // 비밀번호 찾기일때, 변경일때 구분
+                    if (isFindPw){
+                        val intent = Intent(this, LoginActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                    } else{
+                        finish()
+                    }
 
                     Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                 } else{
