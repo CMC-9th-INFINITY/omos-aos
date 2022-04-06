@@ -61,7 +61,7 @@ class ReportBlockRepository {
     }
 
     var stateBlockUser = MutableLiveData<ResultState>()
-    fun blockUser(fromUserId: Int, recordId: Int, reportReason: String, toUserId: Int, type: String){
+    fun blockUser(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){
         blockApi.blockUser(ReportBlock(fromUserId, recordId, reportReason, toUserId), type).enqueue(object: Callback<ResultState> {
             override fun onResponse(
                 call: Call<ResultState>,

@@ -2,6 +2,9 @@ package com.infinity.omos
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -38,6 +41,8 @@ class DjActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_dj)
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        dlg = CustomDialog(this)
 
         toUserId = intent.getIntExtra("toUserId", -1)
 
@@ -124,11 +129,11 @@ class DjActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.getStateSignOut().observe(this) { state ->
+        viewModel.getStateBlockUser().observe(this) { state ->
             state?.let {
-                when(it){
-                    Constant.ApiState.DONE -> {
-                        dlg.dismissProgress()
+                when(it.state){
+                    true -> {
+                        dismissProgress()
                         val intent1 = Intent("RECORD_UPDATE")
                         intent1.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent1)
@@ -145,11 +150,47 @@ class DjActivity : AppCompatActivity() {
                         intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent4)
 
-                        finish()
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
                         Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
                     }
 
-                    Constant.ApiState.ERROR -> {
+                    else -> {
+                        Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        viewModel.getStateReportUser().observe(this) { state ->
+            state?.let {
+                when(it.state){
+                    true -> {
+                        dismissProgress()
+                        val intent1 = Intent("RECORD_UPDATE")
+                        intent1.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent1)
+
+                        val intent2 = Intent("DJ_UPDATE")
+                        intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent2)
+
+                        val intent3 = Intent("LIKE_UPDATE")
+                        intent3.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent3)
+
+                        val intent4 = Intent("SCRAP_UPDATE")
+                        intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                        sendBroadcast(intent4)
+
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
+                        startActivity(intent)
+                        Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
+                    }
+
+                    else -> {
                         Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
                 }
@@ -213,15 +254,13 @@ class DjActivity : AppCompatActivity() {
             }
 
             R.id.action_block -> {
-                dlg = CustomDialog(this)
                 dlg.show("이 DJ를 차단 하시겠어요?", "차단")
 
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
-                            Log.d("SignOutAPI", toUserId.toString())
-                            viewModel.signOut(toUserId)
-                            dlg.showProgress()
+                            viewModel.blockUser(fromUserId, null, null, toUserId, "User")
+                            showProgress()
                         }
                     }
                 }
@@ -229,15 +268,13 @@ class DjActivity : AppCompatActivity() {
             }
 
             R.id.action_report -> {
-                dlg = CustomDialog(this)
                 dlg.show("이 DJ를 신고 하시겠어요?", "신고")
 
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
-                            Log.d("SignOutAPI", toUserId.toString())
-                            viewModel.signOut(toUserId)
-                            dlg.showProgress()
+                            viewModel.reportObject(fromUserId, null, null, toUserId, "User")
+                            showProgress()
                         }
                     }
                 }
@@ -246,6 +283,24 @@ class DjActivity : AppCompatActivity() {
 
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     override fun onDestroy() {

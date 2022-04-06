@@ -4,15 +4,18 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.infinity.omos.data.DjProfile
+import com.infinity.omos.data.ResultState
 import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyDjRepository
 import com.infinity.omos.repository.MyPageRepository
+import com.infinity.omos.repository.ReportBlockRepository
 
 class DjViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: MyDjRepository = MyDjRepository()
     private val myPageRepository: MyPageRepository = MyPageRepository()
+    private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
     fun setDjProfile(fromUserId: Int, toUserId: Int){
         repository.getDjProfile(fromUserId, toUserId)
@@ -45,11 +48,19 @@ class DjViewModel(application: Application): AndroidViewModel(application) {
         return repository.stateDjRecord
     }
 
-    // 계정탈퇴
-    fun signOut(userId: Int){
-        myPageRepository.signOut(userId)
+    // 신고
+    fun reportObject(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){
+        reportRepository.reportObject(fromUserId, recordId, reportReason, toUserId, type)
     }
-    fun getStateSignOut(): LiveData<Constant.ApiState> {
-        return myPageRepository.stateSignOut
+    fun getStateReportUser(): LiveData<ResultState>{
+        return reportRepository.stateReportObject
+    }
+
+    // 차단
+    fun blockUser(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){
+        reportRepository.blockUser(fromUserId, recordId, reportReason, toUserId, type)
+    }
+    fun getStateBlockUser(): LiveData<ResultState>{
+        return reportRepository.stateBlockUser
     }
 }
