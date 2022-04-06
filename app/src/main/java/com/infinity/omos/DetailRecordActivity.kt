@@ -364,7 +364,7 @@ class DetailRecordActivity : AppCompatActivity() {
             dlg.setOnOkClickedListener { content ->
                 when (content) {
                     "yes" -> {
-                        viewModel.reportRecord(postId)
+                        viewModel.reportObject(userId, postId, null, null, "Record")
                         showProgress()
                     }
                 }

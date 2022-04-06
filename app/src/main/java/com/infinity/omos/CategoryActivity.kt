@@ -5,7 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.util.Log
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -29,6 +31,7 @@ class CategoryActivity : AppCompatActivity() {
 
     private val viewModel: CategoryViewModel by viewModels()
     private lateinit var binding: ActivityCategoryBinding
+    private lateinit var dlg: CustomDialog
 
     private var ctg = ""
 
@@ -51,6 +54,7 @@ class CategoryActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         var context = this
+        dlg = CustomDialog(this)
 
         var category = intent.getStringExtra("category")
         initToolBar(category!!)
@@ -81,6 +85,22 @@ class CategoryActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
+        viewModel.getStateReportRecord().observe(this) { state ->
+            state?.let {
+                dismissProgress()
+                if (it.state) {
+                    val intent = Intent("RECORD_UPDATE")
+                    intent.putExtra("isDelete", true)
+                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent)
+
+                    Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         mAdapter.setItemClickListener(object: DetailCategoryListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, postId: Int) {
                 val dlg = CustomDialog(context)
@@ -89,13 +109,8 @@ class CategoryActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
-                            val intent = Intent("RECORD_UPDATE")
-                            intent.putExtra("isDelete", true)
-                            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                            sendBroadcast(intent)
-
-                            viewModel.reportRecord(postId)
-                            Toast.makeText(context, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            viewModel.reportObject(userId, postId, null, null, "Record")
+                            showProgress()
                         }
                     }
                 }
@@ -163,6 +178,24 @@ class CategoryActivity : AppCompatActivity() {
             setSortRecord("date")
             binding.swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     private fun initializeBroadcastReceiver() {

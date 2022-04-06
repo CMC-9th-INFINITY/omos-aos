@@ -5,6 +5,9 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -30,6 +33,7 @@ class MusicRecordActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySearchMusicBinding
     private lateinit var mAdapter: DetailCategoryListAdapter
     lateinit var broadcastReceiver: BroadcastReceiver
+    private lateinit var dlg: CustomDialog
 
     private var page = 0
     private val pageSize = 5
@@ -47,6 +51,7 @@ class MusicRecordActivity : AppCompatActivity() {
         binding.lifecycleOwner = this
 
         val context = this
+        dlg = CustomDialog(this)
 
         musicId = intent.getStringExtra("musicId")!!
         initToolBar()
@@ -58,6 +63,22 @@ class MusicRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
+        viewModel.getStateReportRecord().observe(this) { state ->
+            state?.let {
+                dismissProgress()
+                if (it.state) {
+                    val intent = Intent("RECORD_UPDATE")
+                    intent.putExtra("isDelete", true)
+                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    sendBroadcast(intent)
+
+                    Toast.makeText(this, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "실패", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }
+
         mAdapter.setItemClickListener(object: DetailCategoryListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, postId: Int) {
                 val dlg = CustomDialog(context)
@@ -66,13 +87,8 @@ class MusicRecordActivity : AppCompatActivity() {
                 dlg.setOnOkClickedListener { content ->
                     when(content){
                         "yes" -> {
-                            val intent = Intent("RECORD_UPDATE")
-                            intent.putExtra("isDelete", true)
-                            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-                            sendBroadcast(intent)
-
-                            viewModel.reportRecord(postId)
-                            Toast.makeText(context, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                            viewModel.reportObject(userId, postId, null, null, "Record")
+                            showProgress()
                         }
                     }
                 }
@@ -147,6 +163,24 @@ class MusicRecordActivity : AppCompatActivity() {
             setSortRecord("date")
             binding.swipeRefreshLayout.isRefreshing = false
         }
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     private fun initializeBroadcastReceiver() {

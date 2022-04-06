@@ -8,11 +8,13 @@ import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyRecordRepository
 import com.infinity.omos.repository.RecordRepository
+import com.infinity.omos.repository.ReportBlockRepository
 
 class DetailRecordViewModel(application: Application): AndroidViewModel(application) {
 
     private val repository: RecordRepository = RecordRepository()
     private val myRecordRepository = MyRecordRepository()
+    private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
     // 상세 레코드
     fun setDetailRecord(postId: Int, userId: Int){
@@ -48,10 +50,10 @@ class DetailRecordViewModel(application: Application): AndroidViewModel(applicat
         return myRecordRepository.stateDeleteRecord
     }
 
-    fun reportRecord(postId: Int){
-        repository.reportRecord(postId)
+    fun reportObject(fromUserId: Int, recordId: Int, reportReason: String?, toUserId: Int?, type: String){
+        reportRepository.reportObject(fromUserId, recordId, reportReason, toUserId, type)
     }
     fun getStateReportRecord(): LiveData<ResultState>{
-        return repository.stateReportRecord
+        return reportRepository.stateReportObject
     }
 }
