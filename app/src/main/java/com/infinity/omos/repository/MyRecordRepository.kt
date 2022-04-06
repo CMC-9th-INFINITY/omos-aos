@@ -2,6 +2,7 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
+import com.infinity.omos.api.ImageService
 import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.ResultState
@@ -20,7 +21,46 @@ class MyRecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val recordApi = retrofit.create(RecordService::class.java)
+    private val imageApi = retrofit.create(ImageService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
+
+    var stateDeleteImage = MutableLiveData<ResultState>()
+    fun deleteImage(directory: String, fileName: String){
+        imageApi.deleteS3Image(directory, fileName).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("DeleteS3ImageAPI", "Success")
+                        stateDeleteImage.postValue(body!!)
+                    }
+
+                    401 -> {
+                        Log.d("DeleteS3ImageAPI", "Unauthorized")
+                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        deleteImage(directory, fileName)
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("DeleteS3ImageAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("DeleteS3ImageAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("DeleteS3ImageAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
 
     var stateUpdateRecord = MutableLiveData<ResultState>()
     fun updateRecord(postId: Int, params: Update){

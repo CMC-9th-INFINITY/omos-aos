@@ -41,6 +41,14 @@ class WriteLyricsViewModel(application: Application): AndroidViewModel(applicati
         return repository.stateUpdateRecord
     }
 
+    // s3 이미지 삭제
+    fun deleteS3Image(directory: String, fileName: String){
+        repository.deleteImage(directory, fileName)
+    }
+    fun getStateDeleteImage(): LiveData<ResultState>{
+        return repository.stateDeleteImage
+    }
+
     fun changePrivate(){
         isPublic.value = isPublic.value == false
     }

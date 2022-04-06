@@ -311,10 +311,10 @@ class WriteRecordActivity : AppCompatActivity() {
                 } else{
                     category = GlobalFunction.categoryKrToEng(this, category)
 
+                    val currentTime = System.currentTimeMillis()
                     if (!isModify){
                         // 레코드 저장 상태
 
-                        val currentTime = System.currentTimeMillis()
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
                             awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
@@ -329,7 +329,6 @@ class WriteRecordActivity : AppCompatActivity() {
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
                             if (recordImageUrl == ""){
-                                val currentTime = System.currentTimeMillis()
                                 awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
                                 recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
                             } else{
@@ -340,8 +339,9 @@ class WriteRecordActivity : AppCompatActivity() {
 
                         // 이미지 삭제 시
                         if (tempImageUrl == ""){
+                            val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "").split("/")
+                            viewModel.deleteS3Image(s3Url[0], s3Url[1])
                             viewModel.updateRecord(postId, Update(recordContents, isPublic, "", recordTitle))
-                            // TODO: 삭제 API 구현
                         } else {
                             viewModel.updateRecord(postId, Update(recordContents, isPublic, recordImageUrl, recordTitle))
                         }
