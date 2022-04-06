@@ -128,15 +128,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
-                        android:layout_marginBottom="14dp">
+                        android:layout_marginBottom="14dp"
+                        android:onClick="@{()->vm.checkBoxTosClick()}">
 
                         <ImageView
                             android:id="@+id/checkbox_tos"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/circle_check_box"
-                            android:onClick="@{()->vm.checkBoxTosClick()}"/>
+                            android:background="@drawable/circle_check_box"/>
 
                         <TextView
                             android:id="@+id/tv_tos"
@@ -165,15 +165,15 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        android:onClick="@{()->vm.checkBoxPPClick()}">
 
                         <ImageView
                             android:id="@+id/checkbox_pp"
                             android:layout_width="12dp"
                             android:layout_height="12dp"
                             android:layout_gravity="center"
-                            android:background="@drawable/circle_check_box"
-                            android:onClick="@{()->vm.checkBoxPPClick()}"/>
+                            android:background="@drawable/circle_check_box" />
 
                         <TextView
                             android:id="@+id/tv_pp"
