@@ -25,8 +25,10 @@ interface RecordService {
         @Body params: SaveRecord
     ): Call<ResultState>
 
-    @GET("api/records/select")
-    fun setAllRecords(): Call<Category>
+    @GET("api/records/select/{userId}")
+    fun setAllRecords(
+        @Path("userId") userId: Int
+    ): Call<Category>
 
     @GET("api/records/select/{postId}/user/{userId}")
     fun getDetailRecord(

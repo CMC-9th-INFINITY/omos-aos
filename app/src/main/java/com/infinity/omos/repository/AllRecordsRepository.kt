@@ -22,9 +22,9 @@ class AllRecordsRepository {
 
     var stateAllRecords = MutableLiveData<Constant.ApiState>()
     var allRecords = MutableLiveData<Category>()
-    fun setAllRecords(){
+    fun setAllRecords(userId: Int){
         stateAllRecords.value = Constant.ApiState.LOADING
-        recordApi.setAllRecords().enqueue(object: Callback<Category>{
+        recordApi.setAllRecords(userId).enqueue(object: Callback<Category>{
             override fun onResponse(call: Call<Category>, response: Response<Category>) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -37,7 +37,7 @@ class AllRecordsRepository {
                     401 -> {
                         Log.d("AllRecordsAPI", "Unauthorized")
                         onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
-                        setAllRecords()
+                        setAllRecords(userId)
                     }
 
                     500 -> {

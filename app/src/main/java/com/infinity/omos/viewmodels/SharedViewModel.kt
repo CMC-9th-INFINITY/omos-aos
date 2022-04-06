@@ -73,8 +73,8 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     // 전체 레코드
-    fun setAllRecords(){
-        allRecordsRepository.setAllRecords()
+    fun setAllRecords(userId: Int){
+        allRecordsRepository.setAllRecords(userId)
     }
     fun getAllRecords(): LiveData<Category>{
         return allRecordsRepository.allRecords

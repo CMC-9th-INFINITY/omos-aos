@@ -19,6 +19,8 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class AllRecordFragment : Fragment() {
@@ -26,6 +28,8 @@ class AllRecordFragment : Fragment() {
     private lateinit var viewModel: SharedViewModel
     private lateinit var binding: FragmentAllRecordsBinding
     lateinit var broadcastReceiver: BroadcastReceiver
+
+    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +60,7 @@ class AllRecordFragment : Fragment() {
         }
 
         // 카테고리 리스트 초기화
-        viewModel.setAllRecords()
+        viewModel.setAllRecords(userId)
         viewModel.getAllRecords().observe(viewLifecycleOwner, Observer { records ->
             records?.let {
                 mAdapter.setCategory(addCategory(it))
@@ -84,7 +88,7 @@ class AllRecordFragment : Fragment() {
 
         // 스와이프 기능
         binding.swipeRefreshLayout.setOnRefreshListener {
-            viewModel.setAllRecords()
+            viewModel.setAllRecords(userId)
             binding.swipeRefreshLayout.isRefreshing = false
         }
     }
@@ -102,7 +106,7 @@ class AllRecordFragment : Fragment() {
     private fun initializeBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                viewModel.setAllRecords()
+                viewModel.setAllRecords(userId)
             }
         }
 
