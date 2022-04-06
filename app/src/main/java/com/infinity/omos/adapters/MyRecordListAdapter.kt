@@ -195,6 +195,7 @@ class MyRecordListAdapter internal constructor(context: Context):
 
     internal fun setDjRecord(rec: List<SimpleRecord>) {
         isDj = true
+        record.clear()
         recordAll.clear()
         recordAll.addAll(rec)
         record.addAll(recordAll)

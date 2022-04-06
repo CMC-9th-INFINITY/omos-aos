@@ -480,9 +480,13 @@ class DetailRecordActivity : AppCompatActivity() {
                 viewModel.deleteLike(postId, userId)
             }
 
-            val intent = Intent("LIKE_UPDATE")
-            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-            sendBroadcast(intent)
+            // TODO: 수정 필요
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed({
+                val intent = Intent("LIKE_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent)
+            }, 300)
         }
 
         if (star != prevStar) {
@@ -491,9 +495,14 @@ class DetailRecordActivity : AppCompatActivity() {
             } else {
                 viewModel.deleteScrap(postId, userId)
             }
-            val intent = Intent("SCRAP_UPDATE")
-            intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
-            sendBroadcast(intent)
+
+            // TODO: 수정 필요
+            val handler = Handler(Looper.getMainLooper())
+            handler.postDelayed({
+                val intent = Intent("SCRAP_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                sendBroadcast(intent)
+            }, 300)
         }
     }
 
