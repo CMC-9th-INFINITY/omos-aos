@@ -183,8 +183,7 @@
                     android:layout_height="wrap_content"
                     android:text="비밀번호 찾기"
                     android:textSize="14sp"
-                    android:textColor="@color/light_gray"
-                    android:visibility="invisible"/>
+                    android:textColor="@color/light_gray" />
 
                 <View
                     android:layout_width="wrap_content"

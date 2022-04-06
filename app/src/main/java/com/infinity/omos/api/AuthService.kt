@@ -2,10 +2,7 @@ package com.infinity.omos.api
 
 import com.infinity.omos.data.*
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface AuthService {
     @GET("api/auth/check-email")
@@ -42,4 +39,9 @@ interface AuthService {
     fun getResultSnsSignUp(
         @Body params: UserSnsSignUp
     ): Call<UserToken>
+
+    @PUT("/api/auth/update/password")
+    fun updatePassword(
+        @Body params: Password
+    ): Call<ResultState>
 }

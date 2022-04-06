@@ -7,9 +7,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.repository.MyPageRepository
+import com.infinity.omos.repository.OnBoardingRepository
 
 class ChangePwViewModel(application: Application): AndroidViewModel(application) {
-    private val repository = MyPageRepository()
+    private val repository = OnBoardingRepository()
     var visibleEye1 = MutableLiveData<Boolean>()
     var visibleEye2 = MutableLiveData<Boolean>()
 

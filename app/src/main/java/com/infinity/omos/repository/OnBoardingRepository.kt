@@ -18,6 +18,42 @@ class OnBoardingRepository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val onBoardingApi = retrofit.create(AuthService::class.java)
 
+    var stateUpdatePw = MutableLiveData<ResultState>()
+    fun updatePassword(password: String, userId: Int){
+        onBoardingApi.updatePassword(Password(password, userId)).enqueue(object: Callback<ResultState> {
+            override fun onResponse(
+                call: Call<ResultState>,
+                response: Response<ResultState>
+            ) {
+                val body = response.body()
+                when(val code = response.code()){
+                    in 200..300 -> {
+                        Log.d("UpdatePwAPI", "Success")
+                        stateUpdatePw.postValue(body!!)
+                    }
+
+                    401 -> {
+                        Log.d("UpdatePwAPI", "Unauthorized")
+                    }
+
+                    500 -> {
+                        val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
+                        Log.d("UpdatePwAPI", errorBody!!.message)
+                    }
+
+                    else -> {
+                        Log.d("UpdatePwAPI", "Code: $code")
+                    }
+                }
+            }
+
+            override fun onFailure(call: Call<ResultState>, t: Throwable) {
+                Log.d("UpdatePwAPI", t.message.toString())
+                t.stackTrace
+            }
+        })
+    }
+
     var stateGetCode = MutableLiveData<Constant.ApiState>()
     var emailCode = MutableLiveData<String>()
     fun getEmailCode(email: String){

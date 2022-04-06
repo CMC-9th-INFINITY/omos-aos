@@ -30,11 +30,6 @@ interface MyPageService {
         @Body params: Profile
     ): Call<ResultState>
 
-    @PUT("/api/user/update/password")
-    fun updatePassword(
-        @Body params: Password
-    ): Call<ResultState>
-
     @DELETE("/api/auth/logout/{userId}")
     fun doLogout(
         @Path("userId") userId: Int

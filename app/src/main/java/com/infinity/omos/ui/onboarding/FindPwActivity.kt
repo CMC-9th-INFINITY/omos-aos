@@ -33,14 +33,13 @@ class FindPwActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        initToolBar()
-
         val binding = DataBindingUtil.setContentView<ActivityFindPwBinding>(this,
             R.layout.activity_find_pw
         )
         binding.vm = viewModel
         binding.lifecycleOwner = this
+
+        initToolBar()
 
         // 인증코드 표시 ON/OFF
         viewModel.visibleEye.observe(this, Observer { state ->

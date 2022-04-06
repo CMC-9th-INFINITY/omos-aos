@@ -295,12 +295,12 @@ class SearchRepository {
         })
     }
 
-    var searchMusic = MutableLiveData<List<Music>>()
+    var searchMusic = MutableLiveData<List<SearchMusic>>()
     var stateSearchMusic = MutableLiveData<Constant.ApiState>()
     fun getSearchMusic(keyword: String, limit: Int, offset: Int){
         stateSearchMusic.value = Constant.ApiState.LOADING
-        searchApi.getMusic(keyword, limit, offset).enqueue(object: Callback<List<Music>>{
-            override fun onResponse(call: Call<List<Music>>, response: Response<List<Music>>) {
+        searchApi.getSearchMusic(keyword, limit, offset).enqueue(object: Callback<List<SearchMusic>>{
+            override fun onResponse(call: Call<List<SearchMusic>>, response: Response<List<SearchMusic>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
@@ -327,7 +327,7 @@ class SearchRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Music>>, t: Throwable) {
+            override fun onFailure(call: Call<List<SearchMusic>>, t: Throwable) {
                 Log.d("SearchMusicAPI", t.message.toString())
                 t.stackTrace
             }

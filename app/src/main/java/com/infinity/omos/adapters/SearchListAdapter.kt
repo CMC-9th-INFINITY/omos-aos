@@ -13,6 +13,7 @@ import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Music
+import com.infinity.omos.data.SearchMusic
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListSearchItemBinding
 import com.infinity.omos.etc.GlobalFunction
@@ -23,7 +24,7 @@ class SearchListAdapter internal constructor(private val context: Context)
     : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var nameList = ArrayList<Music>()
+    private var nameList = ArrayList<SearchMusic>()
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -45,7 +46,7 @@ class SearchListAdapter internal constructor(private val context: Context)
     }
 
     inner class SearchViewHolder(val binding: ListSearchItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(music: Music) {
+        fun bind(music: SearchMusic) {
             binding.tvMusicTitle.text = music.musicTitle
 
             // keyword 색상 변경
@@ -63,7 +64,7 @@ class SearchListAdapter internal constructor(private val context: Context)
         }
     }
 
-    internal fun setMusicTitle(name: List<Music>) {
+    internal fun setMusicTitle(name: List<SearchMusic>) {
         nameList.clear()
         nameList.addAll(name)
         notifyDataSetChanged()

@@ -1,9 +1,6 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.Album
-import com.infinity.omos.data.ArtistMusic
-import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Music
+import com.infinity.omos.data.*
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -45,6 +42,15 @@ interface SearchService {
     fun getMusic(
         @Query("keyword") keyword: String,
         @Query("limit") limit: Int,
-        @Query("offset") offset: Int
+        @Query("offset") offset: Int,
+        @Query("type") type: Int = 0
     ): Call<List<Music>>
+
+    @GET("api/search/track")
+    fun getSearchMusic(
+        @Query("keyword") keyword: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int,
+        @Query("type") type: Int = 1
+    ): Call<List<SearchMusic>>
 }
