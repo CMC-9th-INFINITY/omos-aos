@@ -24,7 +24,9 @@ class MyRecordFragment : Fragment() {
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyRecordBinding
     lateinit var broadcastReceiver: BroadcastReceiver
-    lateinit var mAdapter: MyRecordListAdapter
+    val mAdapter: MyRecordListAdapter by lazy {
+        MyRecordListAdapter(requireContext())
+    }
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -49,7 +51,6 @@ class MyRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        mAdapter = MyRecordListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
