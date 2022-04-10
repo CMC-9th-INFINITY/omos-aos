@@ -11,7 +11,7 @@
         android:id="@+id/btn_music"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:background="@color/dark">
 
         <TextView

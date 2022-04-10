@@ -157,8 +157,18 @@ class MainActivity : AppCompatActivity() {
         // 노래 리스트 클릭 시 editText 셋팅
         sAdapter.setItemClickListener(object: SearchListAdapter.OnItemClickListener{
             override fun onClick(v: View, position: Int, title: String) {
+
                 binding.etSearch.setText(title)
                 binding.etSearch.setSelection(title.length)
+
+                keyword = binding.etSearch.text.toString()
+                var intent = Intent("SEARCH_UPDATE")
+                intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                intent.putExtra("keyword", keyword)
+                sendBroadcast(intent)
+
+                binding.rvSearch.visibility = View.GONE
+                binding.searchTab.visibility = View.VISIBLE
             }
         })
 
