@@ -131,6 +131,14 @@ class MyScrapRecordActivity : AppCompatActivity() {
             R.id.action_search -> {
                 binding.toolbar.visibility = View.GONE
                 binding.searchView.visibility = View.VISIBLE
+
+                // editText 포커스 주기
+                binding.etSearch.isFocusableInTouchMode = true
+                binding.etSearch.requestFocus()
+                val inputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.showSoftInput(binding.etSearch, 0)
+
                 true
             }
             else -> super.onOptionsItemSelected(item)

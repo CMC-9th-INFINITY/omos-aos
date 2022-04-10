@@ -20,7 +20,9 @@ import com.infinity.omos.databinding.ActivityMyLikeRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.MyLikeRecordViewModel
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.*
+import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class MyLikeRecordActivity : AppCompatActivity() {
 
@@ -131,6 +133,14 @@ class MyLikeRecordActivity : AppCompatActivity() {
             R.id.action_search -> {
                 binding.toolbar.visibility = View.GONE
                 binding.searchView.visibility = View.VISIBLE
+
+                // editText 포커스 주기
+                binding.etSearch.isFocusableInTouchMode = true
+                binding.etSearch.requestFocus()
+                val inputMethodManager =
+                    getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+                inputMethodManager.showSoftInput(binding.etSearch, 0)
+
                 true
             }
             else -> super.onOptionsItemSelected(item)
