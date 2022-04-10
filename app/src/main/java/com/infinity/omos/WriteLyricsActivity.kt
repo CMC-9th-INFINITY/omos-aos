@@ -327,24 +327,32 @@ class WriteLyricsActivity : AppCompatActivity() {
                 true
             }
             android.R.id.home -> {
-                recordTitle = binding.etRecordTitle.text.toString()
-                recordContents = mAdapter.getContents()
-                if (recordContents != "" || recordTitle != ""){
-                    val dlg = CustomDialog(this)
-                    dlg.show("작성 중인 내용이 삭제됩니다.\n그래도 그만하시겠습니까?", "확인")
-                    dlg.setOnOkClickedListener {
-                        when(it){
-                            "yes" -> {
-                                finish()
-                            }
-                        }
-                    }
-                } else{
-                    finish()
-                }
+                showWarning()
                 true
             }
             else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onBackPressed() {
+        showWarning()
+    }
+
+    private fun showWarning(){
+        recordTitle = binding.etRecordTitle.text.toString()
+        recordContents = mAdapter.getContents()
+        if (recordContents != "" || recordTitle != ""){
+            val dlg = CustomDialog(this)
+            dlg.show("작성 중인 내용이 삭제됩니다.\n그래도 그만하시겠습니까?", "확인")
+            dlg.setOnOkClickedListener {
+                when(it){
+                    "yes" -> {
+                        finish()
+                    }
+                }
+            }
+        } else{
+            finish()
         }
     }
 }
