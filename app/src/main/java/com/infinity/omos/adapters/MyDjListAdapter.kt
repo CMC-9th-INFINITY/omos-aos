@@ -92,9 +92,9 @@ class MyDjListAdapter internal constructor(context: Context):
     }
 
     internal fun setDj(dj: List<Profile>){
-        if (isChecked.size > 0){
-            isChecked[prevChecked] = false
-        }
+        // 초기화
+        isChecked = ArrayList()
+        prevChecked = 0
 
         myDj.clear()
         myDj.addAll(dj)
