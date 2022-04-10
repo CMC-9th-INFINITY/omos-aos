@@ -157,4 +157,13 @@ class MyScrapRecordActivity : AppCompatActivity() {
             IntentFilter("SCRAP_UPDATE")
         )
     }
+
+    override fun onBackPressed() {
+        if (binding.searchView.visibility == View.VISIBLE){
+            // 검색뷰 열려있으면 닫기
+            cancelSearch()
+        } else{
+            super.onBackPressed()
+        }
+    }
 }
