@@ -67,6 +67,16 @@ class MainActivity : AppCompatActivity() {
     private lateinit var inAppUpdate: InAppUpdate
     private val REQUEST_CODE_UPDATE = 100
 
+    private lateinit var filterListener: OnFilterListener
+
+    interface OnFilterListener{
+        fun onFilter(str: String)
+    }
+
+    fun setFilterListener(filterListener: OnFilterListener){
+        this.filterListener = filterListener
+    }
+
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
@@ -203,7 +213,7 @@ class MainActivity : AppCompatActivity() {
                     binding.searchTab.visibility = View.GONE
                 } else{
                     // MY 레코드 검색 (필터기능)
-                    fragmentMyRecord.mAdapter.filter.filter(p0.toString())
+                    filterListener.onFilter(p0.toString())
                 }
             }
 

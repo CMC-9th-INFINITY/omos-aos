@@ -12,6 +12,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
@@ -24,9 +25,6 @@ class MyRecordFragment : Fragment() {
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentMyRecordBinding
     lateinit var broadcastReceiver: BroadcastReceiver
-    val mAdapter: MyRecordListAdapter by lazy {
-        MyRecordListAdapter(requireContext())
-    }
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -51,6 +49,7 @@ class MyRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val mAdapter = MyRecordListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
@@ -90,6 +89,13 @@ class MyRecordFragment : Fragment() {
                 }
             }
         }
+
+        // 검색
+        (activity as MainActivity).setFilterListener(object : MainActivity.OnFilterListener{
+            override fun onFilter(str: String) {
+                mAdapter.filter.filter(str)
+            }
+        })
     }
 
     private fun initializeBroadcastReceiver() {
