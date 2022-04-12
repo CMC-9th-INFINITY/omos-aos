@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -131,6 +132,7 @@ class DetailCategoryListAdapter internal constructor(
                 }
             }
 
+            Log.d("jaemin", num.toString()+" "+heartStarList.size)
             if (num >= heartStarList.size){
                 heartStarList.add(num, LikeScrap(category.isLiked, category.isScraped, category.likeCnt, category.scrapCnt))
             }
@@ -250,7 +252,6 @@ class DetailCategoryListAdapter internal constructor(
 
     internal fun setCategory(category: List<Record>){
         clearCategory()
-        this.category.clear()
         this.category.addAll(category)
         notifyDataSetChanged()
     }
@@ -285,6 +286,8 @@ class DetailCategoryListAdapter internal constructor(
             binding.tvStarCnt.text = String.format("%03d", data.scrapCnt)
         }
     }
+
+
 
     override fun getItemCount(): Int {
         return category.size

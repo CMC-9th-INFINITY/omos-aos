@@ -24,7 +24,7 @@ import com.kakao.sdk.user.UserApiClient
 
 class SplashActivity : AppCompatActivity() {
 
-    private val SPLASH_TIME: Long = 2000 // (ms)초 간 Splash 화면 띄움
+    private val SPLASH_TIME: Long = 1500 // (ms)초 간 Splash 화면 띄움
     private val repository = OnBoardingRepository()
 
     override fun onCreate(savedInstanceState: Bundle?) {

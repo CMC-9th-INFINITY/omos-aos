@@ -5,9 +5,8 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -120,6 +119,8 @@ class MyDjFragment : Fragment() {
                 when (it) {
                     Constant.ApiState.LOADING -> {
                         if (page == 0){
+                            // 중복 API 호출 방지
+                            activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE) // 화면 터치 막기
                             binding.rvRecord.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
                             binding.lnNorecord.visibility = View.GONE
@@ -127,6 +128,7 @@ class MyDjFragment : Fragment() {
                     }
 
                     Constant.ApiState.DONE -> {
+                        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         binding.rvRecord.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
@@ -148,12 +150,15 @@ class MyDjFragment : Fragment() {
             state?.let {
                 when (it) {
                     Constant.ApiState.LOADING -> {
+                        // 중복 API 호출 방지
+                        activity?.window?.addFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         binding.rvRecord.visibility = View.GONE
                         binding.progressBar.visibility = View.VISIBLE
                         binding.lnNorecord.visibility = View.GONE
                     }
 
                     Constant.ApiState.DONE -> {
+                        activity?.window?.clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE)
                         binding.rvRecord.visibility = View.VISIBLE
                         binding.progressBar.visibility = View.GONE
                     }
