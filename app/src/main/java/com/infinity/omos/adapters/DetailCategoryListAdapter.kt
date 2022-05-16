@@ -132,7 +132,6 @@ class DetailCategoryListAdapter internal constructor(
                 }
             }
 
-            Log.d("jaemin", num.toString()+" "+heartStarList.size)
             if (num >= heartStarList.size){
                 heartStarList.add(num, LikeScrap(category.isLiked, category.isScraped, category.likeCnt, category.scrapCnt))
             }

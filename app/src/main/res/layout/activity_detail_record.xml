@@ -113,6 +113,7 @@
                         android:layout_height="wrap_content"
                         android:paddingHorizontal="16dp"
                         android:paddingVertical="8dp"
+                        android:background="#661A1A1A"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -191,44 +192,50 @@
                     android:background="@color/deep_dark"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <ScrollView
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:orientation="vertical">
+                        android:layout_weight="1">
 
-                        <TextView
-                            android:id="@+id/tv_record_contents"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginBottom="30dp"
-                            android:maxLength="794"
-                            android:paddingHorizontal="16dp"
-                            android:paddingVertical="16dp"
-                            android:text="@{data.recordContents}"
-                            android:textColor="@color/gray_02"
-                            android:textSize="16sp"
-                            android:visibility="gone" />
-
-                        <TextView
-                            android:id="@+id/tv_aline_contents"
-                            android:layout_width="wrap_content"
-                            android:layout_height="228dp"
-                            android:layout_gravity="center"
-                            android:fontFamily="@font/cafe24oneprettynight"
-                            android:gravity="center"
-                            android:paddingHorizontal="40dp"
-                            android:textColor="@color/gray_02"
-                            android:textSize="24sp"
-                            android:visibility="gone" />
-
-                        <androidx.recyclerview.widget.RecyclerView
-                            android:id="@+id/rv_lyrics"
+                        <LinearLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:visibility="gone" />
+                            android:layout_height="match_parent"
+                            android:orientation="vertical">
 
-                    </LinearLayout>
+                            <TextView
+                                android:id="@+id/tv_record_contents"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="30dp"
+                                android:maxLength="794"
+                                android:paddingHorizontal="16dp"
+                                android:paddingVertical="16dp"
+                                android:text="@{data.recordContents}"
+                                android:textColor="@color/gray_02"
+                                android:textSize="16sp"
+                                android:visibility="gone"/>
+
+                            <TextView
+                                android:id="@+id/tv_aline_contents"
+                                android:layout_width="match_parent"
+                                android:layout_height="228dp"
+                                android:layout_gravity="center"
+                                android:fontFamily="@font/cafe24oneprettynight"
+                                android:gravity="center"
+                                android:paddingHorizontal="40dp"
+                                android:textColor="@color/gray_02"
+                                android:textSize="24sp"
+                                android:visibility="gone" />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/rv_lyrics"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:visibility="gone" />
+
+                        </LinearLayout>
+
+                    </ScrollView>
 
                     <View
                         android:layout_width="match_parent"

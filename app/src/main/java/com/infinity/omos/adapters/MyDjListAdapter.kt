@@ -1,6 +1,7 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,15 +56,16 @@ class MyDjListAdapter internal constructor(context: Context):
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
+            Log.d("jaemin", num.toString()+" "+isChecked.size)
             if (num >= isChecked.size){
                 isChecked.add(num, false)
-
-                Glide.with(binding.imgAlbumCover.context)
-                    .load(dj.profileUrl)
-                    .error(R.drawable.ic_profile)
-                    .fallback(R.drawable.ic_profile)
-                    .into(binding.imgAlbumCover)
             }
+
+            Glide.with(binding.imgAlbumCover.context)
+                .load(dj.profileUrl)
+                .error(R.drawable.ic_profile)
+                .fallback(R.drawable.ic_profile)
+                .into(binding.imgAlbumCover)
 
             if (isChecked[num]){
                 binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.orange)
