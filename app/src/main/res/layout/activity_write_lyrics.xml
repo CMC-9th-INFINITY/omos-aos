@@ -286,7 +286,7 @@
                             android:id="@+id/tv_limit_contents"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="/380자"
+                            android:text="/1100자"
                             android:textSize="12sp"
                             android:textColor="@color/light_gray"/>
 

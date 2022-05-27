@@ -89,7 +89,7 @@
                 android:textColorHint="@color/gray_07"
                 android:textSize="16sp"
                 android:textColor="@color/white"
-                android:maxLength="250"
+                android:maxLength="1100"
                 android:background="@color/deep_dark"/>
 
             <View
@@ -132,7 +132,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="/250자"
+                        android:text="/1100자"
                         android:textSize="12sp"
                         android:textColor="@color/light_gray"/>
 
