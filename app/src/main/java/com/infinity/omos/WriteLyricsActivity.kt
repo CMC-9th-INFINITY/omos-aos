@@ -283,6 +283,8 @@ class WriteLyricsActivity : AppCompatActivity() {
                 recordContents = mAdapter.getContents()
                 if (recordContents == "" || recordTitle == ""){
                     Toast.makeText(this, "제목 또는 내용을 기입하세요.", Toast.LENGTH_SHORT).show()
+                } else if(mAdapter.getTextLength() > 1100) {
+                    Toast.makeText(this, "글자수가 초과되었습니다.", Toast.LENGTH_SHORT).show()
                 } else{
                     category = GlobalFunction.categoryKrToEng(this, category)
 

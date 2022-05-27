@@ -152,6 +152,8 @@ class LyricsListAdapter internal constructor(context: Context) :
         notifyDataSetChanged()
     }
 
+    internal fun getTextLength(): Int = textLength
+
     internal fun getContents(): String {
         var result = ""
         for (i in 0 until interpret.size) {
