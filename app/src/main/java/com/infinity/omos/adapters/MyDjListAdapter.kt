@@ -56,7 +56,6 @@ class MyDjListAdapter internal constructor(context: Context):
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
-            Log.d("jaemin", num.toString()+" "+isChecked.size)
             if (num >= isChecked.size){
                 isChecked.add(num, false)
             }
@@ -95,7 +94,9 @@ class MyDjListAdapter internal constructor(context: Context):
 
     internal fun setDj(dj: List<Profile>){
         // 초기화
-        isChecked = ArrayList()
+        for(i in isChecked.indices){
+            isChecked[i] = false
+        }
         prevChecked = 0
 
         myDj.clear()
