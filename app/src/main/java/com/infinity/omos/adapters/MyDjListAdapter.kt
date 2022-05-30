@@ -1,6 +1,7 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -67,9 +68,13 @@ class MyDjListAdapter internal constructor(context: Context):
                 .into(binding.imgAlbumCover)
 
             if (isChecked[num]){
-                binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.orange)
+                binding.imgAlbumCover.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,
+                    R.color.orange
+                ))
             } else{
-                binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.dark)
+                binding.imgAlbumCover.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,
+                    R.color.dark
+                ))
             }
 
             val pos = adapterPosition
