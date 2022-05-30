@@ -9,13 +9,6 @@
             android:thicknessRatio="2"
             android:useLevel="false" >
 
-            <gradient
-                android:angle="90"
-                android:endColor="#ED9630"
-                android:centerColor="#EC612B"
-                android:startColor="#EA4325"
-                android:centerY="0.6"/>
-
         </shape>
 
     </item>
@@ -41,8 +34,3 @@
     </item>
 
 </layer-list>
-
-
-
-
-

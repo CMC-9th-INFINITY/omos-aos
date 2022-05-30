@@ -68,13 +68,9 @@ class MyDjListAdapter internal constructor(context: Context):
                 .into(binding.imgAlbumCover)
 
             if (isChecked[num]){
-                binding.imgAlbumCover.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,
-                    R.color.orange
-                ))
+                binding.imgAlbumCover.background = ContextCompat.getDrawable(context, R.drawable.border)
             } else{
-                binding.imgAlbumCover.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(context,
-                    R.color.dark
-                ))
+                binding.imgAlbumCover.background = ContextCompat.getDrawable(context, R.drawable.no_border)
             }
 
             val pos = adapterPosition
