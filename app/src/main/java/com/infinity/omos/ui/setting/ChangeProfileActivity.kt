@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
 import com.infinity.omos.data.Profile
@@ -75,6 +76,8 @@ class ChangeProfileActivity : AppCompatActivity() {
                                 .load(R.drawable.ic_profile)
                                 .error(R.drawable.ic_profile)
                                 .fallback(R.drawable.ic_profile)
+                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
                                 .into(binding.imgProfile)
                         }
                     }
