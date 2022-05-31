@@ -197,8 +197,19 @@ class MyRecordListAdapter internal constructor(context: Context):
         isDj = true
         record.clear()
         recordAll.clear()
-        recordAll.addAll(rec)
-        record.addAll(recordAll)
+
+        /** 현재 MY레코드 불러오기 API를 사용하므로,
+         *  비공개글은 보여주면 안됨
+         *  추후에 API 변경 시 수정 필요
+         */
+
+        for (i in rec){
+            if (i.isPublic == true){
+                record.add(i)
+                recordAll.add(i)
+            }
+        }
+
         notifyDataSetChanged()
     }
 
