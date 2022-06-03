@@ -3,7 +3,7 @@
 # <img src="doc/imgs/ic_launcher.png" width="24px"/> omos
 **음악 감상 아카이빙 & 공유앱**
 > 🏆 Central MakeUs Challenge 9th **대상**  
-> 기간 : 2022.01 ~ 2022.05  
+> 기간 : 2022.01 ~ 2022.04  
 > 인원 : 5명  
 > [Google PlayStore](https://play.google.com/store/apps/details?id=com.infinity.omos)
 
