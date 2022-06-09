@@ -113,6 +113,11 @@ class SettingActivity : AppCompatActivity() {
                 GlobalApplication.prefs.setString("alarm", "off")
             }
         }
+
+        binding.btnBlockId.setOnClickListener {
+            val intent = Intent(this, BlockingActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun initToolBar(){

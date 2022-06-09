@@ -78,6 +78,15 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/btn_block_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="28dp"
+                android:text="차단된 계정"
+                android:textSize="16sp"
+                android:textColor="@color/white"/>
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="2px"
