@@ -103,9 +103,12 @@
         <entry key="..\:/git/OMOS/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.152" />
         <entry key="..\:/git/OMOS/app/src/main/res/xml/path.xml" value="0.20520833333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_gradient.xml" value="0.1485" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/border.xml" value="0.162" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/border_orange_gradient.xml" value="0.162" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/circle_check_box.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/no_border.xml" value="0.162" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/rectangle_box.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_blocking.xml" value="0.2125" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_change_profile.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_detail_record.xml" value="0.2557291666666667" />
@@ -117,10 +120,12 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_setting.xml" value="0.5" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_write_lyrics.xml" value="0.2734375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_write_record.xml" value="0.2557291666666667" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_blocked_account.xml" value="0.48148148148148145" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_category_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_detail_category_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_mydj_item.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_myrecord_item.xml" value="0.2557291666666667" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/menu/appbar_action.xml" value="0.1" />
         <entry key="..\:/git/omos-aos/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/git/omos-aos/app/src/main/res/mipmap-anydpi-v26/ic_launcher_omos.xml" value="0.1" />
         <entry key="..\:/git/omos-aos/app/src/main/res/mipmap-anydpi-v26/ic_launcher_omos_round.xml" value="0.138" />
