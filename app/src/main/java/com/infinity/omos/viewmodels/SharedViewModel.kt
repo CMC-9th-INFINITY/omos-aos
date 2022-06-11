@@ -15,6 +15,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     private val myDjRepository: MyDjRepository = MyDjRepository()
     private val myPageRepository: MyPageRepository = MyPageRepository()
     private val recordRepository: RecordRepository = RecordRepository()
+    private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
     // Today
     // 인기있는 레코드
@@ -155,5 +156,12 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
 
     fun deleteScrap(postId: Int, userId: Int){
         recordRepository.deleteScrap(postId, userId)
+    }
+
+    fun reportObject(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){
+        reportRepository.reportObject(fromUserId, recordId, reportReason, toUserId, type)
+    }
+    fun getStateReportRecord(): LiveData<ResultState>{
+        return reportRepository.stateReportObject
     }
 }

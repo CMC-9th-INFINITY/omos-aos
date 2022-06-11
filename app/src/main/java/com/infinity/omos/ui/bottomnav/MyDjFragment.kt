@@ -5,8 +5,12 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
+import android.os.Message
 import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -17,6 +21,7 @@ import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
 import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.etc.Constant
+import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
@@ -37,6 +42,7 @@ class MyDjFragment : Fragment() {
     private var tmpUserId = -1
     private lateinit var mAdapter: MyDjListAdapter
     private lateinit var rAdapter: DetailCategoryListAdapter
+    private lateinit var dlg: CustomDialog
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,10 +66,52 @@ class MyDjFragment : Fragment() {
             layoutManager = LinearLayoutManager(activity).also { it.orientation = LinearLayoutManager.HORIZONTAL }
         }
 
+        dlg = CustomDialog(requireContext())
+
         rAdapter = DetailCategoryListAdapter(requireContext())
         binding.rvRecord.apply {
             adapter = rAdapter
             layoutManager = LinearLayoutManager(activity)
+        }
+
+        rAdapter.setItemClickListener(object: DetailCategoryListAdapter.OnItemClickListener{
+            override fun onClick(v: View, position: Int, postId: Int) {
+                val dlg = CustomDialog(context!!)
+                dlg.show("이 레코드를 신고하시겠어요?", "신고")
+
+                dlg.setOnOkClickedListener { content ->
+                    when(content){
+                        "yes" -> {
+                            viewModel.reportObject(fromUserId, postId, null, null, "Record")
+                            showProgress()
+                        }
+                    }
+                }
+            }
+        })
+
+        viewModel.getStateReportRecord().observe(viewLifecycleOwner) { state ->
+            state?.let {
+                dismissProgress()
+                if (it.state) {
+                    val intent = Intent("RECORD_UPDATE")
+                    intent.putExtra("isDelete", true)
+                    intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
+                    requireContext().sendBroadcast(intent)
+
+                    if (tmpUserId == -1){
+                        setFirst()
+                    } else {
+                        isFirst = false
+                        viewModel.setMyDjRecord(fromUserId, tmpUserId)
+                    }
+                    binding.rvRecord.scrollToPosition(0)
+
+                    Toast.makeText(context, "신고가 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(context, "실패", Toast.LENGTH_SHORT).show()
+                }
+            }
         }
 
         viewModel.setMyDj(fromUserId)
@@ -216,6 +264,24 @@ class MyDjFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    private fun showProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.showProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
+    }
+
+    private fun dismissProgress(){
+        val handler: Handler = object: Handler(Looper.getMainLooper()) {
+            override fun handleMessage(msg: Message) {
+                dlg.dismissProgress()
+            }
+        }
+        handler.obtainMessage().sendToTarget()
     }
 
     private fun setFirst(){
