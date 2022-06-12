@@ -40,11 +40,16 @@ class AllRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_all_records, container, false)
-        activity?.let {
-            viewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
-            binding.vm = viewModel
-            binding.lifecycleOwner = this
+        binding = DataBindingUtil.inflate<FragmentAllRecordsBinding?>(inflater,
+            R.layout.fragment_all_records,
+            container,
+            false
+        ).apply {
+            activity?.let {
+                viewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
+                vm = viewModel
+                lifecycleOwner = this@AllRecordFragment
+            }
         }
 
         return binding.root

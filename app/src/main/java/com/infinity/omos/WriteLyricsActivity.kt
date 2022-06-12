@@ -101,9 +101,9 @@ class WriteLyricsActivity : AppCompatActivity() {
         }
 
         var interpret = intent.getStringExtra("interpret")
-        if (interpret != null){
-            mAdapter.setInterpret(changeList(interpret))
-            val text = interpret.replace("\n", "")
+        interpret?.let {
+            mAdapter.setInterpret(changeList(it))
+            val text = it.replace("\n", "")
             binding.tvContentsCount.text = text.length.toString()
         }
 
@@ -115,14 +115,12 @@ class WriteLyricsActivity : AppCompatActivity() {
 
         viewModel.isPublic.observe(this) { state ->
             state?.let {
-                state?.let {
-                    isPublic = if (it){
-                        binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
-                        true
-                    } else{
-                        binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
-                        false
-                    }
+                isPublic = if (it){
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                    true
+                } else{
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                    false
                 }
             }
         }

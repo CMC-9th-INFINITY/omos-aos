@@ -18,10 +18,11 @@
         android:paddingHorizontal="16dp"
         tools:background="@color/dark">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="46dp"
             android:layout_height="46dp"
-            android:src="@drawable/ic_profile"/>
+            app:profileImageUrl="@{dj.profileUrl}"
+            tools:src="@drawable/ic_profile"/>
 
         <TextView
             android:id="@+id/tv_nick"

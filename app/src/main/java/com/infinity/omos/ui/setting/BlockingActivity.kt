@@ -6,6 +6,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
+import com.infinity.omos.adapters.BlockedListAdapter
 import com.infinity.omos.databinding.ActivityBlockingBinding
 import com.infinity.omos.databinding.ActivityMyScrapRecordBinding
 import com.infinity.omos.viewmodels.MyScrapRecordViewModel
@@ -19,6 +20,14 @@ class BlockingActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_blocking)
         initToolBar()
+
+        val adapter = BlockedListAdapter()
+        binding.recyclerView.adapter = adapter
+
+    }
+
+    private fun subscribeUi(adapter: BlockedListAdapter) {
+
     }
 
     private fun initToolBar(){
