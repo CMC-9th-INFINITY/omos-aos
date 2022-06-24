@@ -5,9 +5,11 @@
 
     <data>
         <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
             name="dj"
             type="com.infinity.omos.data.Profile" />
-
     </data>
 
     <LinearLayout
@@ -39,10 +41,12 @@
             tools:text="닉네임이들어갑니다열두글자"/>
 
         <Button
+            android:id="@+id/btn_block"
             android:layout_width="80dp"
             android:layout_height="30dp"
             android:layout_marginStart="17dp"
             android:layout_gravity="center"
+            android:onClick="@{clickListener}"
             android:text="차단 해제"
             android:textColor="@color/gray_04"
             android:background="@drawable/button_pressed"/>

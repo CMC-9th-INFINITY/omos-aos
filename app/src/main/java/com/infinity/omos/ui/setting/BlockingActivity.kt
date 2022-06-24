@@ -23,7 +23,7 @@ import kotlinx.coroutines.launch
 class BlockingActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityBlockingBinding
-    private val adapter = BlockedListAdapter()
+    private val adapter = BlockedListAdapter(this)
     private val userId = GlobalApplication.prefs.getInt("userId")
     private val viewModel: BlockedViewModel by viewModels()
 
