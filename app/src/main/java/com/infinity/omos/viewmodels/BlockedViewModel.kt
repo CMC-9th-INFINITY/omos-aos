@@ -1,7 +1,18 @@
 package com.infinity.omos.viewmodels
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
+import com.infinity.omos.data.Profile
+import com.infinity.omos.repository.BlockedRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import javax.inject.Inject
 
-class BlockedViewModel(application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class BlockedViewModel @Inject internal constructor(
+    private val repository: BlockedRepository
+) : ViewModel() {
+
+    fun getBlockedUsers(userId: Int): Flow<List<Profile>> {
+        return repository.getBlockedResult(userId)
+    }
 }
