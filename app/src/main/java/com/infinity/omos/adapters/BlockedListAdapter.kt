@@ -2,16 +2,31 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.activity.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.Profile
+import com.infinity.omos.data.UserId
 import com.infinity.omos.databinding.ListBlockedAccountBinding
 import com.infinity.omos.utils.CustomDialog
+import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.viewmodels.BlockedViewModel
 
-class BlockedListAdapter internal constructor(private val context: Context) :
-    ListAdapter<Profile, RecyclerView.ViewHolder>(BlockedDiffCallback()){
+class BlockedListAdapter : ListAdapter<Profile, RecyclerView.ViewHolder>(BlockedDiffCallback()){
+
+    private lateinit var itemClickListener: OnItemClickListener
+
+    interface OnItemClickListener{
+        fun onClick(dj: Profile)
+    }
+
+    fun setItemClickListener(onItemClickListener: OnItemClickListener){
+        this.itemClickListener = onItemClickListener
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return BlockedViewHolder(
             ListBlockedAccountBinding.inflate(
@@ -34,20 +49,7 @@ class BlockedListAdapter internal constructor(private val context: Context) :
         init {
             binding.setClickListener {
                 binding.dj?.let { dj ->
-                    showDialog(dj.nickname)
-                }
-            }
-        }
-
-        private fun showDialog(name: String){
-            val dlg = CustomDialog(context)
-            dlg.show("${name}님을 차단 해제하시겠어요?", "차단 해제")
-
-            dlg.setOnOkClickedListener { content ->
-                when(content){
-                    "yes" -> {
-
-                    }
+                    itemClickListener.onClick(dj)
                 }
             }
         }
