@@ -104,11 +104,17 @@
         <entry key="..\:/git/OMOS/app/src/main/res/xml/path.xml" value="0.20520833333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_gradient.xml" value="0.1485" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.153" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_rounded_rectangle_deep_dark.xml" value="0.1525" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/border.xml" value="0.162" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/border_orange_gradient.xml" value="0.162" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/btn_blocking.xml" value="0.16799999999999998" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/btn_unblocking.xml" value="0.1515" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/button_pressed.xml" value="0.1515" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/circle_check_box.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/no_border.xml" value="0.162" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/rectangle_box.xml" value="0.153" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/toggle_off.xml" value="0.1525" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/toggle_selector.xml" value="0.1525" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_blocking.xml" value="0.2125" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_change_profile.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_detail_record.xml" value="0.2557291666666667" />

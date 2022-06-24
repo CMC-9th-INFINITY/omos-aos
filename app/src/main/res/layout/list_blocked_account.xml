@@ -39,10 +39,13 @@
             tools:text="닉네임이들어갑니다열두글자"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
             android:layout_marginStart="17dp"
-            android:text="차단 해제"/>
+            android:layout_gravity="center"
+            android:text="차단 해제"
+            android:textColor="@color/gray_04"
+            android:background="@drawable/button_pressed"/>
 
     </LinearLayout>
 
