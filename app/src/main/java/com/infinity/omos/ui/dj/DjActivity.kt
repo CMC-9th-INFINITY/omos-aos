@@ -54,6 +54,16 @@ class DjActivity : AppCompatActivity() {
 
         initToolBar()
 
+        binding.djFollower.setOnClickListener {
+            val intent = Intent(this, FollowActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.djFollowing.setOnClickListener {
+            val intent = Intent(this, FollowActivity::class.java)
+            startActivity(intent)
+        }
+
         val mAdapter = MyRecordListAdapter(this)
         binding.rvRecord.apply{
             adapter = mAdapter

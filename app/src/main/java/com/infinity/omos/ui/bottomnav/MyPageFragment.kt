@@ -17,6 +17,7 @@ import com.infinity.omos.MyScrapRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.ui.dj.FollowActivity
 import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
@@ -55,6 +56,16 @@ class MyPageFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.djFollower.setOnClickListener {
+            val intent = Intent(context, FollowActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.djFollowing.setOnClickListener {
+            val intent = Intent(context, FollowActivity::class.java)
+            startActivity(intent)
+        }
 
         viewModel.setDjProfile(userId, userId)
         viewModel.getDjProfile().observe(this) { profile ->
