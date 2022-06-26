@@ -105,6 +105,7 @@ class MusicFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }

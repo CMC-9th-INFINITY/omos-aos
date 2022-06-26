@@ -167,6 +167,7 @@ class AllFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }

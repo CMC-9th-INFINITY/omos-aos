@@ -143,6 +143,7 @@ class MyDjFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }
@@ -184,6 +185,7 @@ class MyDjFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }
@@ -214,6 +216,7 @@ class MyDjFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }

@@ -129,6 +129,7 @@ class TodayFragment : Fragment() {
                         binding.lnNodj.visibility = View.VISIBLE
                         binding.rvDj.visibility = View.GONE
                     }
+                    else -> {}
                 }
             }
         }
@@ -160,6 +161,7 @@ class TodayFragment : Fragment() {
                         binding.lnNorecord.visibility = View.VISIBLE
                         binding.fmLovedMusic.visibility = View.GONE
                     }
+                    else -> {}
                 }
             }
         }

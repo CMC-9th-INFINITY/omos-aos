@@ -108,6 +108,7 @@ class AlbumFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         })

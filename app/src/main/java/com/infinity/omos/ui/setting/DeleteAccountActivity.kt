@@ -49,6 +49,7 @@ class DeleteAccountActivity : AppCompatActivity() {
                     Constant.ApiState.ERROR -> {
                         Toast.makeText(this, "다시 시도해주세요.", Toast.LENGTH_SHORT).show()
                     }
+                    else -> {}
                 }
             }
         }

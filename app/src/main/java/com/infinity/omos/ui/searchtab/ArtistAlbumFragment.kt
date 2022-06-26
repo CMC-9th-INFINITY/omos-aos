@@ -90,6 +90,7 @@ class ArtistAlbumFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         })

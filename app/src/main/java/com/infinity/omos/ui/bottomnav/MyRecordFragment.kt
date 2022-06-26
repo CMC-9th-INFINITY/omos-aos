@@ -86,6 +86,7 @@ class MyRecordFragment : Fragment() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }

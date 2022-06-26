@@ -101,6 +101,7 @@ class DjActivity : AppCompatActivity() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }
@@ -113,6 +114,7 @@ class DjActivity : AppCompatActivity() {
                         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent)
                     }
+                    else -> {}
                 }
             }
         }
@@ -125,6 +127,7 @@ class DjActivity : AppCompatActivity() {
                         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent)
                     }
+                    else -> {}
                 }
             }
         }

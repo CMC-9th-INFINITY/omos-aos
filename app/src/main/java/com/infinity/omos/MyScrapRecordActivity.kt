@@ -70,6 +70,7 @@ class MyScrapRecordActivity : AppCompatActivity() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }

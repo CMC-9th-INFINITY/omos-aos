@@ -72,6 +72,7 @@ class MyLikeRecordActivity : AppCompatActivity() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         }

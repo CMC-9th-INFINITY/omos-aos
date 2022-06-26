@@ -17,6 +17,9 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".FollowActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.setting.BlockingActivity"
             android:exported="false" />
 

@@ -76,6 +76,7 @@ class AlbumActivity : AppCompatActivity() {
                     Constant.ApiState.ERROR -> {
 
                     }
+                    else -> {}
                 }
             }
         })
