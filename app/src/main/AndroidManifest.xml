@@ -17,7 +17,7 @@
         android:theme="@style/Theme.OMOS"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".FollowActivity"
+            android:name=".ui.dj.FollowActivity"
             android:exported="false" />
         <activity
             android:name=".ui.setting.BlockingActivity"
@@ -88,7 +88,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".DjActivity"
+            android:name=".ui.dj.DjActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/StatusBarStyle" />

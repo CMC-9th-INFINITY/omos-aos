@@ -1,7 +1,8 @@
-package com.infinity.omos
+package com.infinity.omos.ui.dj
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.infinity.omos.R
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

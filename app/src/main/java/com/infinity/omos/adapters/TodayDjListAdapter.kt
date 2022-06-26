@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.infinity.omos.DjActivity
+import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ListMydjItemBinding

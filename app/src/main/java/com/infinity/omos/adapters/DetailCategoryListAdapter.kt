@@ -2,7 +2,6 @@ package com.infinity.omos.adapters
 
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,7 +10,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.DjActivity
+import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.LikeScrap
 import com.infinity.omos.data.Record
