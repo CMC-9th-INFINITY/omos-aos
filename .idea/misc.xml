@@ -109,6 +109,7 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/border_orange_gradient.xml" value="0.162" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/btn_blocking.xml" value="0.16799999999999998" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/btn_unblocking.xml" value="0.1515" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/button_follow.xml" value="0.191" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/button_pressed.xml" value="0.1515" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/circle_check_box.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/no_border.xml" value="0.162" />
@@ -131,6 +132,8 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_blocked_account.xml" value="0.33" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_category_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_detail_category_item.xml" value="0.2557291666666667" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_follower_item.xml" value="0.25364583333333335" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_following_item.xml" value="0.25364583333333335" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_mydj_item.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_myrecord_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/menu/appbar_action.xml" value="0.1" />

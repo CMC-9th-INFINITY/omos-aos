@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="clickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="dj"
+            type="com.infinity.omos.data.Profile" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="12dp"
+        android:paddingHorizontal="16dp"
+        tools:background="@color/dark">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            app:profileImageUrl="@{dj.profileUrl}"
+            tools:src="@drawable/ic_profile"/>
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="8dp"
+            android:layout_gravity="center"
+            android:text="@{dj.nickname}"
+            android:textSize="12sp"
+            android:textColor="@color/white"
+            android:maxLines="1"
+            android:ellipsize="end"
+            tools:text="닉네임이들어갑니다열두글자"/>
+
+        <Button
+            android:id="@+id/btn_delete"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="17dp"
+            android:layout_gravity="center"
+            android:onClick="@{clickListener}"
+            android:text="삭제"
+            android:textColor="@color/gray_04"
+            android:background="@drawable/button_pressed"/>
+
+    </LinearLayout>
+
+</layout>
