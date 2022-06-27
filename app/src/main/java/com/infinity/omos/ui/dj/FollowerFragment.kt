@@ -17,10 +17,9 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class FollowerFragment : Fragment(){
+class FollowerFragment(private val userId: Int) : Fragment(){
 
     private val viewModel: FollowerViewModel by viewModels()
-    private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreateView(
         inflater: LayoutInflater,

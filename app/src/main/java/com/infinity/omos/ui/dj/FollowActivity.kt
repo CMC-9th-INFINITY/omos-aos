@@ -2,6 +2,7 @@ package com.infinity.omos.ui.dj
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.MenuItem
 import androidx.databinding.DataBindingUtil
 import com.google.android.material.tabs.TabLayoutMediator
 import com.infinity.omos.R
@@ -20,9 +21,11 @@ class FollowActivity : AppCompatActivity() {
         val tabLayout = binding.tabs
         val viewPager = binding.viewPager
 
+        val userId = intent.getIntExtra("userId", -1)
+
         initToolBar()
 
-        viewPager.adapter = FollowPagerAdapter(this)
+        viewPager.adapter = FollowPagerAdapter(this, userId)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getTabTitle(position)
@@ -42,5 +45,15 @@ class FollowActivity : AppCompatActivity() {
         setSupportActionBar(toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            android.R.id.home -> {
+                finish()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

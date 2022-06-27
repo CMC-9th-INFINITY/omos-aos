@@ -56,11 +56,13 @@ class DjActivity : AppCompatActivity() {
 
         binding.djFollower.setOnClickListener {
             val intent = Intent(this, FollowActivity::class.java)
+            intent.putExtra("userId", toUserId)
             startActivity(intent)
         }
 
         binding.djFollowing.setOnClickListener {
             val intent = Intent(this, FollowActivity::class.java)
+            intent.putExtra("userId", toUserId)
             startActivity(intent)
         }
 
