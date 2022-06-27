@@ -11,6 +11,16 @@ import retrofit2.http.Path
 
 interface FollowService {
 
+    @GET("api/follow/select/{userId}/follower")
+    suspend fun getFollower(
+        @Path("userId") userId: Int
+    ): List<Profile>
+
+    @GET("api/follow/select/{userId}/following")
+    suspend fun getFollowing(
+        @Path("userId") userId: Int
+    ): List<Profile>
+
     @DELETE("api/follow/delete/{fromUserId}/{toUserId}")
     fun deleteFollow(
         @Path("fromUserId") fromUserId: Int,
