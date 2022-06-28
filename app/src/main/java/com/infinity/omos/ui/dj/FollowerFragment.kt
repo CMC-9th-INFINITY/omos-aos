@@ -7,11 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
-import com.infinity.omos.R
 import com.infinity.omos.adapters.FollowerListAdapter
 import com.infinity.omos.databinding.FragmentFollowerBinding
-import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.viewmodels.FollowerViewModel
+import com.infinity.omos.viewmodels.FollowViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
@@ -19,7 +17,7 @@ import kotlinx.coroutines.launch
 @AndroidEntryPoint
 class FollowerFragment(private val userId: Int) : Fragment(){
 
-    private val viewModel: FollowerViewModel by viewModels()
+    private val viewModel: FollowViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
