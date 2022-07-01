@@ -3,6 +3,7 @@ package com.infinity.omos.di
 import com.infinity.omos.api.BlockService
 import com.infinity.omos.api.FollowService
 import com.infinity.omos.api.RetrofitAPI
+import com.infinity.omos.api.UserService
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,5 +24,11 @@ class NetworkModule {
     @Provides
     fun provideFollowService(): FollowService {
         return RetrofitAPI.getInstnace().create(FollowService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideUserService(): UserService {
+        return RetrofitAPI.getInstnace().create(UserService::class.java)
     }
 }
