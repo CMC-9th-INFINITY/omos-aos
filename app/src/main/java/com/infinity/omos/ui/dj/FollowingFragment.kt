@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.infinity.omos.R
 import com.infinity.omos.adapters.FollowingListAdapter
+import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.FragmentFollowingBinding
 import com.infinity.omos.viewmodels.FollowViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,6 +33,13 @@ class FollowingFragment(private val userId: Int): Fragment() {
         lifecycleScope.launch {
             subscribeUi(adapter)
         }
+
+        adapter.setItemClickListener(object: FollowingListAdapter.OnItemClickListener {
+            override fun onClick(dj: Profile) {
+                // TODO: 팔로우, 팔로잉 클릭 시 버튼 변하기 and API 연동
+            }
+        })
+
         return binding.root
     }
 
