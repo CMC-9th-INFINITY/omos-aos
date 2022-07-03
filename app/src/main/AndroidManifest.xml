@@ -18,7 +18,8 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".ui.dj.FollowActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/StatusBarStyle"/>
         <activity
             android:name=".ui.setting.BlockingActivity"
             android:exported="false" />

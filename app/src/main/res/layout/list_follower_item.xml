@@ -18,7 +18,7 @@
         android:orientation="horizontal"
         android:paddingVertical="6dp"
         android:paddingHorizontal="16dp"
-        tools:background="@color/dark">
+        tools:background="@color/deep_dark">
 
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_width="46dp"

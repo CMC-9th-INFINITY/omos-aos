@@ -123,10 +123,13 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_setting.xml" value="0.5" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_write_lyrics.xml" value="0.2734375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_write_record.xml" value="0.2557291666666667" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_follower.xml" value="0.22708333333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_following.xml" value="0.22916666666666666" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_my_page.xml" value="0.22708333333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_blocked_account.xml" value="0.33" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_category_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_detail_category_item.xml" value="0.2557291666666667" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_follower_item.xml" value="0.22708333333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_following_item.xml" value="0.22916666666666666" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_mydj_item.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_myrecord_item.xml" value="0.2557291666666667" />
