@@ -31,6 +31,7 @@ class FollowActivity : AppCompatActivity() {
         val viewPager = binding.viewPager
 
         val userId = intent.getIntExtra("userId", -1)
+        val currentItemPosition = intent.getIntExtra("followState", 0)
 
         lifecycleScope.launch {
             viewModel.getUserProfile(userId).collectLatest {
@@ -39,6 +40,7 @@ class FollowActivity : AppCompatActivity() {
         }
 
         viewPager.adapter = FollowPagerAdapter(this, userId)
+        viewPager.currentItem = currentItemPosition
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = getTabTitle(position)
