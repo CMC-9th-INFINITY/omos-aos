@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.dj
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -35,6 +36,14 @@ class FollowingFragment(private val userId: Int): Fragment() {
         }
 
         adapter.setItemClickListener(object: FollowingListAdapter.OnItemClickListener {
+            override fun onClick(dj: Profile) {
+                val intent = Intent(context, DjActivity::class.java)
+                intent.putExtra("toUserId", dj.userId)
+                startActivity(intent)
+            }
+        })
+
+        adapter.setButtonClickListener(object: FollowingListAdapter.OnItemClickListener {
             override fun onClick(dj: Profile) {
                 // TODO: 팔로우, 팔로잉 클릭 시 버튼 변하기 and API 연동
             }
