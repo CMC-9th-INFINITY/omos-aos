@@ -61,12 +61,14 @@ class MyPageFragment : Fragment() {
         binding.djFollower.setOnClickListener {
             val intent = Intent(context, FollowActivity::class.java)
             intent.putExtra("userId", userId)
+            intent.putExtra("followState", 0)
             startActivity(intent)
         }
 
         binding.djFollowing.setOnClickListener {
             val intent = Intent(context, FollowActivity::class.java)
             intent.putExtra("userId", userId)
+            intent.putExtra("followState", 1)
             startActivity(intent)
         }
 
