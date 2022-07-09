@@ -5,7 +5,10 @@
 
     <data>
         <variable
-            name="clickListener"
+            name="buttonClickListener"
+            type="android.view.View.OnClickListener" />
+        <variable
+            name="itemClickListener"
             type="android.view.View.OnClickListener" />
         <variable
             name="dj"
@@ -18,6 +21,7 @@
         android:orientation="horizontal"
         android:paddingVertical="6dp"
         android:paddingHorizontal="16dp"
+        android:onClick="@{itemClickListener}"
         tools:background="@color/deep_dark">
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -46,7 +50,7 @@
             android:layout_height="30dp"
             android:layout_marginStart="17dp"
             android:layout_gravity="center"
-            android:onClick="@{clickListener}"
+            android:onClick="@{buttonClickListener}"
             android:text="삭제"
             android:textColor="@color/gray_04"
             android:background="@drawable/button_pressed"
