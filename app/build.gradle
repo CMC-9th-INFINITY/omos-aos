@@ -11,14 +11,14 @@ Properties properties = new Properties()
 properties.load(project.rootProject.file('local.properties').newDataInputStream())
 
 android {
-    compileSdk 32
+    compileSdk rootProject.compileSdkVersion
 
     defaultConfig {
         applicationId "com.infinity.omos"
-        minSdk 21
-        targetSdk 32
+        minSdk rootProject.minSdkVersion
+        targetSdk rootProject.targetSdkVersion
         versionCode 25
-        versionName "25.0"
+        versionName "1.1.0"
 
         buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
@@ -59,79 +59,69 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
-    testImplementation 'junit:junit:4.+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    implementation "androidx.core:core-ktx:$rootProject.coreKtxVersion"
+    implementation "androidx.appcompat:appcompat:$rootProject.appCompatVersion"
+    implementation "com.google.android.material:material:$rootProject.materialVersion"
+    implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
+    implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
+    testImplementation "junit:junit:$rootProject.junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
 
     //ViewModel
-    def ktxVersion = '1.4.0'
-    implementation "androidx.activity:activity-ktx:$ktxVersion"
-    implementation "androidx.fragment:fragment-ktx:$ktxVersion"
+    implementation "androidx.activity:activity-ktx:$rootProject.ktxVersion"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.ktxVersion"
 
     // Lifecycle components
-    def archLifecycleVersion = '2.2.0'
-    implementation "androidx.lifecycle:lifecycle-extensions:$archLifecycleVersion"
-    kapt "androidx.lifecycle:lifecycle-compiler:$archLifecycleVersion"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$archLifecycleVersion"
-
-    // BottomNavigation
-    implementation 'com.google.android.material:material:1.6.0-alpha02'
+    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.archLifecycleVersion"
+    kapt "androidx.lifecycle:lifecycle-compiler:$rootProject.archLifecycleVersion"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.archLifecycleVersion"
 
     // Retrofit
-    def retrofitVersion = '2.9.0'
-    implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
-    implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    implementation "com.squareup.retrofit2:converter-gson:$rootProject.retrofitVersion"
 
     // Glide
-    def glideVersion = '4.12.0'
-    implementation "com.github.bumptech.glide:glide:$glideVersion"
-    annotationProcessor "com.github.bumptech.glide:compiler:$glideVersion"
+    implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
+    annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
     // Kakao login
-    implementation "com.kakao.sdk:v2-user:2.8.5"
+    implementation "com.kakao.sdk:v2-user:$rootProject.kakaoLoginVersion"
 
     // Gson
-    implementation "com.google.code.gson:gson:2.8.7"
+    implementation "com.google.code.gson:gson:$rootProject.gsonVersion"
 
     // View Shaker
-    implementation 'com.daimajia.easing:library:2.0@aar'
-    implementation 'com.daimajia.androidanimations:library:2.3@aar'
+    implementation "com.daimajia.easing:library:$rootProject.easingVersion"
+    implementation "com.daimajia.androidanimations:library:$rootProject.animationsVersion"
 
     // Read More TextView
-    implementation 'kr.co.prnd:readmore-textview:1.0.0'
+    implementation "kr.co.prnd:readmore-textview:$rootProject.readMoreTextViewVersion"
 
     // Image Cropper
-    implementation 'com.theartofdev.edmodo:android-image-cropper:2.8.0'
-
-    // Tab Layout
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation "com.theartofdev.edmodo:android-image-cropper:$rootProject.imageCropperVersion"
 
     // CircleImageView
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation "de.hdodenhof:circleimageview:$rootProject.circleImageViewVersion"
 
     // s3
-    implementation 'com.amazonaws:aws-android-sdk-s3:2.43.0'
+    implementation "com.amazonaws:aws-android-sdk-s3:$rootProject.awsSdkVersion"
 
     // SwipeRefreshLayout
-    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:$rootProject.swipeRefreshVersion"
 
     // Play store core (in app update)
-    implementation 'com.google.android.play:core:1.10.3'
+    implementation "com.google.android.play:core:$rootProject.playCoreVersion"
 
     // FCM
-    implementation 'com.google.firebase:firebase-bom:29.3.0'
-    implementation 'com.google.firebase:firebase-messaging:23.0.2'
+    implementation "com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion"
+    implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
 
     // Coroutine
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.2"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.5.2"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$rootProject.coroutinesVersion"
 
     // Hilt
-    implementation "com.google.dagger:hilt-android:2.42"
-    kapt "com.google.dagger:hilt-android-compiler:2.42"
+    implementation "com.google.dagger:hilt-android:$rootProject.hiltVersion"
+    kapt "com.google.dagger:hilt-android-compiler:$rootProject.hiltVersion"
 }
