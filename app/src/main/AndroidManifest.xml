@@ -81,11 +81,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ArtistActivity"
+            android:name=".ui.search.DetailArtistActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AlbumActivity"
+            android:name=".ui.search.DetailAlbumActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
