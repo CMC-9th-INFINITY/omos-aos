@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.bottomnav
+package com.infinity.omos.ui.main
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -18,7 +18,6 @@ import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.dj.FollowActivity
-import com.infinity.omos.ui.dj.FollowerFragment
 import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
