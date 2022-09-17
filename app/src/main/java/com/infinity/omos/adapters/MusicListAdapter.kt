@@ -12,7 +12,7 @@ import com.infinity.omos.MainActivity.Companion.isWrite
 import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.ui.record.MusicRecordActivity
 import com.infinity.omos.R
-import com.infinity.omos.SelectCategoryActivity
+import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.data.Music
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.databinding.ListMusicItemBinding

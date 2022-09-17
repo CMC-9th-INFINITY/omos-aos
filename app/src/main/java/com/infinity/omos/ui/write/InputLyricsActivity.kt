@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.write
 
 import android.content.Intent
 import android.os.Bundle
@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
+import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityInputLyricsBinding
 import com.infinity.omos.utils.CustomDialog
 import kotlinx.android.synthetic.main.activity_register_nick.*

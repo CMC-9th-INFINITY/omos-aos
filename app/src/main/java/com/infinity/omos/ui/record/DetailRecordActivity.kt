@@ -19,8 +19,8 @@ import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
-import com.infinity.omos.WriteLyricsActivity
-import com.infinity.omos.WriteRecordActivity
+import com.infinity.omos.ui.write.WriteLyricsActivity
+import com.infinity.omos.ui.write.WriteRecordActivity
 import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.databinding.ActivityDetailRecordBinding
 import com.infinity.omos.etc.Constant

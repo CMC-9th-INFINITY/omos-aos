@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.R
-import com.infinity.omos.SelectCategoryActivity
+import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.adapters.CategoryListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding

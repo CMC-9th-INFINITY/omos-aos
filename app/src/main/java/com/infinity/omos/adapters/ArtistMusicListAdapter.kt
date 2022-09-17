@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity.Companion.isWrite
 import com.infinity.omos.ui.record.MusicRecordActivity
-import com.infinity.omos.SelectCategoryActivity
+import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.data.ArtistMusic
 import com.infinity.omos.databinding.ListArtistMusicItemBinding
 
