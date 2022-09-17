@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.searchtab
+package com.infinity.omos.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater

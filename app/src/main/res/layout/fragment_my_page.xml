@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/dark"
-            tools:context=".ui.bottomnav.MyPageFragment">
+            tools:context=".ui.main.MyPageFragment">
 
             <LinearLayout
                 android:id="@+id/ln_profile"

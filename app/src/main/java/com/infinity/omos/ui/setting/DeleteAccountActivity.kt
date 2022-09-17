@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.ui.bottomnav.MyPageFragment
+import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.utils.GlobalApplication

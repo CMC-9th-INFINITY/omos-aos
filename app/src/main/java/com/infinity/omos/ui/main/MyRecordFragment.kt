@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.bottomnav
+package com.infinity.omos.ui.main
 
 import android.content.BroadcastReceiver
 import android.content.Context

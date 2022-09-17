@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.searchtab
+package com.infinity.omos.ui.search
 
 import android.content.BroadcastReceiver
 import android.content.Context
