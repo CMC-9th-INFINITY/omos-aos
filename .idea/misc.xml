@@ -112,6 +112,7 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/rectangle_box.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_album.xml" value="0.22916666666666666" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_blocking.xml" value="0.2125" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_category.xml" value="0.2677083333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_change_profile.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_change_pw.xml" value="0.13451086956521738" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_detail_record.xml" value="0.2557291666666667" />
@@ -122,9 +123,11 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_main.xml" value="0.16530797101449277" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_my_like_record.xml" value="0.2734375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_my_scrap_record.xml" value="0.1634963768115942" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_search_music.xml" value="0.2677083333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_setting.xml" value="0.5" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_write_lyrics.xml" value="0.2734375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/activity_write_record.xml" value="0.2557291666666667" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_album.xml" value="0.2677083333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_follower.xml" value="0.22708333333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_following.xml" value="0.22916666666666666" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_my_page.xml" value="0.22708333333333333" />

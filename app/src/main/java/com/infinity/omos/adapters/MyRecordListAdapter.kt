@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.DetailRecordActivity
+import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.databinding.ListLoadingItemBinding

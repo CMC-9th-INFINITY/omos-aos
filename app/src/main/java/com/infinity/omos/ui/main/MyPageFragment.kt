@@ -11,9 +11,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.infinity.omos.DetailRecordActivity
-import com.infinity.omos.MyLikeRecordActivity
-import com.infinity.omos.MyScrapRecordActivity
+import com.infinity.omos.ui.record.DetailRecordActivity
+import com.infinity.omos.ui.record.MyLikeRecordActivity
+import com.infinity.omos.ui.record.MyScrapRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.etc.GlobalFunction

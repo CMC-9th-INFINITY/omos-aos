@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.CategoryActivity
+import com.infinity.omos.ui.record.CategoryRecordsActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.SumRecord
@@ -50,7 +50,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
             if (pos != RecyclerView.NO_POSITION){
                 itemView.btn_category.setOnClickListener {
                     if (content.category!!.isNotEmpty()){
-                        var intent = Intent(context, CategoryActivity::class.java)
+                        var intent = Intent(context, CategoryRecordsActivity::class.java)
                         intent.putExtra("category", content.title)
                         context.startActivity(intent)
                     } else {

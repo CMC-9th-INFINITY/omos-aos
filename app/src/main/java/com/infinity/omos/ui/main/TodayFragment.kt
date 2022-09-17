@@ -10,7 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.infinity.omos.DetailRecordActivity
+import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.SelectCategoryActivity
 import com.infinity.omos.adapters.CategoryListAdapter
