@@ -14,6 +14,7 @@ import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ListMydjItemBinding
+import com.infinity.omos.databinding.ListRecommendDjItemBinding
 
 class TodayDjListAdapter internal constructor(context: Context):
     ListAdapter<Profile, TodayDjListAdapter.ViewHolder>(
@@ -40,7 +41,7 @@ class TodayDjListAdapter internal constructor(context: Context):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = ListMydjItemBinding.inflate(inflater,parent,false)
+        var binding = ListRecommendDjItemBinding.inflate(inflater,parent,false)
         return ViewHolder(binding)
     }
 
@@ -49,7 +50,7 @@ class TodayDjListAdapter internal constructor(context: Context):
         holder.bind(dj)
     }
 
-    inner class ViewHolder(private val binding: ListMydjItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ListRecommendDjItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(dj: Profile) {
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩

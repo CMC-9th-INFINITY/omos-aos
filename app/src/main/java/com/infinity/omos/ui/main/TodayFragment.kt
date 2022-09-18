@@ -16,6 +16,7 @@ import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.adapters.CategoryListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
+import com.infinity.omos.databinding.FragmentTodayTestBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.GlobalApplication
@@ -25,7 +26,7 @@ import java.util.*
 class TodayFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
-    private lateinit var binding: FragmentTodayBinding
+    private lateinit var binding: FragmentTodayTestBinding
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -53,7 +54,7 @@ class TodayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today_test, container, false)
         activity?.let{
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
@@ -74,7 +75,6 @@ class TodayFragment : Fragment() {
             data?.let {
                 binding.today = it
                 this.artists = GlobalFunction.setArtist(it.artists)
-                binding.tvTodayArtist.text = this.artists
                 musicId = it.musicId
                 musicTitle = it.musicTitle
                 albumImageUrl = it.albumImageUrl
@@ -143,28 +143,6 @@ class TodayFragment : Fragment() {
             }
         }
 
-        viewModel.getStateLoveMusic().observe(viewLifecycleOwner) { state ->
-            state?.let {
-                when (it) {
-                    Constant.ApiState.LOADING -> {
-                        binding.fmLovedMusic.visibility = View.GONE
-                        binding.lnNorecord.visibility = View.VISIBLE
-                    }
-
-                    Constant.ApiState.DONE -> {
-                        binding.fmLovedMusic.visibility = View.VISIBLE
-                        binding.lnNorecord.visibility = View.GONE
-                    }
-
-                    Constant.ApiState.ERROR -> {
-                        binding.lnNorecord.visibility = View.VISIBLE
-                        binding.fmLovedMusic.visibility = View.GONE
-                    }
-                    else -> {}
-                }
-            }
-        }
-
         binding.btnTodayMusic.setOnClickListener {
             if (musicId != ""){
                 val intent = Intent(context, SelectCategoryActivity::class.java)
@@ -174,18 +152,6 @@ class TodayFragment : Fragment() {
                 intent.putExtra("albumImageUrl", albumImageUrl)
                 startActivity(intent)
             }
-        }
-
-        binding.fmLovedMusic.setOnClickListener {
-            if (recordId != -1){
-                val intent = Intent(context, DetailRecordActivity::class.java)
-                intent.putExtra("postId", recordId)
-                startActivity(intent)
-            }
-        }
-
-        binding.btnWriteMyrecord.setOnClickListener {
-            itemClickListener.onClick()
         }
     }
 

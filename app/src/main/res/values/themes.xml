@@ -3,6 +3,8 @@
     <style name="Theme.OMOS" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/main_orange</item>
         <item name="colorOnPrimary">@color/white</item>
+        <item name="colorSecondary">@color/white</item>
+        <item name="colorSecondaryVariant">@color/gray_04</item>
         <item name="android:colorBackground">@color/bg_black</item>
         <item name="android:statusBarColor">?android:colorBackground</item>
     </style>

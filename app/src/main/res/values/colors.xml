@@ -38,4 +38,7 @@
     <color name="black_02">#2C2C2E</color>
     <color name="black_03">#1A1A1A</color>
 
+    <color name="black_01_70">#B33A3A3C</color>
+    <color name="black_03_70">#B31A1A1A</color>
+
 </resources>

@@ -1,0 +1,367 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="vm"
+            type="com.infinity.omos.viewmodels.SharedViewModel" />
+
+        <variable
+            name="today"
+            type="com.infinity.omos.data.Music" />
+
+        <variable
+            name="love"
+            type="com.infinity.omos.data.LovedMusic" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.main.TodayFragment">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <FrameLayout
+                android:id="@+id/frame_top"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/img_main"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="?attr/actionBarSize"
+                    android:paddingHorizontal="16dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <ImageView
+                        android:id="@+id/iv_logo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_title_logo"
+                        android:paddingTop="13dp"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintEnd_toStartOf="@+id/iv_noti"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/iv_noti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:visibility="invisible"
+                        android:src="@drawable/ic_noti"
+                        android:paddingTop="12dp"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_logo"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tv_most_recorded"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="37dp"
+                        android:text="현재 OMOS DJ들이\n가장 많이 기록하고 있는,"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary"
+                        app:layout_constraintTop_toBottomOf="@+id/iv_logo"
+                        app:layout_constraintStart_toStartOf="parent"/>
+
+                    <TextView
+                        android:id="@+id/tv_omos_pick"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:text="OMOS' Pick"
+                        android:textSize="22sp"
+                        android:textColor="?attr/colorSecondary"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_most_recorded"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/btn_today_music"
+                        android:layout_width="78dp"
+                        android:layout_height="78dp"
+                        android:layout_marginTop="14dp"
+                        android:layout_marginBottom="22dp"
+                        app:imageUrl="@{today.albumImageUrl}"
+                        app:layout_constraintTop_toBottomOf="@+id/tv_omos_pick"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginBottom="31dp"
+                        android:orientation="vertical"
+                        app:layout_constraintStart_toEndOf="@+id/btn_today_music"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <ImageView
+                            android:layout_width="21dp"
+                            android:layout_height="21dp"
+                            android:layout_marginBottom="8dp"
+                            android:src="@drawable/ic_spotify"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:text="@{today.musicTitle}"
+                            android:textSize="16sp"
+                            android:textColor="?attr/colorSecondary"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            tools:text="노래제목이들어갑니다노래제목이들어갑니다"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@{today.albumTitle}"
+                            android:textSize="14sp"
+                            android:textColor="?attr/colorSecondaryVariant"
+                            android:maxLines="1"
+                            android:ellipsize="end"
+                            tools:text="가수이름이들어갑니다 - 앨범제목이들어갑니다" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_selected_many_dj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:layout_marginStart="16dp"
+                android:text="수많은 DJ가 선택한"
+                android:textSize="18sp"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintTop_toBottomOf="@+id/frame_top"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_famous"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:layout_marginStart="16dp"
+                app:layout_constraintTop_toBottomOf="@+id/tv_selected_many_dj"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <TextView
+                android:id="@+id/tv_omos_recommend_dj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:layout_marginStart="16dp"
+                android:text="OMOS 추천 DJ"
+                android:textSize="18sp"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintTop_toBottomOf="@+id/rv_famous"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <FrameLayout
+                android:id="@+id/frame_omos_recommend_dj"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tv_omos_recommend_dj"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_dj"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/ln_nodj"
+                    android:layout_width="match_parent"
+                    android:layout_height="95dp"
+                    android:layout_marginTop="4dp"
+                    android:padding="16dp"
+                    android:text="당신과 비슷한 취향의\nDJ를 찾아보세요."
+                    android:textSize="14sp"
+                    android:textColor="?attr/colorSecondaryVariant"
+                    android:background="@color/deep_dark"/>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_my_love_music"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="56dp"
+                android:layout_marginStart="16dp"
+                android:text="내가 사랑했던 노래"
+                android:textSize="18sp"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintTop_toBottomOf="@id/frame_omos_recommend_dj"
+                app:layout_constraintStart_toStartOf="parent"/>
+
+            <FrameLayout
+                android:id="@+id/constraint_bottom"
+                android:layout_width="0dp"
+                android:layout_height="375dp"
+                android:layout_marginTop="12dp"
+                app:layout_constraintTop_toBottomOf="@id/tv_my_love_music"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/img_record"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    app:categoryImageUrl="@{love.recordImageUrl}" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/bg_gradient" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp">
+
+                    <ImageView
+                        android:id="@+id/iv_logo_spotify"
+                        android:layout_width="70dp"
+                        android:layout_height="20.98dp"
+                        android:src="@drawable/logo_spotify"
+                        app:layout_constraintHorizontal_chainStyle="spread_inside"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/btn_see_record"
+                        app:layout_constraintBottom_toBottomOf="@+id/btn_see_record"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btn_see_record"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="레코드 보러가기"
+                        app:strokeWidth="1dp"
+                        app:strokeColor="?attr/colorSecondaryVariant"
+                        app:backgroundTint="@android:color/transparent"
+                        app:shapeAppearance="@style/ShapeAppearance.OMOS.Button"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/iv_logo_spotify"
+                        app:layout_constraintEnd_toEndOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/img_album_cover"
+                        android:layout_width="152dp"
+                        android:layout_height="152dp"
+                        android:layout_marginBottom="26dp"
+                        app:imageUrl="@{love.music.albumImageUrl}"
+                        app:layout_constraintVertical_chainStyle="packed"
+                        app:layout_constraintTop_toBottomOf="@+id/btn_see_record"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toTopOf="@id/tv_music_title"/>
+
+                    <TextView
+                        android:id="@+id/tv_music_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp"
+                        android:paddingHorizontal="71dp"
+                        android:text="@{love.music.musicTitle}"
+                        android:textSize="16sp"
+                        android:textColor="?attr/colorSecondary"
+                        android:maxLines="1"
+                        android:ellipsize="end"
+                        app:layout_constraintTop_toBottomOf="@id/img_album_cover"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="@id/ln_artist_album"/>
+
+                    <LinearLayout
+                        android:id="@+id/ln_artist_album"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:paddingHorizontal="73dp"
+                        app:layout_constraintTop_toBottomOf="@id/tv_music_title"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
+
+                        <TextView
+                            android:id="@+id/tv_love_artist"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="2dp"
+                            android:textSize="14sp"
+                            android:textColor="@color/gray_03"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
+
+                        <TextView
+                            android:id="@+id/tv_album_title"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="@{love.music.albumTitle}"
+                            android:textSize="12sp"
+                            android:textColor="?attr/colorSecondaryVariant"
+                            android:maxLines="1"
+                            android:ellipsize="end"/>
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tv_team_infinity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="34dp"
+                android:text="팀 인피니티"
+                android:textSize="12sp"
+                android:textColor="@color/gray_01"
+                app:layout_constraintTop_toBottomOf="@id/constraint_bottom"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="40dp"
+                android:text="© TEAM INFINITY"
+                android:textSize="11sp"
+                android:textColor="?attr/colorSecondaryVariant"
+                app:layout_constraintTop_toBottomOf="@+id/tv_team_infinity"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+
+</layout>
