@@ -10,12 +10,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.ui.write.SelectCategoryActivity
-import com.infinity.omos.adapters.CategoryListAdapter
+import com.infinity.omos.adapters.HorizontalRecordListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
-import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.databinding.FragmentTodayTestBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
@@ -82,7 +80,7 @@ class TodayFragment : Fragment() {
         }
 
         // 인기있는 레코드
-        val fAdapter = CategoryListAdapter(requireContext())
+        val fAdapter = HorizontalRecordListAdapter(requireContext())
         binding.rvFamous.apply {
             adapter = fAdapter
             layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }

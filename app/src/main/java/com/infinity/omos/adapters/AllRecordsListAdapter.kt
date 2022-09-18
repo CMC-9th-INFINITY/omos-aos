@@ -59,7 +59,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
                 }
             }
 
-            val mAdapter = CategoryListAdapter(context)
+            val mAdapter = HorizontalRecordListAdapter(context)
             mAdapter.setRecords(content.category)
             binding.rvCategory.apply{
                 adapter = mAdapter

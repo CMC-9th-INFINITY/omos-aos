@@ -105,6 +105,8 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_dialog.xml" value="0.233" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_follow.xml" value="0.233" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_gradient.xml" value="0.1485" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_gradient_01.xml" value="0.28" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_gradient_02.xml" value="0.28" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_gradient_main.xml" value="0.264" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/bg_rounded_rectangle.xml" value="0.153" />
         <entry key="..\:/git/omos-aos/app/src/main/res/drawable/border.xml" value="0.162" />
@@ -139,11 +141,13 @@
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_my_page.xml" value="0.22708333333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_today.xml" value="0.2677083333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/fragment_today_test.xml" value="0.25" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_allrecords_item.xml" value="0.36614583333333334" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_blocked_account.xml" value="0.33" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_category_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_detail_category_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_follower_item.xml" value="0.22708333333333333" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_following_item.xml" value="0.22916666666666666" />
+        <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_horizontal_record_item.xml" value="0.9" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_mydj_item.xml" value="0.234375" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_myrecord_item.xml" value="0.2557291666666667" />
         <entry key="..\:/git/omos-aos/app/src/main/res/layout/list_recommend_dj_item.xml" value="0.23072916666666668" />
