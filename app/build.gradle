@@ -116,7 +116,6 @@ dependencies {
     // FCM
     implementation "com.google.firebase:firebase-bom:$rootProject.firebaseBomVersion"
     implementation "com.google.firebase:firebase-messaging:$rootProject.firebaseMessagingVersion"
-    implementation "com.google.firebase:firebase-analytics-ktx"
 
     // Coroutine
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$rootProject.coroutinesVersion"

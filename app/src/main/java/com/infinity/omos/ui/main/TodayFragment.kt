@@ -36,11 +36,11 @@ class TodayFragment : Fragment() {
 
     private lateinit var itemClickListener: OnItemClickListener
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onClick()
     }
 
-    fun setItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
@@ -53,7 +53,7 @@ class TodayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today_test, container, false)
-        activity?.let{
+        activity?.let {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
         }
@@ -81,10 +81,7 @@ class TodayFragment : Fragment() {
 
         // 인기있는 레코드
         val fAdapter = HorizontalRecordListAdapter(requireContext())
-        binding.rvFamous.apply {
-            adapter = fAdapter
-            layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
-        }
+        binding.rvFamous.adapter = fAdapter
         viewModel.setFamousRecord()
         viewModel.getFamousRecord().observe(viewLifecycleOwner) { record ->
             record?.let {
@@ -96,14 +93,16 @@ class TodayFragment : Fragment() {
         val dAdapter = TodayDjListAdapter(requireContext())
         binding.rvDj.apply {
             adapter = dAdapter
-            layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
+            layoutManager = LinearLayoutManager(context).also {
+                it.orientation = LinearLayoutManager.HORIZONTAL
+            }
         }
         viewModel.setRecommendDj()
         viewModel.getRecommendDj().observe(viewLifecycleOwner) { dj ->
             dj?.let {
                 dAdapter.setDj(it)
 
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     binding.lnNodj.visibility = View.VISIBLE
                     binding.rvDj.visibility = View.GONE
                 }
@@ -142,7 +141,7 @@ class TodayFragment : Fragment() {
         }
 
         binding.btnTodayMusic.setOnClickListener {
-            if (musicId != ""){
+            if (musicId != "") {
                 val intent = Intent(context, SelectCategoryActivity::class.java)
                 intent.putExtra("musicId", musicId)
                 intent.putExtra("musicTitle", musicTitle)
@@ -153,7 +152,7 @@ class TodayFragment : Fragment() {
         }
     }
 
-    private fun setMainImage(){
+    private fun setMainImage() {
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_WEEK)
 
