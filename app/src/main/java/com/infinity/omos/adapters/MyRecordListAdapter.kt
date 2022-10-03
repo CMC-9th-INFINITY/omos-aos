@@ -58,27 +58,6 @@ class MyRecordListAdapter internal constructor(context: Context):
         return when(viewType){
             VIEW_TYPE_ITEM -> {
                 val binding = ListMyrecordItemBinding.inflate(inflater,parent,false)
-
-                // 앨범커버 반 가릴 수 있도록 커스텀
-                // 일부 아이템 적용 안되는 문제 해결 (onPreDraw)
-                binding.constraint.viewTreeObserver.addOnPreDrawListener(object: ViewTreeObserver.OnPreDrawListener{
-                    override fun onPreDraw(): Boolean {
-                        var imgWidth = binding.imgAlbumCover.width
-                        var layoutWidth = binding.constraint.width
-
-                        val params = binding.constraint.layoutParams
-                        params.apply {
-                            width = layoutWidth - imgWidth * 9 / 16
-                        }
-                        binding.constraint.apply {
-                            layoutParams = params
-                        }
-
-                        binding.constraint.viewTreeObserver.removeOnPreDrawListener(this)
-                        return true
-                    }
-                })
-
                 RecordViewHolder(binding)
             }
 
