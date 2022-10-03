@@ -14,7 +14,7 @@ import com.infinity.omos.R
 import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.adapters.HorizontalRecordListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
-import com.infinity.omos.databinding.FragmentTodayTestBinding
+import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.GlobalApplication
@@ -24,7 +24,7 @@ import java.util.*
 class TodayFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
-    private lateinit var binding: FragmentTodayTestBinding
+    private lateinit var binding: FragmentTodayBinding
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
@@ -51,8 +51,8 @@ class TodayFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today_test, container, false)
+    ): View {
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
         activity?.let {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
