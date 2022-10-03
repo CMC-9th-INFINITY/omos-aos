@@ -17,6 +17,7 @@ import com.infinity.omos.adapters.TodayDjListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 import java.util.*
@@ -147,6 +148,14 @@ class TodayFragment : Fragment() {
                 intent.putExtra("musicTitle", musicTitle)
                 intent.putExtra("artists", artists)
                 intent.putExtra("albumImageUrl", albumImageUrl)
+                startActivity(intent)
+            }
+        }
+
+        binding.btnSeeRecord.setOnClickListener {
+            if (recordId != -1) {
+                val intent = Intent(context, DetailRecordActivity::class.java)
+                intent.putExtra("postId", recordId)
                 startActivity(intent)
             }
         }
