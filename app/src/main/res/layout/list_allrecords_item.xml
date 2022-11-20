@@ -50,7 +50,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
-            tools:listitem="@layout/list_category_item"/>
+            tools:listitem="@layout/list_horizontal_record_item" />
 
         <LinearLayout
             android:id="@+id/ln_norecord"

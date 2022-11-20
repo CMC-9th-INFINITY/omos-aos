@@ -20,7 +20,7 @@
         android:layout_height="match_parent"
         android:background="@color/dark"
         android:orientation="vertical"
-        tools:context=".DetailRecordActivity">
+        tools:context=".ui.record.DetailRecordActivity">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"

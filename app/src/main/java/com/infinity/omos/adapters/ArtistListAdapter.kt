@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.ArtistActivity
+import com.infinity.omos.ui.search.DetailArtistActivity
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Artists
@@ -79,7 +79,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){
                 itemView.setOnClickListener {
-                    val intent = Intent(context, ArtistActivity::class.java)
+                    val intent = Intent(context, DetailArtistActivity::class.java)
                     intent.putExtra("artistId", artist.artistId)
                     intent.putExtra("artistName", artist.artistName)
                     intent.putExtra("artistImageUrl", artist.artistImageUrl)

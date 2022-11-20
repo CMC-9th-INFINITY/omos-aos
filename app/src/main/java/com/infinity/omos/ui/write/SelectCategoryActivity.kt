@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.write
 
 import android.content.Intent
 import android.content.res.ColorStateList
@@ -6,13 +6,13 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.FrameLayout
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
@@ -31,7 +31,9 @@ class SelectCategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val binding = DataBindingUtil.setContentView<ActivitySelectCategoryBinding>(this, R.layout.activity_select_category)
+        val binding = DataBindingUtil.setContentView<ActivitySelectCategoryBinding>(this,
+            R.layout.activity_select_category
+        )
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -67,8 +69,12 @@ class SelectCategoryActivity : AppCompatActivity() {
 
     private fun changeState(layout: FrameLayout){
         if (prevLayout != null){
-            prevLayout!!.background = ContextCompat.getDrawable(this, R.drawable.bg_rounded_rectangle)
-            prevLayout!!.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this, R.color.deep_dark))
+            prevLayout!!.background = ContextCompat.getDrawable(this,
+                R.drawable.bg_rounded_rectangle
+            )
+            prevLayout!!.backgroundTintList = ColorStateList.valueOf(ContextCompat.getColor(this,
+                R.color.deep_dark
+            ))
         }
 
         layout.background = ContextCompat.getDrawable(this, R.drawable.rectangle_stroke_box2)

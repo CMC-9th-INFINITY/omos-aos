@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.search
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -6,15 +6,15 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.google.android.material.tabs.TabLayoutMediator
+import com.infinity.omos.R
 import com.infinity.omos.adapters.ArtistViewPagerAdapter
 import com.infinity.omos.databinding.ActivityArtistBinding
 import com.infinity.omos.viewmodels.ArtistViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
-class ArtistActivity : AppCompatActivity() {
+class DetailArtistActivity : AppCompatActivity() {
 
     private val viewModel: ArtistViewModel by viewModels()
     private lateinit var binding: ActivityArtistBinding

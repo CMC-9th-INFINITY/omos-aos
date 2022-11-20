@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.record
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,27 +15,26 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
-import com.infinity.omos.databinding.ActivityMyLikeRecordBinding
+import com.infinity.omos.databinding.ActivityMyScrapRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.viewmodels.MyLikeRecordViewModel
-import kotlinx.android.synthetic.main.activity_main.*
+import com.infinity.omos.viewmodels.MyScrapRecordViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
-import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
-class MyLikeRecordActivity : AppCompatActivity() {
+class MyScrapRecordActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityMyLikeRecordBinding
-    private val viewModel: MyLikeRecordViewModel by viewModels()
+    private lateinit var binding: ActivityMyScrapRecordBinding
+    private val viewModel: MyScrapRecordViewModel by viewModels()
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = GlobalApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_like_record)
-        likeBroadcastReceiver()
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_my_scrap_record)
+        scrapBroadcastReceiver()
 
         initToolBar()
 
@@ -45,8 +44,8 @@ class MyLikeRecordActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(context)
         }
 
-        viewModel.setLikeRecord(userId)
-        viewModel.getLikeRecord().observe(this) { record ->
+        viewModel.setScrapRecord(userId)
+        viewModel.getScrapRecord().observe(this) { record ->
             record?.let {
                 mAdapter.setDjRecord(it)
 
@@ -55,7 +54,7 @@ class MyLikeRecordActivity : AppCompatActivity() {
                 }
             }
         }
-        viewModel.getStateLikeRecord().observe(this) { state ->
+        viewModel.getStateScrapRecord().observe(this) { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
@@ -111,8 +110,8 @@ class MyLikeRecordActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = "공감한 레코드"
-        setSupportActionBar(toolbar) // 툴바 사용
+        toolbar.title = "스크랩한 레코드"
+       setSupportActionBar(toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -148,16 +147,16 @@ class MyLikeRecordActivity : AppCompatActivity() {
         }
     }
 
-    private fun likeBroadcastReceiver() {
+    private fun scrapBroadcastReceiver() {
         broadcastReceiver = object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                viewModel.setLikeRecord(userId)
+                viewModel.setScrapRecord(userId)
             }
         }
 
         this.registerReceiver(
             broadcastReceiver,
-            IntentFilter("LIKE_UPDATE")
+            IntentFilter("SCRAP_UPDATE")
         )
     }
 
