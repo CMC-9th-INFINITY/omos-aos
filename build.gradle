@@ -37,6 +37,7 @@ buildscript {
         firebaseMessagingVersion = '23.0.6'
         coroutinesVersion = '1.6.1'
         hiltVersion = '2.42'
+        navigationVersion = '2.5.2'
     }
 
     repositories {
@@ -48,6 +49,7 @@ buildscript {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion"
         classpath "com.google.gms:google-services:$googleServiceVersion"
         classpath "com.google.dagger:hilt-android-gradle-plugin:$hiltVersion"
+        classpath "androidx.navigation:navigation-safe-args-gradle-plugin:$navigationVersion"
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
