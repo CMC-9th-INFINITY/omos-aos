@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.record
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -18,6 +18,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.R
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
 import com.infinity.omos.etc.Constant
@@ -27,7 +28,7 @@ import com.infinity.omos.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
 
-class CategoryActivity : AppCompatActivity() {
+class CategoryRecordsActivity : AppCompatActivity() {
 
     private val viewModel: CategoryViewModel by viewModels()
     private lateinit var binding: ActivityCategoryBinding

@@ -16,7 +16,7 @@ import com.infinity.omos.databinding.FragmentArtistAlbumBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.viewmodels.ArtistViewModel
 
-class ArtistAlbumFragment : Fragment() {
+class DetailArtistAlbumFragment : Fragment() {
 
     private val viewModel: ArtistViewModel by viewModels()
     private lateinit var binding: FragmentArtistAlbumBinding

@@ -8,14 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.DetailRecordActivity
+import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.data.SumRecord
-import com.infinity.omos.databinding.ListCategoryItemBinding
+import com.infinity.omos.databinding.ListHorizontalRecordItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.utils.GlobalApplication
 
-class CategoryListAdapter internal constructor(context: Context):
-    ListAdapter<SumRecord, CategoryListAdapter.ViewHolder>(
+class HorizontalRecordListAdapter internal constructor(context: Context):
+    ListAdapter<SumRecord, HorizontalRecordListAdapter.ViewHolder>(
         CategoryDiffUtil
     ){
 
@@ -40,7 +40,7 @@ class CategoryListAdapter internal constructor(context: Context):
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        var binding = ListCategoryItemBinding.inflate(inflater,parent,false)
+        var binding = ListHorizontalRecordItemBinding.inflate(inflater,parent,false)
         return ViewHolder(binding)
     }
 
@@ -49,7 +49,7 @@ class CategoryListAdapter internal constructor(context: Context):
         holder.bind(record!!)
     }
 
-    inner class ViewHolder(private val binding: ListCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
+    inner class ViewHolder(private val binding: ListHorizontalRecordItemBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(record: SumRecord) {
             binding.record = record
             binding.tvNick.text = "by. ${record.nickname}"

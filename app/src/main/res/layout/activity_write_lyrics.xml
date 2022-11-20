@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        tools:context=".WriteLyricsActivity"
+        tools:context=".ui.write.WriteLyricsActivity"
         android:background="@color/dark">
 
         <androidx.appcompat.widget.Toolbar
