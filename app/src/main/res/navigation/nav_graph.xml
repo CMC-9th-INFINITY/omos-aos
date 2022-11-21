@@ -9,5 +9,15 @@
         android:id="@+id/login_fragment"
         android:name="com.infinity.omos.ui.onboarding.LoginFragment"
         android:label="fragment_login"
-        tools:layout="@layout/fragment_login" />
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/action_login_fragment_to_find_pw_fragment"
+            app:destination="@id/find_pw_fragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/find_pw_fragment"
+        android:name="com.infinity.omos.ui.onboarding.FindPwFragment"
+        android:label="FindPwFragment"
+        tools:layout="@layout/fragment_find_pw" />
 </navigation>

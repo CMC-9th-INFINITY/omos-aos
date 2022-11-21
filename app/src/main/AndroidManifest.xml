@@ -20,16 +20,29 @@
             android:name=".FakeMainActivity"
             android:exported="true">
 
+
+
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
         </activity>
+
+
+
+
         <activity
             android:name=".ui.dj.FollowActivity"
             android:exported="false"
@@ -157,14 +170,10 @@
         <activity
             android:name=".ui.onboarding.LoginActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".SplashActivity"
-            android:exported="true"
-            android:screenOrientation="portrait">
 
 
 
-        </activity> <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
+        <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.infinity.omos.fileprovider"

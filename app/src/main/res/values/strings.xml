@@ -248,4 +248,5 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="sign_up">회원가입</string>
     <string name="kakao_login">카카오로 로그인</string>
     <string name="or">or</string>
+    <string name="next">다음</string>
 </resources>
