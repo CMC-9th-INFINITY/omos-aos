@@ -10,9 +10,22 @@
         android:name="com.infinity.omos.ui.onboarding.LoginFragment"
         android:label="fragment_login"
         tools:layout="@layout/fragment_login">
+
         <action
             android:id="@+id/action_login_fragment_to_find_pw_fragment"
-            app:destination="@id/find_pw_fragment" />
+            app:destination="@id/find_pw_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_login_fragment_to_sign_up_fragment"
+            app:destination="@id/sign_up_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
 
     <fragment
@@ -20,4 +33,10 @@
         android:name="com.infinity.omos.ui.onboarding.FindPwFragment"
         android:label="FindPwFragment"
         tools:layout="@layout/fragment_find_pw" />
+
+    <fragment
+        android:id="@+id/sign_up_fragment"
+        android:name="com.infinity.omos.ui.onboarding.SignUpFragment"
+        android:label="SignUpFragment"
+        tools:layout="@layout/fragment_sign_up" />
 </navigation>

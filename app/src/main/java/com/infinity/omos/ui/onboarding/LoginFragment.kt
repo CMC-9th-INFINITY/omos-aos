@@ -29,5 +29,11 @@ class LoginFragment : Fragment() {
                 LoginFragmentDirections.actionLoginFragmentToFindPwFragment()
             findNavController().navigate(directions)
         }
+
+        binding.tvSignUp.setOnClickListener {
+            val directions =
+                LoginFragmentDirections.actionLoginFragmentToSignUpFragment()
+            findNavController().navigate(directions)
+        }
     }
 }
