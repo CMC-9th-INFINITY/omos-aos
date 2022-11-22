@@ -3,40 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/login_fragment">
+    app:startDestination="@id/nav_on_boarding">
 
-    <fragment
-        android:id="@+id/login_fragment"
-        android:name="com.infinity.omos.ui.onboarding.LoginFragment"
-        android:label="fragment_login"
-        tools:layout="@layout/fragment_login">
+    <include
+        android:id="@+id/nav_on_boarding"
+        app:graph="@navigation/nav_on_boarding" />
 
-        <action
-            android:id="@+id/action_login_fragment_to_find_pw_fragment"
-            app:destination="@id/find_pw_fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-
-        <action
-            android:id="@+id/action_login_fragment_to_sign_up_fragment"
-            app:destination="@id/sign_up_fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/find_pw_fragment"
-        android:name="com.infinity.omos.ui.onboarding.FindPwFragment"
-        android:label="FindPwFragment"
-        tools:layout="@layout/fragment_find_pw" />
-
-    <fragment
-        android:id="@+id/sign_up_fragment"
-        android:name="com.infinity.omos.ui.onboarding.SignUpFragment"
-        android:label="SignUpFragment"
-        tools:layout="@layout/fragment_sign_up" />
 </navigation>

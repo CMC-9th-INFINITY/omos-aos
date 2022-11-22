@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.navGraphViewModels
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentLoginBinding
+import com.infinity.omos.viewmodels.onboarding.OnBoardingViewModel
 
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
+    private val viewModel: OnBoardingViewModel by navGraphViewModels(R.id.nav_on_boarding)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
