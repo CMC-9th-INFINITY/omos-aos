@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_dialog"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_title"
+        style="@style/TextAppearance.Mogle.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="45dp"
+        android:layout_marginTop="43dp"
+        android:layout_marginBottom="40dp"
+        android:gravity="center"
+        android:textColor="?attr/colorOnSurface"
+        tools:text="이 레코드를 신고하시겠어요?" />
+
+    <include layout="@layout/view_separator" />
+
+    <TextView
+        android:id="@+id/tv_ok"
+        style="@style/TextAppearance.Mogle.Subtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingVertical="13dp"
+        android:textColor="?attr/colorPrimary"
+        tools:text="확인" />
+
+    <include layout="@layout/view_separator" />
+
+    <TextView
+        android:id="@+id/tv_cancel"
+        style="@style/TextAppearance.Mogle.Subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginVertical="13dp"
+        tools:text="취소" />
+
+</LinearLayout>
