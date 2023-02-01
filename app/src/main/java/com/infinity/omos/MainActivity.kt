@@ -30,7 +30,11 @@ import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.ui.bottomnav.*
-import com.infinity.omos.ui.searchtab.AllFragment
+import com.infinity.omos.ui.main.MyDjFragment
+import com.infinity.omos.ui.main.MyPageFragment
+import com.infinity.omos.ui.main.MyRecordFragment
+import com.infinity.omos.ui.search.AllFragment
+import com.infinity.omos.ui.main.TodayFragment
 import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.utils.InAppUpdate

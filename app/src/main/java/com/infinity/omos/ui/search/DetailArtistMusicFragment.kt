@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.searchtab
+package com.infinity.omos.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -15,7 +15,7 @@ import com.infinity.omos.databinding.FragmentArtistMusicBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.viewmodels.ArtistViewModel
 
-class ArtistMusicFragment : Fragment() {
+class DetailArtistMusicFragment : Fragment() {
 
     private val viewModel: ArtistViewModel by viewModels()
     private lateinit var binding: FragmentArtistMusicBinding

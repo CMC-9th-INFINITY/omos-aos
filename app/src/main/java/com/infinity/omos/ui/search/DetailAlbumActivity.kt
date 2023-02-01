@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.search
 
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,13 +9,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumDetailListAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.viewmodels.AlbumViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
 
-class AlbumActivity : AppCompatActivity() {
+class DetailAlbumActivity : AppCompatActivity() {
 
     private val viewModel: AlbumViewModel by viewModels()
     private lateinit var binding: ActivityAlbumBinding

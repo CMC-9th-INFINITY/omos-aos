@@ -51,11 +51,11 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyLikeRecordActivity"
+            android:name=".ui.record.MyLikeRecordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MyScrapRecordActivity"
+            android:name=".ui.record.MyScrapRecordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -63,29 +63,29 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".InputLyricsActivity"
+            android:name=".ui.write.InputLyricsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".WriteLyricsActivity"
+            android:name=".ui.write.WriteLyricsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".DetailRecordActivity"
+            android:name=".ui.record.DetailRecordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".MusicRecordActivity"
+            android:name=".ui.record.MusicRecordActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ArtistActivity"
+            android:name=".ui.search.DetailArtistActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".AlbumActivity"
+            android:name=".ui.search.DetailAlbumActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
@@ -100,16 +100,16 @@
             android:exported="true" />
 
         <activity
-            android:name=".WriteRecordActivity"
+            android:name=".ui.write.WriteRecordActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".SelectCategoryActivity"
+            android:name=".ui.write.SelectCategoryActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".CategoryActivity"
+            android:name=".ui.record.CategoryRecordsActivity"
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity

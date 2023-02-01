@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.bottomnav
+package com.infinity.omos.ui.main
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
-import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil

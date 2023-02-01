@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.bottomnav
+package com.infinity.omos.ui.main
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -11,14 +11,13 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import com.infinity.omos.DetailRecordActivity
-import com.infinity.omos.MyLikeRecordActivity
-import com.infinity.omos.MyScrapRecordActivity
+import com.infinity.omos.ui.record.DetailRecordActivity
+import com.infinity.omos.ui.record.MyLikeRecordActivity
+import com.infinity.omos.ui.record.MyScrapRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.dj.FollowActivity
-import com.infinity.omos.ui.dj.FollowerFragment
 import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
@@ -61,12 +60,14 @@ class MyPageFragment : Fragment() {
         binding.djFollower.setOnClickListener {
             val intent = Intent(context, FollowActivity::class.java)
             intent.putExtra("userId", userId)
+            intent.putExtra("followState", 0)
             startActivity(intent)
         }
 
         binding.djFollowing.setOnClickListener {
             val intent = Intent(context, FollowActivity::class.java)
             intent.putExtra("userId", userId)
+            intent.putExtra("followState", 1)
             startActivity(intent)
         }
 

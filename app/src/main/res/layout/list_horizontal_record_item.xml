@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="record"
+            type="com.infinity.omos.data.SumRecord" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingStart="0dp"
+        android:paddingEnd="2dp">
+
+        <ImageView
+            android:layout_width="274dp"
+            android:layout_height="160dp"
+            android:scaleType="centerCrop"
+            app:categoryImageUrl="@{record.recordImageUrl}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_album_cover" />
+
+        <ImageView
+            android:layout_width="274dp"
+            android:layout_height="160dp"
+            android:background="@drawable/bg_gradient_02"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_album_cover" />
+
+        <ImageView
+            android:id="@+id/img_album_cover"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:imageUrl="@{record.music.albumImageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black_01"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/img_album_cover"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/img_album_cover"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_music_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{record.music.musicTitle}"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintBottom_toTopOf="@+id/tv_artist"
+                app:layout_constraintEnd_toStartOf="@id/ic_spotify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Angel Baby" />
+
+            <TextView
+                android:id="@+id/tv_artist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/ic_spotify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_music_title"
+                tools:text="Troye Sivan - Angel Baby" />
+
+            <ImageView
+                android:id="@+id/ic_spotify"
+                android:layout_width="31dp"
+                android:layout_height="21dp"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_spotify"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="12sp"
+            app:layout_constraintBottom_toTopOf="@id/tv_record_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="by. 유니" />
+
+        <TextView
+            android:id="@+id/tv_record_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginBottom="22dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:text="@{record.recordTitle}"
+            android:textColor="?attr/colorSecondary"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="듣자마자 천국가는 노래, Troye Sivan의 Angel Baby" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

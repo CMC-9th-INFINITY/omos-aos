@@ -1,5 +1,10 @@
-package com.infinity.omos.ui.searchtab
+package com.infinity.omos.ui.search
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,39 +15,46 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.infinity.omos.MainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
-import com.infinity.omos.databinding.FragmentArtistAlbumBinding
+import com.infinity.omos.databinding.FragmentAlbumBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.viewmodels.ArtistViewModel
+import com.infinity.omos.utils.Height.Companion.navigationHeight
+import com.infinity.omos.viewmodels.MainViewModel
 
-class ArtistAlbumFragment : Fragment() {
+class AlbumFragment : Fragment() {
 
-    private val viewModel: ArtistViewModel by viewModels()
-    private lateinit var binding: FragmentArtistAlbumBinding
+    private val viewModel: MainViewModel by viewModels()
+    private lateinit var binding: FragmentAlbumBinding
+
+    lateinit var broadcastReceiver: BroadcastReceiver
 
     private var page = 0
     private val pageSize = 20
     private var isLoading = false
 
-    private var artistId = ""
+    private lateinit var mAdapter: AlbumListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initializeBroadcastReceiver()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_artist_album, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_album, container, false)
         activity?.let{
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
         }
 
-        var bundle = this.arguments
-        artistId = bundle?.getString("artistId")!!
+        // 밑에 짤리는 현상 해결
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            binding.recyclerView.setPadding(0, 0, 0, context!!.navigationHeight())
+        }
 
         return binding.root
     }
@@ -50,15 +62,15 @@ class ArtistAlbumFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val mAdapter = AlbumListAdapter(requireContext())
+        mAdapter = AlbumListAdapter(requireContext())
         binding.recyclerView.apply{
             adapter = mAdapter
             layoutManager = LinearLayoutManager(activity)
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.setArtistAlbum(artistId, pageSize, 0)
-        viewModel.getArtistAlbum().observe(viewLifecycleOwner, Observer { album ->
+        viewModel.loadMoreAlbum(keyword, pageSize, 0)
+        viewModel.getAlbum().observe(viewLifecycleOwner, Observer { album ->
             album?.let {
                 isLoading = if (it.isEmpty()) {
                     mAdapter.notifyItemRemoved(mAdapter.itemCount)
@@ -68,17 +80,23 @@ class ArtistAlbumFragment : Fragment() {
                     mAdapter.notifyItemRangeInserted(page * pageSize, it.size)
                     false
                 }
+
+                // 작성한 레코드가 없을 때,
+                if (it.isEmpty() && page == 0){
+                    binding.lnNorecord.visibility = View.VISIBLE
+                }
             }
         })
 
         // 로딩화면
-        viewModel.getStateArtistAlbum().observe(viewLifecycleOwner, Observer { state ->
+        viewModel.getStateAlbum().observe(viewLifecycleOwner, Observer { state ->
             state?.let {
                 when(it){
                     Constant.ApiState.LOADING -> {
                         if (page == 0){
                             binding.recyclerView.visibility = View.GONE
                             binding.progressBar.visibility = View.VISIBLE
+                            binding.lnNorecord.visibility = View.GONE
                         }
                     }
 
@@ -108,9 +126,26 @@ class ArtistAlbumFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && itemTotalCount > -1) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.setArtistAlbum(artistId, pageSize, ++page*pageSize)
+                    viewModel.loadMoreAlbum(keyword, pageSize, ++page*pageSize)
                 }
             }
         })
+    }
+
+    private fun initializeBroadcastReceiver() {
+        broadcastReceiver = object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                page = 0
+                mAdapter.clearRecord()
+                binding.recyclerView.scrollToPosition(0)
+                var keyword = intent?.getStringExtra("keyword")!!
+                viewModel.loadMoreAlbum(keyword, pageSize, 0)
+            }
+        }
+
+        requireActivity().registerReceiver(
+            broadcastReceiver,
+            IntentFilter("SEARCH_UPDATE")
+        )
     }
 }

@@ -3,10 +3,10 @@ package com.infinity.omos.adapters
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.infinity.omos.ui.searchtab.AlbumFragment
-import com.infinity.omos.ui.searchtab.AllFragment
-import com.infinity.omos.ui.searchtab.ArtistFragment
-import com.infinity.omos.ui.searchtab.MusicFragment
+import com.infinity.omos.ui.search.AlbumFragment
+import com.infinity.omos.ui.search.AllFragment
+import com.infinity.omos.ui.search.ArtistFragment
+import com.infinity.omos.ui.search.MusicFragment
 
 class ViewPagerAdapter(fragmentActivity: FragmentActivity) :
     FragmentStateAdapter(fragmentActivity) {

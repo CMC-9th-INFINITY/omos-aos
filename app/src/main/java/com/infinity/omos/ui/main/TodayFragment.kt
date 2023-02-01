@@ -1,8 +1,7 @@
-package com.infinity.omos.ui.bottomnav
+package com.infinity.omos.ui.main
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,14 +10,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.infinity.omos.DetailRecordActivity
 import com.infinity.omos.R
-import com.infinity.omos.SelectCategoryActivity
-import com.infinity.omos.adapters.CategoryListAdapter
+import com.infinity.omos.ui.write.SelectCategoryActivity
+import com.infinity.omos.adapters.HorizontalRecordListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.utils.GlobalApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 import java.util.*
@@ -38,11 +37,11 @@ class TodayFragment : Fragment() {
 
     private lateinit var itemClickListener: OnItemClickListener
 
-    interface OnItemClickListener{
+    interface OnItemClickListener {
         fun onClick()
     }
 
-    fun setItemClickListener(onItemClickListener: OnItemClickListener){
+    fun setItemClickListener(onItemClickListener: OnItemClickListener) {
         this.itemClickListener = onItemClickListener
     }
 
@@ -53,9 +52,9 @@ class TodayFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
-        activity?.let{
+        activity?.let {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
         }
@@ -75,7 +74,6 @@ class TodayFragment : Fragment() {
             data?.let {
                 binding.today = it
                 this.artists = GlobalFunction.setArtist(it.artists)
-                binding.tvTodayArtist.text = this.artists
                 musicId = it.musicId
                 musicTitle = it.musicTitle
                 albumImageUrl = it.albumImageUrl
@@ -83,11 +81,8 @@ class TodayFragment : Fragment() {
         }
 
         // 인기있는 레코드
-        val fAdapter = CategoryListAdapter(requireContext())
-        binding.rvFamous.apply {
-            adapter = fAdapter
-            layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
-        }
+        val fAdapter = HorizontalRecordListAdapter(requireContext())
+        binding.rvFamous.adapter = fAdapter
         viewModel.setFamousRecord()
         viewModel.getFamousRecord().observe(viewLifecycleOwner) { record ->
             record?.let {
@@ -99,14 +94,16 @@ class TodayFragment : Fragment() {
         val dAdapter = TodayDjListAdapter(requireContext())
         binding.rvDj.apply {
             adapter = dAdapter
-            layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
+            layoutManager = LinearLayoutManager(context).also {
+                it.orientation = LinearLayoutManager.HORIZONTAL
+            }
         }
         viewModel.setRecommendDj()
         viewModel.getRecommendDj().observe(viewLifecycleOwner) { dj ->
             dj?.let {
                 dAdapter.setDj(it)
 
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     binding.lnNodj.visibility = View.VISIBLE
                     binding.rvDj.visibility = View.GONE
                 }
@@ -144,30 +141,8 @@ class TodayFragment : Fragment() {
             }
         }
 
-        viewModel.getStateLoveMusic().observe(viewLifecycleOwner) { state ->
-            state?.let {
-                when (it) {
-                    Constant.ApiState.LOADING -> {
-                        binding.fmLovedMusic.visibility = View.GONE
-                        binding.lnNorecord.visibility = View.VISIBLE
-                    }
-
-                    Constant.ApiState.DONE -> {
-                        binding.fmLovedMusic.visibility = View.VISIBLE
-                        binding.lnNorecord.visibility = View.GONE
-                    }
-
-                    Constant.ApiState.ERROR -> {
-                        binding.lnNorecord.visibility = View.VISIBLE
-                        binding.fmLovedMusic.visibility = View.GONE
-                    }
-                    else -> {}
-                }
-            }
-        }
-
         binding.btnTodayMusic.setOnClickListener {
-            if (musicId != ""){
+            if (musicId != "") {
                 val intent = Intent(context, SelectCategoryActivity::class.java)
                 intent.putExtra("musicId", musicId)
                 intent.putExtra("musicTitle", musicTitle)
@@ -177,20 +152,16 @@ class TodayFragment : Fragment() {
             }
         }
 
-        binding.fmLovedMusic.setOnClickListener {
-            if (recordId != -1){
+        binding.btnSeeRecord.setOnClickListener {
+            if (recordId != -1) {
                 val intent = Intent(context, DetailRecordActivity::class.java)
                 intent.putExtra("postId", recordId)
                 startActivity(intent)
             }
         }
-
-        binding.btnWriteMyrecord.setOnClickListener {
-            itemClickListener.onClick()
-        }
     }
 
-    private fun setMainImage(){
+    private fun setMainImage() {
         val calendar = Calendar.getInstance()
         val day = calendar.get(Calendar.DAY_OF_WEEK)
 

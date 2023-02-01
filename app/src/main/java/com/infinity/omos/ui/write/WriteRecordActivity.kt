@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.write
 
 import android.content.Intent
 import android.net.Uri
@@ -20,6 +20,9 @@ import androidx.core.net.toFile
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
+import com.infinity.omos.BuildConfig
+import com.infinity.omos.MainActivity
+import com.infinity.omos.R
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.Update
 import com.infinity.omos.databinding.ActivityWriteRecordBinding
@@ -116,10 +119,14 @@ class WriteRecordActivity : AppCompatActivity() {
         viewModel.isPublic.observe(this, Observer { state ->
             state?.let {
                 isPublic = if (it){
-                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_public))
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this,
+                        R.drawable.ic_public
+                    ))
                     true
                 } else{
-                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this, R.drawable.ic_private))
+                    binding.btnPrivate.setImageDrawable(ContextCompat.getDrawable(this,
+                        R.drawable.ic_private
+                    ))
                     false
                 }
             }

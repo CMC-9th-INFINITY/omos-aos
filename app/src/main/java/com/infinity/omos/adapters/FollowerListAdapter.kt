@@ -9,6 +9,7 @@ import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ListFollowerItemBinding
 
 class FollowerListAdapter : ListAdapter<Profile, RecyclerView.ViewHolder>(FollowerDiffCallback()) {
+    private lateinit var buttonClickListener: OnItemClickListener
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{
@@ -17,6 +18,10 @@ class FollowerListAdapter : ListAdapter<Profile, RecyclerView.ViewHolder>(Follow
 
     fun setItemClickListener(onItemClickListener: OnItemClickListener){
         this.itemClickListener = onItemClickListener
+    }
+
+    fun setButtonClickListener(onItemClickListener: OnItemClickListener){
+        this.buttonClickListener = onItemClickListener
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -38,9 +43,15 @@ class FollowerListAdapter : ListAdapter<Profile, RecyclerView.ViewHolder>(Follow
         private val binding: ListFollowerItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
         init {
-            binding.setClickListener {
+            binding.setItemClickListener {
                 binding.dj?.let { dj ->
                     itemClickListener.onClick(dj)
+                }
+            }
+
+            binding.setButtonClickListener {
+                binding.dj?.let { dj ->
+                    buttonClickListener.onClick(dj)
                 }
             }
         }

@@ -25,7 +25,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.ui.bottomnav.MyPageFragment
+import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.CustomDialog
