@@ -70,7 +70,7 @@ class SplashActivity : AppCompatActivity() {
                 // 이메일 로그인 상태 확인
                 if (GlobalApplication.prefs.getInt("userId") == -1) {
                     Log.d("SplashActivity", "토큰 불러오기 실패")
-                    val intent = Intent(activity, LoginActivity::class.java)
+                    val intent = Intent(activity, OnboardingActivity::class.java)
                     activity.startActivity(intent)
                 } else {
                     Log.d("SplashActivity", "토큰 불러오기 성공")
@@ -91,7 +91,7 @@ class SplashActivity : AppCompatActivity() {
                         }
                     }
 
-                    val intent = Intent(activity, LoginActivity::class.java)
+                    val intent = Intent(activity, OnboardingActivity::class.java)
                     activity.startActivity(intent)
                 } else {
                     Log.d("SplashActivity", "토큰 불러오기 성공")

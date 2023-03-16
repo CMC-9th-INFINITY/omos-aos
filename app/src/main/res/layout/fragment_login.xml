@@ -3,11 +3,18 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.infinity.omos.ui.onboarding.login.LoginViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingHorizontal="@dimen/normal_padding"
-        tools:context=".ui.onboarding.LoginFragment">
+        tools:context=".ui.onboarding.login.LoginFragment">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -42,27 +49,23 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_login" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/et_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="7dp"
+            android:background="@drawable/bg_slightly_rounded_rectangle"
             android:hint="@string/email_hint"
+            android:inputType="textEmailAddress"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp"
+            android:text="@={vm.email}"
+            android:textColor="@color/gray_02"
             android:textColorHint="@color/gray_06"
+            android:textSize="16sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_email"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:backgroundTint="@color/black_03"
-                android:textColor="@color/gray_02" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+            app:layout_constraintTop_toBottomOf="@id/tv_email" />
 
         <TextView
             android:id="@+id/tv_pw"
@@ -72,31 +75,44 @@
             android:text="@string/pw"
             android:textColor="@color/ivory"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/email_input_layout" />
+            app:layout_constraintTop_toBottomOf="@id/et_email" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/pw_input_layout"
-            style="@style/Widget.MaterialComponents.TextInputLayout.FilledBox"
+        <LinearLayout
+            android:id="@+id/linear_pw"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:hint="@string/pw_hint"
-            android:textColorHint="@color/gray_06"
-            app:endIconMode="password_toggle"
-            app:endIconTint="@color/gray_06"
+            android:background="@drawable/bg_slightly_rounded_rectangle"
+            android:orientation="horizontal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_pw">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_pw"
-                android:layout_width="match_parent"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:backgroundTint="@color/black_03"
+                android:layout_marginTop="7dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_slightly_rounded_rectangle"
+                android:hint="@string/pw_hint"
                 android:inputType="textPassword"
-                android:textColor="@color/gray_02" />
+                android:paddingHorizontal="16dp"
+                android:paddingVertical="14dp"
+                android:text="@={vm.password}"
+                android:textColor="@color/gray_02"
+                android:textColorHint="@color/gray_06"
+                android:textSize="16sp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+            <ImageView
+                android:id="@+id/iv_eye"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/show_hide"
+                android:onClick="@{() -> vm.changePasswordVisibleState()}"
+                android:padding="@dimen/normal_padding"
+                android:src="@drawable/selector_eye" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_find_pw"
@@ -106,7 +122,7 @@
             android:text="@string/find_pw"
             android:textColor="@color/gray_04"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pw_input_layout" />
+            app:layout_constraintTop_toBottomOf="@id/linear_pw" />
 
         <TextView
             android:id="@+id/tv_sign_up"
@@ -116,7 +132,7 @@
             android:text="@string/sign_up"
             android:textColor="@color/gray_04"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/pw_input_layout" />
+            app:layout_constraintTop_toBottomOf="@id/linear_pw" />
 
         <Button
             android:id="@+id/btn_login"
@@ -135,23 +151,23 @@
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
             android:background="@color/divide"
-            app:layout_constraintStart_toStartOf="@id/tv_or"
+            app:layout_constraintBottom_toBottomOf="@id/tv_or"
             app:layout_constraintEnd_toEndOf="@id/tv_or"
-            app:layout_constraintTop_toTopOf="@id/tv_or"
-            app:layout_constraintBottom_toBottomOf="@id/tv_or"/>
+            app:layout_constraintStart_toStartOf="@id/tv_or"
+            app:layout_constraintTop_toTopOf="@id/tv_or" />
 
         <TextView
             android:id="@+id/tv_or"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingVertical="4dp"
+            android:background="?android:colorBackground"
             android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp"
             android:text="@string/or"
             android:textColor="@color/gray_06"
-            android:background="?android:colorBackground"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/btn_kakao_login"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/btn_kakao_login" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <Button
             android:id="@+id/btn_kakao_login"
@@ -164,8 +180,8 @@
             android:text="@string/kakao_login"
             android:textColor="@color/kakao"
             app:icon="@drawable/ic_kakao"
-            app:iconTint="@color/kakao"
             app:iconGravity="textStart"
+            app:iconTint="@color/kakao"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

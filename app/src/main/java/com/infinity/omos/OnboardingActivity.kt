@@ -7,9 +7,9 @@ import android.os.Bundle
  * onboarding Navigation component 적용을 위한 Activity
  * 추후 MainActivity로 변경 예정
  */
-class FakeMainActivity : AppCompatActivity() {
+class OnboardingActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_fake_main)
+        setContentView(R.layout.activity_onboarding)
     }
 }

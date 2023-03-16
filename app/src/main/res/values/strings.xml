@@ -251,4 +251,5 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="next">다음</string>
     <string name="confirm_pw_hint">비밀번호를 다시 입력해주세요.</string>
     <string name="confirm_pw">비밀번호 재확인</string>
+    <string name="show_hide">보기/숨기기</string>
 </resources>
