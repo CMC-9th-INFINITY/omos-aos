@@ -57,7 +57,7 @@ class LoginFragment : Fragment() {
     }
 
     private fun collectState() {
-        viewLifecycleOwner.lifecycleScope.launch {
+        lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.isVisiblePassword.collect { isVisiblePassword ->
                     binding.ivEye.isSelected = isVisiblePassword
