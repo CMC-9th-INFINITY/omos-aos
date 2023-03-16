@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.onboarding.login
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
@@ -12,6 +13,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
@@ -40,6 +42,7 @@ class LoginFragment : Fragment() {
 
     private fun initListener() {
         initMoveScreenListener()
+        initLoginListener()
     }
 
     private fun initMoveScreenListener() {
@@ -56,6 +59,15 @@ class LoginFragment : Fragment() {
         }
     }
 
+    private fun initLoginListener() {
+        /*binding.btnLogin.setOnClickListener {
+            val intent = Intent(context, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            }
+            startActivity(intent)
+        }*/
+    }
+
     private fun collectState() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -67,6 +79,22 @@ class LoginFragment : Fragment() {
                         PasswordTransformationMethod.getInstance()
                     }
                     binding.etPw.setSelection(viewModel.password.value.length)
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.errorEmail.collect { errorEmail ->
+                    binding.etEmail.isActivated = errorEmail.state
+                }
+            }
+        }
+
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.errorPassword.collect { errorPassword ->
+                    binding.constraintPassword.isActivated = errorPassword.state
                 }
             }
         }
