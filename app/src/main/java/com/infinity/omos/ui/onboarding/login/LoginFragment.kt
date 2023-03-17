@@ -1,9 +1,6 @@
 package com.infinity.omos.ui.onboarding.login
 
-import android.content.Intent
 import android.os.Bundle
-import android.text.method.HideReturnsTransformationMethod
-import android.text.method.PasswordTransformationMethod
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +10,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
-import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
 import kotlinx.coroutines.launch
 
@@ -37,12 +33,14 @@ class LoginFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initListener()
-        collectState()
+        collectData()
     }
 
     private fun initListener() {
         initMoveScreenListener()
         initLoginListener()
+        initEmailListener()
+        initPasswordListener()
     }
 
     private fun initMoveScreenListener() {
@@ -68,25 +66,65 @@ class LoginFragment : Fragment() {
         }*/
     }
 
-    private fun collectState() {
+    private fun initEmailListener() = with(binding.ofvEmail) {
+        setOnTextChangeListener { text ->
+            viewModel.setEmail(text)
+            viewModel.changeLoginState()
+        }
+
+        setOnFocusChangeListener { hasFocus ->
+            viewModel.checkEmailValidation(hasFocus)
+        }
+    }
+
+    private fun initPasswordListener() = with(binding.ofvPassword) {
+        setOnTextChangeListener { text ->
+            viewModel.setPassword(text)
+            viewModel.changeLoginState()
+        }
+
+        setOnFocusChangeListener { hasFocus ->
+            viewModel.checkPasswordValidation(hasFocus)
+        }
+
+        setOnPasswordToggleClickListener {
+            viewModel.changePasswordVisibleState()
+        }
+    }
+
+    private fun collectData() {
+        collectFieldViewText()
+        collectFieldViewError()
+        collectFieldViewPasswordState()
+    }
+
+    private fun collectFieldViewText() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isVisiblePassword.collect { isVisiblePassword ->
-                    binding.ivEye.isSelected = isVisiblePassword
-                    binding.etPw.transformationMethod = if (isVisiblePassword) {
-                        HideReturnsTransformationMethod.getInstance()
-                    } else {
-                        PasswordTransformationMethod.getInstance()
+                viewModel.email.collect { email ->
+                    if (binding.ofvEmail.text != email) {
+                        binding.ofvEmail.text = email
                     }
-                    binding.etPw.setSelection(viewModel.password.value.length)
                 }
             }
         }
 
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.password.collect { password ->
+                    if (binding.ofvPassword.text != password) {
+                        binding.ofvPassword.text = password
+                    }
+                }
+            }
+        }
+    }
+
+    private fun collectFieldViewError() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.errorEmail.collect { errorEmail ->
-                    binding.etEmail.isActivated = errorEmail.state
+                    binding.ofvEmail.setShowErrorMsg(errorEmail)
                 }
             }
         }
@@ -94,7 +132,17 @@ class LoginFragment : Fragment() {
         lifecycleScope.launch {
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.errorPassword.collect { errorPassword ->
-                    binding.constraintPassword.isActivated = errorPassword.state
+                    binding.ofvPassword.setShowErrorMsg(errorPassword)
+                }
+            }
+        }
+    }
+
+    private fun collectFieldViewPasswordState() {
+        lifecycleScope.launch {
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.isVisiblePassword.collect { isVisiblePassword ->
+                    binding.ofvPassword.setShowPassword(isVisiblePassword)
                 }
             }
         }

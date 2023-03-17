@@ -13,7 +13,6 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/normal_padding"
         tools:context=".ui.onboarding.login.LoginFragment">
 
         <ImageView
@@ -32,6 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="33dp"
+            android:paddingHorizontal="@dimen/normal_padding"
             android:text="@string/login"
             android:textColor="?attr/colorPrimary"
             android:textSize="22sp"
@@ -39,142 +39,58 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
+        <com.infinity.omos.ui.onboarding.OmosFieldView
+            android:id="@+id/ofv_email"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
-            android:text="@string/email"
-            android:textColor="@color/ivory"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_login" />
-
-        <TextView
-            android:id="@+id/tv_error_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{vm.errorEmail.msg}"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="12sp"
-            app:isGone="@{!vm.errorEmail.state}"
-            app:layout_constraintBottom_toBottomOf="@id/tv_email"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_email"
-            tools:text="이메일을 입력해주세요." />
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:afterTextChanged="@{() -> vm.changeLoginState()}"
-            android:background="@drawable/selector_slightly_rounded_rectangle"
-            android:hint="@string/email_hint"
             android:inputType="textEmailAddress"
-            android:onFocusChange="@{(_, hasFocus) -> vm.checkEmailValidation(hasFocus)}"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="14dp"
-            android:text="@={vm.email}"
-            android:textColor="@color/gray_02"
-            android:textColorHint="@color/gray_06"
-            android:textSize="16sp"
+            app:hint="@string/email_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_email" />
+            app:layout_constraintTop_toBottomOf="@id/tv_login"
+            app:title="@string/email" />
 
-        <TextView
-            android:id="@+id/tv_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/pw"
-            android:textColor="@color/ivory"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/et_email" />
-
-        <TextView
-            android:id="@+id/tv_error_password"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{vm.errorPassword.msg}"
-            android:textColor="?attr/colorPrimary"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_password"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_password"
-            tools:text="비밀번호를 입력해주세요." />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraint_password"
+        <com.infinity.omos.ui.onboarding.OmosFieldView
+            android:id="@+id/ofv_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="7dp"
-            android:background="@drawable/selector_slightly_rounded_rectangle"
+            android:layout_marginTop="@dimen/normal_padding"
+            android:inputType="textPassword"
+            app:hint="@string/pw_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_password">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_pw"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_weight="1"
-                android:afterTextChanged="@{() -> vm.changeLoginState()}"
-                android:background="@null"
-                android:hint="@string/pw_hint"
-                android:inputType="textPassword"
-                android:onFocusChange="@{(_, hasFocus) -> vm.checkPasswordValidation(hasFocus)}"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="14dp"
-                android:text="@={vm.password}"
-                android:textColor="@color/gray_02"
-                android:textColorHint="@color/gray_06"
-                android:textSize="16sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_eye"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageView
-                android:id="@+id/iv_eye"
-                android:layout_width="wrap_content"
-                android:layout_height="0dp"
-                android:contentDescription="@string/show_hide"
-                android:onClick="@{() -> vm.changePasswordVisibleState()}"
-                android:paddingHorizontal="@dimen/normal_padding"
-                android:src="@drawable/selector_eye"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/et_pw"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintTop_toBottomOf="@id/ofv_email"
+            app:passwordToggleEnabled="true"
+            app:title="@string/pw" />
 
         <TextView
             android:id="@+id/tv_find_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
+            android:paddingHorizontal="@dimen/normal_padding"
             android:text="@string/find_pw"
             android:textColor="@color/gray_04"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraint_password" />
+            app:layout_constraintTop_toBottomOf="@id/ofv_password" />
 
         <TextView
             android:id="@+id/tv_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
+            android:paddingHorizontal="@dimen/normal_padding"
             android:text="@string/sign_up"
             android:textColor="@color/gray_04"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/constraint_password" />
+            app:layout_constraintTop_toBottomOf="@id/ofv_password" />
 
         <Button
             android:id="@+id/btn_login"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_padding"
             android:backgroundTint="@drawable/selector_ok_background"
             android:enabled="@{vm.isActivatedLogin}"
             android:padding="15dp"
@@ -188,6 +104,7 @@
             android:id="@+id/view_divider"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_marginHorizontal="@dimen/normal_padding"
             android:background="@color/divide"
             app:layout_constraintBottom_toBottomOf="@id/tv_or"
             app:layout_constraintEnd_toEndOf="@id/tv_or"
@@ -212,6 +129,7 @@
             style="@style/Widget.MaterialComponents.Button.Icon"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_padding"
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/yellow"
             android:padding="15dp"

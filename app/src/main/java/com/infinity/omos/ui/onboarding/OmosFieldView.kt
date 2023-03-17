@@ -123,9 +123,9 @@ class OmosFieldView @JvmOverloads constructor(
         }
     }
 
-    fun setOnTextChangeListener(listener: () -> Unit) {
+    fun setOnTextChangeListener(listener: (String) -> Unit) {
         binding.etInput.doAfterTextChanged {
-            listener.invoke()
+            listener.invoke(text)
         }
     }
 }
