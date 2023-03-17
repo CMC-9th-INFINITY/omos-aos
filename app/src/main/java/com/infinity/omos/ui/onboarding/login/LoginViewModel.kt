@@ -10,8 +10,11 @@ class LoginViewModel : ViewModel() {
 
     private val pattern: Pattern = Patterns.EMAIL_ADDRESS
 
-    val email = MutableStateFlow("")
-    val password = MutableStateFlow("")
+    private var _email = MutableStateFlow("")
+    val email = _email.asStateFlow()
+
+    private var _password = MutableStateFlow("")
+    val password = _password.asStateFlow()
 
     private var _errorEmail = MutableStateFlow(ErrorField(false))
     val errorEmail = _errorEmail.asStateFlow()
@@ -25,6 +28,14 @@ class LoginViewModel : ViewModel() {
     private var _isActivatedLogin = MutableStateFlow(false)
     val isActivatedLogin = _isActivatedLogin.asStateFlow()
 
+    fun setEmail(email: String) {
+        _email.value = email
+    }
+
+    fun setPassword(password: String) {
+        _password.value = password
+    }
+
     fun changePasswordVisibleState() {
         _isVisiblePassword.value = isVisiblePassword.value.not()
     }
@@ -36,9 +47,10 @@ class LoginViewModel : ViewModel() {
     fun checkEmailValidation(hasFocus: Boolean) {
         if (hasFocus.not()) {
             if (email.value.isNotEmpty()) {
+                val state = pattern.matcher(email.value).matches().not()
                 _errorEmail.value = ErrorField(
-                    pattern.matcher(email.value).matches().not(),
-                    "입력하신 내용을 다시 확인해주세요."
+                    state,
+                    if (state) "입력하신 내용을 다시 확인해주세요." else ""
                 )
             } else {
                 _errorEmail.value = ErrorField(

@@ -1,7 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="RoundImageView">
-        <attr name="radius" format="integer"/>
+        <attr name="radius" format="integer" />
+    </declare-styleable>
+
+    <declare-styleable name="OmosFieldView">
+        <attr name="title" format="string" />
+        <attr name="text" format="string" />
+        <attr name="hint" format="string" />
+        <attr name="errorMsgTint" format="integer" />
+        <attr name="passwordToggleEnabled" format="boolean" />
+        <attr name="showPassword" format="boolean" />
+        <attr name="android:inputType" />
     </declare-styleable>
 
 </resources>
