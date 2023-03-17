@@ -65,9 +65,13 @@ dependencies {
     implementation "com.google.android.material:material:$rootProject.materialVersion"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintLayoutVersion"
     implementation "androidx.legacy:legacy-support-v4:$rootProject.legacySupportVersion"
+
+    // Test
     testImplementation "junit:junit:$rootProject.junitVersion"
-    androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunit"
-    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.espressoVersion"
+    androidTestImplementation "androidx.test.ext:junit:$rootProject.testExtJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$rootProject.testEspressoCoreVersion"
+    testImplementation "io.mockk:mockk:$rootProject.mockkVersion"
+    testImplementation "com.google.truth:truth:$rootProject.truthVersion"
 
     // Navigation component
     implementation "androidx.navigation:navigation-fragment-ktx:$rootProject.navigationVersion"

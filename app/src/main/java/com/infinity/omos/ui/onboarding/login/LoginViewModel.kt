@@ -1,6 +1,6 @@
 package com.infinity.omos.ui.onboarding.login
 
-import android.util.Patterns
+import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -8,7 +8,7 @@ import java.util.regex.Pattern
 
 class LoginViewModel : ViewModel() {
 
-    private val pattern: Pattern = Patterns.EMAIL_ADDRESS
+    private val pattern: Pattern = PatternsCompat.EMAIL_ADDRESS
 
     private var _email = MutableStateFlow("")
     val email = _email.asStateFlow()
