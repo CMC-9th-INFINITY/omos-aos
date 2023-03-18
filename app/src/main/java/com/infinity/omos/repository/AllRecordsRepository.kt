@@ -7,7 +7,7 @@ import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.Category
 import com.infinity.omos.data.Record
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -36,7 +36,7 @@ class AllRecordsRepository {
 
                     401 -> {
                         Log.d("AllRecordsAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         setAllRecords(userId)
                     }
 
@@ -79,7 +79,7 @@ class AllRecordsRepository {
 
                     401 -> {
                         Log.d("CategoryAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getCategory(category, postId, size, sortType, userId)
                     }
 

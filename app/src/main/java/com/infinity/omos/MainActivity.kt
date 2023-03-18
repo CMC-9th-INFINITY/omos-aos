@@ -36,7 +36,7 @@ import com.infinity.omos.ui.main.MyRecordFragment
 import com.infinity.omos.ui.search.AllFragment
 import com.infinity.omos.ui.main.TodayFragment
 import com.infinity.omos.utils.BackKeyHandler
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
@@ -118,9 +118,9 @@ class MainActivity : AppCompatActivity() {
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
-        Log.d("MainActivity", "aToken: ${GlobalApplication.prefs.getString("accessToken")}")
-        Log.d("MainActivity", "rToken: ${GlobalApplication.prefs.getString("refreshToken")}")
-        Log.d("MainActivity", "userId: ${GlobalApplication.prefs.getInt("userId")}")
+        Log.d("MainActivity", "aToken: ${OmosApplication.prefs.getString("accessToken")}")
+        Log.d("MainActivity", "rToken: ${OmosApplication.prefs.getString("refreshToken")}")
+        Log.d("MainActivity", "userId: ${OmosApplication.prefs.getInt("userId")}")
 
         inAppUpdate = InAppUpdate(this)
         inAppUpdate.checkInAppUpdate()

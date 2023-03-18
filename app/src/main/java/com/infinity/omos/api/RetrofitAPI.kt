@@ -1,7 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.BuildConfig
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -38,7 +38,7 @@ object RetrofitAPI {
         @Throws(IOException::class)
         override fun intercept(chain: Interceptor.Chain)
                 : Response = with(chain) {
-            val token = "Bearer ${GlobalApplication.prefs.getString("accessToken")}"
+            val token = "Bearer ${OmosApplication.prefs.getString("accessToken")}"
             val newRequest = request().newBuilder()
                 .addHeader("Authorization", token)
                 .build()

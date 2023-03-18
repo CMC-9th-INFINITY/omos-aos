@@ -28,7 +28,7 @@ import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.changeList
 import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.ShareInstagram
 import com.infinity.omos.viewmodels.DetailRecordViewModel
 import kotlinx.android.synthetic.main.activity_register.*
@@ -39,7 +39,7 @@ class DetailRecordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDetailRecordBinding
     private lateinit var dlg: CustomDialog
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
     private lateinit var actionInsta: MenuItem
     private lateinit var actionMore: MenuItem
 

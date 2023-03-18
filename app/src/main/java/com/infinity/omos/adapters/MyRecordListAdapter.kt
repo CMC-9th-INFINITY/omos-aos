@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.Filter
 import android.widget.Filterable
 import androidx.core.content.ContextCompat
@@ -21,7 +20,7 @@ import com.infinity.omos.etc.GlobalFunction.Companion.extractLetter
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 
 class MyRecordListAdapter internal constructor(context: Context):
     ListAdapter<SimpleRecord, RecyclerView.ViewHolder>(
@@ -39,7 +38,7 @@ class MyRecordListAdapter internal constructor(context: Context):
     private val VIEW_TYPE_LOADING = 1
 
     private lateinit var itemClickListener: OnItemClickListener
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     interface OnItemClickListener{
         fun onClick(v: View, position: Int)

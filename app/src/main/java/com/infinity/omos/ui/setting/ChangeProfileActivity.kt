@@ -29,7 +29,7 @@ import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -44,7 +44,7 @@ class ChangeProfileActivity : AppCompatActivity() {
     private lateinit var result: ActivityResultLauncher<Intent>
     private lateinit var cropResult: ActivityResultLauncher<Intent>
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
     private var imageFile: File? = null
     private var tempImageUrl = ""
 

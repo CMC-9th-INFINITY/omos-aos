@@ -3,12 +3,11 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.BlockService
-import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.ReportService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.ReportBlock
 import com.infinity.omos.data.ResultState
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +37,7 @@ class ReportBlockRepository {
 
                     401 -> {
                         Log.d("ReportAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         reportObject(fromUserId, recordId, reportReason, toUserId, type)
                     }
 
@@ -76,7 +75,7 @@ class ReportBlockRepository {
 
                     401 -> {
                         Log.d("BlockAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         blockUser(fromUserId, recordId, reportReason, toUserId, type)
                     }
 

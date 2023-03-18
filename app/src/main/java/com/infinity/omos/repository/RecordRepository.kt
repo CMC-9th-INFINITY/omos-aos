@@ -9,7 +9,7 @@ import com.infinity.omos.api.ScrapService
 import com.infinity.omos.data.Record
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +38,7 @@ class RecordRepository {
 
                     401 -> {
                         Log.d("SaveScrapAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         saveLike(postId, userId)
                     }
 
@@ -74,7 +74,7 @@ class RecordRepository {
 
                     401 -> {
                         Log.d("DeleteScrapAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         deleteLike(postId, userId)
                     }
 
@@ -110,7 +110,7 @@ class RecordRepository {
 
                     401 -> {
                         Log.d("SaveLikeAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         saveLike(postId, userId)
                     }
 
@@ -146,7 +146,7 @@ class RecordRepository {
 
                     401 -> {
                         Log.d("DeleteLikeAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         deleteLike(postId, userId)
                     }
 
@@ -187,7 +187,7 @@ class RecordRepository {
 
                     401 -> {
                         Log.d("DetailRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getDetailRecord(postId, userId)
                     }
 

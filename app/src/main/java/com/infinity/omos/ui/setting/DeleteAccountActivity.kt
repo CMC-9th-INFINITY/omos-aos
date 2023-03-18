@@ -13,7 +13,7 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.DeleteAccountViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -22,7 +22,7 @@ class DeleteAccountActivity : AppCompatActivity() {
     private lateinit var binding: ActivityDeleteAccountBinding
     private val viewModel: DeleteAccountViewModel by viewModels()
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +37,7 @@ class DeleteAccountActivity : AppCompatActivity() {
                 when(it){
 
                     Constant.ApiState.DONE -> {
-                        GlobalApplication.prefs.setUserToken(null, null, -1)
+                        OmosApplication.prefs.setUserToken(null, null, -1)
 
                         val intent = Intent(this, LoginActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK

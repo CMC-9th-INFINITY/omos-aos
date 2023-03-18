@@ -19,7 +19,7 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityMyScrapRecordBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.MyScrapRecordViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.*
 
@@ -29,7 +29,7 @@ class MyScrapRecordActivity : AppCompatActivity() {
     private val viewModel: MyScrapRecordViewModel by viewModels()
     lateinit var broadcastReceiver: BroadcastReceiver
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

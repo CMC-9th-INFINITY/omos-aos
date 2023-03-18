@@ -23,7 +23,7 @@ import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.databinding.ActivityCategoryBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.CategoryViewModel
 import kotlinx.android.synthetic.main.activity_category.*
 import kotlinx.android.synthetic.main.activity_register.toolbar
@@ -43,7 +43,7 @@ class CategoryRecordsActivity : AppCompatActivity() {
     private var postId = -1
     private lateinit var mAdapter: DetailCategoryListAdapter
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     lateinit var broadcastReceiver: BroadcastReceiver
 

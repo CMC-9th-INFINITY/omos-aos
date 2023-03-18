@@ -7,7 +7,7 @@ import com.infinity.omos.api.RecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +40,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("MyDjAllRecordsAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMyDjAllRecords(userId, postId, size)
                     }
 
@@ -79,7 +79,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("DeleteFollowAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         deleteFollow(postId, userId)
                     }
 
@@ -118,7 +118,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("SaveFollowAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         saveFollow(postId, userId)
                     }
 
@@ -160,7 +160,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("DjProfileAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getDjProfile(fromUserId, toUserId)
                     }
 
@@ -202,7 +202,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("DjRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getDjRecord(userId)
                     }
 
@@ -244,7 +244,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("MyDjRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMyDjRecord(fromUserId, toUserId)
                     }
 
@@ -286,7 +286,7 @@ class MyDjRepository {
 
                     401 -> {
                         Log.d("MyDjAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMyDj(userId)
                     }
 

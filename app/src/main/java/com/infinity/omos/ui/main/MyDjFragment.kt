@@ -21,7 +21,7 @@ import com.infinity.omos.adapters.MyDjListAdapter
 import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyDjFragment : Fragment() {
@@ -30,7 +30,7 @@ class MyDjFragment : Fragment() {
     private lateinit var binding: FragmentMyDjBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
-    private val fromUserId = GlobalApplication.prefs.getInt("userId")
+    private val fromUserId = OmosApplication.prefs.getInt("userId")
 
     private var page = 0
     private val pageSize = 5

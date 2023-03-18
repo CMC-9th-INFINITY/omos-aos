@@ -21,7 +21,7 @@ import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityDjBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.DjViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 
@@ -30,7 +30,7 @@ class DjActivity : AppCompatActivity() {
     private val viewModel: DjViewModel by viewModels()
     private lateinit var binding: ActivityDjBinding
 
-    private val fromUserId = GlobalApplication.prefs.getInt("userId")
+    private val fromUserId = OmosApplication.prefs.getInt("userId")
     private var toUserId = -1
     private var isClickFollow = false
     private var followerCnt = 0

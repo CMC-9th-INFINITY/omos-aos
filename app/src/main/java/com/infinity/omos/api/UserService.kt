@@ -1,12 +1,14 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.Profile
-import retrofit2.http.GET
-import retrofit2.http.Path
+import com.infinity.omos.data.user.UserCredential
+import com.infinity.omos.data.user.UserToken
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface UserService {
-    @GET("api/user/{userId}")
-    suspend fun getUserProfile(
-        @Path("userId") userId: Int
-    ): Profile
+
+    @POST("api/auth/login")
+    suspend fun loginUser(
+        @Body params: UserCredential
+    ): UserToken
 }

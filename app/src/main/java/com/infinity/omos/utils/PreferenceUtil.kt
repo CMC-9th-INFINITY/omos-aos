@@ -2,7 +2,7 @@ package com.infinity.omos.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.infinity.omos.data.UserToken
+import com.infinity.omos.data.FakeUserToken
 
 /**
  *  SharedPreference Util
@@ -11,17 +11,17 @@ class PreferenceUtil(context: Context) {
     private val prefs: SharedPreferences =
         context.getSharedPreferences("prefs_name", Context.MODE_PRIVATE)
 
-    fun getUserToken(): UserToken?{
+    fun getUserToken(): FakeUserToken?{
         var accessToken = getString("accessToken")
         var refreshToken = getString("refreshToken")
         var userId = getInt("userId")
 
-        var userToken: UserToken? = null
+        var fakeUserToken: FakeUserToken? = null
         if (userId != -1){
-            userToken = UserToken(accessToken, refreshToken, userId)
+            fakeUserToken = FakeUserToken(accessToken, refreshToken, userId)
         }
 
-        return userToken
+        return fakeUserToken
     }
 
     fun setUserToken(accessToken: String?, refreshToken: String?, userId: Int){

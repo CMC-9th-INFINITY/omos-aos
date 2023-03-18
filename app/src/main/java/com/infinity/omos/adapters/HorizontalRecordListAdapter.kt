@@ -12,7 +12,7 @@ import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListHorizontalRecordItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 
 class HorizontalRecordListAdapter internal constructor(context: Context):
     ListAdapter<SumRecord, HorizontalRecordListAdapter.ViewHolder>(
@@ -23,7 +23,7 @@ class HorizontalRecordListAdapter internal constructor(context: Context):
     private val context = context
     private var record = ArrayList<SumRecord?>()
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     private lateinit var itemClickListener: OnItemClickListener
 

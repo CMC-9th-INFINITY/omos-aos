@@ -29,7 +29,7 @@ import com.infinity.omos.databinding.ActivityWriteRecordBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.WriteRecordViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -57,7 +57,7 @@ class WriteRecordActivity : AppCompatActivity() {
 
     private var isModify = false
 
-    private var userId = GlobalApplication.prefs.getInt("userId")
+    private var userId = OmosApplication.prefs.getInt("userId")
     private var imageFile: File? = null
     lateinit var awsConnector: AWSConnector
 

@@ -19,8 +19,7 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.etc.GlobalFunction
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class AllRecordFragment : Fragment() {
@@ -29,7 +28,7 @@ class AllRecordFragment : Fragment() {
     private lateinit var binding: FragmentAllRecordsBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

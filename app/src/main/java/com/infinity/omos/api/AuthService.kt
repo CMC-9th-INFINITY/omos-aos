@@ -18,12 +18,12 @@ interface AuthService {
     @POST("api/auth/login")
     fun getResultLogin(
         @Body params: UserLogin
-    ): Call<UserToken>
+    ): Call<FakeUserToken>
 
     @POST("api/auth/reissue")
     fun getToken(
-        @Body params: UserToken
-    ): Call<UserToken>
+        @Body params: FakeUserToken
+    ): Call<FakeUserToken>
 
     @POST("api/auth/signup")
     fun getResultSignUp(
@@ -33,12 +33,12 @@ interface AuthService {
     @POST("api/auth/sns-login")
     fun getResultSnsLogin(
         @Body params: UserSnsLogin
-    ): Call<UserToken>
+    ): Call<FakeUserToken>
 
     @POST("api/auth/sns-signup")
     fun getResultSnsSignUp(
         @Body params: UserSnsSignUp
-    ): Call<UserToken>
+    ): Call<FakeUserToken>
 
     @PUT("/api/auth/update/password")
     fun updatePassword(
