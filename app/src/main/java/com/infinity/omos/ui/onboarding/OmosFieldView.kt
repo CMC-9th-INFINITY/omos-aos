@@ -12,7 +12,6 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.doAfterTextChanged
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ViewOmosFieldBinding
-import com.infinity.omos.ui.onboarding.login.ErrorField
 
 class OmosFieldView @JvmOverloads constructor(
     context: Context,
