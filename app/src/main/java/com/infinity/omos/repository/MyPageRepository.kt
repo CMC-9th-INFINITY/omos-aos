@@ -6,7 +6,7 @@ import com.infinity.omos.api.MyPageService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -38,7 +38,7 @@ class MyPageRepository {
 
                     401 -> {
                         Log.d("MyPageDataAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMyPageData(userId)
                     }
 
@@ -78,7 +78,7 @@ class MyPageRepository {
 
                     401 -> {
                         Log.d("SignOutAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         signOut(userId)
                     }
 
@@ -118,7 +118,7 @@ class MyPageRepository {
 
                     401 -> {
                         Log.d("LogoutAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         doLogout(userId)
                     }
 
@@ -160,7 +160,7 @@ class MyPageRepository {
 
                     401 -> {
                         Log.d("UpdateProfileAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         updateProfile(nickname, profileUrl, userId)
                     }
 
@@ -204,7 +204,7 @@ class MyPageRepository {
 
                     401 -> {
                         Log.d("ScrapRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getScrapRecord(userId)
                     }
 
@@ -248,7 +248,7 @@ class MyPageRepository {
 
                     401 -> {
                         Log.d("LikeRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getLikeRecord(userId)
                     }
 

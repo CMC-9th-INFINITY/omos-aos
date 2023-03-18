@@ -19,7 +19,7 @@ import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.dj.FollowActivity
 import com.infinity.omos.ui.setting.SettingActivity
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyPageFragment : Fragment() {
@@ -28,7 +28,7 @@ class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     private var scrap1 = -1
     private var scrap2 = -1

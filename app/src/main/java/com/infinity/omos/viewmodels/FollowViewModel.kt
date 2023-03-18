@@ -1,10 +1,9 @@
 package com.infinity.omos.viewmodels
 
-import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.Profile
 import com.infinity.omos.repository.FollowRepository
-import com.infinity.omos.repository.UserRepository
+import com.infinity.omos.repository.FakeUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -12,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FollowViewModel @Inject internal constructor(
     private val followRepository: FollowRepository,
-    private val userRepository: UserRepository
+    private val fakeUserRepository: FakeUserRepository
 ): ViewModel() {
 
     fun getFollower(userId: Int): Flow<List<Profile>> {
@@ -24,6 +23,6 @@ class FollowViewModel @Inject internal constructor(
     }
 
     fun getUserProfile(userId: Int): Flow<Profile> {
-        return userRepository.getUserProfile(userId)
+        return fakeUserRepository.getUserProfile(userId)
     }
 }

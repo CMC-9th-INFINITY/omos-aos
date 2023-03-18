@@ -6,7 +6,7 @@ import com.infinity.omos.api.AuthService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -132,17 +132,17 @@ class OnBoardingRepository {
     }
 
     var stateToken = MutableLiveData<Constant.ApiState>()
-    fun getUserToken(userInfo: UserToken){
-        onBoardingApi.getToken(userInfo).enqueue(object: Callback<UserToken> {
+    fun getUserToken(userInfo: FakeUserToken){
+        onBoardingApi.getToken(userInfo).enqueue(object: Callback<FakeUserToken> {
             override fun onResponse(
-                call: Call<UserToken>,
-                response: Response<UserToken>
+                call: Call<FakeUserToken>,
+                response: Response<FakeUserToken>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("ReissueAPI", "Save Token")
-                        GlobalApplication.prefs.setUserToken(
+                        OmosApplication.prefs.setUserToken(
                             body?.accessToken,
                             body?.refreshToken,
                             body?.userId!!)
@@ -166,7 +166,7 @@ class OnBoardingRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserToken>, t: Throwable) {
+            override fun onFailure(call: Call<FakeUserToken>, t: Throwable) {
                 Log.d("ReissueAPI fail", t.message.toString())
                 stateToken.value = Constant.ApiState.NETWORK
                 t.stackTrace
@@ -176,16 +176,16 @@ class OnBoardingRepository {
 
     var stateLogin = MutableLiveData<Constant.ApiState>()
     fun checkLogin(userLogin: UserLogin){
-        onBoardingApi.getResultLogin(userLogin).enqueue(object: Callback<UserToken> {
+        onBoardingApi.getResultLogin(userLogin).enqueue(object: Callback<FakeUserToken> {
             override fun onResponse(
-                call: Call<UserToken>,
-                response: Response<UserToken>
+                call: Call<FakeUserToken>,
+                response: Response<FakeUserToken>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("LoginAPI", "Success Login")
-                        GlobalApplication.prefs.setUserToken(
+                        OmosApplication.prefs.setUserToken(
                             body?.accessToken,
                             body?.refreshToken,
                             body?.userId!!)
@@ -212,7 +212,7 @@ class OnBoardingRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserToken>, t: Throwable) {
+            override fun onFailure(call: Call<FakeUserToken>, t: Throwable) {
                 Log.d("LoginAPI", t.message.toString())
                 stateLogin.value = Constant.ApiState.NETWORK
                 t.stackTrace
@@ -222,16 +222,16 @@ class OnBoardingRepository {
 
     var stateSnsLogin = MutableLiveData<Constant.ApiState>()
     fun checkSnsLogin(id: UserSnsLogin){
-        onBoardingApi.getResultSnsLogin(id).enqueue(object: Callback<UserToken> {
+        onBoardingApi.getResultSnsLogin(id).enqueue(object: Callback<FakeUserToken> {
             override fun onResponse(
-                call: Call<UserToken>,
-                response: Response<UserToken>
+                call: Call<FakeUserToken>,
+                response: Response<FakeUserToken>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("SnsLoginAPI", "Success Login")
-                        GlobalApplication.prefs.setUserToken(
+                        OmosApplication.prefs.setUserToken(
                             body?.accessToken,
                             body?.refreshToken,
                             body?.userId!!)
@@ -257,7 +257,7 @@ class OnBoardingRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserToken>, t: Throwable) {
+            override fun onFailure(call: Call<FakeUserToken>, t: Throwable) {
                 Log.d("SnsLoginAPI", t.message.toString())
                 stateSnsLogin.value = Constant.ApiState.NETWORK
                 t.stackTrace
@@ -309,16 +309,16 @@ class OnBoardingRepository {
 
     var stateSnsSignUp = MutableLiveData<Constant.ApiState>()
     fun snsSignUp(userInfo: UserSnsSignUp){
-        onBoardingApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<UserToken>{
+        onBoardingApi.getResultSnsSignUp(userInfo).enqueue(object: Callback<FakeUserToken>{
             override fun onResponse(
-                call: Call<UserToken>,
-                response: Response<UserToken>
+                call: Call<FakeUserToken>,
+                response: Response<FakeUserToken>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("signUpAPI", "Success SignUp")
-                        GlobalApplication.prefs.setUserToken(
+                        OmosApplication.prefs.setUserToken(
                             body?.accessToken,
                             body?.refreshToken,
                             body?.userId!!)
@@ -344,7 +344,7 @@ class OnBoardingRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserToken>, t: Throwable) {
+            override fun onFailure(call: Call<FakeUserToken>, t: Throwable) {
                 Log.d("signUpAPI", t.message.toString())
                 stateSnsSignUp.value = Constant.ApiState.NETWORK
                 t.stackTrace

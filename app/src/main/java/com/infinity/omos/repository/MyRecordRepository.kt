@@ -10,7 +10,7 @@ import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.data.Update
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -40,7 +40,7 @@ class MyRecordRepository {
 
                     401 -> {
                         Log.d("DeleteS3ImageAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         deleteImage(directory, fileName)
                     }
 
@@ -78,7 +78,7 @@ class MyRecordRepository {
 
                     401 -> {
                         Log.d("UpdateRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         updateRecord(postId, params)
                     }
 
@@ -116,7 +116,7 @@ class MyRecordRepository {
 
                     401 -> {
                         Log.d("DeleteRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         deleteRecord(postId)
                     }
 
@@ -154,7 +154,7 @@ class MyRecordRepository {
 
                     401 -> {
                         Log.d("SaveRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         saveRecord(record)
                     }
 
@@ -195,7 +195,7 @@ class MyRecordRepository {
 
                     401 -> {
                         Log.d("MyRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMyRecord(userId)
                     }
 

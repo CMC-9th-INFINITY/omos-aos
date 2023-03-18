@@ -1,19 +1,12 @@
 package com.infinity.omos.adapters
 
-import android.content.Context
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import androidx.activity.viewModels
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.Profile
-import com.infinity.omos.data.UserId
 import com.infinity.omos.databinding.ListBlockedAccountBinding
-import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
-import com.infinity.omos.viewmodels.BlockedViewModel
 
 class BlockedListAdapter : ListAdapter<Profile, RecyclerView.ViewHolder>(BlockedDiffCallback()){
 

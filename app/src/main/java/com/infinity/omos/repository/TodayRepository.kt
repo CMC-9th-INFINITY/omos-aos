@@ -9,7 +9,7 @@ import com.infinity.omos.data.Music
 import com.infinity.omos.data.Profile
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,7 +42,7 @@ class TodayRepository {
 
                     401 -> {
                         Log.d("FamousRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getFamousRecord()
                     }
 
@@ -85,7 +85,7 @@ class TodayRepository {
 
                     401 -> {
                         Log.d("MyLoveMusicAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMyLoveMusic(userId)
                     }
 
@@ -129,7 +129,7 @@ class TodayRepository {
 
                     401 -> {
                         Log.d("TodayMusicAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getTodayMusic()
                     }
 
@@ -172,7 +172,7 @@ class TodayRepository {
 
                     401 -> {
                         Log.d("RecommendDjAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getRecommendDj()
                     }
 

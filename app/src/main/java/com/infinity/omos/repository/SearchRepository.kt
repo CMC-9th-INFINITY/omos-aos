@@ -7,7 +7,7 @@ import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.SearchService
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -37,7 +37,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("MusicRecordAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMusicRecord(musicId, postId, size, sortType, userId)
                     }
 
@@ -77,7 +77,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("ArtistAlbumAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getArtistAlbum(artistId, limit, offset)
                     }
 
@@ -116,7 +116,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("ArtistMusicAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getArtistMusic(artistId)
                     }
 
@@ -155,7 +155,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("AlbumDetailAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getAlbumDetail(albumId)
                     }
 
@@ -194,7 +194,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("ArtistAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getArtist(keyword, limit, offset)
                     }
 
@@ -233,7 +233,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("MusicAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getMusic(keyword, limit, offset)
                     }
 
@@ -272,7 +272,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("AlbumAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getAlbum(keyword, limit, offset)
                     }
 
@@ -311,7 +311,7 @@ class SearchRepository {
 
                     401 -> {
                         Log.d("SearchMusicAPI", "Unauthorized")
-                        onBoardingRepository.getUserToken(GlobalApplication.prefs.getUserToken()!!)
+                        onBoardingRepository.getUserToken(OmosApplication.prefs.getUserToken()!!)
                         getSearchMusic(keyword, limit, offset)
                     }
 

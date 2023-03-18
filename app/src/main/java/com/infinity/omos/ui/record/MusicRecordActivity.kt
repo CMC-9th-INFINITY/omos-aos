@@ -23,7 +23,7 @@ import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.databinding.ActivitySearchMusicBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.MusicRecordViewModel
 import kotlinx.android.synthetic.main.activity_category.*
 
@@ -42,7 +42,7 @@ class MusicRecordActivity : AppCompatActivity() {
     private var postId = -1
     private var musicId = ""
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -3,11 +3,8 @@ package com.infinity.omos.ui.setting
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -18,7 +15,7 @@ import androidx.lifecycle.Observer
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityChangePwBinding
 import com.infinity.omos.ui.onboarding.LoginActivity
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.ChangePwViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Pattern
@@ -27,7 +24,7 @@ class ChangePwActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChangePwBinding
     private val viewModel: ChangePwViewModel by viewModels()
-    private var userId = GlobalApplication.prefs.getInt("userId")
+    private var userId = OmosApplication.prefs.getInt("userId")
     private var isFindPw = false
 
     private val pwPattern =

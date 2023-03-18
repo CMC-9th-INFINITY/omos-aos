@@ -18,7 +18,7 @@ import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.record.DetailRecordActivity
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 import java.util.*
 
@@ -27,7 +27,7 @@ class TodayFragment : Fragment() {
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentTodayBinding
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     private var musicId = ""
     private var musicTitle = ""

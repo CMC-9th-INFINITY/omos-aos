@@ -16,7 +16,7 @@ import com.infinity.omos.databinding.ActivitySettingBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.viewmodels.SettingViewModel
 import com.kakao.sdk.user.UserApiClient
@@ -28,7 +28,7 @@ class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
     private val viewModel: SettingViewModel by viewModels()
 
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,7 +67,7 @@ class SettingActivity : AppCompatActivity() {
                             }
 
                             viewModel.doLogout(userId)
-                            GlobalApplication.prefs.setUserToken(null, null, -1)
+                            OmosApplication.prefs.setUserToken(null, null, -1)
 
                             val intent = Intent(this, LoginActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
@@ -87,7 +87,7 @@ class SettingActivity : AppCompatActivity() {
             PendingIntent.FLAG_IMMUTABLE
         )
 
-        val state = GlobalApplication.prefs.getString("alarm")
+        val state = OmosApplication.prefs.getString("alarm")
         if (state == "on"){
             binding.btnAlarm.isChecked = true
         }
@@ -107,10 +107,10 @@ class SettingActivity : AppCompatActivity() {
                     pendingIntent
                 )
 
-                GlobalApplication.prefs.setString("alarm", "on")
+                OmosApplication.prefs.setString("alarm", "on")
             } else {
                 alarmManager.cancel(pendingIntent)
-                GlobalApplication.prefs.setString("alarm", "off")
+                OmosApplication.prefs.setString("alarm", "off")
             }
         }
 

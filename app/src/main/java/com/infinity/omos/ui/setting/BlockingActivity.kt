@@ -1,6 +1,5 @@
 package com.infinity.omos.ui.setting
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -13,11 +12,9 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.BlockedListAdapter
 import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ActivityBlockingBinding
-import com.infinity.omos.databinding.ActivityMyScrapRecordBinding
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.utils.GlobalApplication
+import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.viewmodels.BlockedViewModel
-import com.infinity.omos.viewmodels.MyScrapRecordViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.coroutines.flow.collectLatest
@@ -29,7 +26,7 @@ class BlockingActivity : AppCompatActivity() {
     private lateinit var binding: ActivityBlockingBinding
     private val viewModel: BlockedViewModel by viewModels()
     private val adapter = BlockedListAdapter()
-    private val userId = GlobalApplication.prefs.getInt("userId")
+    private val userId = OmosApplication.prefs.getInt("userId")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
