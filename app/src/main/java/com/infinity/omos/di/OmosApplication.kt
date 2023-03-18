@@ -1,16 +1,14 @@
-package com.infinity.omos.utils
+package com.infinity.omos.di
 
 import android.app.Application
 import com.infinity.omos.BuildConfig
+import com.infinity.omos.utils.PreferenceUtil
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp
 
-/**
- *  가장 먼저 실행
- */
-
 @HiltAndroidApp
-class GlobalApplication: Application() {
+class OmosApplication : Application() {
+
     override fun onCreate() {
         super.onCreate()
         prefs = PreferenceUtil(applicationContext)
