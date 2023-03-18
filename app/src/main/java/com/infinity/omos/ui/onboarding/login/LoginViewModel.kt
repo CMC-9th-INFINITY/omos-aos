@@ -2,6 +2,7 @@ package com.infinity.omos.ui.onboarding.login
 
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
+import com.infinity.omos.ui.onboarding.ErrorField
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import java.util.regex.Pattern
