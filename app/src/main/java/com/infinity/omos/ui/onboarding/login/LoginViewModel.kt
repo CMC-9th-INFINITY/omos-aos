@@ -1,13 +1,23 @@
 package com.infinity.omos.ui.onboarding.login
 
+import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.infinity.omos.data.user.UserCredential
+import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorField
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
+import javax.inject.Inject
 
-class LoginViewModel : ViewModel() {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    private val userRepository: UserRepository
+) : ViewModel() {
 
     private val pattern: Pattern = PatternsCompat.EMAIL_ADDRESS
 
@@ -74,6 +84,25 @@ class LoginViewModel : ViewModel() {
                     false
                 )
             }
+        }
+    }
+
+    fun loginUser() {
+        viewModelScope.launch {
+            userRepository.loginUser(
+                UserCredential(
+                    email.value,
+                    password.value
+                )
+            )
+                .onSuccess { userToken ->
+                    // TODO: 토큰 저장 및 화면 이동 이벤트 발생
+                    Log.d("jaemin", userToken.userId.toString())
+                }
+                .onFailure {
+                    // TODO: 에러 메시지 띄우기
+                    Log.d("jaemin", "로그인 에러")
+                }
         }
     }
 }

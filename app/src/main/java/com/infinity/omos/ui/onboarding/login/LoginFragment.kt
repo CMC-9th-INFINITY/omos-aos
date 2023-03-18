@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.onboarding.login
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -10,9 +11,12 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
+import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private lateinit var binding: FragmentLoginBinding
@@ -58,12 +62,15 @@ class LoginFragment : Fragment() {
     }
 
     private fun initLoginListener() {
-        /*binding.btnLogin.setOnClickListener {
-            val intent = Intent(context, MainActivity::class.java).apply {
+        binding.btnLogin.setOnClickListener {
+
+            viewModel.loginUser()
+
+            /*val intent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             }
-            startActivity(intent)
-        }*/
+            startActivity(intent)*/
+        }
     }
 
     private fun initEmailListener() = with(binding.ofvEmail) {

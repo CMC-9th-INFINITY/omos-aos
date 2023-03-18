@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".utils.GlobalApplication"
+        android:name=".di.OmosApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher_omos"
         android:label="@string/app_name"
