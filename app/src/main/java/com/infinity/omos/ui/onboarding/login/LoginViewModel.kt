@@ -40,10 +40,16 @@ class LoginViewModel @Inject constructor(
     val isActivatedLogin = _isActivatedLogin.asStateFlow()
 
     fun setEmail(email: String) {
+        if (errorEmail.value.state) {
+            _errorEmail.value = ErrorField(false)
+        }
         _email.value = email
     }
 
     fun setPassword(password: String) {
+        if (errorPassword.value.state) {
+            _errorPassword.value = ErrorField(false)
+        }
         _password.value = password
     }
 
@@ -80,9 +86,7 @@ class LoginViewModel @Inject constructor(
                     BLANK_PASSWORD_ERROR_MESSAGE
                 )
             } else {
-                _errorPassword.value = ErrorField(
-                    false
-                )
+                _errorPassword.value = ErrorField(false)
             }
         }
     }
