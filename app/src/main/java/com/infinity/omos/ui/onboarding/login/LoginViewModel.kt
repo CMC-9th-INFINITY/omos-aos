@@ -61,12 +61,12 @@ class LoginViewModel @Inject constructor(
                 val state = pattern.matcher(email.value).matches().not()
                 _errorEmail.value = ErrorField(
                     state,
-                    if (state) "입력하신 내용을 다시 확인해주세요." else ""
+                    if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else ""
                 )
             } else {
                 _errorEmail.value = ErrorField(
                     true,
-                    "이메일을 입력해주세요."
+                    BLANK_EMAIL_ERROR_MESSAGE
                 )
             }
         }
@@ -77,7 +77,7 @@ class LoginViewModel @Inject constructor(
             if (password.value.isEmpty()) {
                 _errorPassword.value = ErrorField(
                     true,
-                    "비밀번호를 입력해주세요."
+                    BLANK_PASSWORD_ERROR_MESSAGE
                 )
             } else {
                 _errorPassword.value = ErrorField(
@@ -96,13 +96,27 @@ class LoginViewModel @Inject constructor(
                 )
             )
                 .onSuccess { userToken ->
+                    userRepository.saveToken(userToken)
+
                     // TODO: 토큰 저장 및 화면 이동 이벤트 발생
                     Log.d("jaemin", userToken.userId.toString())
                 }
                 .onFailure {
-                    // TODO: 에러 메시지 띄우기
-                    Log.d("jaemin", "로그인 에러")
+                    _errorEmail.value = ErrorField(
+                        true,
+                        INCORRECT_CONTENTS_ERROR_MESSAGE
+                    )
+                    _errorPassword.value = ErrorField(
+                        true,
+                        INCORRECT_CONTENTS_ERROR_MESSAGE
+                    )
                 }
         }
+    }
+
+    companion object {
+        const val INCORRECT_CONTENTS_ERROR_MESSAGE = "입력하신 내용을 다시 확인해주세요."
+        const val BLANK_EMAIL_ERROR_MESSAGE = "이메일을 입력해주세요."
+        const val BLANK_PASSWORD_ERROR_MESSAGE = "비밀번호를 입력해주세요."
     }
 }
