@@ -18,6 +18,7 @@ import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
@@ -27,6 +28,7 @@ import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import javax.inject.Named
+import javax.inject.Provider
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
@@ -62,13 +64,37 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideTokenAuthenticator(
+        dataStoreManager: DataStoreManager,
+        authService: Provider<AuthService> // Provider: 순환 참조 문제 해결
+    ): Authenticator {
+        val authenticator = Authenticator { _, response ->
+            if (response.code == 401) {
+                val oldToken = runBlocking { dataStoreManager.tokenFlow.first() }
+                val newToken = authService.get().reissueToken(oldToken)
+                runBlocking { dataStoreManager.saveToken(newToken) }
+
+                response.request.newBuilder()
+                    .addHeader("Authorization", "Bearer ${newToken.accessToken}")
+                    .build()
+            } else {
+                null
+            }
+        }
+        return authenticator
+    }
+
+    @Provides
+    @Singleton
     fun provideOmosOkhttpClient(
         loggingInterceptor: HttpLoggingInterceptor,
-        omosInterceptor: Interceptor
+        omosInterceptor: Interceptor,
+        tokenAuthenticator: Authenticator
     ): OkHttpClient {
         return OkHttpClient().newBuilder()
             .addInterceptor(loggingInterceptor)
             .addInterceptor(omosInterceptor)
+            .authenticator(tokenAuthenticator)
             .build()
     }
 
@@ -93,50 +119,20 @@ object NetworkModule {
             .build()
     }
 
-    /*@Provides
-    @Singleton
-    fun provideReissueInterceptor(
-        service: AuthService,
-        dataStoreManager: DataStoreManager
-    ): Interceptor {
-        return Interceptor { chain ->
-            val request = chain.request()
-            val response = chain.proceed(request)
-            if (response.code == 401) {
-                val token = runBlocking { dataStoreManager.tokenFlow.first() }
-                service.reissueToken(token)
-            }
-
-
-
-            val jsonString = response.body?.string() ?: ""
-            val json = Json { ignoreUnknownKeys = true }
-            val result = json.decodeFromString<WeatherContainerResponse>(jsonString)
-            val weather = result.weathers.first()
-            val type = getWeatherTypeById(weather.id)
-            val main = result.main
-            response.newBuilder()
-                .message(response.message)
-                .body(
-                    Json.encodeToString(
-                        WeatherResponse(
-                            weather.id,
-                            type,
-                            weather.icon,
-                            main.temperature
-                        )
-                    ).toResponseBody()
-                )
-                .build()
-        }
-    }*/
-
     @Provides
     @Singleton
     fun provideUserService(
         retrofit: Retrofit
     ): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthService(
+        retrofit: Retrofit
+    ): AuthService {
+        return retrofit.create(AuthService::class.java)
     }
 
     @Provides
