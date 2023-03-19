@@ -1,6 +1,9 @@
 package com.infinity.omos.ui.onboarding.login
 
 import com.google.common.truth.Truth.assertThat
+import com.infinity.omos.repository.UserRepository
+import io.mockk.MockKAnnotations
+import io.mockk.impl.annotations.MockK
 import org.junit.Before
 import org.junit.Test
 
@@ -8,9 +11,13 @@ class LoginViewModelTest {
 
     private lateinit var viewModel: LoginViewModel
 
+    @MockK
+    private lateinit var userRepository: UserRepository
+
     @Before
     fun setUp() {
-        viewModel = LoginViewModel()
+        MockKAnnotations.init(this)
+        viewModel = LoginViewModel(userRepository)
     }
 
     @Test

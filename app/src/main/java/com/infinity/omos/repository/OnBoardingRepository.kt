@@ -2,7 +2,7 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.AuthService
+import com.infinity.omos.api.FakeAuthService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
@@ -16,7 +16,7 @@ import retrofit2.Retrofit
 class OnBoardingRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val onBoardingApi = retrofit.create(AuthService::class.java)
+    private val onBoardingApi = retrofit.create(FakeAuthService::class.java)
 
     var getUserId = MutableLiveData<UserId>()
     fun getUserIdFromEmail(email: String){
