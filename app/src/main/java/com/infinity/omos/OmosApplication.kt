@@ -1,7 +1,6 @@
-package com.infinity.omos.di
+package com.infinity.omos
 
 import android.app.Application
-import com.infinity.omos.BuildConfig
 import com.infinity.omos.utils.PreferenceUtil
 import com.kakao.sdk.common.KakaoSdk
 import dagger.hilt.android.HiltAndroidApp

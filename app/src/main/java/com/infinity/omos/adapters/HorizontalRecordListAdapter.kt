@@ -12,7 +12,7 @@ import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListHorizontalRecordItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 
 class HorizontalRecordListAdapter internal constructor(context: Context):
     ListAdapter<SumRecord, HorizontalRecordListAdapter.ViewHolder>(

@@ -13,7 +13,7 @@ import com.infinity.omos.adapters.BlockedListAdapter
 import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ActivityBlockingBinding
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.BlockedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_register_nick.*

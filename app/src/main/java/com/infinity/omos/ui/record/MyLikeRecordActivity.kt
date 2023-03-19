@@ -19,7 +19,7 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityMyLikeRecordBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.MyLikeRecordViewModel
 import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 

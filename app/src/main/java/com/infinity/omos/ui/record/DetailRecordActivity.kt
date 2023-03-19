@@ -28,7 +28,7 @@ import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.etc.GlobalFunction.Companion.changeList
 import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.ShareInstagram
 import com.infinity.omos.viewmodels.DetailRecordViewModel
 import kotlinx.android.synthetic.main.activity_register.*

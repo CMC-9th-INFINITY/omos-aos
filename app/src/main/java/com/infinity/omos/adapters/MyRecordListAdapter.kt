@@ -20,7 +20,7 @@ import com.infinity.omos.etc.GlobalFunction.Companion.extractLetter
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.etc.GlobalFunction.Companion.setCategoryText
 import com.infinity.omos.etc.GlobalFunction.Companion.setDate
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 
 class MyRecordListAdapter internal constructor(context: Context):
     ListAdapter<SimpleRecord, RecyclerView.ViewHolder>(

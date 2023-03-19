@@ -16,7 +16,7 @@ import com.infinity.omos.databinding.ActivitySettingBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.viewmodels.SettingViewModel
 import com.kakao.sdk.user.UserApiClient
