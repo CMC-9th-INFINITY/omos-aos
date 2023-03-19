@@ -40,8 +40,8 @@ class LoginViewModel @Inject constructor(
     private var _isActivatedLogin = MutableStateFlow(false)
     val isActivatedLogin = _isActivatedLogin.asStateFlow()
 
-    private var _eventFlow = MutableSharedFlow<Event>()
-    val eventFlow = _eventFlow.asSharedFlow()
+    private var _state = MutableStateFlow<LoginState>(LoginState.Nothing)
+    val state = _state.asStateFlow()
 
     fun setEmail(email: String) {
         if (errorEmail.value.state) {
@@ -96,6 +96,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginUser() {
+        _state.value = LoginState.Loading
         viewModelScope.launch {
             userRepository.loginUser(
                 UserCredential(
@@ -105,7 +106,7 @@ class LoginViewModel @Inject constructor(
             )
                 .onSuccess { userToken ->
                     userRepository.saveToken(userToken)
-                    _eventFlow.emit(Event.MoveScreen)
+                    _state.value = LoginState.Success
                 }
                 .onFailure {
                     _errorEmail.value = ErrorField(
@@ -116,6 +117,7 @@ class LoginViewModel @Inject constructor(
                         true,
                         INCORRECT_CONTENTS_ERROR_MESSAGE
                     )
+                    _state.value = LoginState.Failure
                 }
         }
     }
@@ -124,9 +126,5 @@ class LoginViewModel @Inject constructor(
         const val INCORRECT_CONTENTS_ERROR_MESSAGE = "입력하신 내용을 다시 확인해주세요."
         const val BLANK_EMAIL_ERROR_MESSAGE = "이메일을 입력해주세요."
         const val BLANK_PASSWORD_ERROR_MESSAGE = "비밀번호를 입력해주세요."
-    }
-
-    sealed class Event {
-        object MoveScreen : Event()
     }
 }
