@@ -19,8 +19,8 @@ android {
         applicationId "com.infinity.omos"
         minSdk rootProject.minSdkVersion
         targetSdk rootProject.targetSdkVersion
-        versionCode 25
-        versionName "1.1.0"
+        versionCode 28
+        versionName "1.1.2"
 
         buildConfigField "String", "BASE_URL", properties['base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
