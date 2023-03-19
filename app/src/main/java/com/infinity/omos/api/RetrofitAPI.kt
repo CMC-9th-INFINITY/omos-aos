@@ -1,7 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.BuildConfig
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -18,7 +18,7 @@ object RetrofitAPI {
     fun getInstnace(): Retrofit {
         if (instance == null) {
             instance = Retrofit.Builder()
-                .baseUrl(BuildConfig.BASE_URL)
+                .baseUrl(BuildConfig.OMOS_BASE_URL)
                 .client(provideOkHttpClient(AppInterceptor()))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()

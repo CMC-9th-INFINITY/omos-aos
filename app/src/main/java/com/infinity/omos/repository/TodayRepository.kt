@@ -9,7 +9,7 @@ import com.infinity.omos.data.Music
 import com.infinity.omos.data.Profile
 import com.infinity.omos.data.SumRecord
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback

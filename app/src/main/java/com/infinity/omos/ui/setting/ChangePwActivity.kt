@@ -15,7 +15,7 @@ import androidx.lifecycle.Observer
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityChangePwBinding
 import com.infinity.omos.ui.onboarding.LoginActivity
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.ChangePwViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 import java.util.regex.Pattern

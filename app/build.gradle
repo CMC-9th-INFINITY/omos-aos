@@ -22,7 +22,7 @@ android {
         versionCode 28
         versionName "1.1.2"
 
-        buildConfigField "String", "BASE_URL", properties['base_url']
+        buildConfigField "String", "OMOS_BASE_URL", properties['omos_base_url']
         buildConfigField "String", "KAKAO_NATIVE_APP_KEY", properties['kakao_native_app_key']
         manifestPlaceholders["KAKAO_OAUTH_KEY"] = properties['kakao_oauth_key']
         buildConfigField "String", "S3_BASE_URL", properties['s3_base_url']
@@ -100,7 +100,7 @@ dependencies {
     implementation "com.github.bumptech.glide:glide:$rootProject.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$rootProject.glideVersion"
 
-    // Kakao login
+    // Kakao Login
     implementation "com.kakao.sdk:v2-user:$rootProject.kakaoLoginVersion"
 
     // Gson

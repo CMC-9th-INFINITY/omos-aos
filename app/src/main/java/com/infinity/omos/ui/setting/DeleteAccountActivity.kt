@@ -13,7 +13,7 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.DeleteAccountViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 

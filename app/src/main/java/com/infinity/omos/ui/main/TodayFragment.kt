@@ -18,7 +18,7 @@ import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.record.DetailRecordActivity
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 import java.util.*
 

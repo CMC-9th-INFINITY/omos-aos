@@ -21,7 +21,7 @@ import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityDjBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.DjViewModel
 import kotlinx.android.synthetic.main.activity_register.*
 

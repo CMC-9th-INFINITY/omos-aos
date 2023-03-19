@@ -10,7 +10,6 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
-import com.infinity.omos.di.OmosApplication
 import com.kakao.sdk.user.UserApiClient
 
 

@@ -19,7 +19,7 @@ import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.SharedViewModel
 
 class AllRecordFragment : Fragment() {

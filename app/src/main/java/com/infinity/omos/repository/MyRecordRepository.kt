@@ -10,7 +10,7 @@ import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.data.Update
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.di.OmosApplication
+import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback

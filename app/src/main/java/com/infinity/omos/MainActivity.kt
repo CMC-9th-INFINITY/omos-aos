@@ -36,7 +36,6 @@ import com.infinity.omos.ui.main.MyRecordFragment
 import com.infinity.omos.ui.search.AllFragment
 import com.infinity.omos.ui.main.TodayFragment
 import com.infinity.omos.utils.BackKeyHandler
-import com.infinity.omos.di.OmosApplication
 import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.MainViewModel
 import kotlinx.android.synthetic.main.activity_main.*
