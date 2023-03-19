@@ -1,6 +1,5 @@
 package com.infinity.omos.ui.onboarding.login
 
-import android.util.Log
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -8,7 +7,9 @@ import com.infinity.omos.data.user.UserCredential
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorField
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.regex.Pattern
@@ -38,6 +39,9 @@ class LoginViewModel @Inject constructor(
 
     private var _isActivatedLogin = MutableStateFlow(false)
     val isActivatedLogin = _isActivatedLogin.asStateFlow()
+
+    private var _eventFlow = MutableSharedFlow<Event>()
+    val eventFlow = _eventFlow.asSharedFlow()
 
     fun setEmail(email: String) {
         if (errorEmail.value.state) {
@@ -101,9 +105,7 @@ class LoginViewModel @Inject constructor(
             )
                 .onSuccess { userToken ->
                     userRepository.saveToken(userToken)
-
-                    // TODO: 토큰 저장 및 화면 이동 이벤트 발생
-                    Log.d("jaemin", userToken.userId.toString())
+                    _eventFlow.emit(Event.MoveScreen)
                 }
                 .onFailure {
                     _errorEmail.value = ErrorField(
@@ -122,5 +124,9 @@ class LoginViewModel @Inject constructor(
         const val INCORRECT_CONTENTS_ERROR_MESSAGE = "입력하신 내용을 다시 확인해주세요."
         const val BLANK_EMAIL_ERROR_MESSAGE = "이메일을 입력해주세요."
         const val BLANK_PASSWORD_ERROR_MESSAGE = "비밀번호를 입력해주세요."
+    }
+
+    sealed class Event {
+        object MoveScreen : Event()
     }
 }

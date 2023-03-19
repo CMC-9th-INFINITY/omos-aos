@@ -13,7 +13,9 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
+import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -63,13 +65,7 @@ class LoginFragment : Fragment() {
 
     private fun initLoginListener() {
         binding.btnLogin.setOnClickListener {
-
             viewModel.loginUser()
-
-            /*val intent = Intent(context, MainActivity::class.java).apply {
-                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            }
-            startActivity(intent)*/
         }
     }
 
@@ -103,54 +99,60 @@ class LoginFragment : Fragment() {
         collectFieldViewText()
         collectFieldViewError()
         collectFieldViewPasswordState()
+        collectEvent()
     }
 
-    private fun collectFieldViewText() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.email.collect { email ->
-                    if (binding.ofvEmail.text != email) {
-                        binding.ofvEmail.text = email
+    private fun collectEvent() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.eventFlow.collect { event ->
+                when (event) {
+                    LoginViewModel.Event.MoveScreen -> {
+                        val intent = Intent(context, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        startActivity(intent)
                     }
                 }
             }
         }
+    }
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.password.collect { password ->
-                    if (binding.ofvPassword.text != password) {
-                        binding.ofvPassword.text = password
-                    }
+    private fun collectFieldViewText() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.email.collect { email ->
+                if (binding.ofvEmail.text != email) {
+                    binding.ofvEmail.text = email
+                }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.password.collect { password ->
+                if (binding.ofvPassword.text != password) {
+                    binding.ofvPassword.text = password
                 }
             }
         }
     }
 
     private fun collectFieldViewError() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.errorEmail.collect { errorEmail ->
-                    binding.ofvEmail.setShowErrorMsg(errorEmail)
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.errorEmail.collect { errorEmail ->
+                binding.ofvEmail.setShowErrorMsg(errorEmail)
             }
         }
 
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.errorPassword.collect { errorPassword ->
-                    binding.ofvPassword.setShowErrorMsg(errorPassword)
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.errorPassword.collect { errorPassword ->
+                binding.ofvPassword.setShowErrorMsg(errorPassword)
             }
         }
     }
 
     private fun collectFieldViewPasswordState() {
-        lifecycleScope.launch {
-            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED) {
-                viewModel.isVisiblePassword.collect { isVisiblePassword ->
-                    binding.ofvPassword.setShowPassword(isVisiblePassword)
-                }
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.isVisiblePassword.collect { isVisiblePassword ->
+                binding.ofvPassword.setShowPassword(isVisiblePassword)
             }
         }
     }
