@@ -99,19 +99,17 @@ class LoginFragment : Fragment() {
         collectFieldViewText()
         collectFieldViewError()
         collectFieldViewPasswordState()
-        collectEvent()
+        collectLoginState()
     }
 
-    private fun collectEvent() {
+    private fun collectLoginState() {
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.eventFlow.collect { event ->
-                when (event) {
-                    LoginViewModel.Event.MoveScreen -> {
-                        val intent = Intent(context, MainActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        }
-                        startActivity(intent)
+            viewModel.state.collect { state ->
+                if (state == LoginState.Success) {
+                    val intent = Intent(context, MainActivity::class.java).apply {
+                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                     }
+                    startActivity(intent)
                 }
             }
         }
