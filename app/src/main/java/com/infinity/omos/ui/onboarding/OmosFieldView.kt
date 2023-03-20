@@ -96,11 +96,11 @@ class OmosFieldView @JvmOverloads constructor(
         binding.etInput.setSelection(text.length)
     }
 
-    fun setShowErrorMsg(error: ErrorField) {
-        binding.constraintInput.isActivated = error.state
-        binding.tvErrorMsg.text = error.msg
+    fun setShowErrorMsg(state: Boolean, msg: String) {
+        binding.constraintInput.isActivated = state
+        binding.tvErrorMsg.text = msg
 
-        if (error.state) {
+        if (state) {
             val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake)
             binding.constraintLayout.startAnimation(shakeAnimation)
         }

@@ -16,5 +16,5 @@ fun bindGone(view: View, isGone: Boolean) {
 
 @BindingAdapter("showErrorMsg")
 fun bindErrorMsg(view: OmosFieldView, error: ErrorField) {
-    view.setShowErrorMsg(error)
+    view.setShowErrorMsg(error.state, error.msg)
 }

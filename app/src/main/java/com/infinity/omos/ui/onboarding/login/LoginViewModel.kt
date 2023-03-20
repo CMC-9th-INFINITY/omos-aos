@@ -4,14 +4,21 @@ import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserCredential
+import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorField
+import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.BLANK_EMAIL_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.BLANK_PASSWORD_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.NOT_EXIST_USER
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -67,14 +74,14 @@ class LoginViewModel @Inject constructor(
 
     fun checkEmailValidation(hasFocus: Boolean) {
         if (hasFocus.not()) {
-            if (email.value.isNotEmpty()) {
+            _errorEmail.value = if (email.value.isNotEmpty()) {
                 val state = pattern.matcher(email.value).matches().not()
-                _errorEmail.value = ErrorField(
+                ErrorField(
                     state,
                     if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else ""
                 )
             } else {
-                _errorEmail.value = ErrorField(
+                ErrorField(
                     true,
                     BLANK_EMAIL_ERROR_MESSAGE
                 )
@@ -84,13 +91,13 @@ class LoginViewModel @Inject constructor(
 
     fun checkPasswordValidation(hasFocus: Boolean) {
         if (hasFocus.not()) {
-            if (password.value.isEmpty()) {
-                _errorPassword.value = ErrorField(
+            _errorPassword.value = if (password.value.isEmpty()) {
+                ErrorField(
                     true,
                     BLANK_PASSWORD_ERROR_MESSAGE
                 )
             } else {
-                _errorPassword.value = ErrorField(false)
+                ErrorField(false)
             }
         }
     }
@@ -117,14 +124,31 @@ class LoginViewModel @Inject constructor(
                         true,
                         INCORRECT_CONTENTS_ERROR_MESSAGE
                     )
-                    _state.value = LoginState.Failure
+                    _state.value = LoginState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
+                }
+        }
+    }
+
+    fun loginKakaoUser(email: String) {
+        _state.value = LoginState.Loading
+        viewModelScope.launch {
+            userRepository.loginSnsUser(
+                UserSnsCredential(
+                    email,
+                    TYPE_KAKAO
+                )
+            )
+                .onSuccess { userToken ->
+                    userRepository.saveToken(userToken)
+                    _state.value = LoginState.Success
+                }
+                .onFailure {
+                    _state.value = LoginState.Failure(NOT_EXIST_USER)
                 }
         }
     }
 
     companion object {
-        const val INCORRECT_CONTENTS_ERROR_MESSAGE = "입력하신 내용을 다시 확인해주세요."
-        const val BLANK_EMAIL_ERROR_MESSAGE = "이메일을 입력해주세요."
-        const val BLANK_PASSWORD_ERROR_MESSAGE = "비밀번호를 입력해주세요."
+        const val TYPE_KAKAO = "KAKAO"
     }
 }

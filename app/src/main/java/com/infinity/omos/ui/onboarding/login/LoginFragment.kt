@@ -12,7 +12,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.MainActivity
+import com.infinity.omos.data.UserSnsLogin
 import com.infinity.omos.databinding.FragmentLoginBinding
+import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.NOT_EXIST_USER
+import com.infinity.omos.utils.KakaoLoginManager
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collect
@@ -67,6 +70,13 @@ class LoginFragment : Fragment() {
         binding.btnLogin.setOnClickListener {
             viewModel.loginUser()
         }
+
+        binding.btnKakaoLogin.setOnClickListener {
+            KakaoLoginManager(requireContext()).login { userId ->
+                val userEmail = "$userId@kakao.com"
+                viewModel.loginKakaoUser(userEmail)
+            }
+        }
     }
 
     private fun initEmailListener() = with(binding.ofvEmail) {
@@ -105,11 +115,17 @@ class LoginFragment : Fragment() {
     private fun collectLoginState() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.state.collect { state ->
-                if (state == LoginState.Success) {
-                    val intent = Intent(context, MainActivity::class.java).apply {
-                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                when (state) {
+                    LoginState.Success -> {
+                        val intent = Intent(context, MainActivity::class.java).apply {
+                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        }
+                        startActivity(intent)
                     }
-                    startActivity(intent)
+                    LoginState.Failure(NOT_EXIST_USER) -> {
+                        // TODO: 회언가입 닉네임 입력 페이지 이동
+                    }
+                    else -> Unit
                 }
             }
         }
@@ -135,14 +151,14 @@ class LoginFragment : Fragment() {
 
     private fun collectFieldViewError() {
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorEmail.collect { errorEmail ->
-                binding.ofvEmail.setShowErrorMsg(errorEmail)
+            viewModel.errorEmail.collect { (state, msg) ->
+                binding.ofvEmail.setShowErrorMsg(state, msg)
             }
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorPassword.collect { errorPassword ->
-                binding.ofvPassword.setShowErrorMsg(errorPassword)
+            viewModel.errorPassword.collect { (state, msg) ->
+                binding.ofvPassword.setShowErrorMsg(state, msg)
             }
         }
     }
