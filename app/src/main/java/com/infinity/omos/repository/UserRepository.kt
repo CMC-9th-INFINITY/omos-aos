@@ -1,6 +1,7 @@
 package com.infinity.omos.repository
 
 import com.infinity.omos.data.user.UserCredential
+import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.source.local.UserLocalDataSource
 import com.infinity.omos.source.remote.UserRemoteDataSource
@@ -14,6 +15,10 @@ class UserRepository @Inject constructor(
 
     suspend fun loginUser(userCredential: UserCredential): Result<UserToken> {
         return userRemoteDataSource.loginUser(userCredential)
+    }
+
+    suspend fun loginSnsUser(userSnsCredential: UserSnsCredential): Result<UserToken> {
+        return userRemoteDataSource.loginSnsUser(userSnsCredential)
     }
 
     suspend fun saveToken(token: UserToken) {
