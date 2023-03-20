@@ -16,6 +16,7 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import retrofit2.HttpException
+import retrofit2.Response
 
 class LoginViewModelTest {
 
@@ -132,6 +133,41 @@ class LoginViewModelTest {
 
         // when
         viewModel.loginUser()
+        val result = viewModel.state.value
+
+        // then
+        assertThat(result).isInstanceOf(LoginState.Failure::class.java)
+        coVerify(exactly = 0) { userRepository.saveToken(any()) }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `카카오 로그인 성공 시 Success 상태가 되는가`() = runTest {
+        // given
+        val token = UserToken("abc", "def", 0)
+        val resultToken = Result.success(token)
+        coEvery { userRepository.loginSnsUser(any()) } returns resultToken
+        coEvery { userRepository.saveToken(any()) } returns Unit
+
+        // when
+        viewModel.loginKakaoUser("email@naver.com")
+        val result = viewModel.state.value
+
+        // then
+        assertThat(result).isInstanceOf(LoginState.Success::class.java)
+        coVerify { userRepository.saveToken(any()) }
+    }
+
+    @OptIn(ExperimentalCoroutinesApi::class)
+    @Test
+    fun `카카오 로그인 실패 시 Failure 상태가 되는가`() = runTest {
+        val exception = mockk<HttpException>()
+        val resultToken = Result.failure<UserToken>(exception)
+        coEvery { userRepository.loginSnsUser(any()) } returns resultToken
+        coEvery { userRepository.saveToken(any()) } returns Unit
+
+        // when
+        viewModel.loginKakaoUser("email@naver.com")
         val result = viewModel.state.value
 
         // then
