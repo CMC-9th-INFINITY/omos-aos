@@ -3,10 +3,13 @@ package com.infinity.omos.ui.onboarding.forgot
 import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.infinity.omos.data.user.UserEmail
+import com.infinity.omos.repository.AuthRepository
 import com.infinity.omos.ui.onboarding.ErrorField
 import com.infinity.omos.ui.onboarding.OnboardingState
 import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.BLANK_EMAIL_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +19,9 @@ import java.util.regex.Pattern
 import javax.inject.Inject
 
 @HiltViewModel
-class ForgotPasswordViewModel @Inject constructor() : ViewModel() {
+class ForgotPasswordViewModel @Inject constructor(
+    private val authRepository: AuthRepository
+) : ViewModel() {
 
     private val pattern: Pattern = PatternsCompat.EMAIL_ADDRESS
 
@@ -61,9 +66,13 @@ class ForgotPasswordViewModel @Inject constructor() : ViewModel() {
     fun sendAuthMail() {
         _state.value = OnboardingState.Loading
         viewModelScope.launch {
-            // TODO: 인증 메일 전송 API 구현
-            delay(1000)
-            _state.value = OnboardingState.Success
+            val email = UserEmail(email.value)
+            authRepository.sendAuthMail(email)
+                .onSuccess { authCode ->
+                    // TODO: 인증 코드 값 저장
+                    _state.value = OnboardingState.Success
+                }
+                .onFailure { _state.value = OnboardingState.Failure(NETWORK_ERROR_MESSAGE) }
         }
     }
 }

@@ -1,7 +1,9 @@
 package com.infinity.omos.source.remote
 
 import com.infinity.omos.api.UserService
+import com.infinity.omos.data.auth.AuthCode
 import com.infinity.omos.data.user.UserCredential
+import com.infinity.omos.data.user.UserEmail
 import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.data.user.UserToken
 import javax.inject.Inject
