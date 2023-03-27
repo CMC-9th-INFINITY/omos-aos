@@ -2,7 +2,7 @@ name: Android CI
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "master" ]
   pull_request:
     branches: [ "develop" ]
 
@@ -22,24 +22,24 @@ jobs:
           cache: gradle
 
       - name: Decode Secret Action (local.properties)
-          env:
-            OMOS_BASE_URL: ${{secrets.OMOS_BASE_URL}}
-            KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
-            KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
-            S3_BASE_URL: ${{secrets.S3_BASE_URL}}
-            RELEASE_STORE_FILE: ${{secrets.RELEASE_STORE_FILE}}
-            RELEASE_STORE_PASSWORD: ${{secrets.RELEASE_STORE_PASSWORD}}
-            RELEASE_KEY_ALIAS: ${{secrets.RELEASE_KEY_ALIAS}}
-            RELEASE_KEY_PASSWORD: ${{secrets.RELEASE_KEY_PASSWORD}}
-          run: |
-            echo omos_base_url="$OMOS_BASE_URL" >> ./local.properties
-            echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
-            echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
-            echo s3_base_url="$S3_BASE_URL" >> ./local.properties
-            echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
-            echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
-            echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
-            echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
+        env:
+          OMOS_BASE_URL: ${{secrets.OMOS_BASE_URL}}
+          KAKAO_NATIVE_APP_KEY: ${{secrets.KAKAO_NATIVE_APP_KEY}}
+          KAKAO_OAUTH_KEY: ${{secrets.KAKAO_OAUTH_KEY}}
+          S3_BASE_URL: ${{secrets.S3_BASE_URL}}
+          RELEASE_STORE_FILE: ${{secrets.RELEASE_STORE_FILE}}
+          RELEASE_STORE_PASSWORD: ${{secrets.RELEASE_STORE_PASSWORD}}
+          RELEASE_KEY_ALIAS: ${{secrets.RELEASE_KEY_ALIAS}}
+          RELEASE_KEY_PASSWORD: ${{secrets.RELEASE_KEY_PASSWORD}}
+        run: |
+          echo omos_base_url="$OMOS_BASE_URL" >> ./local.properties
+          echo kakao_native_app_key="$KAKAO_NATIVE_APP_KEY" >> ./local.properties
+          echo kakao_oauth_key="$KAKAO_OAUTH_KEY" >> ./local.properties
+          echo s3_base_url="$S3_BASE_URL" >> ./local.properties
+          echo RELEASE_STORE_FILE="$RELEASE_STORE_FILE" >> ./local.properties
+          echo RELEASE_STORE_PASSWORD="$RELEASE_STORE_PASSWORD" >> ./local.properties
+          echo RELEASE_KEY_ALIAS="$RELEASE_KEY_ALIAS" >> ./local.properties
+          echo RELEASE_KEY_PASSWORD="$RELEASE_KEY_PASSWORD" >> ./local.properties
 
       - name: Generate Keystore file from Github Secrets
         env:
