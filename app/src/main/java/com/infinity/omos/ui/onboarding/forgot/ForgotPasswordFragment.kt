@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
 import com.infinity.omos.ui.onboarding.OnboardingState
+import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -43,16 +44,12 @@ class ForgotPasswordFragment : Fragment() {
             viewModel.changeNextState()
         }
 
-        binding.ofvEmail.setOnFocusChangeListener { hasFocus ->
-            viewModel.checkEmailValidation(hasFocus)
-        }
-
         binding.btnNext.setOnClickListener {
             // TODO: 비밀번호 변경 페이지 이동
         }
 
         binding.tvSendAuthMail.setOnClickListener {
-            viewModel.sendAuthMail()
+            showAlertDialog()
         }
     }
 
@@ -66,7 +63,7 @@ class ForgotPasswordFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.state.collect { state ->
                 if (state == OnboardingState.Success) {
-                    // TODO: 인증메일 발송 성공 팝업 띄우기
+                    showSuccessDialog()
                     setAgainMail()
                 }
             }
@@ -76,5 +73,30 @@ class ForgotPasswordFragment : Fragment() {
     private fun setAgainMail() {
         binding.tvSendAuthMail.text = requireContext().getString(R.string.send_again_auth_mail)
         binding.tvSendAuthMail.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+    }
+
+    private fun showAlertDialog() {
+        val dialog = OmosDialog(requireActivity())
+        dialog.showDialog(
+            title = "인증메일을 발송하시겠습니까?",
+            okText = "발송",
+            onOkClickListener = {
+                viewModel.checkEmailValidation()
+
+                if (viewModel.errorEmail.value.state.not()) {
+                    viewModel.sendAuthMail()
+                }
+            }
+        )
+    }
+
+    private fun showSuccessDialog() {
+        val dialog = OmosDialog(requireActivity())
+        dialog.showDialog(
+            title = getString(R.string.complete_send_auth_mail),
+            okText = getString(R.string.ok),
+            cancelVisible = false,
+            onOkClickListener = null
+        )
     }
 }
