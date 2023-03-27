@@ -12,12 +12,12 @@
         tools:layout="@layout/fragment_login">
 
         <action
-            android:id="@+id/action_login_fragment_to_find_pw_fragment"
-            app:destination="@id/find_pw_fragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right" />
+            android:id="@+id/action_login_fragment_to_forgot_password_fragment"
+            app:destination="@id/forgot_password_fragment"
+            app:enterAnim="@anim/slide_in_left"
+            app:exitAnim="@anim/slide_out_right"
+            app:popEnterAnim="@anim/slide_in_right"
+            app:popExitAnim="@anim/slide_out_left" />
 
         <action
             android:id="@+id/action_login_fragment_to_sign_up_fragment"
@@ -27,11 +27,12 @@
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
     </fragment>
+
     <fragment
-        android:id="@+id/find_pw_fragment"
-        android:name="com.infinity.omos.ui.onboarding.FindPwFragment"
-        android:label="FindPwFragment"
-        tools:layout="@layout/fragment_find_pw" />
+        android:id="@+id/forgot_password_fragment"
+        android:name="com.infinity.omos.ui.onboarding.forgot.ForgotPasswordFragment"
+        android:label="ForgotPasswordFragment"
+        tools:layout="@layout/fragment_forgot_password" />
     <fragment
         android:id="@+id/sign_up_fragment"
         android:name="com.infinity.omos.ui.onboarding.SignUpFragment"

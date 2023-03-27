@@ -17,7 +17,7 @@
     <string name="no_match_password">비밀번호가 일치하지 않아요.</string>
     <string name="no_match_code">인즏코드가 일치하지 않아요.</string>
     <string name="send_auth_mail"><u>인증메일 보내기</u></string>
-    <string name="send_again_auth_mail">인증메일 재전송</string>
+    <string name="send_again_auth_mail"><u>인증메일 재전송</u></string>
     <string name="look"><u>보기</u></string>
 
     <string name="_ing">서비스 준비 중</string>
@@ -253,4 +253,6 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="confirm_pw">비밀번호 재확인</string>
     <string name="show_hide">보기/숨기기</string>
     <string name="title">제목</string>
+    <string name="email_auth_code">이메일 인증코드</string>
+    <string name="email_auth_code_hint">인증코드를 입력해주세요.</string>
 </resources>
