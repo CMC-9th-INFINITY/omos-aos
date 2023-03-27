@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.onboarding
+package com.infinity.omos.ui.view
 
 import android.content.Context
 import android.content.res.TypedArray
