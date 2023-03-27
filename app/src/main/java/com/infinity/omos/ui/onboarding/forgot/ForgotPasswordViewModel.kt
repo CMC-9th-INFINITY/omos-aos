@@ -40,23 +40,21 @@ class ForgotPasswordViewModel @Inject constructor() : ViewModel() {
     }
 
     fun changeNextState() {
-        _isActivatedNext.value = email.value.isNotEmpty()
+        _isActivatedNext.value = state.value is OnboardingState.Success
     }
 
-    fun checkEmailValidation(hasFocus: Boolean) {
-        if (hasFocus.not()) {
-            _errorEmail.value = if (email.value.isNotEmpty()) {
-                val state = pattern.matcher(email.value).matches().not()
-                ErrorField(
-                    state,
-                    if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else ""
-                )
-            } else {
-                ErrorField(
-                    true,
-                    BLANK_EMAIL_ERROR_MESSAGE
-                )
-            }
+    fun checkEmailValidation() {
+        _errorEmail.value = if (email.value.isNotEmpty()) {
+            val state = pattern.matcher(email.value).matches().not()
+            ErrorField(
+                state,
+                if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else ""
+            )
+        } else {
+            ErrorField(
+                true,
+                BLANK_EMAIL_ERROR_MESSAGE
+            )
         }
     }
 
