@@ -62,7 +62,7 @@ object NetworkModule {
         val authenticator = Authenticator { _, response ->
             if (response.code == 401) {
                 val oldToken = runBlocking { dataStoreManager.tokenFlow.first() }
-                val newToken = authService.get().reissueToken(oldToken)
+                val newToken = runBlocking { authService.get().reissueToken(oldToken) }
                 runBlocking { dataStoreManager.saveToken(newToken) }
 
                 response.request.newBuilder()

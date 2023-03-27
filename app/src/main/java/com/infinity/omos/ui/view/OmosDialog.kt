@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import com.infinity.omos.R
 import com.infinity.omos.databinding.ViewOmosDialogBinding
 import com.infinity.omos.utils.Width.Companion.screenWidth
 
@@ -15,7 +16,7 @@ class OmosDialog(private val activity: Activity) {
     fun showDialog(
         title: String,
         okText: String,
-        cancelText: String = "취소",
+        cancelText: String = activity.getString(R.string.cancel),
         cancelVisible: Boolean = true,
         onOkClickListener: (() -> Unit)?
     ) {
