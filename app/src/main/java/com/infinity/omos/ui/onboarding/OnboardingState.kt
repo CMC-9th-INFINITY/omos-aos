@@ -16,6 +16,7 @@ sealed class OnboardingState{
             const val BLANK_PASSWORD_ERROR_MESSAGE = "비밀번호를 입력해주세요."
             const val NOT_EXIST_USER_ERROR_MESSAGE = "해당하는 유저가 존재하지 않습니다."
             const val INCORRECT_AUTH_CODE_ERROR_MESSAGE = "인증코드가 일치하지 않습니다."
+            const val CORRECT_AUTH_CODE_MESSAGE = "인증에 성공하였습니다."
             const val NETWORK_ERROR_MESSAGE = "네트워크 오류"
         }
     }

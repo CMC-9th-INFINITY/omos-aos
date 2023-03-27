@@ -12,6 +12,7 @@
         <attr name="passwordToggleEnabled" format="boolean" />
         <attr name="showPassword" format="boolean" />
         <attr name="android:inputType" />
+        <attr name="android:maxLength" />
     </declare-styleable>
 
 </resources>

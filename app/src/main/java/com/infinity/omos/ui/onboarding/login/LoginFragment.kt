@@ -101,7 +101,6 @@ class LoginFragment : Fragment() {
     }
 
     private fun collectData() {
-        collectFieldViewText()
         collectFieldViewError()
         collectFieldViewPasswordState()
         collectLoginState()
@@ -121,24 +120,6 @@ class LoginFragment : Fragment() {
                         // TODO: 회언가입 닉네임 입력 페이지 이동
                     }
                     else -> Unit
-                }
-            }
-        }
-    }
-
-    private fun collectFieldViewText() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.email.collect { email ->
-                if (binding.ofvEmail.text != email) {
-                    binding.ofvEmail.text = email
-                }
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.password.collect { password ->
-                if (binding.ofvPassword.text != password) {
-                    binding.ofvPassword.text = password
                 }
             }
         }

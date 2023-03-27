@@ -2,16 +2,21 @@ package com.infinity.omos.ui.view
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.text.InputFilter
+import android.text.InputFilter.LengthFilter
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ViewOmosFieldBinding
+
 
 class OmosFieldView @JvmOverloads constructor(
     context: Context,
@@ -24,6 +29,10 @@ class OmosFieldView @JvmOverloads constructor(
         this,
         true
     )
+
+    private val typedArray = context.obtainStyledAttributes(intArrayOf(android.R.attr.colorPrimary))
+    private val colorPrimary = typedArray.getColor(0, 0)
+    private val colorGray = ContextCompat.getColor(context, R.color.gray_05)
 
     var text: String
         get() = binding.etInput.text.toString()
@@ -47,8 +56,6 @@ class OmosFieldView @JvmOverloads constructor(
         val hint = types.getText(R.styleable.OmosFieldView_hint)
         setHint(hint.toString())
 
-        val typedArray = context.obtainStyledAttributes(intArrayOf(android.R.attr.colorPrimary))
-        val colorPrimary = typedArray.getColor(0, 0)
         val errorMsgTint = types.getColor(R.styleable.OmosFieldView_errorMsgTint, colorPrimary)
         setErrorMsgTint(errorMsgTint)
         typedArray.recycle()
@@ -62,6 +69,9 @@ class OmosFieldView @JvmOverloads constructor(
 
         val type = types.getInt(R.styleable.OmosFieldView_android_inputType, -1)
         setInputType(type)
+
+        val length = types.getInt(R.styleable.OmosFieldView_android_maxLength, Int.MAX_VALUE)
+        setMaxLength(length)
 
         types.recycle()
     }
@@ -103,11 +113,24 @@ class OmosFieldView @JvmOverloads constructor(
         if (state) {
             val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake)
             binding.constraintLayout.startAnimation(shakeAnimation)
+            setErrorMsgTint(colorPrimary)
+        } else {
+            setErrorMsgTint(colorGray)
         }
     }
 
     fun setInputType(type: Int) {
         binding.etInput.inputType = type
+    }
+
+    fun setMaxLength(length: Int) {
+        val fArray = arrayOfNulls<InputFilter>(1)
+        fArray[0] = LengthFilter(length)
+        binding.etInput.filters = fArray
+    }
+
+    fun setEditTextEnabled(enabled: Boolean) {
+        binding.etInput.isEnabled = enabled
     }
 
     fun setOnPasswordToggleClickListener(listener: () -> Unit) {

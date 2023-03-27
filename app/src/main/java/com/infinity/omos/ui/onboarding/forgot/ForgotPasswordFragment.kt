@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
-import com.infinity.omos.ui.onboarding.OnboardingState
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -44,6 +44,11 @@ class ForgotPasswordFragment : Fragment() {
             viewModel.changeNextState()
         }
 
+        binding.ofvEmailAuthCode.setOnTextChangeListener { text ->
+            viewModel.setAuthCode(text)
+            viewModel.checkAuthCodeValidation(resources.getInteger(R.integer.auth_code_length))
+        }
+
         binding.btnNext.setOnClickListener {
             // TODO: 비밀번호 변경 페이지 이동
         }
@@ -54,6 +59,22 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun collectData() {
+        collectFieldViewText()
+        collectFieldViewError()
+        collectEvent()
+    }
+
+    private fun collectFieldViewText() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.authCode.collect { authCode ->
+                if (binding.ofvEmailAuthCode.text != authCode) {
+                    binding.ofvEmailAuthCode.text = authCode
+                }
+            }
+        }
+    }
+
+    private fun collectFieldViewError() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.errorEmail.collect { (state, msg) ->
                 binding.ofvEmail.setShowErrorMsg(state, msg)
@@ -61,10 +82,28 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.state.collect { state ->
-                if (state == OnboardingState.Success) {
+            viewModel.errorAuthCode.collect { (state, msg) ->
+                binding.ofvEmailAuthCode.setShowErrorMsg(state, msg)
+            }
+        }
+    }
+
+    private fun collectEvent() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.event.collect { event ->
+                if (event is ForgotPasswordViewModel.Event.ShowDialog) {
                     showSuccessDialog()
                     setAgainMail()
+                }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.isActivatedNext.collect { isActivated ->
+                if (isActivated) {
+                    binding.ofvEmail.setEditTextEnabled(false)
+                    binding.ofvEmailAuthCode.setEditTextEnabled(false)
+                    binding.tvSendAuthMail.visibility = View.GONE
                 }
             }
         }
