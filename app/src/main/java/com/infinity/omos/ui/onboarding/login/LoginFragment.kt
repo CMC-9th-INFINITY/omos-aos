@@ -7,19 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.MainActivity
-import com.infinity.omos.data.UserSnsLogin
 import com.infinity.omos.databinding.FragmentLoginBinding
-import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.NOT_EXIST_USER
+import com.infinity.omos.ui.onboarding.OnboardingState
+import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
 import com.infinity.omos.utils.KakaoLoginManager
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class LoginFragment : Fragment() {
@@ -55,7 +50,7 @@ class LoginFragment : Fragment() {
     private fun initMoveScreenListener() {
         binding.tvFindPw.setOnClickListener {
             val directions =
-                LoginFragmentDirections.actionLoginFragmentToFindPwFragment()
+                LoginFragmentDirections.actionLoginFragmentToForgotPasswordFragment()
             findNavController().navigate(directions)
         }
 
@@ -116,13 +111,13 @@ class LoginFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.state.collect { state ->
                 when (state) {
-                    LoginState.Success -> {
+                    OnboardingState.Success -> {
                         val intent = Intent(context, MainActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         }
                         startActivity(intent)
                     }
-                    LoginState.Failure(NOT_EXIST_USER) -> {
+                    OnboardingState.Failure(NOT_EXIST_USER_ERROR_MESSAGE) -> {
                         // TODO: 회언가입 닉네임 입력 페이지 이동
                     }
                     else -> Unit

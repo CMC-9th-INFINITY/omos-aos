@@ -7,18 +7,15 @@ import com.infinity.omos.data.user.UserCredential
 import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorField
-import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.BLANK_EMAIL_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.BLANK_PASSWORD_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.login.LoginState.Failure.Companion.NOT_EXIST_USER
+import com.infinity.omos.ui.onboarding.OnboardingState
+import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.BLANK_EMAIL_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.BLANK_PASSWORD_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import java.util.regex.Pattern
 import javax.inject.Inject
 
@@ -47,7 +44,7 @@ class LoginViewModel @Inject constructor(
     private var _isActivatedLogin = MutableStateFlow(false)
     val isActivatedLogin = _isActivatedLogin.asStateFlow()
 
-    private var _state = MutableStateFlow<LoginState>(LoginState.Nothing)
+    private var _state = MutableStateFlow<OnboardingState>(OnboardingState.Nothing)
     val state = _state.asStateFlow()
 
     fun setEmail(email: String) {
@@ -103,7 +100,7 @@ class LoginViewModel @Inject constructor(
     }
 
     fun loginUser() {
-        _state.value = LoginState.Loading
+        _state.value = OnboardingState.Loading
         viewModelScope.launch {
             userRepository.loginUser(
                 UserCredential(
@@ -113,7 +110,7 @@ class LoginViewModel @Inject constructor(
             )
                 .onSuccess { userToken ->
                     userRepository.saveToken(userToken)
-                    _state.value = LoginState.Success
+                    _state.value = OnboardingState.Success
                 }
                 .onFailure {
                     _errorEmail.value = ErrorField(
@@ -124,13 +121,13 @@ class LoginViewModel @Inject constructor(
                         true,
                         INCORRECT_CONTENTS_ERROR_MESSAGE
                     )
-                    _state.value = LoginState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
+                    _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
                 }
         }
     }
 
     fun loginKakaoUser(email: String) {
-        _state.value = LoginState.Loading
+        _state.value = OnboardingState.Loading
         viewModelScope.launch {
             userRepository.loginSnsUser(
                 UserSnsCredential(
@@ -140,10 +137,10 @@ class LoginViewModel @Inject constructor(
             )
                 .onSuccess { userToken ->
                     userRepository.saveToken(userToken)
-                    _state.value = LoginState.Success
+                    _state.value = OnboardingState.Success
                 }
                 .onFailure {
-                    _state.value = LoginState.Failure(NOT_EXIST_USER)
+                    _state.value = OnboardingState.Failure(NOT_EXIST_USER_ERROR_MESSAGE)
                 }
         }
     }
