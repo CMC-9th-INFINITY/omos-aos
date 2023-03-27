@@ -4,19 +4,18 @@ import com.google.common.truth.Truth.assertThat
 import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.MainDispatcherRule
+import com.infinity.omos.ui.onboarding.OnboardingState
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
-import io.mockk.verify
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import retrofit2.HttpException
-import retrofit2.Response
 
 class LoginViewModelTest {
 
@@ -119,7 +118,7 @@ class LoginViewModelTest {
         val result = viewModel.state.value
 
         // then
-        assertThat(result).isInstanceOf(LoginState.Success::class.java)
+        assertThat(result).isInstanceOf(OnboardingState.Success::class.java)
         coVerify { userRepository.saveToken(any()) }
     }
 
@@ -136,7 +135,7 @@ class LoginViewModelTest {
         val result = viewModel.state.value
 
         // then
-        assertThat(result).isInstanceOf(LoginState.Failure::class.java)
+        assertThat(result).isInstanceOf(OnboardingState.Failure::class.java)
         coVerify(exactly = 0) { userRepository.saveToken(any()) }
     }
 
@@ -154,7 +153,7 @@ class LoginViewModelTest {
         val result = viewModel.state.value
 
         // then
-        assertThat(result).isInstanceOf(LoginState.Success::class.java)
+        assertThat(result).isInstanceOf(OnboardingState.Success::class.java)
         coVerify { userRepository.saveToken(any()) }
     }
 
@@ -171,7 +170,7 @@ class LoginViewModelTest {
         val result = viewModel.state.value
 
         // then
-        assertThat(result).isInstanceOf(LoginState.Failure::class.java)
+        assertThat(result).isInstanceOf(OnboardingState.Failure::class.java)
         coVerify(exactly = 0) { userRepository.saveToken(any()) }
     }
 }
