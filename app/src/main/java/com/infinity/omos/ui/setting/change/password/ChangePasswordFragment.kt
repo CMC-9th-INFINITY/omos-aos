@@ -9,7 +9,9 @@ import androidx.fragment.app.viewModels
 import com.infinity.omos.databinding.FragmentChangePasswordBinding
 import com.infinity.omos.ui.onboarding.OnboardingState
 import com.infinity.omos.utils.repeatOnStarted
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class ChangePasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentChangePasswordBinding
@@ -43,6 +45,10 @@ class ChangePasswordFragment : Fragment() {
         setOnTextChangeListener { text ->
             viewModel.setNewPassword(text)
             viewModel.changeCompleteState()
+
+            if (viewModel.confirmNewPassword.value.isNotEmpty()) {
+                viewModel.checkConfirmNewPasswordValidation(false)
+            }
         }
 
         setOnFocusChangeListener { hasFocus ->
