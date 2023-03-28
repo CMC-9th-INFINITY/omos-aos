@@ -1,6 +1,7 @@
-package com.infinity.omos.ui.onboarding
+package com.infinity.omos.ui.onboarding.base
 
 import androidx.lifecycle.ViewModel
+import com.infinity.omos.ui.onboarding.ErrorField
 import com.infinity.omos.utils.Pattern
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow

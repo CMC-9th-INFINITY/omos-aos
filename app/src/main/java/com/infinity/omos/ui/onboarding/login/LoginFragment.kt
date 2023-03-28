@@ -10,8 +10,8 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
-import com.infinity.omos.ui.onboarding.OnboardingState
-import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
 import com.infinity.omos.utils.KakaoLoginManager
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint

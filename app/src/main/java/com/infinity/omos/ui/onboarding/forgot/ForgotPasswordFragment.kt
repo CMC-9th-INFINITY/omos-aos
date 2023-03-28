@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
-import com.infinity.omos.ui.onboarding.OnboardingViewModel
+import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint

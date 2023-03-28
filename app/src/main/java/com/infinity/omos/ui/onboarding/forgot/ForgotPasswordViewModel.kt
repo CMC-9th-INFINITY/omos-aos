@@ -3,10 +3,10 @@ package com.infinity.omos.ui.onboarding.forgot
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserEmail
 import com.infinity.omos.repository.AuthRepository
-import com.infinity.omos.ui.onboarding.AuthCodeState
-import com.infinity.omos.ui.onboarding.OnboardingState
-import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.OnboardingViewModel
+import com.infinity.omos.ui.onboarding.base.AuthCodeState
+import com.infinity.omos.ui.onboarding.base.OnboardingState
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
