@@ -32,7 +32,27 @@
         android:id="@+id/forgot_password_fragment"
         android:name="com.infinity.omos.ui.onboarding.forgot.ForgotPasswordFragment"
         android:label="ForgotPasswordFragment"
-        tools:layout="@layout/fragment_forgot_password" />
+        tools:layout="@layout/fragment_forgot_password">
+
+        <action
+            android:id="@+id/action_forgot_password_fragment_to_change_password_fragment"
+            app:destination="@id/change_password_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/change_password_fragment"
+        android:name="com.infinity.omos.ui.setting.change.password.ChangePasswordFragment"
+        android:label="ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password">
+
+
+
+    </fragment>
     <fragment
         android:id="@+id/sign_up_fragment"
         android:name="com.infinity.omos.ui.onboarding.SignUpFragment"
