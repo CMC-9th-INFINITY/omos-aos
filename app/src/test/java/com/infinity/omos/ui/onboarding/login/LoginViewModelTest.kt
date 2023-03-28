@@ -4,7 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.MainDispatcherRule
-import com.infinity.omos.ui.onboarding.OnboardingState
+import com.infinity.omos.ui.onboarding.base.OnboardingState
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify

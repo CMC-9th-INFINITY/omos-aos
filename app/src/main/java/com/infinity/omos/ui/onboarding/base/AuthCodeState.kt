@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.onboarding
+package com.infinity.omos.ui.onboarding.base
 
 sealed class AuthCodeState {
 
