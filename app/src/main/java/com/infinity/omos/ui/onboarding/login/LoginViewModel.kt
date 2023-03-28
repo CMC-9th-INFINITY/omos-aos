@@ -1,6 +1,5 @@
 package com.infinity.omos.ui.onboarding.login
 
-import androidx.core.util.PatternsCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserCredential
@@ -12,6 +11,7 @@ import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.BLANK_E
 import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.BLANK_PASSWORD_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
+import com.infinity.omos.utils.Pattern.Companion.emailPattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -23,8 +23,6 @@ import javax.inject.Inject
 class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository
 ) : ViewModel() {
-
-    private val pattern: Pattern = PatternsCompat.EMAIL_ADDRESS
 
     private var _email = MutableStateFlow("")
     val email = _email.asStateFlow()
@@ -72,7 +70,7 @@ class LoginViewModel @Inject constructor(
     fun checkEmailValidation(hasFocus: Boolean) {
         if (hasFocus.not()) {
             _errorEmail.value = if (email.value.isNotEmpty()) {
-                val state = pattern.matcher(email.value).matches().not()
+                val state = emailPattern.matcher(email.value).matches().not()
                 ErrorField(
                     state,
                     if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else ""
