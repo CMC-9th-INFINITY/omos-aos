@@ -2,6 +2,7 @@ package com.infinity.omos.ui.setting.change.password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.infinity.omos.data.user.UserId
 import com.infinity.omos.data.user.UserPassword
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorField
@@ -9,10 +10,11 @@ import com.infinity.omos.ui.onboarding.OnboardingState
 import com.infinity.omos.ui.onboarding.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
 import com.infinity.omos.utils.Pattern.Companion.passwordPattern
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -107,10 +109,11 @@ class ChangePasswordViewModel @Inject constructor(
         }
     }
 
-    fun changePassword() {
+    fun changePassword(email: String) {
         _state.value = OnboardingState.Loading
         viewModelScope.launch {
-            val password = UserPassword(confirmNewPassword.value, 0)
+            val userId = userRepository.getUserIdFromEmail(email).getOrDefault(UserId(-1))
+            val password = UserPassword(confirmNewPassword.value, userId.userId)
             userRepository.changePassword(password)
                 .onSuccess { _state.value = OnboardingState.Success }
                 .onFailure { _state.value = OnboardingState.Failure(NETWORK_ERROR_MESSAGE) }

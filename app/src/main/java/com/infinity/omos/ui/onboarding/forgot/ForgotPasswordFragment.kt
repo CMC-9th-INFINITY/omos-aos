@@ -41,7 +41,6 @@ class ForgotPasswordFragment : Fragment() {
     private fun initListener() {
         binding.ofvEmail.setOnTextChangeListener { text ->
             viewModel.setEmail(text)
-            viewModel.changeNextState()
         }
 
         binding.ofvEmailAuthCode.setOnTextChangeListener { text ->
@@ -51,7 +50,7 @@ class ForgotPasswordFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             val directions =
-                ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment()
+                ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment(viewModel.email.value)
             findNavController().navigate(directions)
         }
 

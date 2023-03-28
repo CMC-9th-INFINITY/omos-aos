@@ -48,5 +48,5 @@ interface FakeAuthService {
     @GET("api/auth/{email}")
     fun getUserIdFromEmail(
         @Path("email") email: String
-    ): Call<UserId>
+    ): Call<FakeUserId>
 }

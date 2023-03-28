@@ -2,6 +2,7 @@ package com.infinity.omos.repository
 
 import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.UserCredential
+import com.infinity.omos.data.user.UserId
 import com.infinity.omos.data.user.UserPassword
 import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.data.user.UserToken
@@ -21,6 +22,10 @@ class UserRepository @Inject constructor(
 
     suspend fun loginSnsUser(userSnsCredential: UserSnsCredential): Result<UserToken> {
         return userRemoteDataSource.loginSnsUser(userSnsCredential)
+    }
+
+    suspend fun getUserIdFromEmail(email: String): Result<UserId> {
+        return userRemoteDataSource.getUserIdFromEmail(email)
     }
 
     suspend fun changePassword(userPassword: UserPassword): Result<NetworkResult> {

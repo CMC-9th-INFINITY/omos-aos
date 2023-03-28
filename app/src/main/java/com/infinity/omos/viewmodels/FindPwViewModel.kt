@@ -5,7 +5,7 @@ import android.widget.EditText
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.data.UserId
+import com.infinity.omos.data.FakeUserId
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
 
@@ -49,7 +49,7 @@ class FindPwViewModel(application: Application): AndroidViewModel(application) {
     fun setUserIdFromEmail(email: String){
         repository.getUserIdFromEmail(email)
     }
-    fun getUserIdFromEmail(): LiveData<UserId>{
-        return repository.getUserId
+    fun getUserIdFromEmail(): LiveData<FakeUserId>{
+        return repository.getFakeUserId
     }
 }

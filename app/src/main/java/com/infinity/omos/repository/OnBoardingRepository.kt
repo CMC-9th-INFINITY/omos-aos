@@ -18,18 +18,18 @@ class OnBoardingRepository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val onBoardingApi = retrofit.create(FakeAuthService::class.java)
 
-    var getUserId = MutableLiveData<UserId>()
+    var getFakeUserId = MutableLiveData<FakeUserId>()
     fun getUserIdFromEmail(email: String){
-        onBoardingApi.getUserIdFromEmail(email).enqueue(object: Callback<UserId> {
+        onBoardingApi.getUserIdFromEmail(email).enqueue(object: Callback<FakeUserId> {
             override fun onResponse(
-                call: Call<UserId>,
-                response: Response<UserId>
+                call: Call<FakeUserId>,
+                response: Response<FakeUserId>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("UserIdAPI", "Success")
-                        getUserId.postValue(body!!)
+                        getFakeUserId.postValue(body!!)
                     }
 
                     401 -> {
@@ -47,7 +47,7 @@ class OnBoardingRepository {
                 }
             }
 
-            override fun onFailure(call: Call<UserId>, t: Throwable) {
+            override fun onFailure(call: Call<FakeUserId>, t: Throwable) {
                 Log.d("UserIdAPI", t.message.toString())
                 t.stackTrace
             }

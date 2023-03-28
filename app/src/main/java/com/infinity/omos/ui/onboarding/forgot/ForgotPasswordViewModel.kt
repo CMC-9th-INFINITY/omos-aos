@@ -67,10 +67,6 @@ class ForgotPasswordViewModel @Inject constructor(
         _authCode.value = code
     }
 
-    fun changeNextState() {
-        _isActivatedNext.value = state.value is OnboardingState.Success
-    }
-
     fun checkEmailValidation() {
         _errorEmail.value = if (email.value.isNotEmpty()) {
             val state = pattern.matcher(email.value).matches().not()
