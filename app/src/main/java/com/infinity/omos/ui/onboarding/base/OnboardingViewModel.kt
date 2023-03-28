@@ -2,11 +2,19 @@ package com.infinity.omos.ui.onboarding.base
 
 import androidx.lifecycle.ViewModel
 import com.infinity.omos.ui.onboarding.ErrorField
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.BLANK_EMAIL_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.BLANK_PASSWORD_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.CORRECT_AUTH_CODE_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.INCORRECT_AUTH_CODE_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_MATCH_CONFIRM_PASSWORD_ERROR_MESSAGE
+import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_MATCH_PASSWORD_ERROR_MESSAGE
 import com.infinity.omos.utils.Pattern
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asSharedFlow
 import kotlinx.coroutines.flow.asStateFlow
+import timber.log.Timber
 
 abstract class OnboardingViewModel : ViewModel() {
 
@@ -92,98 +100,75 @@ abstract class OnboardingViewModel : ViewModel() {
         _isVisibleConfirmPassword.value = isVisibleConfirmPassword.value.not()
     }
 
-    fun isValidEmail(): Boolean {
+    fun checkEmailValidation(hasFocus: Boolean = false) {
+        if (hasFocus) return
+
+        _errorEmail.value = validateEmailWithError()
+    }
+
+    fun validateEmailWithError(): ErrorField {
         return if (email.value.isNotEmpty()) {
             val state = Pattern.emailPattern.matcher(email.value).matches().not()
-            _errorEmail.value = ErrorField(
-                state,
-                if (state) OnboardingState.Failure.INCORRECT_CONTENTS_ERROR_MESSAGE else ""
-            )
-            state
+            ErrorField(state, if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else "")
         } else {
-            val state = true
-            _errorEmail.value = ErrorField(
-                state,
-                OnboardingState.Failure.BLANK_EMAIL_ERROR_MESSAGE
-            )
-            state
+            ErrorField(true, BLANK_EMAIL_ERROR_MESSAGE)
         }
     }
 
-    fun isValidAuthCode(maxLength: Int): Boolean {
-        if (authCode.value.length == maxLength && correctAuthCode == authCode.value) {
+    fun checkAuthCodeValidation(maxLength: Int, hasFocus: Boolean = false) {
+        if (hasFocus) return
+
+        val error = validateAuthCodeWithError(maxLength)
+        if (error.state.not() && error.msg == CORRECT_AUTH_CODE_MESSAGE) {
+            _errorEmail.value = error
+        } else {
+            _errorAuthCode.value = error
+        }
+    }
+
+    fun validateAuthCodeWithError(maxLength: Int): ErrorField {
+        return if (authCode.value.length == maxLength && correctAuthCode == authCode.value) {
             // 인증 성공
-            val isError = false
-            _errorEmail.value = ErrorField(
-                isError,
-                OnboardingState.Failure.CORRECT_AUTH_CODE_MESSAGE
-            )
             _authCodeState.value = AuthCodeState.Success
-            return isError.not()
-        }
-
-        _errorAuthCode.value = if (authCode.value.length == maxLength && correctAuthCode != authCode.value) {
+            ErrorField(false, CORRECT_AUTH_CODE_MESSAGE)
+        } else if (authCode.value.length == maxLength && correctAuthCode != authCode.value) {
             // 인증 실패
-            ErrorField(
-                true,
-                OnboardingState.Failure.INCORRECT_AUTH_CODE_ERROR_MESSAGE
-            )
+            ErrorField(true, INCORRECT_AUTH_CODE_ERROR_MESSAGE)
         } else {
-            ErrorField(false, "")
+            ErrorField(false)
         }
-
-        return false
     }
 
-    fun isValidPassword(hasFocus: Boolean): Boolean {
-        if (hasFocus.not()) {
-            return if (password.value.isEmpty()) {
-                val isError = true
-                _errorPassword.value = ErrorField(
-                    isError,
-                    OnboardingState.Failure.BLANK_PASSWORD_ERROR_MESSAGE
-                )
-                isError.not()
-            } else if (Pattern.passwordPattern.matches(password.value).not()) {
-                val isError = true
-                _errorPassword.value = ErrorField(
-                    isError,
-                    OnboardingState.Failure.NOT_MATCH_PASSWORD_ERROR_MESSAGE
-                )
-                isError.not()
-            } else {
-                val isError = false
-                _errorPassword.value = ErrorField(isError)
-                isError.not()
-            }
-        }
-        return false
+    fun checkPasswordValidation(hasFocus: Boolean = false) {
+        if (hasFocus) return
+
+        _errorPassword.value = validatePasswordWithError()
     }
 
-    fun isValidConfirmPassword(hasFocus: Boolean): Boolean {
-        if (hasFocus.not()) {
-            return if (confirmPassword.value.isEmpty()) {
-                val isError = true
-                _errorConfirmPassword.value = ErrorField(
-                    isError,
-                    OnboardingState.Failure.BLANK_PASSWORD_ERROR_MESSAGE
-                )
-                isError.not()
-            } else if (password.value != confirmPassword.value) {
-                val isError = true
-                _errorConfirmPassword.value = ErrorField(
-                    isError,
-                    OnboardingState.Failure.NOT_MATCH_CONFIRM_PASSWORD_ERROR_MESSAGE
-                )
-                isError.not()
-            } else {
-                val isError = false
-                _errorConfirmPassword.value = ErrorField(isError)
-                isError.not()
-            }
+    open fun validatePasswordWithError(): ErrorField {
+        return if (password.value.isEmpty()) {
+            ErrorField(true, BLANK_PASSWORD_ERROR_MESSAGE)
+        } else if (Pattern.passwordPattern.matches(password.value).not()) {
+            ErrorField(true, NOT_MATCH_PASSWORD_ERROR_MESSAGE)
+        } else {
+            ErrorField(false)
         }
+    }
 
-        return false
+    fun checkConfirmPasswordValidation(hasFocus: Boolean = false) {
+        if (hasFocus) return
+
+        _errorConfirmPassword.value = validateConfirmPasswordWithError()
+    }
+
+    fun validateConfirmPasswordWithError(): ErrorField {
+        return if (confirmPassword.value.isEmpty()) {
+            ErrorField(true, BLANK_PASSWORD_ERROR_MESSAGE)
+        } else if (password.value != confirmPassword.value) {
+            ErrorField(true, NOT_MATCH_CONFIRM_PASSWORD_ERROR_MESSAGE)
+        } else {
+            ErrorField(false)
+        }
     }
 
     sealed class Event {

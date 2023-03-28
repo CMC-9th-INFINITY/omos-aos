@@ -1,20 +1,15 @@
 package com.infinity.omos.ui.onboarding.login
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserCredential
 import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorField
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.BLANK_EMAIL_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.BLANK_PASSWORD_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
-import com.infinity.omos.utils.Pattern.Companion.emailPattern
+import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
@@ -22,78 +17,18 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository
-) : ViewModel() {
+) : OnboardingViewModel() {
 
-    private var _email = MutableStateFlow("")
-    val email = _email.asStateFlow()
-
-    private var _password = MutableStateFlow("")
-    val password = _password.asStateFlow()
-
-    private var _errorEmail = MutableStateFlow(ErrorField(false))
-    val errorEmail = _errorEmail.asStateFlow()
-
-    private var _errorPassword = MutableStateFlow(ErrorField(false))
-    val errorPassword = _errorPassword.asStateFlow()
-
-    private var _isVisiblePassword = MutableStateFlow(false)
-    val isVisiblePassword = _isVisiblePassword.asStateFlow()
-
-    private var _isActivatedLogin = MutableStateFlow(false)
-    val isActivatedLogin = _isActivatedLogin.asStateFlow()
-
-    private var _state = MutableStateFlow<OnboardingState>(OnboardingState.Nothing)
-    val state = _state.asStateFlow()
-
-    fun setEmail(email: String) {
-        if (errorEmail.value.state) {
-            _errorEmail.value = ErrorField(false)
-        }
-        _email.value = email
+    override fun changeCompleteState() {
+        _isCompleted.value =
+            validateEmailWithError().state.not() && validatePasswordWithError().state.not()
     }
 
-    fun setPassword(password: String) {
-        if (errorPassword.value.state) {
-            _errorPassword.value = ErrorField(false)
-        }
-        _password.value = password
-    }
-
-    fun changePasswordVisibleState() {
-        _isVisiblePassword.value = isVisiblePassword.value.not()
-    }
-
-    fun changeLoginState() {
-        _isActivatedLogin.value = email.value.isNotEmpty() && password.value.isNotEmpty()
-    }
-
-    fun checkEmailValidation(hasFocus: Boolean) {
-        if (hasFocus.not()) {
-            _errorEmail.value = if (email.value.isNotEmpty()) {
-                val state = emailPattern.matcher(email.value).matches().not()
-                ErrorField(
-                    state,
-                    if (state) INCORRECT_CONTENTS_ERROR_MESSAGE else ""
-                )
-            } else {
-                ErrorField(
-                    true,
-                    BLANK_EMAIL_ERROR_MESSAGE
-                )
-            }
-        }
-    }
-
-    fun checkPasswordValidation(hasFocus: Boolean) {
-        if (hasFocus.not()) {
-            _errorPassword.value = if (password.value.isEmpty()) {
-                ErrorField(
-                    true,
-                    BLANK_PASSWORD_ERROR_MESSAGE
-                )
-            } else {
-                ErrorField(false)
-            }
+    override fun validatePasswordWithError(): ErrorField {
+        return if (password.value.isEmpty()) {
+            ErrorField(true, OnboardingState.Failure.BLANK_PASSWORD_ERROR_MESSAGE)
+        } else {
+            ErrorField(false)
         }
     }
 

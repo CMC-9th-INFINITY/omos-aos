@@ -16,6 +16,10 @@ class ForgotPasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository
 ) : OnboardingViewModel() {
 
+    override fun changeCompleteState() {
+        _isCompleted.value = authCodeState.value is AuthCodeState.Success
+    }
+
     fun sendAuthMail() {
         _authCode.value = ""
         _state.value = OnboardingState.Loading
@@ -30,9 +34,5 @@ class ForgotPasswordViewModel @Inject constructor(
                 }
                 .onFailure { _state.value = OnboardingState.Failure(NETWORK_ERROR_MESSAGE) }
         }
-    }
-
-    override fun changeCompleteState() {
-        _isCompleted.value = authCodeState.value is AuthCodeState.Success
     }
 }

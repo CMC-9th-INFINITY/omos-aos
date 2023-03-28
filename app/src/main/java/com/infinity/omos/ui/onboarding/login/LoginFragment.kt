@@ -77,7 +77,7 @@ class LoginFragment : Fragment() {
     private fun initEmailListener() = with(binding.ofvEmail) {
         setOnTextChangeListener { text ->
             viewModel.setEmail(text)
-            viewModel.changeLoginState()
+            viewModel.changeCompleteState()
         }
 
         setOnFocusChangeListener { hasFocus ->
@@ -88,7 +88,7 @@ class LoginFragment : Fragment() {
     private fun initPasswordListener() = with(binding.ofvPassword) {
         setOnTextChangeListener { text ->
             viewModel.setPassword(text)
-            viewModel.changeLoginState()
+            viewModel.changeCompleteState()
         }
 
         setOnFocusChangeListener { hasFocus ->

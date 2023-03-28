@@ -46,10 +46,8 @@ class ForgotPasswordFragment : Fragment() {
 
         binding.ofvEmailAuthCode.setOnTextChangeListener { text ->
             viewModel.setAuthCode(text)
-            val isCompleted = viewModel.isValidAuthCode(resources.getInteger(R.integer.auth_code_length))
-            if (isCompleted) {
-                viewModel.changeCompleteState()
-            }
+            viewModel.checkAuthCodeValidation(resources.getInteger(R.integer.auth_code_length))
+            viewModel.changeCompleteState()
         }
 
         binding.btnNext.setOnClickListener {
@@ -123,7 +121,7 @@ class ForgotPasswordFragment : Fragment() {
             title = "인증메일을 발송하시겠습니까?",
             okText = "발송",
             onOkClickListener = {
-                viewModel.isValidEmail()
+                viewModel.checkEmailValidation()
 
                 if (viewModel.errorEmail.value.state.not()) {
                     viewModel.sendAuthMail()

@@ -43,8 +43,8 @@ class ChangePasswordFragment : Fragment() {
 
     private fun initListener() {
         initBackButtonListener()
-        initNewPasswordListener()
-        initConfirmNewPasswordListener()
+        initPasswordListener()
+        initConfirmPasswordListener()
         initCompleteListener()
     }
 
@@ -54,37 +54,37 @@ class ChangePasswordFragment : Fragment() {
         }
     }
 
-    private fun initNewPasswordListener() = with(binding.ofvNewPassword) {
+    private fun initPasswordListener() = with(binding.ofvPassword) {
         setOnTextChangeListener { text ->
-            viewModel.setNewPassword(text)
+            viewModel.setPassword(text)
             viewModel.changeCompleteState()
 
-            if (viewModel.confirmNewPassword.value.isNotEmpty()) {
-                viewModel.checkConfirmNewPasswordValidation(false)
+            if (viewModel.confirmPassword.value.isNotEmpty()) {
+                viewModel.checkConfirmPasswordValidation()
             }
         }
 
         setOnFocusChangeListener { hasFocus ->
-            viewModel.checkNewPasswordValidation(hasFocus)
+            viewModel.checkPasswordValidation(hasFocus)
         }
 
         setOnPasswordToggleClickListener {
-            viewModel.changeNewPasswordVisibleState()
+            viewModel.changePasswordVisibleState()
         }
     }
 
-    private fun initConfirmNewPasswordListener() = with(binding.ofvConfirmNewPassword) {
+    private fun initConfirmPasswordListener() = with(binding.ofvConfirmPassword) {
         setOnTextChangeListener { text ->
-            viewModel.setConfirmNewPassword(text)
+            viewModel.setConfirmPassword(text)
             viewModel.changeCompleteState()
         }
 
         setOnFocusChangeListener { hasFocus ->
-            viewModel.checkConfirmNewPasswordValidation(hasFocus)
+            viewModel.checkConfirmPasswordValidation(hasFocus)
         }
 
         setOnPasswordToggleClickListener {
-            viewModel.changeConfirmNewPasswordVisibleState()
+            viewModel.changeConfirmPasswordVisibleState()
         }
     }
 
@@ -102,28 +102,28 @@ class ChangePasswordFragment : Fragment() {
 
     private fun collectFieldViewError() {
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorNewPassword.collect { (state, msg) ->
-                binding.ofvNewPassword.setShowErrorMsg(state, msg)
+            viewModel.errorPassword.collect { (state, msg) ->
+                binding.ofvPassword.setShowErrorMsg(state, msg)
             }
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorConfirmNewPassword.collect { (state, msg) ->
-                binding.ofvConfirmNewPassword.setShowErrorMsg(state, msg)
+            viewModel.errorConfirmPassword.collect { (state, msg) ->
+                binding.ofvConfirmPassword.setShowErrorMsg(state, msg)
             }
         }
     }
 
     private fun collectFieldViewPasswordState() {
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.isVisibleNewPassword.collect { isVisibleNewPassword ->
-                binding.ofvNewPassword.setShowPassword(isVisibleNewPassword)
+            viewModel.isVisiblePassword.collect { isVisiblePassword ->
+                binding.ofvPassword.setShowPassword(isVisiblePassword)
             }
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.isVisibleConfirmNewPassword.collect { isVisibleConfirmNewPassword ->
-                binding.ofvConfirmNewPassword.setShowPassword(isVisibleConfirmNewPassword)
+            viewModel.isVisibleConfirmPassword.collect { isVisibleConfirmPassword ->
+                binding.ofvConfirmPassword.setShowPassword(isVisibleConfirmPassword)
             }
         }
     }
