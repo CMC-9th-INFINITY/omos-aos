@@ -16,6 +16,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
 
 @HiltViewModel
@@ -98,28 +99,34 @@ class LoginViewModel @Inject constructor(
 
     fun loginUser() {
         _state.value = OnboardingState.Loading
+
+        // TODO: 이메일은 맞고 비밀번호는 틀릴 시 401 에러 문제 해결 후 타임아웃 없애기
         viewModelScope.launch {
-            userRepository.loginUser(
-                UserCredential(
-                    email.value,
-                    password.value
+            withTimeoutOrNull(5000) {
+                userRepository.loginUser(
+                    UserCredential(
+                        email.value,
+                        password.value
+                    )
                 )
-            )
-                .onSuccess { userToken ->
-                    userRepository.saveToken(userToken)
-                    _state.value = OnboardingState.Success
-                }
-                .onFailure {
-                    _errorEmail.value = ErrorField(
-                        true,
-                        INCORRECT_CONTENTS_ERROR_MESSAGE
-                    )
-                    _errorPassword.value = ErrorField(
-                        true,
-                        INCORRECT_CONTENTS_ERROR_MESSAGE
-                    )
-                    _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
-                }
+                    .onSuccess { userToken ->
+                        userRepository.saveToken(userToken)
+                        _state.value = OnboardingState.Success
+                    }
+                    .onFailure {
+                        _errorEmail.value = ErrorField(
+                            true,
+                            INCORRECT_CONTENTS_ERROR_MESSAGE
+                        )
+                        _errorPassword.value = ErrorField(
+                            true,
+                            INCORRECT_CONTENTS_ERROR_MESSAGE
+                        )
+                        _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
+                    }
+            } ?: run {
+                _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
+            }
         }
     }
 

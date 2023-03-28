@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
+import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentChangePasswordBinding
 import com.infinity.omos.ui.onboarding.OnboardingState
 import com.infinity.omos.utils.repeatOnStarted
@@ -16,6 +20,8 @@ class ChangePasswordFragment : Fragment() {
 
     private lateinit var binding: FragmentChangePasswordBinding
     private val viewModel: ChangePasswordViewModel by viewModels()
+
+    private val args: ChangePasswordFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -77,7 +83,7 @@ class ChangePasswordFragment : Fragment() {
 
     private fun initCompleteListener() {
         binding.btnComplete.setOnClickListener {
-            viewModel.changePassword()
+            viewModel.changePassword(args.email)
         }
     }
 
@@ -119,7 +125,11 @@ class ChangePasswordFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.state.collect { state ->
                 if (state == OnboardingState.Success) {
-                    // TODO: 로그인 화면 이동
+                    val directions =
+                        ChangePasswordFragmentDirections.actionChangePasswordFragmentToLoginFragment()
+                    findNavController().navigate(directions)
+
+                    Toast.makeText(context, getString(R.string.change_password), Toast.LENGTH_LONG).show()
                 }
             }
         }

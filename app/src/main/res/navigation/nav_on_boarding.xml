@@ -50,7 +50,19 @@
         android:label="ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password">
 
+        <action
+            android:id="@+id/action_change_password_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
 
+        <argument
+            android:name="email"
+            app:argType="string" />
 
     </fragment>
     <fragment
