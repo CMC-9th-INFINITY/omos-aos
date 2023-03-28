@@ -5,14 +5,17 @@
 
     <data>
 
-        <import type="android.text.InputType" />
+        <import type="com.infinity.omos.ui.onboarding.OnboardingState" />
+
+        <variable
+            name="vm"
+            type="com.infinity.omos.ui.onboarding.signup.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:paddingHorizontal="@dimen/normal_padding"
-        tools:context=".ui.onboarding.SignUpFragment">
+        tools:context=".ui.onboarding.signup.SignUpFragment">
 
         <ImageView
             android:id="@+id/iv_logo"
@@ -26,9 +29,10 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tv_login"
+            android:id="@+id/tv_sign_up"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_padding"
             android:layout_marginTop="33dp"
             android:text="@string/sign_up"
             android:textColor="?attr/colorPrimary"
@@ -37,65 +41,103 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/iv_logo" />
 
-        <include
-            android:id="@+id/layout_email"
-            layout="@layout/layout_input"
+        <com.infinity.omos.ui.view.OmosFieldView
+            android:id="@+id/ofv_email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="22dp"
+            android:inputType="textEmailAddress"
+            app:hint="@string/email_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_login"
-            app:title="@{@string/email}"
-            app:hint="@{@string/email_hint}"/>
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_up"
+            app:title="@string/email" />
 
         <TextView
             android:id="@+id/tv_send_auth_mail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:paddingHorizontal="@dimen/normal_padding"
             android:text="@string/send_auth_mail"
             android:textColor="@color/light_gray"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_email" />
+            app:layout_constraintTop_toBottomOf="@id/ofv_email" />
 
-        <include
-            android:id="@+id/layout_pw"
-            layout="@layout/layout_secret_input"
+        <com.infinity.omos.ui.view.OmosFieldView
+            android:id="@+id/ofv_email_auth_code"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="@dimen/normal_padding"
+            android:inputType="numberDecimal"
+            android:maxLength="@integer/auth_code_length"
+            app:hint="@string/email_auth_code_hint"
+            app:isGone="@{!(vm.state instanceof OnboardingState.Success) || vm.isActivatedNext}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_send_auth_mail"
-            app:title="@{@string/pw}"
-            app:hint="@{@string/pw_hint}"/>
+            app:title="@string/email_auth_code" />
 
-        <include
-            android:id="@+id/layout_confirm_pw"
-            layout="@layout/layout_secret_input"
+        <com.infinity.omos.ui.view.OmosFieldView
+            android:id="@+id/ofv_password"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/normal_padding"
+            android:inputType="textPassword"
+            app:hint="@string/new_password_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layout_pw"
-            app:title="@{@string/confirm_pw}"
-            app:hint="@{@string/confirm_pw_hint}"/>
+            app:layout_constraintTop_toBottomOf="@id/ofv_email_auth_code"
+            app:passwordToggleEnabled="true"
+            app:title="비밀번호" />
+
+        <com.infinity.omos.ui.view.OmosFieldView
+            android:id="@+id/ofv_confirm_password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_padding"
+            android:inputType="textPassword"
+            app:hint="@string/confirm_new_password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ofv_password"
+            app:passwordToggleEnabled="true"
+            app:title="비밀번호 재확인" />
 
         <Button
             android:id="@+id/btn_next"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            android:backgroundTint="@color/gray_04"
+            android:layout_marginHorizontal="@dimen/normal_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:backgroundTint="@drawable/selector_ok_background"
             android:padding="@dimen/normal_padding"
             android:text="@string/next"
-            android:textColor="@color/gray_06"
+            android:textColor="@drawable/selector_ok_text"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <FrameLayout
+            android:id="@+id/frame_progress_bar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/bg_black_50"
+            app:isGone="@{!(vm.state instanceof OnboardingState.Loading)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="gone">
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
