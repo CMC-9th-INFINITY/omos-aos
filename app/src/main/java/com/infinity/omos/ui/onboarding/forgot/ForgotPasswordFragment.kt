@@ -6,8 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
 import com.infinity.omos.ui.view.OmosDialog
@@ -50,7 +50,9 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
-            // TODO: 비밀번호 변경 페이지 이동
+            val directions =
+                ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment()
+            findNavController().navigate(directions)
         }
 
         binding.tvSendAuthMail.setOnClickListener {
@@ -67,9 +69,7 @@ class ForgotPasswordFragment : Fragment() {
     private fun collectFieldViewText() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.authCode.collect { authCode ->
-                if (binding.ofvEmailAuthCode.text != authCode) {
-                    binding.ofvEmailAuthCode.text = authCode
-                }
+                binding.ofvEmailAuthCode.text = authCode
             }
         }
     }
