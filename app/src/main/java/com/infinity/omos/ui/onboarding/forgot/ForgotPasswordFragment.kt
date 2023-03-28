@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
+import com.infinity.omos.ui.onboarding.OnboardingViewModel
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -45,7 +46,10 @@ class ForgotPasswordFragment : Fragment() {
 
         binding.ofvEmailAuthCode.setOnTextChangeListener { text ->
             viewModel.setAuthCode(text)
-            viewModel.checkAuthCodeValidation(resources.getInteger(R.integer.auth_code_length))
+            val isCompleted = viewModel.isValidAuthCode(resources.getInteger(R.integer.auth_code_length))
+            if (isCompleted) {
+                viewModel.changeCompleteState()
+            }
         }
 
         binding.btnNext.setOnClickListener {
@@ -90,7 +94,7 @@ class ForgotPasswordFragment : Fragment() {
     private fun collectEvent() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.event.collect { event ->
-                if (event is ForgotPasswordViewModel.Event.ShowDialog) {
+                if (event is OnboardingViewModel.Event.ShowDialog) {
                     showSuccessDialog()
                     setAgainMail()
                 }
@@ -98,8 +102,8 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.isActivatedNext.collect { isActivated ->
-                if (isActivated) {
+            viewModel.isCompleted.collect { isCompleted ->
+                if (isCompleted) {
                     binding.ofvEmail.setEditTextEnabled(false)
                     binding.ofvEmailAuthCode.setEditTextEnabled(false)
                     binding.tvSendAuthMail.visibility = View.GONE
@@ -119,7 +123,7 @@ class ForgotPasswordFragment : Fragment() {
             title = "인증메일을 발송하시겠습니까?",
             okText = "발송",
             onOkClickListener = {
-                viewModel.checkEmailValidation()
+                viewModel.isValidEmail()
 
                 if (viewModel.errorEmail.value.state.not()) {
                     viewModel.sendAuthMail()

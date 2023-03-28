@@ -167,8 +167,8 @@ class OmosFieldView @JvmOverloads constructor(
     }
 
     fun setOnFocusChangeListener(listener: (Boolean) -> Unit) {
-        binding.etInput.setOnFocusChangeListener { _, b ->
-            listener.invoke(b)
+        binding.etInput.setOnFocusChangeListener { _, _ ->
+            listener.invoke(false) // 포커스가 떠날 때
         }
     }
 
