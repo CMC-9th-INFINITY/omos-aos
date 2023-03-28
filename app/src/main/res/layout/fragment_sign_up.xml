@@ -90,7 +90,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="36dp"
             android:backgroundTint="@color/gray_04"
-            android:padding="15dp"
+            android:padding="@dimen/normal_padding"
             android:text="@string/next"
             android:textColor="@color/gray_06"
             app:layout_constraintBottom_toBottomOf="parent"

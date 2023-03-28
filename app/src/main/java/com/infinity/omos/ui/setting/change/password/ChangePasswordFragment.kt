@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.infinity.omos.databinding.FragmentChangePasswordBinding
+import com.infinity.omos.ui.onboarding.OnboardingState
+import com.infinity.omos.utils.repeatOnStarted
 
 class ChangePasswordFragment : Fragment() {
 
@@ -22,5 +24,98 @@ class ChangePasswordFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
         }
         return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initListener()
+        collectData()
+    }
+
+    private fun initListener() {
+        initNewPasswordListener()
+        initConfirmNewPasswordListener()
+        initCompleteListener()
+    }
+
+    private fun initNewPasswordListener() = with(binding.ofvNewPassword) {
+        setOnTextChangeListener { text ->
+            viewModel.setNewPassword(text)
+            viewModel.changeCompleteState()
+        }
+
+        setOnFocusChangeListener { hasFocus ->
+            viewModel.checkNewPasswordValidation(hasFocus)
+        }
+
+        setOnPasswordToggleClickListener {
+            viewModel.changeNewPasswordVisibleState()
+        }
+    }
+
+    private fun initConfirmNewPasswordListener() = with(binding.ofvConfirmNewPassword) {
+        setOnTextChangeListener { text ->
+            viewModel.setConfirmNewPassword(text)
+            viewModel.changeCompleteState()
+        }
+
+        setOnFocusChangeListener { hasFocus ->
+            viewModel.checkConfirmNewPasswordValidation(hasFocus)
+        }
+
+        setOnPasswordToggleClickListener {
+            viewModel.changeConfirmNewPasswordVisibleState()
+        }
+    }
+
+    private fun initCompleteListener() {
+        binding.btnComplete.setOnClickListener {
+            viewModel.changePassword()
+        }
+    }
+
+    private fun collectData() {
+        collectFieldViewError()
+        collectFieldViewPasswordState()
+        collectLoginState()
+    }
+
+    private fun collectFieldViewError() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.errorNewPassword.collect { (state, msg) ->
+                binding.ofvNewPassword.setShowErrorMsg(state, msg)
+            }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.errorConfirmNewPassword.collect { (state, msg) ->
+                binding.ofvConfirmNewPassword.setShowErrorMsg(state, msg)
+            }
+        }
+    }
+
+    private fun collectFieldViewPasswordState() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.isVisibleNewPassword.collect { isVisibleNewPassword ->
+                binding.ofvNewPassword.setShowPassword(isVisibleNewPassword)
+            }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.isVisibleConfirmNewPassword.collect { isVisibleConfirmNewPassword ->
+                binding.ofvConfirmNewPassword.setShowPassword(isVisibleConfirmNewPassword)
+            }
+        }
+    }
+
+    private fun collectLoginState() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.state.collect { state ->
+                if (state == OnboardingState.Success) {
+                    // TODO: 로그인 화면 이동
+                }
+            }
+        }
     }
 }

@@ -95,7 +95,7 @@
             android:layout_marginHorizontal="@dimen/normal_padding"
             android:backgroundTint="@drawable/selector_ok_background"
             android:enabled="@{vm.isActivatedLogin}"
-            android:padding="15dp"
+            android:padding="@dimen/normal_padding"
             android:text="@string/login"
             android:textColor="@drawable/selector_ok_text"
             app:layout_constraintBottom_toTopOf="@id/tv_or"
