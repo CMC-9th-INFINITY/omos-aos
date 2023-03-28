@@ -48,6 +48,7 @@
                 android:background="@null"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="14dp"
+                android:saveEnabled="false"
                 android:textColor="@drawable/selector_edit_text"
                 android:textColorHint="@color/gray_06"
                 android:textSize="16sp"

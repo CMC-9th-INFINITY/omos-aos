@@ -2,6 +2,8 @@ package com.infinity.omos.ui.view
 
 import android.content.Context
 import android.content.res.TypedArray
+import android.os.Bundle
+import android.os.Parcelable
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
 import android.text.method.HideReturnsTransformationMethod
@@ -10,7 +12,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.core.widget.doAfterTextChanged
@@ -37,11 +38,37 @@ class OmosFieldView @JvmOverloads constructor(
     var text: String
         get() = binding.etInput.text.toString()
         set(newText) {
-            binding.etInput.setText(newText)
+            if (text != newText) {
+                binding.etInput.setText(newText)
+            }
         }
 
     init {
         getAttrs(attrs)
+    }
+
+    /**
+     *  android:saveEnabled = false
+     *  editText의 값이 마지막에 입력한 값으로 동일하게 복원되는 문제 해결
+     */
+    override fun onSaveInstanceState(): Parcelable {
+        val bundle = Bundle()
+        bundle.putParcelable("instanceState", super.onSaveInstanceState())
+        bundle.putString("currentEdit", binding.etInput.text.toString())
+        bundle.putBoolean("isFocused", binding.etInput.hasFocus())
+        return bundle
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is Bundle) {
+            binding.etInput.setText(state.getString("currentEdit"))
+            if (state.getBoolean("isFocused")) {
+                binding.etInput.requestFocus()
+            }
+            super.onRestoreInstanceState(state.getParcelable("instanceState"))
+            return
+        }
+        super.onRestoreInstanceState(state)
     }
 
     private fun getAttrs(attrs: AttributeSet) {
@@ -147,7 +174,7 @@ class OmosFieldView @JvmOverloads constructor(
 
     fun setOnTextChangeListener(listener: (String) -> Unit) {
         binding.etInput.doAfterTextChanged {
-            listener.invoke(text)
+            listener.invoke(it.toString())
         }
     }
 }
