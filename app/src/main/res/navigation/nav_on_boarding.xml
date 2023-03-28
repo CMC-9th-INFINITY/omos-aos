@@ -67,7 +67,7 @@
     </fragment>
     <fragment
         android:id="@+id/sign_up_fragment"
-        android:name="com.infinity.omos.ui.onboarding.SignUpFragment"
+        android:name="com.infinity.omos.ui.onboarding.signup.SignUpFragment"
         android:label="SignUpFragment"
         tools:layout="@layout/fragment_sign_up" />
 
