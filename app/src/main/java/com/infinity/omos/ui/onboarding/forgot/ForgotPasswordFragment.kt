@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
+import com.infinity.omos.ui.onboarding.base.AuthCodeState
 import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
@@ -100,8 +101,8 @@ class ForgotPasswordFragment : Fragment() {
         }
 
         viewLifecycleOwner.repeatOnStarted {
-            viewModel.isCompleted.collect { isCompleted ->
-                if (isCompleted) {
+            viewModel.authCodeState.collect { authCodeState ->
+                if (authCodeState is AuthCodeState.Success) {
                     binding.ofvEmail.setEditTextEnabled(false)
                     binding.ofvEmailAuthCode.setEditTextEnabled(false)
                     binding.tvSendAuthMail.visibility = View.GONE
@@ -118,8 +119,8 @@ class ForgotPasswordFragment : Fragment() {
     private fun showAlertDialog() {
         val dialog = OmosDialog(requireActivity())
         dialog.showDialog(
-            title = "인증메일을 발송하시겠습니까?",
-            okText = "발송",
+            title = getString(R.string.alert_send_email),
+            okText = getString(R.string.send),
             onOkClickListener = {
                 viewModel.checkEmailValidation()
 

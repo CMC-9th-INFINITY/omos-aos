@@ -261,4 +261,6 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="forgot_password">비밀번호 찾기</string>
     <string name="complete">완료</string>
     <string name="change_password">비밀번호가 변경되었습니다.</string>
+    <string name="alert_send_email">인증메일을 발송하시겠습니까?</string>
+    <string name="send">발송</string>
 </resources>
