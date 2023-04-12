@@ -1,11 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.NetworkResult
-import com.infinity.omos.data.user.UserCredential
-import com.infinity.omos.data.user.UserId
-import com.infinity.omos.data.user.UserPassword
-import com.infinity.omos.data.user.UserSnsCredential
-import com.infinity.omos.data.user.UserToken
+import com.infinity.omos.data.user.*
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
@@ -33,4 +29,10 @@ interface UserService {
     suspend fun changePassword(
         @Body params: UserPassword
     ): NetworkResult
+
+    @POST("api/auth/signup")
+    suspend fun signUpUser(
+        @Body params: UserSignUp
+    ): NetworkResult
+
 }
