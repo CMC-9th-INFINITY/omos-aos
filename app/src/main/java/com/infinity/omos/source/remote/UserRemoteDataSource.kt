@@ -33,6 +33,12 @@ class UserRemoteDataSource @Inject constructor(
         }
     }
 
+    suspend fun isNotEmailDuplicate(email: String): Result<NetworkResult> {
+        return Result.runCatching {
+            userService.isNotEmailDuplicate(email)
+        }
+    }
+
     suspend fun signUpUser(userSignUp: UserSignUp): Result<NetworkResult> {
         return Result.runCatching {
             userService.signUpUser(userSignUp)

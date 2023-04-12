@@ -2,11 +2,7 @@ package com.infinity.omos.api
 
 import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.*
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.PUT
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface UserService {
 
@@ -28,6 +24,11 @@ interface UserService {
     @PUT("api/auth/update/password")
     suspend fun changePassword(
         @Body params: UserPassword
+    ): NetworkResult
+
+    @GET("api/auth/check-email")
+    suspend fun isNotEmailDuplicate(
+        @Query("email") email: String
     ): NetworkResult
 
     @POST("api/auth/signup")

@@ -28,6 +28,10 @@ class UserRepository @Inject constructor(
         return userRemoteDataSource.changePassword(userPassword)
     }
 
+    suspend fun isNotEmailDuplicate(email: String): Result<NetworkResult> {
+        return userRemoteDataSource.isNotEmailDuplicate(email)
+    }
+
     suspend fun signUpUser(userSignUp: UserSignUp): Result<NetworkResult> {
         return userRemoteDataSource.signUpUser(userSignUp)
     }
