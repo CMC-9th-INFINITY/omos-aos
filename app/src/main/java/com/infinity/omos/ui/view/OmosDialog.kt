@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.view.Gravity
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ViewOmosDialogBinding
 import com.infinity.omos.utils.Width.Companion.screenWidth
@@ -18,22 +19,24 @@ class OmosDialog(private val activity: Activity) {
         okText: String,
         cancelText: String = activity.getString(R.string.cancel),
         cancelVisible: Boolean = true,
+        gravity: Int = Gravity.CENTER,
+        sizeRatio: Double = 0.8,
         onOkClickListener: (() -> Unit)?
     ) {
         binding = ViewOmosDialogBinding.inflate(activity.layoutInflater)
-        initDialog()
-        initProperty(title, okText, cancelText, cancelVisible)
+        initDialog(sizeRatio)
+        initProperty(title, okText, cancelText, cancelVisible, gravity)
         initListener(onOkClickListener)
 
         dlg.show()
     }
 
-    private fun initDialog() = with(dlg) {
+    private fun initDialog(sizeRatio: Double) = with(dlg) {
         setContentView(binding.root)
 
         // 다이얼로그 가로 크기 조절
         val params = window?.attributes
-        params?.width = (context.screenWidth() * 0.8).toInt()
+        params?.width = (context.screenWidth() * sizeRatio).toInt()
         window?.attributes = params
 
         setCancelable(false) // 다이얼로그 외부 영역 터치 불가
@@ -44,12 +47,14 @@ class OmosDialog(private val activity: Activity) {
         title: String,
         okText: String,
         cancelText: String,
-        visible: Boolean
+        visible: Boolean,
+        gravity: Int
     ) = with(binding) {
         tvTitle.text = title
         tvOk.text = okText
         tvCancel.text = cancelText
         cancelVisible = visible
+        tvTitle.gravity = gravity
     }
 
     private fun initListener(onOkClickListener: (() -> Unit)?) = with(binding) {
