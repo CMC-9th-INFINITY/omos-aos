@@ -8,14 +8,22 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentNicknameBinding
+import com.infinity.omos.ui.onboarding.base.OnboardingState
+import com.infinity.omos.ui.setting.change.password.ChangePasswordFragmentArgs
 import com.infinity.omos.ui.view.OmosDialog
+import com.infinity.omos.utils.repeatOnStarted
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class NicknameFragment : Fragment() {
 
     private lateinit var binding: FragmentNicknameBinding
     private val viewModel: NicknameViewModel by viewModels()
+
+    private val args: NicknameFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,6 +52,7 @@ class NicknameFragment : Fragment() {
     private fun initNicknameListener() = with(binding.ofvNickname) {
         setOnTextChangeListener { nick ->
             viewModel.setNickname(nick)
+            viewModel.changeCompleteState()
         }
     }
 
@@ -85,13 +94,25 @@ class NicknameFragment : Fragment() {
         }
 
         binding.btnComplete.setOnClickListener {
-            val directions =
-                NicknameFragmentDirections.actionNicknameFragmentToLoginFragment()
-            findNavController().navigate(directions)
+            viewModel.signUp(args.email, args.password)
         }
     }
 
     private fun collectData() {
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.state.collect { state ->
+                if (state == OnboardingState.Success) {
+                    val directions =
+                        NicknameFragmentDirections.actionNicknameFragmentToLoginFragment()
+                    findNavController().navigate(directions)
+                }
+            }
+        }
 
+        viewLifecycleOwner.repeatOnStarted {
+            viewModel.errorNick.collect { (state, msg) ->
+                binding.ofvNickname.setShowErrorMsg(state, msg)
+            }
+        }
     }
 }

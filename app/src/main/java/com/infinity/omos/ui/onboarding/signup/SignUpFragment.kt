@@ -111,7 +111,7 @@ class SignUpFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             val directions =
-                SignUpFragmentDirections.actionSignUpFragmentToNicknameFragment()
+                SignUpFragmentDirections.actionSignUpFragmentToNicknameFragment(viewModel.email.value, viewModel.password.value)
             findNavController().navigate(directions)
         }
     }

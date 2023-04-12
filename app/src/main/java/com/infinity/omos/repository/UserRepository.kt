@@ -1,11 +1,7 @@
 package com.infinity.omos.repository
 
 import com.infinity.omos.data.NetworkResult
-import com.infinity.omos.data.user.UserCredential
-import com.infinity.omos.data.user.UserId
-import com.infinity.omos.data.user.UserPassword
-import com.infinity.omos.data.user.UserSnsCredential
-import com.infinity.omos.data.user.UserToken
+import com.infinity.omos.data.user.*
 import com.infinity.omos.source.local.UserLocalDataSource
 import com.infinity.omos.source.remote.UserRemoteDataSource
 import kotlinx.coroutines.flow.Flow
@@ -30,6 +26,10 @@ class UserRepository @Inject constructor(
 
     suspend fun changePassword(userPassword: UserPassword): Result<NetworkResult> {
         return userRemoteDataSource.changePassword(userPassword)
+    }
+
+    suspend fun signUpUser(userSignUp: UserSignUp): Result<NetworkResult> {
+        return userRemoteDataSource.signUpUser(userSignUp)
     }
 
     suspend fun saveToken(token: UserToken) {
