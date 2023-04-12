@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.infinity.omos.ui.onboarding.base.OnboardingState" />
+
+        <variable
+            name="vm"
+            type="com.infinity.omos.ui.onboarding.signup.NicknameViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.onboarding.signup.NicknameFragment">
+
+        <ImageView
+            android:id="@+id/iv_logo"
+            android:layout_width="76dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="42dp"
+            android:contentDescription="@string/omos_logo"
+            android:src="@drawable/ic_omos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tv_sign_up"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_padding"
+            android:layout_marginTop="33dp"
+            android:text="@string/sign_up"
+            android:textColor="?attr/colorPrimary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_logo" />
+
+        <com.infinity.omos.ui.view.OmosFieldView
+            android:id="@+id/ofv_nickname"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            app:hint="@string/nickname_hint"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_sign_up"
+            app:title="@string/nickname" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_padding"
+            android:layout_marginTop="@dimen/normal_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ofv_nickname" />
+
+        <CheckBox
+            android:id="@+id/btn_tos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/normal_padding"
+            android:button="@drawable/selector_agreement"
+            android:minHeight="36dp"
+            app:layout_constraintBottom_toTopOf="@id/btn_pp"
+            app:layout_constraintEnd_toStartOf="@id/tv_prefix_tos"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            app:useMaterialThemeColors="false" />
+
+        <TextView
+            android:id="@+id/tv_prefix_tos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/required"
+            android:textColor="@color/gray_05"
+            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintEnd_toStartOf="@id/tv_tos"
+            app:layout_constraintStart_toEndOf="@id/btn_tos"
+            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+
+        <TextView
+            android:id="@+id/tv_tos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/tos"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintStart_toEndOf="@id/tv_prefix_tos"
+            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+
+        <TextView
+            android:id="@+id/tv_postfix_tos"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/agree"
+            android:textColor="@color/gray_05"
+            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintEnd_toStartOf="@+id/tv_tos_view"
+            app:layout_constraintStart_toEndOf="@id/tv_tos"
+            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+
+        <TextView
+            android:id="@+id/tv_tos_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/normal_padding"
+            android:text="@string/view"
+            android:textColor="@color/gray_05"
+            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_postfix_tos"
+            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+
+        <CheckBox
+            android:id="@+id/btn_pp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:button="@drawable/selector_agreement"
+            android:minHeight="36dp"
+            app:layout_constraintEnd_toStartOf="@id/tv_prefix_pp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/btn_tos"
+            app:useMaterialThemeColors="false" />
+
+        <TextView
+            android:id="@+id/tv_prefix_pp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/required"
+            android:textColor="@color/gray_05"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintEnd_toStartOf="@id/tv_pp"
+            app:layout_constraintStart_toEndOf="@id/btn_pp"
+            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+
+        <TextView
+            android:id="@+id/tv_pp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pp"
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintStart_toEndOf="@id/tv_prefix_pp"
+            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+
+        <TextView
+            android:id="@+id/tv_postfix_pp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/agree"
+            android:textColor="@color/gray_05"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintEnd_toStartOf="@id/tv_pp_view"
+            app:layout_constraintStart_toEndOf="@id/tv_pp"
+            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+
+        <TextView
+            android:id="@+id/tv_pp_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/normal_padding"
+            android:text="@string/view"
+            android:textColor="@color/gray_05"
+            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/tv_postfix_pp"
+            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+
+        <Button
+            android:id="@+id/btn_next"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/normal_padding"
+            android:layout_marginBottom="@dimen/large_padding"
+            android:backgroundTint="@drawable/selector_ok_background"
+            android:enabled="@{vm.isCompleted}"
+            android:padding="@dimen/normal_padding"
+            android:text="@string/complete"
+            android:textColor="@drawable/selector_ok_text"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

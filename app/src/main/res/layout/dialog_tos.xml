@@ -19,7 +19,7 @@
         android:id="@+id/tv_tos"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:text="@string/tos"
+        android:text="@string/tos_view"
         android:textColor="@color/dark_gray"
         app:layout_constraintTop_toBottomOf="@+id/btn_exit"
         app:layout_constraintStart_toStartOf="parent"

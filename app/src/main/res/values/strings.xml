@@ -30,7 +30,7 @@
 
     <string name="no_record">%s의\n첫번째 주인공이 되어봐요!</string>
 
-    <string name="tos">
+    <string name="tos_view">
         Omos 이용약관\n
 \n
 제 1 조 (목적)\n
@@ -183,7 +183,7 @@
 ③해외에 주소나 거소가 있는 "회원"의 경우 "회사"와 "회원"간 발생한 분쟁에 관한 소송은 전항에도 불구하고 대한민국 서울중앙지방법원을 관할법원으로 합니다.
     </string>
 
-    <string name="pp">
+    <string name="pp_view">
 Omos 개인정보 처리방침\n
 \n
 \n
@@ -263,4 +263,11 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="change_password">비밀번호가 변경되었습니다.</string>
     <string name="alert_send_email">인증메일을 발송하시겠습니까?</string>
     <string name="send">발송</string>
+    <string name="nickname_hint">닉네임을 입력해주세요.</string>
+    <string name="nickname">닉네임</string>
+    <string name="required">(필수) </string>
+    <string name="agree">에 동의합니다.</string>
+    <string name="view"><u>보기</u></string>
+    <string name="tos">이용약관</string>
+    <string name="pp">개인정보 보호정책</string>
 </resources>

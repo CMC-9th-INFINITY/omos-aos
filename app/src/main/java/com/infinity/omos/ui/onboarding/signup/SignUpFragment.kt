@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentSignUpBinding
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
@@ -109,7 +110,9 @@ class SignUpFragment : Fragment() {
         }
 
         binding.btnNext.setOnClickListener {
-            // TODO: 닉네임 입력 페이지로 이동
+            val directions =
+                SignUpFragmentDirections.actionSignUpFragmentToNicknameFragment()
+            findNavController().navigate(directions)
         }
     }
 
