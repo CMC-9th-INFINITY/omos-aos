@@ -87,6 +87,15 @@
         android:label="NicknameFragment"
         tools:layout="@layout/fragment_nickname">
 
+        <action
+            android:id="@+id/action_nickname_fragment_to_login_fragment"
+            app:destination="@id/login_fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
 
     </fragment>
 

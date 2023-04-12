@@ -63,13 +63,13 @@
             app:layout_constraintTop_toBottomOf="@id/ofv_nickname" />
 
         <CheckBox
-            android:id="@+id/btn_tos"
+            android:id="@+id/cb_tos"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/normal_padding"
             android:button="@drawable/selector_agreement"
             android:minHeight="36dp"
-            app:layout_constraintBottom_toTopOf="@id/btn_pp"
+            app:layout_constraintBottom_toTopOf="@id/cb_pp"
             app:layout_constraintEnd_toStartOf="@id/tv_prefix_tos"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/divider"
@@ -81,10 +81,10 @@
             android:layout_height="wrap_content"
             android:text="@string/required"
             android:textColor="@color/gray_05"
-            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintBottom_toBottomOf="@id/cb_tos"
             app:layout_constraintEnd_toStartOf="@id/tv_tos"
-            app:layout_constraintStart_toEndOf="@id/btn_tos"
-            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+            app:layout_constraintStart_toEndOf="@id/cb_tos"
+            app:layout_constraintTop_toTopOf="@id/cb_tos" />
 
         <TextView
             android:id="@+id/tv_tos"
@@ -92,9 +92,9 @@
             android:layout_height="wrap_content"
             android:text="@string/tos"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintBottom_toBottomOf="@id/cb_tos"
             app:layout_constraintStart_toEndOf="@id/tv_prefix_tos"
-            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+            app:layout_constraintTop_toTopOf="@id/cb_tos" />
 
         <TextView
             android:id="@+id/tv_postfix_tos"
@@ -102,10 +102,10 @@
             android:layout_height="wrap_content"
             android:text="@string/agree"
             android:textColor="@color/gray_05"
-            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintBottom_toBottomOf="@id/cb_tos"
             app:layout_constraintEnd_toStartOf="@+id/tv_tos_view"
             app:layout_constraintStart_toEndOf="@id/tv_tos"
-            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+            app:layout_constraintTop_toTopOf="@id/cb_tos" />
 
         <TextView
             android:id="@+id/tv_tos_view"
@@ -114,20 +114,20 @@
             android:paddingHorizontal="@dimen/normal_padding"
             android:text="@string/view"
             android:textColor="@color/gray_05"
-            app:layout_constraintBottom_toBottomOf="@id/btn_tos"
+            app:layout_constraintBottom_toBottomOf="@id/cb_tos"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_postfix_tos"
-            app:layout_constraintTop_toTopOf="@id/btn_tos" />
+            app:layout_constraintTop_toTopOf="@id/cb_tos" />
 
         <CheckBox
-            android:id="@+id/btn_pp"
+            android:id="@+id/cb_pp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:button="@drawable/selector_agreement"
             android:minHeight="36dp"
             app:layout_constraintEnd_toStartOf="@id/tv_prefix_pp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/btn_tos"
+            app:layout_constraintTop_toBottomOf="@id/cb_tos"
             app:useMaterialThemeColors="false" />
 
         <TextView
@@ -136,10 +136,10 @@
             android:layout_height="wrap_content"
             android:text="@string/required"
             android:textColor="@color/gray_05"
-            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintBottom_toBottomOf="@id/cb_pp"
             app:layout_constraintEnd_toStartOf="@id/tv_pp"
-            app:layout_constraintStart_toEndOf="@id/btn_pp"
-            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+            app:layout_constraintStart_toEndOf="@id/cb_pp"
+            app:layout_constraintTop_toTopOf="@id/cb_pp" />
 
         <TextView
             android:id="@+id/tv_pp"
@@ -147,9 +147,9 @@
             android:layout_height="wrap_content"
             android:text="@string/pp"
             android:textColor="?attr/colorPrimary"
-            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintBottom_toBottomOf="@id/cb_pp"
             app:layout_constraintStart_toEndOf="@id/tv_prefix_pp"
-            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+            app:layout_constraintTop_toTopOf="@id/cb_pp" />
 
         <TextView
             android:id="@+id/tv_postfix_pp"
@@ -157,10 +157,10 @@
             android:layout_height="wrap_content"
             android:text="@string/agree"
             android:textColor="@color/gray_05"
-            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintBottom_toBottomOf="@id/cb_pp"
             app:layout_constraintEnd_toStartOf="@id/tv_pp_view"
             app:layout_constraintStart_toEndOf="@id/tv_pp"
-            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+            app:layout_constraintTop_toTopOf="@id/cb_pp" />
 
         <TextView
             android:id="@+id/tv_pp_view"
@@ -169,13 +169,13 @@
             android:paddingHorizontal="@dimen/normal_padding"
             android:text="@string/view"
             android:textColor="@color/gray_05"
-            app:layout_constraintBottom_toBottomOf="@id/btn_pp"
+            app:layout_constraintBottom_toBottomOf="@id/cb_pp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/tv_postfix_pp"
-            app:layout_constraintTop_toTopOf="@id/btn_pp" />
+            app:layout_constraintTop_toTopOf="@id/cb_pp" />
 
         <Button
-            android:id="@+id/btn_next"
+            android:id="@+id/btn_complete"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/normal_padding"
