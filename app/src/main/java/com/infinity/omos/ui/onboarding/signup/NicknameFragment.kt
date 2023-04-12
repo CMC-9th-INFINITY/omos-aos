@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -105,6 +106,8 @@ class NicknameFragment : Fragment() {
                     val directions =
                         NicknameFragmentDirections.actionNicknameFragmentToLoginFragment()
                     findNavController().navigate(directions)
+
+                    Toast.makeText(context, getString(R.string.success_sign_up), Toast.LENGTH_LONG).show()
                 }
             }
         }

@@ -21,6 +21,7 @@ sealed class OnboardingState{
             const val CORRECT_AUTH_CODE_MESSAGE = "인증에 성공하였습니다."
             const val NETWORK_ERROR_MESSAGE = "네트워크 오류"
             const val ALREADY_EXIST_NICKNAME = "이미 쓰고 있는 닉네임이에요."
+            const val ALREADY_EXIST_EMAIL = "이미 쓰고 있는 이메일이에요."
         }
     }
 }
