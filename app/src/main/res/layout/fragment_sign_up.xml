@@ -91,7 +91,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ofv_email_auth_code"
-            app:passwordToggleEnabled="true"
             app:title="비밀번호" />
 
         <com.infinity.omos.ui.view.OmosFieldView
@@ -104,7 +103,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ofv_password"
-            app:passwordToggleEnabled="true"
             app:title="비밀번호 재확인" />
 
         <Button

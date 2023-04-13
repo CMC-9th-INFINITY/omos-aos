@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Parcelable
 import android.text.InputFilter
 import android.text.InputFilter.LengthFilter
+import android.text.InputType
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
 import android.util.AttributeSet
@@ -32,7 +33,11 @@ class OmosFieldView @JvmOverloads constructor(
     )
 
     private val typedArray = context.obtainStyledAttributes(intArrayOf(android.R.attr.colorPrimary))
-    private val colorPrimary = typedArray.getColor(0, 0)
+    private val colorPrimary = typedArray.run {
+        val color = getColor(0, 0)
+        recycle()
+        color
+    }
     private val colorGray = ContextCompat.getColor(context, R.color.gray_05)
 
     var text: String
@@ -55,7 +60,10 @@ class OmosFieldView @JvmOverloads constructor(
     }
 
     private fun changePasswordVisible() {
-        val isVisible = binding.ivEye.isSelected.not()
+        setPasswordVisible(binding.ivEye.isSelected.not())
+    }
+
+    private fun setPasswordVisible(isVisible: Boolean) {
         binding.ivEye.isSelected = isVisible
         binding.etInput.transformationMethod = if (isVisible) {
             HideReturnsTransformationMethod.getInstance()
@@ -77,16 +85,8 @@ class OmosFieldView @JvmOverloads constructor(
         val hint = types.getText(R.styleable.OmosFieldView_hint)
         setHint(hint.toString())
 
-        val errorMsgTint = types.getColor(R.styleable.OmosFieldView_errorMsgTint, colorPrimary)
-        setErrorMsgTint(errorMsgTint)
-        typedArray.recycle()
-
-        val passwordToggleEnabled =
-            types.getBoolean(R.styleable.OmosFieldView_passwordToggleEnabled, false)
-        setPasswordToggleEnabled(passwordToggleEnabled)
-
-        val type = types.getInt(R.styleable.OmosFieldView_android_inputType, -1)
-        setInputType(type)
+        val inputType = types.getInt(R.styleable.OmosFieldView_android_inputType, -1)
+        setInputType(inputType)
 
         val length = types.getInt(R.styleable.OmosFieldView_android_maxLength, Int.MAX_VALUE)
         setMaxLength(length)
@@ -94,57 +94,53 @@ class OmosFieldView @JvmOverloads constructor(
         types.recycle()
     }
 
-    fun setTitle(title: String) {
+    private fun setTitle(title: String) {
         binding.tvTitle.text = title
     }
 
-    fun setHint(hint: String) {
+    private fun setHint(hint: String) {
         binding.etInput.hint = hint
     }
 
-    fun setErrorMsgTint(tint: Int) {
-        binding.tvErrorMsg.setTextColor(tint)
-    }
-
-    private fun setPasswordToggleEnabled(isEnabled: Boolean) {
-        binding.ivEye.visibility = if (isEnabled) {
-            View.VISIBLE
-        } else {
-            View.GONE
-        }
-    }
-
-    fun setShowErrorMsg(state: Boolean, msg: String) {
-        binding.constraintInput.isActivated = state
-        binding.tvErrorMsg.text = msg
-
-        if (state) {
-            val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake)
-            binding.constraintLayout.startAnimation(shakeAnimation)
-            setErrorMsgTint(colorPrimary)
-        } else {
-            setErrorMsgTint(colorGray)
-        }
-    }
-
-    fun setInputType(type: Int) {
+    private fun setInputType(type: Int) {
         binding.etInput.inputType = type
+
+        when (type) {
+            InputType.TYPE_CLASS_TEXT + InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS -> {
+
+            }
+
+            InputType.TYPE_CLASS_TEXT + InputType.TYPE_TEXT_VARIATION_PASSWORD -> {
+                showPasswordToggle()
+            }
+        }
     }
 
-    fun setMaxLength(length: Int) {
+    private fun showPasswordToggle() {
+        binding.ivEye.visibility = View.VISIBLE
+    }
+
+    private fun setMaxLength(length: Int) {
         val fArray = arrayOfNulls<InputFilter>(1)
         fArray[0] = LengthFilter(length)
         binding.etInput.filters = fArray
     }
 
-    fun setEditTextEnabled(enabled: Boolean) {
-        binding.etInput.isEnabled = enabled
+    fun setShowErrorMsg(state: Boolean, msg: String) {
+        binding.constraintInput.isActivated = state
+        binding.tvMsg.text = msg
+
+        if (state) {
+            val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake)
+            binding.constraintLayout.startAnimation(shakeAnimation)
+            binding.tvMsg.setTextColor(colorPrimary)
+        } else {
+            binding.tvMsg.setTextColor(colorGray)
+        }
     }
 
-    fun setOnPasswordToggleClickListener(listener: () -> Unit) {
-        binding.ivEye.setOnClickListener {
-            listener.invoke()
-        }
+    fun setEditTextEnabled(enabled: Boolean) {
+        binding.etInput.isEnabled = enabled
     }
 
     fun setOnFocusChangeListener(listener: (Boolean) -> Unit) {
@@ -166,17 +162,21 @@ class OmosFieldView @JvmOverloads constructor(
     override fun onSaveInstanceState(): Parcelable {
         val bundle = Bundle()
         bundle.putParcelable("instanceState", super.onSaveInstanceState())
-        bundle.putString("currentEdit", binding.etInput.text.toString())
+        bundle.putString("text", binding.etInput.text.toString())
+        bundle.putBoolean("passwordVisible", binding.ivEye.isSelected)
         bundle.putBoolean("isFocused", binding.etInput.hasFocus())
         return bundle
     }
 
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
-            binding.etInput.setText(state.getString("currentEdit"))
+            binding.etInput.setText(state.getString("text"))
+            setPasswordVisible(state.getBoolean("passwordVisible"))
+
             if (state.getBoolean("isFocused")) {
                 binding.etInput.requestFocus()
             }
+
             super.onRestoreInstanceState(state.getParcelable("instanceState"))
             return
         }
