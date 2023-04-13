@@ -84,10 +84,6 @@ class SignUpFragment : Fragment() {
         setOnFocusChangeListener { hasFocus ->
             viewModel.checkPasswordValidation(hasFocus)
         }
-
-        setOnPasswordToggleClickListener {
-            viewModel.changePasswordVisibleState()
-        }
     }
 
     private fun initConfirmPasswordListener() = with(binding.ofvConfirmPassword) {
@@ -98,10 +94,6 @@ class SignUpFragment : Fragment() {
 
         setOnFocusChangeListener { hasFocus ->
             viewModel.checkConfirmPasswordValidation(hasFocus)
-        }
-
-        setOnPasswordToggleClickListener {
-            viewModel.changeConfirmPasswordVisibleState()
         }
     }
     private fun initButtonClickListener() {
@@ -118,7 +110,6 @@ class SignUpFragment : Fragment() {
 
     private fun collectData() {
         collectFieldViewError()
-        collectFieldViewPasswordState()
         collectEvent()
     }
 
@@ -144,20 +135,6 @@ class SignUpFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.errorConfirmPassword.collect { (state, msg) ->
                 binding.ofvConfirmPassword.setShowErrorMsg(state, msg)
-            }
-        }
-    }
-
-    private fun collectFieldViewPasswordState() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.isVisiblePassword.collect { isVisiblePassword ->
-                binding.ofvPassword.setShowPassword(isVisiblePassword)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.isVisibleConfirmPassword.collect { isVisibleConfirmPassword ->
-                binding.ofvConfirmPassword.setShowPassword(isVisibleConfirmPassword)
             }
         }
     }

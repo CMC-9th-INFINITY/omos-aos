@@ -44,31 +44,25 @@ class OmosFieldView @JvmOverloads constructor(
         }
 
     init {
+        initListener()
         getAttrs(attrs)
     }
 
-    /**
-     *  android:saveEnabled = false
-     *  editText의 값이 마지막에 입력한 값으로 동일하게 복원되는 문제 해결
-     */
-    override fun onSaveInstanceState(): Parcelable {
-        val bundle = Bundle()
-        bundle.putParcelable("instanceState", super.onSaveInstanceState())
-        bundle.putString("currentEdit", binding.etInput.text.toString())
-        bundle.putBoolean("isFocused", binding.etInput.hasFocus())
-        return bundle
+    private fun initListener() {
+        binding.ivEye.setOnClickListener {
+            changePasswordVisible()
+        }
     }
 
-    override fun onRestoreInstanceState(state: Parcelable?) {
-        if (state is Bundle) {
-            binding.etInput.setText(state.getString("currentEdit"))
-            if (state.getBoolean("isFocused")) {
-                binding.etInput.requestFocus()
-            }
-            super.onRestoreInstanceState(state.getParcelable("instanceState"))
-            return
+    private fun changePasswordVisible() {
+        val isVisible = binding.ivEye.isSelected.not()
+        binding.ivEye.isSelected = isVisible
+        binding.etInput.transformationMethod = if (isVisible) {
+            HideReturnsTransformationMethod.getInstance()
+        } else {
+            PasswordTransformationMethod.getInstance()
         }
-        super.onRestoreInstanceState(state)
+        binding.etInput.setSelection(text.length)
     }
 
     private fun getAttrs(attrs: AttributeSet) {
@@ -91,9 +85,6 @@ class OmosFieldView @JvmOverloads constructor(
             types.getBoolean(R.styleable.OmosFieldView_passwordToggleEnabled, false)
         setPasswordToggleEnabled(passwordToggleEnabled)
 
-        val showPassword = types.getBoolean(R.styleable.OmosFieldView_showPassword, false)
-        setShowPassword(showPassword)
-
         val type = types.getInt(R.styleable.OmosFieldView_android_inputType, -1)
         setInputType(type)
 
@@ -115,22 +106,12 @@ class OmosFieldView @JvmOverloads constructor(
         binding.tvErrorMsg.setTextColor(tint)
     }
 
-    fun setPasswordToggleEnabled(isEnabled: Boolean) {
+    private fun setPasswordToggleEnabled(isEnabled: Boolean) {
         binding.ivEye.visibility = if (isEnabled) {
             View.VISIBLE
         } else {
             View.GONE
         }
-    }
-
-    fun setShowPassword(isVisible: Boolean) {
-        binding.ivEye.isSelected = isVisible
-        binding.etInput.transformationMethod = if (isVisible) {
-            HideReturnsTransformationMethod.getInstance()
-        } else {
-            PasswordTransformationMethod.getInstance()
-        }
-        binding.etInput.setSelection(text.length)
     }
 
     fun setShowErrorMsg(state: Boolean, msg: String) {
@@ -176,5 +157,29 @@ class OmosFieldView @JvmOverloads constructor(
         binding.etInput.doAfterTextChanged {
             listener.invoke(it.toString())
         }
+    }
+
+    /**
+     *  android:saveEnabled = false
+     *  editText의 값이 마지막에 입력한 값으로 동일하게 복원되는 문제 해결
+     */
+    override fun onSaveInstanceState(): Parcelable {
+        val bundle = Bundle()
+        bundle.putParcelable("instanceState", super.onSaveInstanceState())
+        bundle.putString("currentEdit", binding.etInput.text.toString())
+        bundle.putBoolean("isFocused", binding.etInput.hasFocus())
+        return bundle
+    }
+
+    override fun onRestoreInstanceState(state: Parcelable?) {
+        if (state is Bundle) {
+            binding.etInput.setText(state.getString("currentEdit"))
+            if (state.getBoolean("isFocused")) {
+                binding.etInput.requestFocus()
+            }
+            super.onRestoreInstanceState(state.getParcelable("instanceState"))
+            return
+        }
+        super.onRestoreInstanceState(state)
     }
 }

@@ -94,15 +94,10 @@ class LoginFragment : Fragment() {
         setOnFocusChangeListener { hasFocus ->
             viewModel.checkPasswordValidation(hasFocus)
         }
-
-        setOnPasswordToggleClickListener {
-            viewModel.changePasswordVisibleState()
-        }
     }
 
     private fun collectData() {
         collectFieldViewError()
-        collectFieldViewPasswordState()
         collectLoginState()
     }
 
@@ -135,14 +130,6 @@ class LoginFragment : Fragment() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.errorPassword.collect { (state, msg) ->
                 binding.ofvPassword.setShowErrorMsg(state, msg)
-            }
-        }
-    }
-
-    private fun collectFieldViewPasswordState() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.isVisiblePassword.collect { isVisiblePassword ->
-                binding.ofvPassword.setShowPassword(isVisiblePassword)
             }
         }
     }
