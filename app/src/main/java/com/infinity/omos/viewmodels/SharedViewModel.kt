@@ -3,11 +3,21 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.*
+import com.infinity.omos.utils.DataStoreManager
+import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.first
+import javax.inject.Inject
 
-class SharedViewModel(application: Application): AndroidViewModel(application) {
+@HiltViewModel
+class SharedViewModel @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+): ViewModel() {
+
+    private val userId = dataStoreManager.getUserId()
 
     private val todayRepository: TodayRepository = TodayRepository()
     private val myRecordRepository: MyRecordRepository = MyRecordRepository()
@@ -30,7 +40,7 @@ class SharedViewModel(application: Application): AndroidViewModel(application) {
     }
 
     // 사랑했던 노래
-    fun setMyLoveMusic(userId: Int){
+    fun setMyLoveMusic(){
         todayRepository.getMyLoveMusic(userId)
     }
     fun getMyLoveMusic(): LiveData<LovedMusic>{

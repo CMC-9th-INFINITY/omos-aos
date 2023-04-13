@@ -27,8 +27,6 @@ class TodayFragment : Fragment() {
     private val viewModel: SharedViewModel by viewModels()
     private lateinit var binding: FragmentTodayBinding
 
-    private val userId = OmosApplication.prefs.getInt("userId")
-
     private var musicId = ""
     private var musicTitle = ""
     private var artists = ""
@@ -132,7 +130,7 @@ class TodayFragment : Fragment() {
         }
 
         // 내가 사랑했던 노래
-        viewModel.setMyLoveMusic(userId)
+        viewModel.setMyLoveMusic()
         viewModel.getMyLoveMusic().observe(viewLifecycleOwner) { music ->
             music?.let {
                 binding.love = it

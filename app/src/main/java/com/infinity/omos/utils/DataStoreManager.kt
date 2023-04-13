@@ -7,13 +7,14 @@ import androidx.datastore.preferences.core.intPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.infinity.omos.data.user.UserToken
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 
 class DataStoreManager @Inject constructor(
     private val dataStore: DataStore<Preferences>
 ) {
-
     private val accessTokenKey = stringPreferencesKey("accessToken")
     private val refreshTokenKey = stringPreferencesKey("refreshToken")
     private val userIdKey = intPreferencesKey("userId")
@@ -32,5 +33,9 @@ class DataStoreManager @Inject constructor(
             settings[refreshTokenKey] = token.refreshToken
             settings[userIdKey] = token.userId
         }
+    }
+
+    fun getUserId(): Int {
+        return runBlocking { tokenFlow.first().userId }
     }
 }
