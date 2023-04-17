@@ -181,7 +181,7 @@ class OmosFieldView @JvmOverloads constructor(
         binding.tvMsg.setTextColor(colorPrimary)
     }
 
-    private fun hideErrorMessage() {
+    fun hideErrorMessage() {
         binding.constraintInput.isActivated = false
         binding.tvMsg.text = ""
     }

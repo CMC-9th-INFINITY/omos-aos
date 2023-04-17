@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentChangePasswordBinding
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,8 +44,7 @@ class ChangePasswordFragment : Fragment() {
 
     private fun initListener() {
         initBackButtonListener()
-        initPasswordListener()
-        initConfirmPasswordListener()
+        initFieldListener()
         initCompleteListener()
     }
 
@@ -54,30 +54,28 @@ class ChangePasswordFragment : Fragment() {
         }
     }
 
-    private fun initPasswordListener() = with(binding.ofvPassword) {
-        setOnTextChangeListener { text ->
+    private fun initFieldListener() {
+        binding.ofvPassword.setOnTextChangeListener(errorListener = { text ->
             viewModel.setPassword(text)
-            viewModel.changeCompleteState()
-
-            if (viewModel.confirmPassword.value.isNotEmpty()) {
-                viewModel.checkConfirmPasswordValidation()
+            viewModel.getPasswordErrorMessage(text)
+        }) {
+            if (viewModel.getConfirmPasswordErrorMessage() == ErrorMessage.NO_ERROR) {
+                binding.ofvConfirmPassword.hideErrorMessage()
             }
+
+            changeCompleteState()
         }
 
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkPasswordValidation(hasFocus)
+        binding.ofvConfirmPassword.setOnTextChangeListener(errorListener = { text ->
+            viewModel.setConfirmPassword(text)
+            viewModel.getConfirmPasswordErrorMessage(text)
+        }) {
+            changeCompleteState()
         }
     }
 
-    private fun initConfirmPasswordListener() = with(binding.ofvConfirmPassword) {
-        setOnTextChangeListener { text ->
-            viewModel.setConfirmPassword(text)
-            viewModel.changeCompleteState()
-        }
-
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkConfirmPasswordValidation(hasFocus)
-        }
+    private fun changeCompleteState() {
+        viewModel.changeCompleteState(binding.ofvPassword.error == ErrorMessage.NO_ERROR && binding.ofvConfirmPassword.error == ErrorMessage.NO_ERROR)
     }
 
     private fun initCompleteListener() {
@@ -87,22 +85,7 @@ class ChangePasswordFragment : Fragment() {
     }
 
     private fun collectData() {
-        collectFieldViewError()
         collectLoginState()
-    }
-
-    private fun collectFieldViewError() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorPassword.collect { (state, msg) ->
-                binding.ofvPassword.setShowErrorMsg(state, msg)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorConfirmPassword.collect { (state, msg) ->
-                binding.ofvConfirmPassword.setShowErrorMsg(state, msg)
-            }
-        }
     }
 
     private fun collectLoginState() {
@@ -113,7 +96,8 @@ class ChangePasswordFragment : Fragment() {
                         ChangePasswordFragmentDirections.actionChangePasswordFragmentToLoginFragment()
                     findNavController().navigate(directions)
 
-                    Toast.makeText(context, getString(R.string.change_password), Toast.LENGTH_LONG).show()
+                    Toast.makeText(context, getString(R.string.change_password), Toast.LENGTH_LONG)
+                        .show()
                 }
             }
         }
