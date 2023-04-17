@@ -48,11 +48,13 @@ class ForgotPasswordFragment : Fragment() {
 
     private fun initFieldListener() {
         binding.ofvEmail.setOnTextChangeListener(errorListener = { text ->
-            viewModel.validateEmail(text)
+            viewModel.setEmail(text)
+            viewModel.getEmailErrorMessage(text)
         })
 
         binding.ofvEmailAuthCode.setOnTextChangeListener(errorListener = { text ->
-            viewModel.validateAuthCode(text, resources.getInteger(R.integer.auth_code_length))
+            viewModel.setAuthCode(text)
+            viewModel.getAuthCodeErrorMessage(text, resources.getInteger(R.integer.auth_code_length))
         }) { text ->
             if (text.length == resources.getInteger(R.integer.auth_code_length)) {
 

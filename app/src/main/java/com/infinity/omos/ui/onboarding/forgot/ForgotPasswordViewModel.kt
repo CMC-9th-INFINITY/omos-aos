@@ -47,10 +47,13 @@ class ForgotPasswordViewModel @Inject constructor(
         _isCompleted.value = state
     }
 
-    fun validateEmail(text: String): ErrorMessage {
+    fun setEmail(text: String) {
         _email.value = text
-        return if (email.value.isNotEmpty()) {
-            val state = Pattern.emailPattern.matcher(email.value).matches().not()
+    }
+
+    fun getEmailErrorMessage(text: String): ErrorMessage {
+        return if (text.isNotEmpty()) {
+            val state = Pattern.emailPattern.matcher(text).matches().not()
             if (state) {
                 ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE
             } else {
@@ -61,9 +64,12 @@ class ForgotPasswordViewModel @Inject constructor(
         }
     }
 
-    fun validateAuthCode(text: String, maxLength: Int): ErrorMessage {
+    fun setAuthCode(text: String) {
         _authCode.value = text
-        return if (authCode.value.length == maxLength && correctAuthCode != authCode.value) {
+    }
+
+    fun getAuthCodeErrorMessage(text: String, maxLength: Int): ErrorMessage {
+        return if (text.length == maxLength && correctAuthCode != text) {
             // 인증 실패
             ErrorMessage.INCORRECT_AUTH_CODE_ERROR_MESSAGE
         } else {

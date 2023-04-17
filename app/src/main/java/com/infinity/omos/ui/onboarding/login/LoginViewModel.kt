@@ -38,10 +38,13 @@ class LoginViewModel @Inject constructor(
         _isCompleted.value = state
     }
 
-    fun validateEmail(text: String): ErrorMessage {
+    fun setEmail(text: String) {
         _email.value = text
-        return if (email.value.isNotEmpty()) {
-            val state = Pattern.emailPattern.matcher(email.value).matches().not()
+    }
+
+    fun getEmailErrorMessage(text: String): ErrorMessage {
+        return if (text.isNotEmpty()) {
+            val state = Pattern.emailPattern.matcher(text).matches().not()
             if (state) {
                 ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE
             } else {
@@ -52,9 +55,11 @@ class LoginViewModel @Inject constructor(
         }
     }
 
-    fun validatePassword(text: String): ErrorMessage {
+    fun setPassword(text: String) {
         _password.value = text
-        return if (password.value.isEmpty()) {
+    }
+    fun getPasswordErrorMessage(text: String): ErrorMessage {
+        return if (text.isEmpty()) {
             ErrorMessage.BLANK_PASSWORD_ERROR_MESSAGE
         } else {
             ErrorMessage.NO_ERROR

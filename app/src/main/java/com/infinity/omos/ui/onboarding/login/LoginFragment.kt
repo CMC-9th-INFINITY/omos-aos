@@ -76,13 +76,15 @@ class LoginFragment : Fragment() {
 
     private fun initFieldListener() {
         binding.ofvEmail.setOnTextChangeListener(errorListener = { text ->
-            viewModel.validateEmail(text)
+            viewModel.setEmail(text)
+            viewModel.getEmailErrorMessage(text)
         }) {
             changeCompleteState()
         }
 
         binding.ofvPassword.setOnTextChangeListener(errorListener = { text ->
-            viewModel.validatePassword(text)
+            viewModel.setPassword(text)
+            viewModel.getPasswordErrorMessage(text)
         }) {
             changeCompleteState()
         }
