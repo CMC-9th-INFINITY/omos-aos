@@ -100,7 +100,7 @@ class OmosFieldView @JvmOverloads constructor(
         val hint = types.getText(R.styleable.OmosFieldView_hint)
         setHint(hint.toString())
 
-        val inputType = types.getInt(R.styleable.OmosFieldView_android_inputType, -1)
+        val inputType = types.getInt(R.styleable.OmosFieldView_android_inputType, InputType.TYPE_CLASS_TEXT)
         setInputType(inputType)
 
         val length = types.getInt(R.styleable.OmosFieldView_android_maxLength, Int.MAX_VALUE)
@@ -172,7 +172,8 @@ class OmosFieldView @JvmOverloads constructor(
         }
     }
 
-    fun showErrorMessage() {
+    fun showErrorMessage(err: ErrorMessage = error) {
+        error = err
         binding.constraintInput.isActivated = true
         binding.tvMsg.text = error.msg
 

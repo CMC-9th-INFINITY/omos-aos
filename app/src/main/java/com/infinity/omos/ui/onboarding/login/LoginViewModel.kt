@@ -7,8 +7,6 @@ import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
 import com.infinity.omos.utils.Pattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -83,10 +81,10 @@ class LoginViewModel @Inject constructor(
                         _state.value = OnboardingState.Success
                     }
                     .onFailure {
-                        _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
+                        _state.value = OnboardingState.Failure(ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE)
                     }
             } ?: run {
-                _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
+                _state.value = OnboardingState.Failure(ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE)
             }
         }
     }
@@ -105,7 +103,7 @@ class LoginViewModel @Inject constructor(
                     _state.value = OnboardingState.Success
                 }
                 .onFailure {
-                    _state.value = OnboardingState.Failure(NOT_EXIST_USER_ERROR_MESSAGE)
+                    _state.value = OnboardingState.Failure(ErrorMessage.NOT_EXIST_USER_ERROR_MESSAGE)
                 }
         }
     }

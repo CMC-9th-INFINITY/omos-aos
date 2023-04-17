@@ -1,12 +1,11 @@
 package com.infinity.omos.ui.onboarding.signup
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserSignUp
 import com.infinity.omos.repository.UserRepository
-import com.infinity.omos.ui.onboarding.ErrorField
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.ALREADY_EXIST_NICKNAME
-import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class NicknameViewModel @Inject constructor(
     private val userRepository: UserRepository
-) : OnboardingViewModel() {
+) : ViewModel() {
 
     private var _nickname = MutableStateFlow("")
     val nickname = _nickname.asStateFlow()
@@ -27,8 +26,11 @@ class NicknameViewModel @Inject constructor(
     private var _ppState = MutableStateFlow(false)
     val ppState = _ppState.asStateFlow()
 
-    private var _errorNick = MutableStateFlow(ErrorField(false))
-    val errorNick = _errorNick.asStateFlow()
+    private var _isCompleted = MutableStateFlow(false)
+    val isCompleted = _isCompleted.asStateFlow()
+
+    private var _state = MutableStateFlow<OnboardingState>(OnboardingState.Nothing)
+    val state = _state.asStateFlow()
 
     fun setTosCheckBox(state: Boolean) {
         _tosState.value = state
@@ -39,13 +41,10 @@ class NicknameViewModel @Inject constructor(
     }
 
     fun setNickname(nickname: String) {
-        if (errorNick.value.state) {
-            _errorNick.value = ErrorField(false)
-        }
         _nickname.value = nickname
     }
 
-    override fun changeCompleteState() {
+    fun changeCompleteState() {
         _isCompleted.value = tosState.value && ppState.value && nickname.value.isNotEmpty()
     }
 
@@ -58,8 +57,7 @@ class NicknameViewModel @Inject constructor(
                     _state.value = OnboardingState.Success
                 }
                 .onFailure {
-                    _errorNick.value = ErrorField(true, ALREADY_EXIST_NICKNAME)
-                    _state.value = OnboardingState.Failure(OnboardingState.Failure.NETWORK_ERROR_MESSAGE)
+                    _state.value = OnboardingState.Failure(ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR_MESSAGE)
                 }
         }
     }

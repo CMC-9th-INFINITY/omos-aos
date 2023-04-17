@@ -6,9 +6,8 @@ import com.infinity.omos.data.user.UserEmail
 import com.infinity.omos.repository.AuthRepository
 import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
+import com.infinity.omos.ui.onboarding.base.Event
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import com.infinity.omos.utils.Pattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -34,7 +33,7 @@ class ForgotPasswordViewModel @Inject constructor(
     private var _isCompleted = MutableStateFlow(false)
     val isCompleted = _isCompleted.asStateFlow()
 
-    private val _event = MutableSharedFlow<OnboardingViewModel.Event>()
+    private val _event = MutableSharedFlow<Event>()
     val event = _event.asSharedFlow()
 
     private var _authCodeState = MutableStateFlow<AuthCodeState>(AuthCodeState.Nothing)
@@ -89,11 +88,11 @@ class ForgotPasswordViewModel @Inject constructor(
             authRepository.sendAuthMail(email)
                 .onSuccess { authCode ->
                     correctAuthCode = authCode.code
-                    _event.emit(OnboardingViewModel.Event.ShowDialog)
+                    _event.emit(Event.ShowDialog)
                     _authCodeState.value = AuthCodeState.Ready
                     _state.value = OnboardingState.Success
                 }
-                .onFailure { _state.value = OnboardingState.Failure(NETWORK_ERROR_MESSAGE) }
+                .onFailure { _state.value = OnboardingState.Failure(ErrorMessage.NETWORK_ERROR_MESSAGE) }
         }
     }
 }
