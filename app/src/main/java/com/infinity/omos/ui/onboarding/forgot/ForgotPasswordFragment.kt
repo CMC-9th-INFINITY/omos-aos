@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
 import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import com.infinity.omos.ui.view.OmosDialog
@@ -41,16 +42,30 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun initListener() {
-        binding.ofvEmail.setOnTextChangeListener { text ->
-            viewModel.setEmail(text)
-        }
+        initFieldListener()
+        initClickListener()
+    }
 
-        binding.ofvEmailAuthCode.setOnTextChangeListener { text ->
-            viewModel.setAuthCode(text)
-            viewModel.checkAuthCodeValidation(resources.getInteger(R.integer.auth_code_length))
-            viewModel.changeCompleteState()
-        }
+    private fun initFieldListener() {
+        binding.ofvEmail.setOnTextChangeListener(errorListener = { text ->
+            viewModel.validateEmail(text)
+        })
 
+        binding.ofvEmailAuthCode.setOnTextChangeListener(errorListener = { text ->
+            viewModel.validateAuthCode(text, resources.getInteger(R.integer.auth_code_length))
+        }) { text ->
+            if (text.length == resources.getInteger(R.integer.auth_code_length)) {
+
+                if (binding.ofvEmailAuthCode.error == ErrorMessage.NO_ERROR) {
+                    viewModel.setAuthCodeState()
+                } else {
+                    binding.ofvEmailAuthCode.showErrorMessage()
+                }
+            }
+        }
+    }
+
+    private fun initClickListener() {
         binding.btnNext.setOnClickListener {
             val directions =
                 ForgotPasswordFragmentDirections.actionForgotPasswordFragmentToChangePasswordFragment(viewModel.email.value)
@@ -63,31 +78,7 @@ class ForgotPasswordFragment : Fragment() {
     }
 
     private fun collectData() {
-        collectFieldViewText()
-        collectFieldViewError()
         collectEvent()
-    }
-
-    private fun collectFieldViewText() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.authCode.collect { authCode ->
-                binding.ofvEmailAuthCode.text = authCode
-            }
-        }
-    }
-
-    private fun collectFieldViewError() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorEmail.collect { (state, msg) ->
-                binding.ofvEmail.setShowErrorMsg(state, msg)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorAuthCode.collect { (state, msg) ->
-                binding.ofvEmailAuthCode.setShowErrorMsg(state, msg)
-            }
-        }
     }
 
     private fun collectEvent() {
@@ -104,8 +95,10 @@ class ForgotPasswordFragment : Fragment() {
             viewModel.authCodeState.collect { authCodeState ->
                 if (authCodeState is AuthCodeState.Success) {
                     binding.ofvEmail.setEditTextEnabled(false)
+                    binding.ofvEmail.showSuccessMessage(resources.getString(R.string.success_auth))
                     binding.ofvEmailAuthCode.setEditTextEnabled(false)
                     binding.tvSendAuthMail.visibility = View.GONE
+                    viewModel.changeCompleteState(true)
                 }
             }
         }
@@ -122,10 +115,10 @@ class ForgotPasswordFragment : Fragment() {
             title = getString(R.string.alert_send_email),
             okText = getString(R.string.send),
             onOkClickListener = {
-                viewModel.checkEmailValidation()
-
-                if (viewModel.errorEmail.value.state.not()) {
+                if (binding.ofvEmail.error == ErrorMessage.NO_ERROR) {
                     viewModel.sendAuthMail()
+                } else {
+                    binding.ofvEmail.showErrorMessage()
                 }
             }
         )

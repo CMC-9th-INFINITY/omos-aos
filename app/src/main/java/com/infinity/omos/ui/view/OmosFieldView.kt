@@ -64,26 +64,11 @@ class OmosFieldView @JvmOverloads constructor(
         }
 
         setOnFocusChangeListener { hasFocus ->
-            if (hasFocus.not()) {
-                val msg = when (error) {
-                    ErrorMessage.DEFAULT -> return@setOnFocusChangeListener
-                    ErrorMessage.NO_ERROR -> ""
-                    ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE -> "입력하신 내용을 다시 확인해주세요."
-                    ErrorMessage.BLANK_EMAIL_ERROR_MESSAGE -> "이메일을 입력해주세요."
-                    ErrorMessage.BLANK_PASSWORD_ERROR_MESSAGE -> "비밀번호를 입력해주세요."
-                    ErrorMessage.NOT_MATCH_PASSWORD_ERROR_MESSAGE -> "8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요."
-                    ErrorMessage.NOT_MATCH_CONFIRM_PASSWORD_ERROR_MESSAGE -> "비밀번호가 일치하지 않아요."
-                    ErrorMessage.NOT_EXIST_USER_ERROR_MESSAGE -> "해당하는 유저가 존재하지 않습니다."
-                    ErrorMessage.INCORRECT_AUTH_CODE_ERROR_MESSAGE -> "인증코드가 일치하지 않습니다."
-                    ErrorMessage.NETWORK_ERROR_MESSAGE -> "네트워크 오류"
-                    ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR_MESSAGE -> "이미 쓰고 있는 닉네임이에요."
-                    ErrorMessage.ALREADY_EXIST_EMAIL_ERROR_MESSAGE -> "이미 쓰고 있는 이메일이에요."
-                }
-
-                if (msg.isNotEmpty()) {
-                    showErrorMessage(msg)
-                } else {
+            if (hasFocus.not() && error != ErrorMessage.DEFAULT) {
+                if (error == ErrorMessage.NO_ERROR) {
                     hideErrorMessage()
+                } else {
+                    showErrorMessage()
                 }
             }
         }
@@ -179,7 +164,7 @@ class OmosFieldView @JvmOverloads constructor(
         }
     }
 
-    fun setOnTextChangeListener(errorListener: (String) -> ErrorMessage = { ErrorMessage.DEFAULT }, listener: (String) -> Unit) {
+    fun setOnTextChangeListener(errorListener: (String) -> ErrorMessage = { ErrorMessage.DEFAULT }, listener: (String) -> Unit = {}) {
         binding.etInput.doAfterTextChanged {
             hideErrorMessage()
             error = errorListener.invoke(it.toString())
@@ -187,9 +172,9 @@ class OmosFieldView @JvmOverloads constructor(
         }
     }
 
-    private fun showErrorMessage(msg: String) {
+    fun showErrorMessage() {
         binding.constraintInput.isActivated = true
-        binding.tvMsg.text = msg
+        binding.tvMsg.text = error.msg
 
         val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake)
         binding.constraintLayout.startAnimation(shakeAnimation)
