@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
 import com.infinity.omos.utils.KakaoLoginManager
@@ -43,8 +44,7 @@ class LoginFragment : Fragment() {
     private fun initListener() {
         initMoveScreenListener()
         initLoginListener()
-        initEmailListener()
-        initPasswordListener()
+        initFieldListener()
     }
 
     private fun initMoveScreenListener() {
@@ -74,30 +74,25 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun initEmailListener() = with(binding.ofvEmail) {
-        setOnTextChangeListener { text ->
-            viewModel.setEmail(text)
-            viewModel.changeCompleteState()
+    private fun initFieldListener() {
+        binding.ofvEmail.setOnTextChangeListener(errorListener = { text ->
+            viewModel.validateEmail(text)
+        }) {
+            changeCompleteState()
         }
 
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkEmailValidation(hasFocus)
+        binding.ofvPassword.setOnTextChangeListener(errorListener = { text ->
+            viewModel.validatePassword(text)
+        }) {
+            changeCompleteState()
         }
     }
 
-    private fun initPasswordListener() = with(binding.ofvPassword) {
-        setOnTextChangeListener { text ->
-            viewModel.setPassword(text)
-            viewModel.changeCompleteState()
-        }
-
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkPasswordValidation(hasFocus)
-        }
+    private fun changeCompleteState() {
+        viewModel.changeCompleteState(binding.ofvEmail.error == ErrorMessage.NO_ERROR && binding.ofvPassword.error == ErrorMessage.NO_ERROR)
     }
 
     private fun collectData() {
-        collectFieldViewError()
         collectLoginState()
     }
 
@@ -116,20 +111,6 @@ class LoginFragment : Fragment() {
                     }
                     else -> Unit
                 }
-            }
-        }
-    }
-
-    private fun collectFieldViewError() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorEmail.collect { (state, msg) ->
-                binding.ofvEmail.setShowErrorMsg(state, msg)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorPassword.collect { (state, msg) ->
-                binding.ofvPassword.setShowErrorMsg(state, msg)
             }
         }
     }
