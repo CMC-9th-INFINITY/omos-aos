@@ -1,23 +1,78 @@
 package com.infinity.omos.ui.onboarding.forgot
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserEmail
 import com.infinity.omos.repository.AuthRepository
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
+import com.infinity.omos.utils.Pattern
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ForgotPasswordViewModel @Inject constructor(
     private val authRepository: AuthRepository
-) : OnboardingViewModel() {
+) : ViewModel() {
 
-    override fun changeCompleteState() {
-        _isCompleted.value = authCodeState.value is AuthCodeState.Success
+    private var _email = MutableStateFlow("")
+    val email = _email.asStateFlow()
+
+    private var _authCode = MutableStateFlow("")
+    val authCode = _authCode.asStateFlow()
+
+    private var correctAuthCode = ""
+
+    private var _isCompleted = MutableStateFlow(false)
+    val isCompleted = _isCompleted.asStateFlow()
+
+    private val _event = MutableSharedFlow<OnboardingViewModel.Event>()
+    val event = _event.asSharedFlow()
+
+    private var _authCodeState = MutableStateFlow<AuthCodeState>(AuthCodeState.Nothing)
+    val authCodeState = _authCodeState.asStateFlow()
+
+    private var _state = MutableStateFlow<OnboardingState>(OnboardingState.Nothing)
+    val state = _state.asStateFlow()
+
+    fun changeCompleteState(state: Boolean) {
+        _isCompleted.value = state
+    }
+
+    fun validateEmail(text: String): ErrorMessage {
+        _email.value = text
+        return if (email.value.isNotEmpty()) {
+            val state = Pattern.emailPattern.matcher(email.value).matches().not()
+            if (state) {
+                ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE
+            } else {
+                ErrorMessage.NO_ERROR
+            }
+        } else {
+            ErrorMessage.BLANK_EMAIL_ERROR_MESSAGE
+        }
+    }
+
+    fun validateAuthCode(text: String, maxLength: Int): ErrorMessage {
+        _authCode.value = text
+        return if (authCode.value.length == maxLength && correctAuthCode != authCode.value) {
+            // 인증 실패
+            ErrorMessage.INCORRECT_AUTH_CODE_ERROR_MESSAGE
+        } else {
+            ErrorMessage.NO_ERROR
+        }
+    }
+
+    fun setAuthCodeState() {
+        _authCodeState.value = AuthCodeState.Success
     }
 
     fun sendAuthMail() {
@@ -28,7 +83,7 @@ class ForgotPasswordViewModel @Inject constructor(
             authRepository.sendAuthMail(email)
                 .onSuccess { authCode ->
                     correctAuthCode = authCode.code
-                    _event.emit(Event.ShowDialog)
+                    _event.emit(OnboardingViewModel.Event.ShowDialog)
                     _authCodeState.value = AuthCodeState.Ready
                     _state.value = OnboardingState.Success
                 }
