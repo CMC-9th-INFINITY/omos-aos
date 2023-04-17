@@ -15,9 +15,12 @@ import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ViewOmosFieldBinding
+import com.infinity.omos.ui.onboarding.ErrorMessage
+import timber.log.Timber
 
 
 class OmosFieldView @JvmOverloads constructor(
@@ -48,6 +51,8 @@ class OmosFieldView @JvmOverloads constructor(
             }
         }
 
+    var error: ErrorMessage = ErrorMessage.DEFAULT
+
     init {
         initListener()
         getAttrs(attrs)
@@ -56,6 +61,31 @@ class OmosFieldView @JvmOverloads constructor(
     private fun initListener() {
         binding.ivEye.setOnClickListener {
             changePasswordVisible()
+        }
+
+        setOnFocusChangeListener { hasFocus ->
+            if (hasFocus.not()) {
+                val msg = when (error) {
+                    ErrorMessage.DEFAULT -> return@setOnFocusChangeListener
+                    ErrorMessage.NO_ERROR -> ""
+                    ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE -> "입력하신 내용을 다시 확인해주세요."
+                    ErrorMessage.BLANK_EMAIL_ERROR_MESSAGE -> "이메일을 입력해주세요."
+                    ErrorMessage.BLANK_PASSWORD_ERROR_MESSAGE -> "비밀번호를 입력해주세요."
+                    ErrorMessage.NOT_MATCH_PASSWORD_ERROR_MESSAGE -> "8~16자의 영문 대소문자, 숫자, 특수문자만 가능해요."
+                    ErrorMessage.NOT_MATCH_CONFIRM_PASSWORD_ERROR_MESSAGE -> "비밀번호가 일치하지 않아요."
+                    ErrorMessage.NOT_EXIST_USER_ERROR_MESSAGE -> "해당하는 유저가 존재하지 않습니다."
+                    ErrorMessage.INCORRECT_AUTH_CODE_ERROR_MESSAGE -> "인증코드가 일치하지 않습니다."
+                    ErrorMessage.NETWORK_ERROR_MESSAGE -> "네트워크 오류"
+                    ErrorMessage.ALREADY_EXIST_NICKNAME_ERROR_MESSAGE -> "이미 쓰고 있는 닉네임이에요."
+                    ErrorMessage.ALREADY_EXIST_EMAIL_ERROR_MESSAGE -> "이미 쓰고 있는 이메일이에요."
+                }
+
+                if (msg.isNotEmpty()) {
+                    showErrorMessage(msg)
+                } else {
+                    hideErrorMessage()
+                }
+            }
         }
     }
 
@@ -145,14 +175,35 @@ class OmosFieldView @JvmOverloads constructor(
 
     fun setOnFocusChangeListener(listener: (Boolean) -> Unit) {
         binding.etInput.setOnFocusChangeListener { _, b ->
-            listener.invoke(b) // 포커스가 떠날 때
+            listener.invoke(b)
         }
     }
 
-    fun setOnTextChangeListener(listener: (String) -> Unit) {
+    fun setOnTextChangeListener(errorListener: (String) -> ErrorMessage = { ErrorMessage.DEFAULT }, listener: (String) -> Unit) {
         binding.etInput.doAfterTextChanged {
+            hideErrorMessage()
+            error = errorListener.invoke(it.toString())
             listener.invoke(it.toString())
         }
+    }
+
+    private fun showErrorMessage(msg: String) {
+        binding.constraintInput.isActivated = true
+        binding.tvMsg.text = msg
+
+        val shakeAnimation = AnimationUtils.loadAnimation(context, R.anim.shake)
+        binding.constraintLayout.startAnimation(shakeAnimation)
+        binding.tvMsg.setTextColor(colorPrimary)
+    }
+
+    private fun hideErrorMessage() {
+        binding.constraintInput.isActivated = false
+        binding.tvMsg.text = ""
+    }
+
+    fun showSuccessMessage(msg: String) {
+        binding.tvMsg.text = msg
+        binding.tvMsg.setTextColor(colorGray)
     }
 
     /**
@@ -171,7 +222,9 @@ class OmosFieldView @JvmOverloads constructor(
     override fun onRestoreInstanceState(state: Parcelable?) {
         if (state is Bundle) {
             binding.etInput.setText(state.getString("text"))
-            setPasswordVisible(state.getBoolean("passwordVisible"))
+            if (binding.ivEye.isVisible) {
+                setPasswordVisible(state.getBoolean("passwordVisible"))
+            }
 
             if (state.getBoolean("isFocused")) {
                 binding.etInput.requestFocus()

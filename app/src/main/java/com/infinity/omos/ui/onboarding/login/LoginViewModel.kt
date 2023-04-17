@@ -1,15 +1,18 @@
 package com.infinity.omos.ui.onboarding.login
 
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserCredential
 import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.repository.UserRepository
-import com.infinity.omos.ui.onboarding.ErrorField
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.INCORRECT_CONTENTS_ERROR_MESSAGE
 import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
-import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
+import com.infinity.omos.utils.Pattern
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withTimeoutOrNull
 import javax.inject.Inject
@@ -17,18 +20,44 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val userRepository: UserRepository
-) : OnboardingViewModel() {
+) : ViewModel() {
 
-    override fun changeCompleteState() {
-        _isCompleted.value =
-            validateEmailWithError().state.not() && validatePasswordWithError().state.not()
+    private var _email = MutableStateFlow("")
+    val email = _email.asStateFlow()
+
+    private var _password = MutableStateFlow("")
+    val password = _password.asStateFlow()
+
+    private var _isCompleted = MutableStateFlow(false)
+    val isCompleted = _isCompleted.asStateFlow()
+
+    private var _state = MutableStateFlow<OnboardingState>(OnboardingState.Nothing)
+    val state = _state.asStateFlow()
+
+    fun changeCompleteState(state: Boolean) {
+        _isCompleted.value = state
     }
 
-    override fun validatePasswordWithError(): ErrorField {
-        return if (password.value.isEmpty()) {
-            ErrorField(true, OnboardingState.Failure.BLANK_PASSWORD_ERROR_MESSAGE)
+    fun validateEmail(text: String): ErrorMessage {
+        _email.value = text
+        return if (email.value.isNotEmpty()) {
+            val state = Pattern.emailPattern.matcher(email.value).matches().not()
+            if (state) {
+                ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE
+            } else {
+                ErrorMessage.NO_ERROR
+            }
         } else {
-            ErrorField(false)
+            ErrorMessage.BLANK_EMAIL_ERROR_MESSAGE
+        }
+    }
+
+    fun validatePassword(text: String): ErrorMessage {
+        _password.value = text
+        return if (password.value.isEmpty()) {
+            ErrorMessage.BLANK_PASSWORD_ERROR_MESSAGE
+        } else {
+            ErrorMessage.NO_ERROR
         }
     }
 
@@ -49,14 +78,6 @@ class LoginViewModel @Inject constructor(
                         _state.value = OnboardingState.Success
                     }
                     .onFailure {
-                        _errorEmail.value = ErrorField(
-                            true,
-                            INCORRECT_CONTENTS_ERROR_MESSAGE
-                        )
-                        _errorPassword.value = ErrorField(
-                            true,
-                            INCORRECT_CONTENTS_ERROR_MESSAGE
-                        )
                         _state.value = OnboardingState.Failure(INCORRECT_CONTENTS_ERROR_MESSAGE)
                     }
             } ?: run {
