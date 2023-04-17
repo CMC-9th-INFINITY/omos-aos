@@ -12,7 +12,6 @@ import com.infinity.omos.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
 import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NOT_EXIST_USER_ERROR_MESSAGE
 import com.infinity.omos.utils.KakaoLoginManager
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -108,7 +107,7 @@ class LoginFragment : Fragment() {
                         }
                         startActivity(intent)
                     }
-                    OnboardingState.Failure(NOT_EXIST_USER_ERROR_MESSAGE) -> {
+                    OnboardingState.Failure(ErrorMessage.NOT_EXIST_USER_ERROR_MESSAGE) -> {
                         // TODO: 회언가입 닉네임 입력 페이지 이동
                     }
                     else -> Unit

@@ -12,7 +12,7 @@ import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentForgotPasswordBinding
 import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
-import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
+import com.infinity.omos.ui.onboarding.base.Event
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,7 +86,7 @@ class ForgotPasswordFragment : Fragment() {
     private fun collectEvent() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.event.collect { event ->
-                if (event is OnboardingViewModel.Event.ShowDialog) {
+                if (event is Event.ShowDialog) {
                     showSuccessDialog()
                     setAgainMail()
                 }

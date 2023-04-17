@@ -10,9 +10,10 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentSignUpBinding
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
+import com.infinity.omos.ui.onboarding.base.Event
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingViewModel
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -42,60 +43,62 @@ class SignUpFragment : Fragment() {
     }
 
     private fun initListener() {
-        initEmailListener()
-        initAuthCodeListener()
-        initPasswordListener()
-        initConfirmPasswordListener()
+        initFieldListener()
         initButtonClickListener()
     }
 
-    private fun initEmailListener() = with(binding.ofvEmail) {
-        setOnTextChangeListener { email ->
-            viewModel.setEmail(email)
+    private fun initFieldListener() {
+        binding.ofvEmail.setOnTextChangeListener(errorListener = { text ->
+            viewModel.setEmail(text)
+            viewModel.getEmailErrorMessage(text)
+        }) {
+            changeCompleteState()
         }
 
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkEmailValidation(hasFocus)
-        }
-    }
-
-    private fun initAuthCodeListener() = with(binding.ofvEmailAuthCode) {
-        setOnTextChangeListener { text ->
+        binding.ofvEmailAuthCode.setOnTextChangeListener(errorListener = { text ->
             viewModel.setAuthCode(text)
-            viewModel.checkAuthCodeValidation(resources.getInteger(R.integer.auth_code_length))
-            viewModel.changeCompleteState()
-        }
+            viewModel.getAuthCodeErrorMessage(
+                text,
+                resources.getInteger(R.integer.auth_code_length)
+            )
+        }) { text ->
+            if (text.length == resources.getInteger(R.integer.auth_code_length)) {
 
-        setOnFocusChangeListener {
-            viewModel.checkAuthCodeValidation(resources.getInteger(R.integer.auth_code_length))
-        }
-    }
-
-    private fun initPasswordListener() = with(binding.ofvPassword) {
-        setOnTextChangeListener { text ->
-            viewModel.setPassword(text)
-            viewModel.changeCompleteState()
-
-            if (viewModel.confirmPassword.value.isNotEmpty()) {
-                viewModel.checkConfirmPasswordValidation()
+                if (binding.ofvEmailAuthCode.error == ErrorMessage.NO_ERROR) {
+                    viewModel.setAuthCodeState()
+                } else {
+                    binding.ofvEmailAuthCode.showErrorMessage()
+                }
             }
         }
 
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkPasswordValidation(hasFocus)
-        }
-    }
+        binding.ofvPassword.setOnTextChangeListener(errorListener = { text ->
+            viewModel.setPassword(text)
+            viewModel.getPasswordErrorMessage(text)
+        }) {
+            if (viewModel.getConfirmPasswordErrorMessage() == ErrorMessage.NO_ERROR) {
+                binding.ofvConfirmPassword.hideErrorMessage()
+            }
 
-    private fun initConfirmPasswordListener() = with(binding.ofvConfirmPassword) {
-        setOnTextChangeListener { text ->
+            changeCompleteState()
+        }
+
+        binding.ofvConfirmPassword.setOnTextChangeListener(errorListener = { text ->
             viewModel.setConfirmPassword(text)
-            viewModel.changeCompleteState()
-        }
-
-        setOnFocusChangeListener { hasFocus ->
-            viewModel.checkConfirmPasswordValidation(hasFocus)
+            viewModel.getConfirmPasswordErrorMessage(text)
+        }) {
+            changeCompleteState()
         }
     }
+
+    private fun changeCompleteState() {
+        viewModel.changeCompleteState(
+            viewModel.authCodeState.value is AuthCodeState.Success
+                    && binding.ofvPassword.error == ErrorMessage.NO_ERROR
+                    && binding.ofvConfirmPassword.error == ErrorMessage.NO_ERROR
+        )
+    }
+
     private fun initButtonClickListener() {
         binding.tvSendAuthMail.setOnClickListener {
             showAlertDialog()
@@ -103,46 +106,30 @@ class SignUpFragment : Fragment() {
 
         binding.btnNext.setOnClickListener {
             val directions =
-                SignUpFragmentDirections.actionSignUpFragmentToNicknameFragment(viewModel.email.value, viewModel.password.value)
+                SignUpFragmentDirections.actionSignUpFragmentToNicknameFragment(
+                    viewModel.email.value,
+                    viewModel.password.value
+                )
             findNavController().navigate(directions)
         }
     }
 
     private fun collectData() {
-        collectFieldViewError()
         collectEvent()
-    }
-
-    private fun collectFieldViewError() {
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorEmail.collect { (state, msg) ->
-                binding.ofvEmail.setShowErrorMsg(state, msg)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorAuthCode.collect { (state, msg) ->
-                binding.ofvEmailAuthCode.setShowErrorMsg(state, msg)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorPassword.collect { (state, msg) ->
-                binding.ofvPassword.setShowErrorMsg(state, msg)
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorConfirmPassword.collect { (state, msg) ->
-                binding.ofvConfirmPassword.setShowErrorMsg(state, msg)
-            }
-        }
     }
 
     private fun collectEvent() {
         viewLifecycleOwner.repeatOnStarted {
+            viewModel.state.collect { state ->
+                if (state is OnboardingState.Failure) {
+                    binding.ofvEmail.showErrorMessage(state.error)
+                }
+            }
+        }
+
+        viewLifecycleOwner.repeatOnStarted {
             viewModel.event.collect { event ->
-                if (event is OnboardingViewModel.Event.ShowDialog) {
+                if (event is Event.ShowDialog) {
                     showSuccessDialog()
                     setAgainMail()
                 }
@@ -153,6 +140,7 @@ class SignUpFragment : Fragment() {
             viewModel.authCodeState.collect { authCodeState ->
                 if (authCodeState is AuthCodeState.Success) {
                     binding.ofvEmail.setEditTextEnabled(false)
+                    binding.ofvEmail.showSuccessMessage(resources.getString(R.string.success_auth))
                     binding.ofvEmailAuthCode.setEditTextEnabled(false)
                     binding.tvSendAuthMail.visibility = View.GONE
                 }
@@ -171,10 +159,10 @@ class SignUpFragment : Fragment() {
             title = getString(R.string.alert_send_email),
             okText = getString(R.string.send),
             onOkClickListener = {
-                viewModel.checkEmailValidation()
-
-                if (viewModel.errorEmail.value.state.not()) {
+                if (binding.ofvEmail.error == ErrorMessage.NO_ERROR) {
                     viewModel.sendAuthMail()
+                } else {
+                    binding.ofvEmail.showErrorMessage()
                 }
             }
         )

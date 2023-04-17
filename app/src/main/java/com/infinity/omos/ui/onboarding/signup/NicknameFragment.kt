@@ -13,7 +13,6 @@ import androidx.navigation.fragment.navArgs
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentNicknameBinding
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.setting.change.password.ChangePasswordFragmentArgs
 import com.infinity.omos.ui.view.OmosDialog
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -102,19 +101,15 @@ class NicknameFragment : Fragment() {
     private fun collectData() {
         viewLifecycleOwner.repeatOnStarted {
             viewModel.state.collect { state ->
-                if (state == OnboardingState.Success) {
+                if (state is OnboardingState.Success) {
                     val directions =
                         NicknameFragmentDirections.actionNicknameFragmentToLoginFragment()
                     findNavController().navigate(directions)
 
                     Toast.makeText(context, getString(R.string.success_sign_up), Toast.LENGTH_LONG).show()
+                } else if (state is OnboardingState.Failure) {
+                    binding.ofvNickname.showErrorMessage(state.error)
                 }
-            }
-        }
-
-        viewLifecycleOwner.repeatOnStarted {
-            viewModel.errorNick.collect { (state, msg) ->
-                binding.ofvNickname.setShowErrorMsg(state, msg)
             }
         }
     }

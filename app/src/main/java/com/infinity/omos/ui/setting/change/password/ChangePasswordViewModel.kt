@@ -7,7 +7,6 @@ import com.infinity.omos.data.user.UserPassword
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
-import com.infinity.omos.ui.onboarding.base.OnboardingState.Failure.Companion.NETWORK_ERROR_MESSAGE
 import com.infinity.omos.utils.Pattern
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -69,7 +68,7 @@ class ChangePasswordViewModel @Inject constructor(
             val password = UserPassword(confirmPassword.value, userId.userId)
             userRepository.changePassword(password)
                 .onSuccess { _state.value = OnboardingState.Success }
-                .onFailure { _state.value = OnboardingState.Failure(NETWORK_ERROR_MESSAGE) }
+                .onFailure { _state.value = OnboardingState.Failure(ErrorMessage.NETWORK_ERROR_MESSAGE) }
         }
     }
 }
