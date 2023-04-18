@@ -4,6 +4,7 @@ import com.google.common.truth.Truth.assertThat
 import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.MainDispatcherRule
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
@@ -35,73 +36,63 @@ class LoginViewModelTest {
     }
 
     @Test
-    fun `이메일과 비밀번호에 텍스트 입력 시 로그인 버튼 활성화`() {
+    fun `이메일이 비어있을 때 에러 메시지 반환`() {
         // given
-        viewModel.setEmail("email")
-        viewModel.setPassword("password")
+        val text = ""
 
         // when
-        viewModel.changeLoginState()
-        val result = viewModel.isActivatedLogin.value
+        val result = viewModel.getEmailErrorMessage(text)
 
         // then
-        assertThat(result).isTrue()
+        assertThat(result).isEqualTo(ErrorMessage.BLANK_EMAIL_ERROR_MESSAGE)
     }
 
     @Test
-    fun `이메일 또는 비밀번호 공백 시 로그인 버튼 비활성화`() {
+    fun `이메일 양식이 틀릴 때 에러 메시지 반환`() {
         // given
-        viewModel.setEmail("")
-        viewModel.setPassword("")
+        val text = "email"
 
         // when
-        viewModel.changeLoginState()
-        val result = viewModel.isActivatedLogin.value
+        val result = viewModel.getEmailErrorMessage(text)
 
         // then
-        assertThat(result).isFalse()
+        assertThat(result).isEqualTo(ErrorMessage.INCORRECT_CONTENTS_ERROR_MESSAGE)
     }
 
     @Test
-    fun `이메일 입력란이 비어있을 때 오류 발생`() {
+    fun `비밀번호 비어있을 때 에러 메시지 반환`() {
         // given
-        viewModel.setEmail("")
+        val text = ""
 
         // when
-        viewModel.checkEmailValidation(false)
-        val error = viewModel.errorEmail.value
+        val result = viewModel.getPasswordErrorMessage(text)
 
         // then
-        assertThat(error.state).isTrue()
-        assertThat(error.msg).isEqualTo("이메일을 입력해주세요.")
+        assertThat(result).isEqualTo(ErrorMessage.BLANK_PASSWORD_ERROR_MESSAGE)
     }
 
     @Test
-    fun `이메일 형식이 아닐 때 오류 발생`() {
+    fun `이메일 양식에 맞을 때 성공 메시지 반환`() {
         // given
-        viewModel.setEmail("abcde")
+        val text = "email@naver.com"
 
         // when
-        viewModel.checkEmailValidation(false)
-        val error = viewModel.errorEmail.value
+        val result = viewModel.getEmailErrorMessage(text)
 
         // then
-        assertThat(error.state).isTrue()
-        assertThat(error.msg).isEqualTo("입력하신 내용을 다시 확인해주세요.")
+        assertThat(result).isEqualTo(ErrorMessage.NO_ERROR)
     }
 
     @Test
-    fun `비밀번호 입력란이 비어있을 때 오류 발생`() {
+    fun `비밀번호 입력 시 성공 메시지 반환`() {
         // given
-        viewModel.setPassword("")
+        val text = "password"
 
         // when
-        viewModel.checkPasswordValidation(false)
-        val error = viewModel.errorPassword.value
+        val result = viewModel.getPasswordErrorMessage(text)
 
         // then
-        assertThat(error.state).isTrue()
-        assertThat(error.msg).isEqualTo("비밀번호를 입력해주세요.")
+        assertThat(result).isEqualTo(ErrorMessage.NO_ERROR)
     }
 
     @OptIn(ExperimentalCoroutinesApi::class)
