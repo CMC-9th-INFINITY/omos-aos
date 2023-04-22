@@ -1,11 +1,11 @@
-package com.infinity.omos.ui.onboarding.login
+package com.infinity.omos.ui.onboarding
 
 import com.google.common.truth.Truth.assertThat
 import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.repository.UserRepository
 import com.infinity.omos.ui.MainDispatcherRule
-import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
+import com.infinity.omos.ui.onboarding.login.LoginViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery
 import io.mockk.coVerify
