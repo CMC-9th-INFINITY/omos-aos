@@ -2,7 +2,7 @@ package com.infinity.omos.ui.onboarding
 
 import com.google.common.truth.Truth.assertThat
 import com.infinity.omos.data.auth.AuthCode
-import com.infinity.omos.repository.AuthRepository
+import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.ui.MainDispatcherRule
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import com.infinity.omos.ui.onboarding.forgot.ForgotPasswordViewModel

@@ -1,45 +1,45 @@
-package com.infinity.omos.source.remote
+package com.infinity.omos.source.remote.user
 
 import com.infinity.omos.api.UserService
 import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.*
 import javax.inject.Inject
 
-class UserRemoteDataSource @Inject constructor(
+class UserRemoteDataSourceImpl @Inject constructor(
     private val userService: UserService
-) {
+) : UserRemoteDataSource {
 
-    suspend fun loginUser(userCredential: UserCredential): Result<UserToken> {
+    override suspend fun loginUser(userCredential: UserCredential): Result<UserToken> {
         return Result.runCatching {
             userService.loginUser(userCredential)
         }
     }
 
-    suspend fun loginSnsUser(userSnsCredential: UserSnsCredential): Result<UserToken> {
+    override suspend fun loginSnsUser(userSnsCredential: UserSnsCredential): Result<UserToken> {
         return Result.runCatching {
             userService.loginSnsUser(userSnsCredential)
         }
     }
 
-    suspend fun getUserIdFromEmail(email: String): Result<UserId> {
+    override suspend fun getUserIdFromEmail(email: String): Result<UserId> {
         return Result.runCatching {
             userService.getUserIdFromEmail(email)
         }
     }
 
-    suspend fun changePassword(userPassword: UserPassword): Result<NetworkResult> {
+    override suspend fun changePassword(userPassword: UserPassword): Result<NetworkResult> {
         return Result.runCatching {
             userService.changePassword(userPassword)
         }
     }
 
-    suspend fun isNotEmailDuplicate(email: String): Result<NetworkResult> {
+    override suspend fun isNotEmailDuplicate(email: String): Result<NetworkResult> {
         return Result.runCatching {
             userService.isNotEmailDuplicate(email)
         }
     }
 
-    suspend fun signUpUser(userSignUp: UserSignUp): Result<NetworkResult> {
+    override suspend fun signUpUser(userSignUp: UserSignUp): Result<NetworkResult> {
         return Result.runCatching {
             userService.signUpUser(userSignUp)
         }
