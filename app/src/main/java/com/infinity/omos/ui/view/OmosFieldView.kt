@@ -29,7 +29,7 @@ class OmosFieldView @JvmOverloads constructor(
     defStyleAttr: Int = 0,
 ) : ConstraintLayout(context, attrs, defStyleAttr) {
 
-    private val binding: ViewOmosFieldBinding = ViewOmosFieldBinding.inflate(
+    val binding: ViewOmosFieldBinding = ViewOmosFieldBinding.inflate(
         LayoutInflater.from(context),
         this,
         true
