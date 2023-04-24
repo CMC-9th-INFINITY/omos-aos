@@ -3,7 +3,7 @@ package com.infinity.omos.ui.onboarding.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserSignUp
-import com.infinity.omos.repository.UserRepository
+import com.infinity.omos.repository.user.UserRepository
 import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import dagger.hilt.android.lifecycle.HiltViewModel

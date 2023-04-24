@@ -1,14 +1,14 @@
-package com.infinity.omos.source.local
+package com.infinity.omos.source.local.user
 
 import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.utils.DataStoreManager
 import javax.inject.Inject
 
-class UserLocalDataSource @Inject constructor(
+class UserLocalDataSourceImpl @Inject constructor(
     private val dataStoreManager: DataStoreManager
-) {
+) : UserLocalDataSource {
 
-    suspend fun saveToken(token: UserToken) {
+    override suspend fun saveToken(token: UserToken) {
         dataStoreManager.saveToken(token)
     }
 }
