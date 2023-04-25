@@ -3,7 +3,7 @@ package com.infinity.omos.viewmodels
 import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.Profile
 import com.infinity.omos.repository.FollowRepository
-import com.infinity.omos.repository.FakeUserRepository
+import com.infinity.omos.repository.RemoveUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -11,7 +11,7 @@ import javax.inject.Inject
 @HiltViewModel
 class FollowViewModel @Inject internal constructor(
     private val followRepository: FollowRepository,
-    private val fakeUserRepository: FakeUserRepository
+    private val removeUserRepository: RemoveUserRepository
 ): ViewModel() {
 
     fun getFollower(userId: Int): Flow<List<Profile>> {
@@ -23,6 +23,6 @@ class FollowViewModel @Inject internal constructor(
     }
 
     fun getUserProfile(userId: Int): Flow<Profile> {
-        return fakeUserRepository.getUserProfile(userId)
+        return removeUserRepository.getUserProfile(userId)
     }
 }
