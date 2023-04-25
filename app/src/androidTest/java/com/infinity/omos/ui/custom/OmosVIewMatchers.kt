@@ -1,8 +1,9 @@
-package com.infinity.omos.ui.onboarding
+package com.infinity.omos.ui.custom
 
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.infinity.omos.R
+import com.infinity.omos.ui.onboarding.ErrorMessage
 import com.infinity.omos.ui.view.OmosFieldView
 import org.hamcrest.Description
 import org.hamcrest.Matcher

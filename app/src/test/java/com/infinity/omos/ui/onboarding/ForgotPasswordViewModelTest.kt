@@ -113,7 +113,6 @@ class ForgotPasswordViewModelTest {
     @Test
     fun `메일로 인증코드를 보내는 것을 실패했을 때 Failure 상태가 되는가`() {
         // given
-        val authCode = "123456"
         val exception = Exception()
         coEvery { authRepository.sendAuthMail(any()) } returns Result.failure(exception)
 

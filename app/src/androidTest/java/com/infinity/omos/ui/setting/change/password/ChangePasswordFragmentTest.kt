@@ -8,8 +8,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.infinity.omos.OnboardingActivity
 import com.infinity.omos.R
-import com.infinity.omos.ui.onboarding.OmosViewActions
-import com.infinity.omos.ui.onboarding.OmosViewMatchers
+import com.infinity.omos.ui.custom.OmosViewActions
+import com.infinity.omos.ui.custom.OmosViewMatchers
 import com.infinity.omos.util.SUCCESS_AUTH_CODE
 import dagger.hilt.android.testing.HiltAndroidRule
 import dagger.hilt.android.testing.HiltAndroidTest

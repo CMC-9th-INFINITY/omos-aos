@@ -1,9 +1,9 @@
 package com.infinity.omos.di
 
 import com.infinity.omos.repository.FakeAuthRepository
+import com.infinity.omos.repository.FakeUserRepository
 import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.repository.user.UserRepository
-import com.infinity.omos.repository.user.UserRepositoryImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.components.SingletonComponent
@@ -26,6 +26,6 @@ interface FakeRepositoryModule {
     @Binds
     @Singleton
     fun bindUserRepository(
-        repository: UserRepositoryImpl
+        repository: FakeUserRepository
     ): UserRepository
 }

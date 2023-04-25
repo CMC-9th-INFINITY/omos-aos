@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
 import javax.inject.Inject
 
-class FakeUserRepository @Inject internal constructor(private val service: FakeUserService){
+class RemoveUserRepository @Inject internal constructor(private val service: FakeUserService){
 
     fun getUserProfile(userId: Int): Flow<Profile> {
         return flow {
