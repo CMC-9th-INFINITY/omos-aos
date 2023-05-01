@@ -1,6 +1,6 @@
 package com.infinity.omos.ui.onboarding.base
 
-import com.infinity.omos.ui.onboarding.ErrorMessage
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 
 sealed class OnboardingState{
 

@@ -10,7 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.FragmentSignUpBinding
-import com.infinity.omos.ui.onboarding.ErrorMessage
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
 import com.infinity.omos.ui.onboarding.base.Event
 import com.infinity.omos.ui.onboarding.base.OnboardingState

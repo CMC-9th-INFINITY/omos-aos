@@ -25,8 +25,6 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.CategoryViewModel
-import kotlinx.android.synthetic.main.activity_category.*
-import kotlinx.android.synthetic.main.activity_register.toolbar
 
 class CategoryRecordsActivity : AppCompatActivity() {
 
@@ -81,7 +79,7 @@ class CategoryRecordsActivity : AppCompatActivity() {
         }
 
         mAdapter = DetailCategoryListAdapter(this)
-        recyclerView.apply {
+        binding.recyclerView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
         }
@@ -214,8 +212,8 @@ class CategoryRecordsActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(category: String){
-        toolbar.title = category
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = category
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

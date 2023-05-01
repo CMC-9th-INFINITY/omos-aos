@@ -1,6 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.NetworkResult
+import com.infinity.omos.data.Profile
 import com.infinity.omos.data.user.*
 import retrofit2.http.*
 
@@ -36,4 +37,8 @@ interface UserService {
         @Body params: UserSignUp
     ): NetworkResult
 
+    @GET("api/user/{userId}")
+    suspend fun getUserProfile(
+        @Path("userId") userId: Int
+    ): Profile
 }

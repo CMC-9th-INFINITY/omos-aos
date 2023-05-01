@@ -13,7 +13,6 @@ import com.bumptech.glide.Glide
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityInputLyricsBinding
 import com.infinity.omos.utils.CustomDialog
-import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class InputLyricsActivity : AppCompatActivity() {
 
@@ -63,8 +62,8 @@ class InputLyricsActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = ""
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = ""
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

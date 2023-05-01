@@ -11,11 +11,10 @@ import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.main.MyPageFragment
-import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.OnboardingActivity
 import com.infinity.omos.viewmodels.DeleteAccountViewModel
-import kotlinx.android.synthetic.main.activity_register.*
 
 class DeleteAccountActivity : AppCompatActivity() {
 
@@ -39,7 +38,7 @@ class DeleteAccountActivity : AppCompatActivity() {
                     Constant.ApiState.DONE -> {
                         OmosApplication.prefs.setUserToken(null, null, -1)
 
-                        val intent = Intent(this, LoginActivity::class.java)
+                        val intent = Intent(this, OnboardingActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 
@@ -68,8 +67,8 @@ class DeleteAccountActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = "계정 탈퇴"
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = "계정 탈퇴"
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.user.UserCredential
 import com.infinity.omos.data.user.UserSnsCredential
 import com.infinity.omos.repository.user.UserRepository
-import com.infinity.omos.ui.onboarding.ErrorMessage
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
 import com.infinity.omos.utils.Pattern
 import dagger.hilt.android.lifecycle.HiltViewModel

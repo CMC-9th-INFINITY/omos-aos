@@ -19,8 +19,7 @@ import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ViewOmosFieldBinding
-import com.infinity.omos.ui.onboarding.ErrorMessage
-import timber.log.Timber
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 
 
 class OmosFieldView @JvmOverloads constructor(

@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.onboarding
+package com.infinity.omos.ui.onboarding.error
 
 enum class ErrorMessage(val msg: String?) {
     DEFAULT(null),

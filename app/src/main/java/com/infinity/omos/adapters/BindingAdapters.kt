@@ -3,7 +3,7 @@ package com.infinity.omos.adapters
 import android.view.View
 import androidx.databinding.BindingAdapter
 import com.infinity.omos.ui.view.OmosFieldView
-import com.infinity.omos.ui.onboarding.ErrorField
+import com.infinity.omos.ui.onboarding.error.ErrorField
 
 @BindingAdapter("isGone")
 fun bindGone(view: View, isGone: Boolean) {

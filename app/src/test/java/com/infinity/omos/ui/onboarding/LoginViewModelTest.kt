@@ -5,6 +5,7 @@ import com.infinity.omos.data.user.UserToken
 import com.infinity.omos.repository.user.UserRepository
 import com.infinity.omos.ui.MainDispatcherRule
 import com.infinity.omos.ui.onboarding.base.OnboardingState
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.login.LoginViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

@@ -5,6 +5,7 @@ import com.infinity.omos.data.auth.AuthCode
 import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.ui.MainDispatcherRule
 import com.infinity.omos.ui.onboarding.base.OnboardingState
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.forgot.ForgotPasswordViewModel
 import io.mockk.MockKAnnotations
 import io.mockk.coEvery

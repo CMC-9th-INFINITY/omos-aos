@@ -15,7 +15,6 @@ import androidx.lifecycle.Observer
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivitySelectCategoryBinding
 import com.infinity.omos.viewmodels.SelectCategoryViewModel
-import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 import kotlinx.android.synthetic.main.activity_select_category.*
 
 class SelectCategoryActivity : AppCompatActivity() {

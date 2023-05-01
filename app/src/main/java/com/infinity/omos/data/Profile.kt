@@ -1,9 +1,11 @@
 package com.infinity.omos.data
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class Profile(
-    @SerializedName("nickname") val nickname: String,
-    @SerializedName("profileUrl") val profileUrl: String?,
-    @SerializedName("userId") val userId: Int
+    @SerialName("nickname") val nickname: String,
+    @SerialName("profileUrl") val profileUrl: String?,
+    @SerialName("userId") val userId: Int
 )

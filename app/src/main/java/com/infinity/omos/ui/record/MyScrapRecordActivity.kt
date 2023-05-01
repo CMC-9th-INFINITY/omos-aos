@@ -21,7 +21,6 @@ import com.infinity.omos.databinding.ActivityMyScrapRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.MyScrapRecordViewModel
-import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class MyScrapRecordActivity : AppCompatActivity() {
 
@@ -39,7 +38,7 @@ class MyScrapRecordActivity : AppCompatActivity() {
         initToolBar()
 
         val mAdapter = MyRecordListAdapter(this)
-        binding.recyclerView.apply{
+        binding.recyclerView.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(context)
         }
@@ -49,14 +48,14 @@ class MyScrapRecordActivity : AppCompatActivity() {
             record?.let {
                 mAdapter.setDjRecord(it)
 
-                if (it.isEmpty()){
+                if (it.isEmpty()) {
                     binding.lnNorecord.visibility = View.VISIBLE
                 }
             }
         }
         viewModel.getStateScrapRecord().observe(this) { state ->
             state?.let {
-                when(it){
+                when (it) {
                     Constant.ApiState.LOADING -> {
                         binding.recyclerView.visibility = View.GONE
                         binding.lnNorecord.visibility = View.GONE
@@ -109,9 +108,9 @@ class MyScrapRecordActivity : AppCompatActivity() {
         inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
 
-    private fun initToolBar(){
-        toolbar.title = "스크랩한 레코드"
-       setSupportActionBar(toolbar) // 툴바 사용
+    private fun initToolBar() {
+        binding.toolbar.title = "스크랩한 레코드"
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -124,7 +123,7 @@ class MyScrapRecordActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when(item.itemId){
+        return when (item.itemId) {
             android.R.id.home -> {
                 finish()
                 true
@@ -161,10 +160,10 @@ class MyScrapRecordActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (binding.searchView.visibility == View.VISIBLE){
+        if (binding.searchView.visibility == View.VISIBLE) {
             // 검색뷰 열려있으면 닫기
             cancelSearch()
-        } else{
+        } else {
             super.onBackPressed()
         }
     }

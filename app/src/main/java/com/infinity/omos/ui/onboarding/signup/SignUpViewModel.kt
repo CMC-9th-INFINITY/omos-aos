@@ -6,7 +6,7 @@ import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.UserEmail
 import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.repository.user.UserRepository
-import com.infinity.omos.ui.onboarding.ErrorMessage
+import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.AuthCodeState
 import com.infinity.omos.ui.onboarding.base.Event
 import com.infinity.omos.ui.onboarding.base.OnboardingState

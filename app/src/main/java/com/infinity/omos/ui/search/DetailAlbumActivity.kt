@@ -14,7 +14,6 @@ import com.infinity.omos.adapters.AlbumDetailListAdapter
 import com.infinity.omos.databinding.ActivityAlbumBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.viewmodels.AlbumViewModel
-import kotlinx.android.synthetic.main.activity_register_nick.*
 
 class DetailAlbumActivity : AppCompatActivity() {
 
@@ -86,8 +85,8 @@ class DetailAlbumActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = ""
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = ""
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

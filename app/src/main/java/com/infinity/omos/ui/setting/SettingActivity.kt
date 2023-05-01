@@ -14,9 +14,9 @@ import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivitySettingBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.OnboardingActivity
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.viewmodels.SettingViewModel
 import com.kakao.sdk.user.UserApiClient
@@ -43,8 +43,8 @@ class SettingActivity : AppCompatActivity() {
         }
 
         binding.btnChangePw.setOnClickListener {
-            val intent = Intent(this, ChangePwActivity::class.java)
-            startActivity(intent)
+            Toast.makeText(this, "준비 중", Toast.LENGTH_SHORT).show()
+            // TODO: 비밀번호 변경 화면 이동
         }
 
         binding.btnDeleteAccount.setOnClickListener {
@@ -69,7 +69,7 @@ class SettingActivity : AppCompatActivity() {
                             viewModel.doLogout(userId)
                             OmosApplication.prefs.setUserToken(null, null, -1)
 
-                            val intent = Intent(this, LoginActivity::class.java)
+                            val intent = Intent(this, OnboardingActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
 

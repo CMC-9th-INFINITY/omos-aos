@@ -16,7 +16,6 @@ import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.BlockedViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_register_nick.*
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 
@@ -74,8 +73,8 @@ class BlockingActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = "차단된 계정"
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = "차단된 계정"
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

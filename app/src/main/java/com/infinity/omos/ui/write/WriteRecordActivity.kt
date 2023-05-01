@@ -33,7 +33,6 @@ import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.WriteRecordViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 import kotlinx.android.synthetic.main.activity_write_record.*
 import java.io.File
 import java.text.SimpleDateFormat

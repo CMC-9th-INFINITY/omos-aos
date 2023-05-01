@@ -21,7 +21,6 @@ import com.infinity.omos.databinding.ActivityMyLikeRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.MyLikeRecordViewModel
-import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class MyLikeRecordActivity : AppCompatActivity() {
 
@@ -110,8 +109,8 @@ class MyLikeRecordActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = "공감한 레코드"
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = "공감한 레코드"
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

@@ -31,7 +31,6 @@ import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.ShareInstagram
 import com.infinity.omos.viewmodels.DetailRecordViewModel
-import kotlinx.android.synthetic.main.activity_register.*
 
 class DetailRecordActivity : AppCompatActivity() {
 
@@ -379,8 +378,8 @@ class DetailRecordActivity : AppCompatActivity() {
     }
 
     private fun initToolBar() {
-        toolbar.title = ""
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = ""
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

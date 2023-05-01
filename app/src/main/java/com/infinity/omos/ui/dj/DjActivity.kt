@@ -23,7 +23,6 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.viewmodels.DjViewModel
-import kotlinx.android.synthetic.main.activity_register.*
 
 class DjActivity : AppCompatActivity() {
 
@@ -246,8 +245,8 @@ class DjActivity : AppCompatActivity() {
     }
 
     private fun initToolBar(){
-        toolbar.title = ""
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = ""
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

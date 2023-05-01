@@ -12,7 +12,6 @@ import com.infinity.omos.adapters.ArtistViewPagerAdapter
 import com.infinity.omos.databinding.ActivityArtistBinding
 import com.infinity.omos.viewmodels.ArtistViewModel
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_register_nick.toolbar
 
 class DetailArtistActivity : AppCompatActivity() {
 

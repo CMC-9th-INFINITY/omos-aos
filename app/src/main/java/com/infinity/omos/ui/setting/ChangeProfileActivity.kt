@@ -26,14 +26,13 @@ import com.infinity.omos.data.Profile
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.main.MyPageFragment
-import com.infinity.omos.ui.onboarding.LoginActivity
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.utils.ErrorMsg.Companion.showErrorMsg
 import com.infinity.omos.viewmodels.ChangeProfileViewModel
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import kotlinx.android.synthetic.main.activity_register.*
 import java.io.File
 
 
@@ -157,7 +156,7 @@ class ChangeProfileActivity : AppCompatActivity() {
                     }
                     Constant.ApiState.ERROR -> {
                         // 이미 있는 닉네임일 때,
-                        LoginActivity.showErrorMsg(
+                        showErrorMsg(
                             this,
                             binding.etNick,
                             binding.tvErrorNick,
@@ -234,8 +233,8 @@ class ChangeProfileActivity : AppCompatActivity() {
     }
 
     private fun initToolBar() {
-        toolbar.title = "프로필 변경"
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = "프로필 변경"
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
