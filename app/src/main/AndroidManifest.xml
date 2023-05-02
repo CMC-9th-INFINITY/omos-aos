@@ -14,12 +14,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_omos_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.OMOS"
+        android:theme="@style/Theme.Omos.Splash"
         android:usesCleartextTraffic="true">
         <activity
             android:name=".OnboardingActivity"
             android:exported="true"
             android:screenOrientation="portrait">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.app.lib_name"
@@ -30,12 +36,6 @@
             android:name=".SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
 
         </activity>
 

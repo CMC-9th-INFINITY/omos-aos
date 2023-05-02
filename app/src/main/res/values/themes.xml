@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
 
-    <style name="Theme.OMOS" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.Omos" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="colorPrimary">@color/main_orange</item>
         <item name="colorOnPrimary">@color/white</item>
 
@@ -13,17 +13,23 @@
         <item name="android:statusBarColor">?android:colorBackground</item>
     </style>
 
-    <style name="ToolbarColoredBackArrow" parent="Theme.OMOS">
+    <style name="Theme.Omos.Splash" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/bg_black</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash_logo</item>
+        <item name="postSplashScreenTheme">@style/Theme.Omos</item>
+    </style>
+
+    <style name="ToolbarColoredBackArrow" parent="Theme.Omos">
         <item name="android:textColorSecondary">@color/gray_03</item>
         <item name="actionMenuTextColor">@color/gray_03</item> <!--액션 메뉴의 텍스트 색상-->
     </style>
 
-    <style name="StatusBarStyle" parent="Theme.OMOS">
+    <style name="StatusBarStyle" parent="Theme.Omos">
         <item name="android:statusBarColor">@color/deep_dark</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>
 
-    <style name="MainStatusBarStyle" parent="Theme.OMOS">
+    <style name="MainStatusBarStyle" parent="Theme.Omos">
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
     </style>

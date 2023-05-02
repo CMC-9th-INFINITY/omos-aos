@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.OMOS.Appbar" parent="Theme.MaterialComponents.NoActionBar">
+    <style name="Theme.Omos.Appbar" parent="Theme.MaterialComponents.NoActionBar">
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:backgroundTint">@color/bg_black</item>
     </style>

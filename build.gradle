@@ -57,6 +57,7 @@ buildscript {
         coroutinesVersion = '1.6.1'
         hiltVersion = '2.42'
         navigationVersion = '2.5.2'
+        splashVersion = '1.0.1'
     }
 
     repositories {

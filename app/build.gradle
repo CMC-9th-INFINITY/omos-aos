@@ -154,4 +154,7 @@ dependencies {
 
     // DataStore
     implementation "androidx.datastore:datastore-preferences:$rootProject.dataStoreVersion"
+
+    // Splash
+    implementation "androidx.core:core-splashscreen:$rootProject.splashVersion"
 }
