@@ -10,19 +10,19 @@
 
         <variable
             name="scrap1"
-            type="com.infinity.omos.data.SumRecord" />
+            type="com.infinity.omos.data.record.SumRecord" />
 
         <variable
             name="scrap2"
-            type="com.infinity.omos.data.SumRecord" />
+            type="com.infinity.omos.data.record.SumRecord" />
 
         <variable
             name="like1"
-            type="com.infinity.omos.data.SumRecord" />
+            type="com.infinity.omos.data.record.SumRecord" />
 
         <variable
             name="like2"
-            type="com.infinity.omos.data.SumRecord" />
+            type="com.infinity.omos.data.record.SumRecord" />
     </data>
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout

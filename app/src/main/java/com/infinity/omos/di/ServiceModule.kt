@@ -1,20 +1,25 @@
 package com.infinity.omos.di
 
-import com.infinity.omos.api.AuthService
-import com.infinity.omos.api.BlockService
-import com.infinity.omos.api.FakeUserService
-import com.infinity.omos.api.FollowService
-import com.infinity.omos.api.UserService
+import com.infinity.omos.api.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 object ServiceModule {
+
+    @Provides
+    @Singleton
+    fun provideAuthService(
+        retrofit: Retrofit
+    ): AuthService {
+        return retrofit.create(AuthService::class.java)
+    }
 
     @Provides
     @Singleton
@@ -26,10 +31,10 @@ object ServiceModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(
+    fun provideTodayService(
         retrofit: Retrofit
-    ): AuthService {
-        return retrofit.create(AuthService::class.java)
+    ): TodayService {
+        return retrofit.create(TodayService::class.java)
     }
 
     @Provides

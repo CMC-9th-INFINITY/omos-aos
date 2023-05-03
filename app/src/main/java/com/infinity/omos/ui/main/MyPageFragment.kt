@@ -20,7 +20,6 @@ import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.dj.FollowActivity
 import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyPageFragment : Fragment() {
 

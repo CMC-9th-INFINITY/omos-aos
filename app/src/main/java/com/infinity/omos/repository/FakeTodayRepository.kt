@@ -7,7 +7,7 @@ import com.infinity.omos.api.TodayService
 import com.infinity.omos.data.LovedMusic
 import com.infinity.omos.data.Music
 import com.infinity.omos.data.Profile
-import com.infinity.omos.data.SumRecord
+import com.infinity.omos.data.record.SumRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -16,7 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class TodayRepository {
+class FakeTodayRepository {
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
 
     private val todayApi = retrofit.create(TodayService::class.java)
@@ -69,7 +69,7 @@ class TodayRepository {
     var stateLoveMusic = MutableLiveData<Constant.ApiState>()
     fun getMyLoveMusic(userId: Int){
         stateLoveMusic.value = Constant.ApiState.LOADING
-        todayApi.getMyLoveMusic(userId).enqueue(object:
+        todayApi.getLovedMusic(userId).enqueue(object:
             Callback<LovedMusic> {
             override fun onResponse(
                 call: Call<LovedMusic>,
@@ -156,7 +156,7 @@ class TodayRepository {
     var stateRecommendDj = MutableLiveData<Constant.ApiState>()
     fun getRecommendDj(){
         stateRecommendDj.value = Constant.ApiState.LOADING
-        todayApi.getRecommendDj().enqueue(object:
+        todayApi.getRecommendedDj().enqueue(object:
             Callback<List<Profile>> {
             override fun onResponse(
                 call: Call<List<Profile>>,

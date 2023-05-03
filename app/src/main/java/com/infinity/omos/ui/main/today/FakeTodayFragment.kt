@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.main
+package com.infinity.omos.ui.main.today
 
 import android.content.Intent
 import android.os.Bundle
@@ -14,18 +14,19 @@ import com.infinity.omos.R
 import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.adapters.HorizontalRecordListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
-import com.infinity.omos.databinding.FragmentTodayBinding
+import com.infinity.omos.databinding.FragmentFakeTodayBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.etc.GlobalFunction
+import com.infinity.omos.ui.main.SharedViewModel
 import com.infinity.omos.ui.record.DetailRecordActivity
-import com.infinity.omos.OmosApplication
-import com.infinity.omos.viewmodels.SharedViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
 
-class TodayFragment : Fragment() {
+@AndroidEntryPoint
+class FakeTodayFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
-    private lateinit var binding: FragmentTodayBinding
+    private lateinit var binding: FragmentFakeTodayBinding
 
     private var musicId = ""
     private var musicTitle = ""
@@ -51,7 +52,7 @@ class TodayFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_today, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fake_today, container, false)
         activity?.let {
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner

@@ -34,20 +34,21 @@ import com.infinity.omos.ui.main.MyDjFragment
 import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.ui.main.MyRecordFragment
 import com.infinity.omos.ui.search.AllFragment
-import com.infinity.omos.ui.main.TodayFragment
+import com.infinity.omos.ui.main.today.FakeTodayFragment
 import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.MainViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_main.*
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
     private lateinit var binding: ActivityMainBinding
 
     // Bottom Navigation
-    private val fragmentToday by lazy { TodayFragment() }
+    private val fragmentToday by lazy { FakeTodayFragment() }
     private val fragmentMyRecord by lazy { MyRecordFragment() }
     private val fragmentAllRecords by lazy { AllRecordFragment() }
     private val fragmentMyDj by lazy { MyDjFragment() }
@@ -154,7 +155,7 @@ class MainActivity : AppCompatActivity() {
             binding.etSearch.setText("")
         }
 
-        fragmentToday.setItemClickListener(object: TodayFragment.OnItemClickListener{
+        fragmentToday.setItemClickListener(object: FakeTodayFragment.OnItemClickListener{
             override fun onClick() {
                 binding.btnFloating.visibility = View.GONE
                 onOptionsItemSelected(actionWrite)
@@ -266,7 +267,7 @@ class MainActivity : AppCompatActivity() {
 
         // OMOS 텍스트 이미지 추가
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_title_logo)
+        supportActionBar?.setHomeAsUpIndicator(R.drawable.ic_omos_title_logo)
     }
 
     private fun initTabLayout() {

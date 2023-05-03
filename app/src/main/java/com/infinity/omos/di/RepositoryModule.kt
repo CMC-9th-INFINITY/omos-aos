@@ -2,6 +2,8 @@ package com.infinity.omos.di
 
 import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.repository.auth.AuthRepositoryImpl
+import com.infinity.omos.repository.today.TodayRepository
+import com.infinity.omos.repository.today.TodayRepositoryImpl
 import com.infinity.omos.repository.user.UserRepository
 import com.infinity.omos.repository.user.UserRepositoryImpl
 import dagger.Binds
@@ -25,4 +27,10 @@ interface RepositoryModule {
     fun bindUserRepository(
         userRepositoryImpl: UserRepositoryImpl
     ): UserRepository
+
+    @Binds
+    @Singleton
+    fun bindTodayRepository(
+        todayRepositoryImpl: TodayRepositoryImpl
+    ): TodayRepository
 }

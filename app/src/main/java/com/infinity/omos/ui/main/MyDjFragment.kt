@@ -22,7 +22,6 @@ import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyDjFragment : Fragment() {
 

@@ -18,7 +18,6 @@ import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.viewmodels.SharedViewModel
 
 class MyRecordFragment : Fragment() {
 

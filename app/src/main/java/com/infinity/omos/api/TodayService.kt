@@ -3,23 +3,22 @@ package com.infinity.omos.api
 import com.infinity.omos.data.LovedMusic
 import com.infinity.omos.data.Music
 import com.infinity.omos.data.Profile
-import com.infinity.omos.data.SumRecord
-import retrofit2.Call
+import com.infinity.omos.data.record.SumRecord
 import retrofit2.http.GET
 import retrofit2.http.Path
 
 interface TodayService {
     @GET("/api/today/famous-records-of-today")
-    fun getFamousRecord(): Call<List<SumRecord>>
+    suspend fun getFamousRecord(): List<SumRecord>
 
     @GET("/api/today/music-loved/{userId}")
-    fun getMyLoveMusic(
+    suspend fun getLovedMusic(
         @Path("userId") userId: Int
-    ): Call<LovedMusic>
+    ): LovedMusic
 
     @GET("/api/today/music-of-today")
-    fun getTodayMusic(): Call<Music>
+    suspend fun getTodayMusic(): Music
 
     @GET("/api/today/recommend-dj")
-    fun getRecommendDj(): Call<List<Profile>>
+    suspend fun getRecommendedDj(): List<Profile>
 }

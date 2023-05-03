@@ -1,20 +1,13 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.Intent
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.MainActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.AllRecords
-import com.infinity.omos.data.Music
 import com.infinity.omos.data.SearchMusic
-import com.infinity.omos.data.SumRecord
 import com.infinity.omos.databinding.ListSearchItemBinding
 import com.infinity.omos.etc.GlobalFunction
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.record.DetailRecordActivity
-import com.infinity.omos.data.SumRecord
+import com.infinity.omos.data.record.SumRecord
 import com.infinity.omos.databinding.ListHorizontalRecordItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist
 import com.infinity.omos.OmosApplication

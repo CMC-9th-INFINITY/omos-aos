@@ -1,15 +1,13 @@
-package com.infinity.omos.viewmodels
+package com.infinity.omos.ui.main
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.*
+import com.infinity.omos.data.record.SumRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.*
 import com.infinity.omos.utils.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 
 @HiltViewModel
@@ -19,7 +17,7 @@ class SharedViewModel @Inject constructor(
 
     private val userId = dataStoreManager.getUserId()
 
-    private val todayRepository: TodayRepository = TodayRepository()
+    private val fakeTodayRepository: FakeTodayRepository = FakeTodayRepository()
     private val myRecordRepository: MyRecordRepository = MyRecordRepository()
     private val allRecordsRepository: AllRecordsRepository = AllRecordsRepository()
     private val myDjRepository: MyDjRepository = MyDjRepository()
@@ -30,46 +28,46 @@ class SharedViewModel @Inject constructor(
     // Today
     // 인기있는 레코드
     fun setFamousRecord(){
-        todayRepository.getFamousRecord()
+        fakeTodayRepository.getFamousRecord()
     }
     fun getFamousRecord(): LiveData<List<SumRecord>>{
-        return todayRepository.famousRecord
+        return fakeTodayRepository.famousRecord
     }
     fun getStateFamousRecord(): LiveData<Constant.ApiState>{
-        return todayRepository.stateFamousRecord
+        return fakeTodayRepository.stateFamousRecord
     }
 
     // 사랑했던 노래
     fun setMyLoveMusic(){
-        todayRepository.getMyLoveMusic(userId)
+        fakeTodayRepository.getMyLoveMusic(userId)
     }
     fun getMyLoveMusic(): LiveData<LovedMusic>{
-        return todayRepository.loveMusic
+        return fakeTodayRepository.loveMusic
     }
     fun getStateLoveMusic(): LiveData<Constant.ApiState>{
-        return todayRepository.stateLoveMusic
+        return fakeTodayRepository.stateLoveMusic
     }
 
     // 오늘의 노래
     fun setTodayMusic(){
-        todayRepository.getTodayMusic()
+        fakeTodayRepository.getTodayMusic()
     }
     fun getTodayMusic(): LiveData<Music>{
-        return todayRepository.todayMusic
+        return fakeTodayRepository.todayMusic
     }
     fun getStateTodayMusic(): LiveData<Constant.ApiState>{
-        return todayRepository.stateTodayMusic
+        return fakeTodayRepository.stateTodayMusic
     }
 
     // 추천 DJ
     fun setRecommendDj(){
-        todayRepository.getRecommendDj()
+        fakeTodayRepository.getRecommendDj()
     }
     fun getRecommendDj(): LiveData<List<Profile>>{
-        return todayRepository.recommendDj
+        return fakeTodayRepository.recommendDj
     }
     fun getStateRecommendDj(): LiveData<Constant.ApiState>{
-        return todayRepository.stateRecommendDj
+        return fakeTodayRepository.stateRecommendDj
     }
 
     // My 레코드

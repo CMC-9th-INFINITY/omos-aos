@@ -1,9 +1,11 @@
 package com.infinity.omos.data
 
-import com.google.gson.annotations.SerializedName
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class LovedMusic(
-    @SerializedName("recordId") val recordId: Int,
-    @SerializedName("music") val music: Music,
-    @SerializedName("recordImageUrl") val recordImageUrl: String
+    @SerialName("recordId") val recordId: Int,
+    @SerialName("music") val music: Music,
+    @SerialName("recordImageUrl") val recordImageUrl: String
 )

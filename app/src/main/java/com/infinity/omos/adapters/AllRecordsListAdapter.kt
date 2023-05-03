@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.record.CategoryRecordsActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.AllRecords
-import com.infinity.omos.data.SumRecord
+import com.infinity.omos.data.record.SumRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
