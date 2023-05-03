@@ -275,7 +275,7 @@
                         app:strokeWidth="1dp" />
 
                     <ImageView
-                        android:id="@+id/img_album_cover"
+                        android:id="@+id/iv_album_cover"
                         android:layout_width="152dp"
                         android:layout_height="152dp"
                         android:layout_marginBottom="26dp"
@@ -300,7 +300,7 @@
                         app:layout_constraintBottom_toBottomOf="@id/ln_artist_album"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@id/img_album_cover" />
+                        app:layout_constraintTop_toBottomOf="@id/iv_album_cover" />
 
                     <LinearLayout
                         android:id="@+id/ln_artist_album"

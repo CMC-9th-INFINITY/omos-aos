@@ -271,4 +271,20 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="view"><u>보기</u></string>
     <string name="tos">이용약관</string>
     <string name="pp">개인정보 보호정책</string>
+    <string name="main_image">메인 이미지</string>
+    <string name="omos_title_logo">omos 타이틀 로고</string>
+    <string name="noti">알림</string>
+    <string name="most_recoded">현재 OMOS DJ들이\n가장 많이 기록하고 있는,</string>
+    <string name="omos_pick">OMOS\' Pick</string>
+    <string name="omos_pick_album_cover">omos pick 앨범 커버</string>
+    <string name="spotify_icon">스포티파이 아이콘</string>
+    <string name="selected_by_dj">수많은 DJ가 선택한</string>
+    <string name="record_image">레코드 이미지</string>
+    <string name="album_cover">앨범 커버</string>
+    <string name="omos_recommended_dj">OMOS 추천 DJ</string>
+    <string name="loved_music">내가 사랑했던 노래</string>
+    <string name="go_to_record">레코드 보러가기</string>
+    <string name="spotify_logo">스포티파이 로고</string>
+    <string name="team_infinity">팀 인피니티</string>
+    <string name="c_team_infinity">© TEAM INFINITY</string>
 </resources>

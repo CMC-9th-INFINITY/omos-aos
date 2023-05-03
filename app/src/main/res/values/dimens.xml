@@ -4,6 +4,9 @@
     <dimen name="design_bottom_navigation_text_size" tools:override="true">10sp</dimen>
     <dimen name="design_bottom_navigation_active_text_size" tools:override="true">10sp</dimen>
 
+    <dimen name="small_padding">12dp</dimen>
     <dimen name="normal_padding">16dp</dimen>
     <dimen name="large_padding">36dp</dimen>
+
+    <dimen name="status_bar_height">24dp</dimen>
 </resources>

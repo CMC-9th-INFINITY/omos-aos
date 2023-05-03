@@ -17,31 +17,36 @@
         android:paddingEnd="2dp">
 
         <ImageView
+            android:id="@+id/iv_record"
             android:layout_width="274dp"
             android:layout_height="160dp"
+            android:contentDescription="@string/record_image"
             android:scaleType="centerCrop"
             app:categoryImageUrl="@{record.recordImageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_album_cover" />
+            app:layout_constraintTop_toBottomOf="@+id/iv_album_cover" />
 
         <ImageView
-            android:layout_width="274dp"
-            android:layout_height="160dp"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:background="@drawable/bg_gradient_02"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_album_cover" />
+            android:contentDescription="@string/record_image"
+            app:layout_constraintBottom_toBottomOf="@id/iv_record"
+            app:layout_constraintEnd_toEndOf="@id/iv_record"
+            app:layout_constraintStart_toStartOf="@id/iv_record"
+            app:layout_constraintTop_toTopOf="@id/iv_record" />
 
         <ImageView
-            android:id="@+id/img_album_cover"
+            android:id="@+id/iv_album_cover"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:contentDescription="@string/album_cover"
             app:imageUrl="@{record.music.albumImageUrl}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/gray_06" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -49,9 +54,9 @@
             android:background="@color/black_01"
             android:paddingHorizontal="10dp"
             android:paddingVertical="6dp"
-            app:layout_constraintBottom_toBottomOf="@+id/img_album_cover"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_album_cover"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/img_album_cover"
+            app:layout_constraintStart_toEndOf="@id/iv_album_cover"
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
@@ -63,7 +68,7 @@
                 android:text="@{record.music.musicTitle}"
                 android:textColor="?attr/colorSecondary"
                 app:layout_constraintBottom_toTopOf="@+id/tv_artist"
-                app:layout_constraintEnd_toStartOf="@id/ic_spotify"
+                app:layout_constraintEnd_toStartOf="@id/iv_spotify"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Angel Baby" />
@@ -77,13 +82,13 @@
                 android:textColor="?attr/colorSecondaryVariant"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/ic_spotify"
+                app:layout_constraintEnd_toStartOf="@id/iv_spotify"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_music_title"
                 tools:text="Troye Sivan - Angel Baby" />
 
             <ImageView
-                android:id="@+id/ic_spotify"
+                android:id="@+id/iv_spotify"
                 android:layout_width="31dp"
                 android:layout_height="21dp"
                 android:paddingStart="10dp"

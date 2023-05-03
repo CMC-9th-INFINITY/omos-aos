@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="dj"
             type="com.infinity.omos.data.Profile" />
@@ -15,23 +17,24 @@
         android:paddingEnd="16dp">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/img_album_cover"
+            android:id="@+id/iv_album_cover"
             android:layout_width="88dp"
-            android:layout_height="88dp"/>
+            android:layout_height="88dp"
+            tools:src="@color/gray_06" />
 
         <TextView
             android:id="@+id/tv_nick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
+            android:ellipsize="end"
             android:gravity="center"
-            android:text="@{dj.nickname}"
-            android:textSize="12sp"
-            android:textColor="@color/gray_03"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:text="@{dj.nickname}"
+            android:textColor="@color/gray_03"
+            android:textSize="12sp"
+            tools:text="DJ 닉네임열두글자까지가능" />
 
     </LinearLayout>
-
 
 </layout>

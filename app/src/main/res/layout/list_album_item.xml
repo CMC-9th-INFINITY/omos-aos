@@ -17,7 +17,7 @@
         android:background="@color/dark">
 
         <com.infinity.omos.utils.RoundImageView
-            android:id="@+id/img_album_cover"
+            android:id="@+id/iv_album_cover"
             android:layout_width="70dp"
             android:layout_height="70dp"
             imageUrl="@{data.albumImageUrl}"
@@ -32,7 +32,7 @@
             android:layout_marginStart="12dp"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/img_album_cover"
+            app:layout_constraintStart_toEndOf="@+id/iv_album_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintBottom_toBottomOf="parent">
 
