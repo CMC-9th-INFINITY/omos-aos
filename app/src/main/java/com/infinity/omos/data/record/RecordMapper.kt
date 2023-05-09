@@ -5,7 +5,7 @@ import com.infinity.omos.data.music.toPresentation
 fun SumRecord.toPresentation(): SumRecordModel {
     return SumRecordModel(
         music = music.toPresentation(),
-        nickname = nickname,
+        nickname = "by. $nickname",
         recordId = recordId,
         recordImageUrl = recordImageUrl,
         recordTitle = recordTitle,

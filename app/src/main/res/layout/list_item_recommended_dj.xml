@@ -21,7 +21,7 @@
             android:id="@+id/iv_profile"
             android:layout_width="88dp"
             android:layout_height="88dp"
-            app:imageFromUrl="@{profile.profileUrl}"
+            app:profileImageFromUrl="@{profile.profileUrl}"
             tools:src="@color/gray_06" />
 
         <TextView

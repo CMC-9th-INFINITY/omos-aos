@@ -39,10 +39,7 @@ class TodayViewModel @Inject constructor(
     val lovedMusicUiState = _lovedMusicUiState.asStateFlow()
 
     init {
-        fetchTodayMusic()
-        fetchFamousRecords()
-        fetchRecommendedDjs()
-        fetchLovedMusic()
+        refresh()
     }
 
     private fun fetchTodayMusic() {
@@ -95,6 +92,13 @@ class TodayViewModel @Inject constructor(
                     _lovedMusicUiState.value = LovedMusicUiState.Error
                 }
         }
+    }
+
+    fun refresh() {
+        fetchTodayMusic()
+        fetchFamousRecords()
+        fetchRecommendedDjs()
+        fetchLovedMusic()
     }
 }
 

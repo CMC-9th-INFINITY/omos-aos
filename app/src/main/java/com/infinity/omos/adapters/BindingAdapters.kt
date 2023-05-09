@@ -24,8 +24,19 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
     if (!imageUrl.isNullOrEmpty()) {
         Glide.with(view.context)
             .load(imageUrl)
-            .error(R.drawable.ic_record)
-            .fallback(R.drawable.ic_record)
+            .placeholder(R.color.gray_06)
+            .into(view)
+    }
+}
+
+@BindingAdapter("profileImageFromUrl")
+fun bindProfileImageFromUrl(view: ImageView, imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        Glide.with(view.context)
+            .load(imageUrl)
+            .error(R.drawable.ic_profile)
+            .fallback(R.drawable.ic_profile)
+            .placeholder(R.drawable.ic_profile)
             .into(view)
     }
 }
