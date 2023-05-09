@@ -5,7 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import com.infinity.omos.data.Album
 import com.infinity.omos.data.Artists
-import com.infinity.omos.data.Music
+import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.SearchMusic
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.SearchRepository

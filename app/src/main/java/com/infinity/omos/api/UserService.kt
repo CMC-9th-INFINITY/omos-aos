@@ -1,8 +1,9 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.NetworkResult
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.data.user.*
+import com.infinity.omos.data.user.login.*
 import retrofit2.http.*
 
 interface UserService {

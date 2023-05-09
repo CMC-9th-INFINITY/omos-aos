@@ -1,6 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.*
+import com.infinity.omos.data.music.Music
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path

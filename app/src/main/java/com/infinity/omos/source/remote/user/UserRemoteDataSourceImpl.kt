@@ -3,6 +3,7 @@ package com.infinity.omos.source.remote.user
 import com.infinity.omos.api.UserService
 import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.*
+import com.infinity.omos.data.user.login.*
 import javax.inject.Inject
 
 class UserRemoteDataSourceImpl @Inject constructor(

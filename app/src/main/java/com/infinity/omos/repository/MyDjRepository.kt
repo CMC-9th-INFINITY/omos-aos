@@ -8,6 +8,7 @@ import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback

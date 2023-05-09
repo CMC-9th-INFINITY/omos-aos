@@ -2,6 +2,7 @@ package com.infinity.omos.repository.user
 
 import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.*
+import com.infinity.omos.data.user.login.*
 import com.infinity.omos.source.local.user.UserLocalDataSource
 import com.infinity.omos.source.remote.user.UserRemoteDataSource
 import javax.inject.Inject

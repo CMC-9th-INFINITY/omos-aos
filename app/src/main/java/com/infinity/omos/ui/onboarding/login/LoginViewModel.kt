@@ -2,8 +2,8 @@ package com.infinity.omos.ui.onboarding.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.infinity.omos.data.user.UserCredential
-import com.infinity.omos.data.user.UserSnsCredential
+import com.infinity.omos.data.user.login.UserCredential
+import com.infinity.omos.data.user.login.UserSnsCredential
 import com.infinity.omos.repository.user.UserRepository
 import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState

@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.databinding.ListTodayDjItemBinding
 
 class TodayDjListAdapter internal constructor(context: Context):
@@ -54,13 +54,13 @@ class TodayDjListAdapter internal constructor(context: Context):
             binding.dj = dj
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
 
-            Glide.with(binding.imgAlbumCover.context)
+            Glide.with(binding.ivAlbumCover.context)
                 .load(dj.profileUrl)
                 .error(R.drawable.ic_profile)
                 .fallback(R.drawable.ic_profile)
-                .into(binding.imgAlbumCover)
+                .into(binding.ivAlbumCover)
 
-            binding.imgAlbumCover.borderColor = ContextCompat.getColor(context, R.color.dark)
+            binding.ivAlbumCover.borderColor = ContextCompat.getColor(context, R.color.dark)
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION){

@@ -11,11 +11,11 @@
 
         <variable
             name="today"
-            type="com.infinity.omos.data.Music" />
+            type="com.infinity.omos.data.music.Music" />
 
         <variable
             name="love"
-            type="com.infinity.omos.data.LovedMusic" />
+            type="com.infinity.omos.data.music.LovedMusic" />
     </data>
 
     <ScrollView
@@ -169,7 +169,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_selected_many_dj"
-                tools:listitem="@layout/list_horizontal_record_item" />
+                tools:listitem="@layout/list_item_horizontal_record" />
 
             <TextView
                 android:id="@+id/tv_omos_recommend_dj"

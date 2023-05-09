@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.databinding.ListBlockedAccountBinding
 
 class BlockedListAdapter : ListAdapter<Profile, RecyclerView.ViewHolder>(BlockedDiffCallback()){

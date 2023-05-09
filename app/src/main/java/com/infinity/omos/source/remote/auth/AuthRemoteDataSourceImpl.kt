@@ -2,7 +2,7 @@ package com.infinity.omos.source.remote.auth
 
 import com.infinity.omos.api.AuthService
 import com.infinity.omos.data.auth.AuthCode
-import com.infinity.omos.data.user.UserEmail
+import com.infinity.omos.data.user.login.UserEmail
 import javax.inject.Inject
 
 class AuthRemoteDataSourceImpl @Inject constructor(

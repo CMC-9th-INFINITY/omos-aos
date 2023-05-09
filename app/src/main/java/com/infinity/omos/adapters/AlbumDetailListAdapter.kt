@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.MainActivity.Companion.isWrite
+import com.infinity.omos.ui.main.MainActivity.Companion.isWrite
 import com.infinity.omos.ui.record.MusicRecordActivity
 import com.infinity.omos.ui.write.SelectCategoryActivity
-import com.infinity.omos.data.Music
+import com.infinity.omos.data.music.Music
 import com.infinity.omos.databinding.ListAlbumDetailItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.setArtist

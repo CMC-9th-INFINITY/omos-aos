@@ -1,7 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.auth.AuthCode
-import com.infinity.omos.data.user.UserEmail
+import com.infinity.omos.data.user.login.UserEmail
 import com.infinity.omos.data.user.UserToken
 import retrofit2.http.Body
 import retrofit2.http.POST

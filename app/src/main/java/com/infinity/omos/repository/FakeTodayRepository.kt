@@ -4,9 +4,9 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.TodayService
-import com.infinity.omos.data.LovedMusic
-import com.infinity.omos.data.Music
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.music.LovedMusic
+import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.data.record.SumRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
@@ -26,7 +26,7 @@ class FakeTodayRepository {
     var stateFamousRecord = MutableLiveData<Constant.ApiState>()
     fun getFamousRecord(){
         stateFamousRecord.value = Constant.ApiState.LOADING
-        todayApi.getFamousRecord().enqueue(object:
+        /*todayApi.getFamousRecords().enqueue(object:
             Callback<List<SumRecord>> {
             override fun onResponse(
                 call: Call<List<SumRecord>>,
@@ -62,14 +62,14 @@ class FakeTodayRepository {
                 Log.d("FamousRecordAPI", t.message.toString())
                 t.stackTrace
             }
-        })
+        })*/
     }
 
     var loveMusic = MutableLiveData<LovedMusic>()
     var stateLoveMusic = MutableLiveData<Constant.ApiState>()
     fun getMyLoveMusic(userId: Int){
         stateLoveMusic.value = Constant.ApiState.LOADING
-        todayApi.getLovedMusic(userId).enqueue(object:
+        /*todayApi.getLovedMusic(userId).enqueue(object:
             Callback<LovedMusic> {
             override fun onResponse(
                 call: Call<LovedMusic>,
@@ -106,14 +106,14 @@ class FakeTodayRepository {
                 stateLoveMusic.value = Constant.ApiState.ERROR
                 t.stackTrace
             }
-        })
+        })*/
     }
 
     var todayMusic = MutableLiveData<Music>()
     var stateTodayMusic = MutableLiveData<Constant.ApiState>()
     fun getTodayMusic(){
         stateTodayMusic.value = Constant.ApiState.LOADING
-        todayApi.getTodayMusic().enqueue(object:
+        /*todayApi.getTodayMusic().enqueue(object:
             Callback<Music> {
             override fun onResponse(
                 call: Call<Music>,
@@ -149,14 +149,14 @@ class FakeTodayRepository {
                 Log.d("TodayMusicAPI", t.message.toString())
                 t.stackTrace
             }
-        })
+        })*/
     }
 
     var recommendDj = MutableLiveData<List<Profile>>()
     var stateRecommendDj = MutableLiveData<Constant.ApiState>()
     fun getRecommendDj(){
         stateRecommendDj.value = Constant.ApiState.LOADING
-        todayApi.getRecommendedDj().enqueue(object:
+        /*todayApi.getRecommendedDjs().enqueue(object:
             Callback<List<Profile>> {
             override fun onResponse(
                 call: Call<List<Profile>>,
@@ -192,6 +192,6 @@ class FakeTodayRepository {
                 Log.d("RecommendDjAPI", t.message.toString())
                 t.stackTrace
             }
-        })
+        })*/
     }
 }

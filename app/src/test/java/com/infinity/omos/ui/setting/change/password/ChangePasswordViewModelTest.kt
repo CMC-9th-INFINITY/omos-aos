@@ -2,7 +2,7 @@ package com.infinity.omos.ui.setting.password
 
 import com.google.common.truth.Truth.assertThat
 import com.infinity.omos.data.NetworkResult
-import com.infinity.omos.data.user.UserId
+import com.infinity.omos.data.user.login.UserId
 import com.infinity.omos.repository.user.UserRepository
 import com.infinity.omos.ui.MainDispatcherRule
 import com.infinity.omos.ui.onboarding.error.ErrorMessage

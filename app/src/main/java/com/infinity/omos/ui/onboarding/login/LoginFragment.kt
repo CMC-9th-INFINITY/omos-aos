@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.infinity.omos.MainActivity
+import com.infinity.omos.ui.main.MainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
 import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState

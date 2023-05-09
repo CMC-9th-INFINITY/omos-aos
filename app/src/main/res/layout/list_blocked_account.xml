@@ -9,7 +9,7 @@
             type="android.view.View.OnClickListener" />
         <variable
             name="dj"
-            type="com.infinity.omos.data.Profile" />
+            type="com.infinity.omos.data.user.Profile" />
     </data>
 
     <LinearLayout

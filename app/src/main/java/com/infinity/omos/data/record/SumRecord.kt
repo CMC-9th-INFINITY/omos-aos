@@ -1,6 +1,6 @@
 package com.infinity.omos.data.record
 
-import com.infinity.omos.data.Music
+import com.infinity.omos.data.music.Music
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

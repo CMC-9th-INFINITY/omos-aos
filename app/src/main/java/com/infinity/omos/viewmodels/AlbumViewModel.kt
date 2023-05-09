@@ -3,7 +3,7 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.infinity.omos.data.Music
+import com.infinity.omos.data.music.Music
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.SearchRepository
 

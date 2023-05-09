@@ -1,7 +1,7 @@
 package com.infinity.omos.repository
 
 import com.infinity.omos.api.BlockService
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.data.ResultState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

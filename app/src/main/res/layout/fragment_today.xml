@@ -6,8 +6,12 @@
     <data>
 
         <variable
-            name="vm"
-            type="com.infinity.omos.ui.main.today.TodayViewModel" />
+            name="todayMusic"
+            type="com.infinity.omos.data.music.MusicModel" />
+
+        <variable
+            name="lovedMusic"
+            type="com.infinity.omos.data.music.LovedMusicModel" />
     </data>
 
     <ScrollView
@@ -19,6 +23,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <ImageView
+                android:id="@+id/iv_main"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:contentDescription="@string/main_image"
+                android:scaleType="centerCrop"
+                app:layout_constraintBottom_toBottomOf="@id/frame_omos_pick"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:background="@color/gray_07" />
+
             <FrameLayout
                 android:id="@+id/frame_omos_pick"
                 android:layout_width="0dp"
@@ -27,12 +43,6 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:contentDescription="@string/main_image"
-                    android:scaleType="centerCrop" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -87,6 +97,7 @@
                         android:layout_marginTop="14dp"
                         android:layout_marginBottom="10dp"
                         android:contentDescription="@string/omos_pick_album_cover"
+                        app:imageFromUrl="@{todayMusic.albumImageUrl}"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@id/tv_music_title"
                         app:layout_constraintStart_toStartOf="parent"
@@ -112,21 +123,23 @@
                         android:layout_marginTop="6dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{todayMusic.musicTitle}"
                         android:textColor="?attr/colorSecondary"
                         android:textSize="16sp"
-                        app:layout_constraintBottom_toTopOf="@id/tv_artist"
+                        app:layout_constraintBottom_toTopOf="@id/tv_artist_album"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/iv_today_music"
                         app:layout_constraintTop_toBottomOf="@id/iv_spotify"
                         tools:text="노래제목이들어갑니다노래제목이들어갑니다" />
 
                     <TextView
-                        android:id="@+id/tv_artist"
+                        android:id="@+id/tv_artist_album"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/normal_padding"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{todayMusic.artistsAndAlbumTitle}"
                         android:textColor="?attr/colorSecondaryVariant"
                         app:layout_constraintBottom_toBottomOf="@id/iv_today_music"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -161,7 +174,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tv_selected_by_dj"
-                tools:listitem="@layout/list_horizontal_record_item" />
+                tools:listitem="@layout/list_item_horizontal_record" />
 
             <TextView
                 android:id="@+id/tv_omos_recommend_dj"
@@ -186,7 +199,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_omos_recommend_dj"
-                tools:listitem="@layout/list_today_dj_item" />
+                tools:listitem="@layout/list_item_recommended_dj" />
 
             <TextView
                 android:id="@+id/tv_loved_music"
@@ -210,16 +223,17 @@
                 app:layout_constraintTop_toBottomOf="@id/tv_loved_music">
 
                 <ImageView
-                    android:id="@+id/iv_loved_album_cover"
+                    android:id="@+id/iv_loved_record_image"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/album_cover"
-                    android:scaleType="centerCrop" />
+                    android:contentDescription="@string/record_image"
+                    android:scaleType="centerCrop"
+                    app:imageFromUrl="@{lovedMusic.recordImageUrl}" />
 
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:contentDescription="@string/album_cover"
+                    android:contentDescription="@string/record_image"
                     android:src="@drawable/bg_gradient_01" />
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -255,6 +269,7 @@
                         android:layout_height="156dp"
                         android:layout_marginTop="25dp"
                         android:contentDescription="@string/album_cover"
+                        app:imageFromUrl="@{lovedMusic.music.albumImageUrl}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/btn_go_to_record"
@@ -267,6 +282,7 @@
                         android:layout_marginTop="24dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{lovedMusic.music.musicTitle}"
                         android:textColor="?attr/colorSecondary"
                         android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -281,6 +297,7 @@
                         android:layout_marginBottom="42dp"
                         android:ellipsize="end"
                         android:maxLines="1"
+                        android:text="@{lovedMusic.music.artistsAndAlbumTitle}"
                         android:textColor="@color/gray_03"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"

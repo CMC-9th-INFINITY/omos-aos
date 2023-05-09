@@ -5,12 +5,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.MainActivity
+import com.infinity.omos.ui.main.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.SearchMusic
 import com.infinity.omos.databinding.ListSearchItemBinding
 import com.infinity.omos.etc.GlobalFunction
-import kotlinx.android.synthetic.main.list_allrecords_item.view.*
 import kotlinx.android.synthetic.main.list_search_item.view.*
 
 class SearchListAdapter internal constructor(private val context: Context)

@@ -21,7 +21,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
-import com.infinity.omos.MainActivity
+import com.infinity.omos.ui.main.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.Update

@@ -2,8 +2,8 @@ package com.infinity.omos.ui.setting.change.password
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.infinity.omos.data.user.UserId
-import com.infinity.omos.data.user.UserPassword
+import com.infinity.omos.data.user.login.UserId
+import com.infinity.omos.data.user.login.UserPassword
 import com.infinity.omos.repository.user.UserRepository
 import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState

@@ -40,11 +40,11 @@ class InputLyricsActivity : AppCompatActivity() {
 
         binding.tvMusicTitle.text = musicTitle
         binding.tvArtist.text = artists
-        Glide.with(binding.imgAlbumCover.context)
+        Glide.with(binding.ivAlbumCover.context)
             .load(albumImageUrl)
             .error(R.drawable.ic_launcher_background)
             .fallback(R.drawable.ic_record)
-            .into(binding.imgAlbumCover)
+            .into(binding.ivAlbumCover)
 
         binding.etLyrics.addTextChangedListener(object: TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {

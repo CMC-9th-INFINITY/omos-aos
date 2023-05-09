@@ -1,5 +1,6 @@
-package com.infinity.omos.data
+package com.infinity.omos.data.music
 
+import com.infinity.omos.data.music.Music
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 

@@ -1,4 +1,4 @@
-package com.infinity.omos
+package com.infinity.omos.ui.main
 
 import android.content.Context
 import android.content.Intent
@@ -24,17 +24,16 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.messaging.FirebaseMessaging
+import com.infinity.omos.OmosApplication
+import com.infinity.omos.R
 import com.infinity.omos.adapters.SearchListAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityMainBinding
 import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.ui.bottomnav.*
-import com.infinity.omos.ui.main.MyDjFragment
-import com.infinity.omos.ui.main.MyPageFragment
-import com.infinity.omos.ui.main.MyRecordFragment
+import com.infinity.omos.ui.main.today.TodayFragment
 import com.infinity.omos.ui.search.AllFragment
-import com.infinity.omos.ui.main.today.FakeTodayFragment
 import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.MainViewModel
@@ -48,7 +47,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     // Bottom Navigation
-    private val fragmentToday by lazy { FakeTodayFragment() }
+    private val fragmentToday by lazy { TodayFragment() }
     private val fragmentMyRecord by lazy { MyRecordFragment() }
     private val fragmentAllRecords by lazy { AllRecordFragment() }
     private val fragmentMyDj by lazy { MyDjFragment() }
@@ -155,12 +154,12 @@ class MainActivity : AppCompatActivity() {
             binding.etSearch.setText("")
         }
 
-        fragmentToday.setItemClickListener(object: FakeTodayFragment.OnItemClickListener{
+        /*fragmentToday.setItemClickListener(object: FakeTodayFragment.OnItemClickListener{
             override fun onClick() {
                 binding.btnFloating.visibility = View.GONE
                 onOptionsItemSelected(actionWrite)
             }
-        })
+        })*/
 
         val sAdapter = SearchListAdapter(this)
         binding.rvSearch.apply {
@@ -298,7 +297,9 @@ class MainActivity : AppCompatActivity() {
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         stateWrite = false
                         stateSearch = false
-                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context,
+                            R.color.dark
+                        ))
                         invalidateOptionsMenu()
                         changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
@@ -323,7 +324,9 @@ class MainActivity : AppCompatActivity() {
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
-                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context,
+                            R.color.dark
+                        ))
                         binding.divisor.visibility = View.VISIBLE
 
                         invalidateOptionsMenu()
@@ -347,7 +350,9 @@ class MainActivity : AppCompatActivity() {
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
-                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context,
+                            R.color.dark
+                        ))
                         binding.divisor.visibility = View.VISIBLE
 
                         invalidateOptionsMenu()
@@ -370,7 +375,9 @@ class MainActivity : AppCompatActivity() {
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
-                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.dark))
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context,
+                            R.color.dark
+                        ))
                         binding.divisor.visibility = View.VISIBLE
 
                         invalidateOptionsMenu()
@@ -394,7 +401,9 @@ class MainActivity : AppCompatActivity() {
                         binding.lnToolbar.visibility = View.VISIBLE
                         binding.btnFloating.visibility = View.GONE
 
-                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context, R.color.deep_dark))
+                        binding.mainLayout.setBackgroundColor(ContextCompat.getColor(context,
+                            R.color.deep_dark
+                        ))
                         binding.divisor.visibility = View.INVISIBLE
 
                         invalidateOptionsMenu()

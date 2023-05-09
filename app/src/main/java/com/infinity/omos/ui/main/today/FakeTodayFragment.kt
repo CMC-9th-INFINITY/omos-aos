@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.infinity.omos.R
 import com.infinity.omos.ui.write.SelectCategoryActivity
-import com.infinity.omos.adapters.HorizontalRecordListAdapter
+import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.adapters.TodayDjListAdapter
 import com.infinity.omos.databinding.FragmentFakeTodayBinding
 import com.infinity.omos.etc.Constant
@@ -79,7 +79,7 @@ class FakeTodayFragment : Fragment() {
             }
         }
 
-        // 인기있는 레코드
+/*        // 인기있는 레코드
         val fAdapter = HorizontalRecordListAdapter(requireContext())
         binding.rvFamous.adapter = fAdapter
         viewModel.setFamousRecord()
@@ -87,7 +87,7 @@ class FakeTodayFragment : Fragment() {
             record?.let {
                 fAdapter.setRecords(it)
             }
-        }
+        }*/
 
         // 추천 DJ
         val dAdapter = TodayDjListAdapter(requireContext())

@@ -1,7 +1,7 @@
 package com.infinity.omos.repository.auth
 
 import com.infinity.omos.data.auth.AuthCode
-import com.infinity.omos.data.user.UserEmail
+import com.infinity.omos.data.user.login.UserEmail
 
 interface AuthRepository {
 

@@ -20,7 +20,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
-import com.infinity.omos.MainActivity
+import com.infinity.omos.ui.main.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.LyricsListAdapter
 import com.infinity.omos.data.SaveRecord

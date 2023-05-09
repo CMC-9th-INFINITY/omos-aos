@@ -1,9 +1,9 @@
 package com.infinity.omos.source.remote.today
 
 import com.infinity.omos.api.TodayService
-import com.infinity.omos.data.LovedMusic
-import com.infinity.omos.data.Music
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.music.LovedMusic
+import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.data.record.SumRecord
 import javax.inject.Inject
 
@@ -11,9 +11,9 @@ class TodayRemoteDataSourceImpl @Inject constructor(
     private val todayService: TodayService
 ) : TodayRemoteDataSource {
 
-    override suspend fun getFamousRecord(): Result<List<SumRecord>> {
+    override suspend fun getFamousRecords(): Result<List<SumRecord>> {
         return Result.runCatching {
-            todayService.getFamousRecord()
+            todayService.getFamousRecords()
         }
     }
 
@@ -29,9 +29,9 @@ class TodayRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override suspend fun getRecommendedDj(): Result<List<Profile>> {
+    override suspend fun getRecommendedDjs(): Result<List<Profile>> {
         return Result.runCatching {
-            todayService.getRecommendedDj()
+            todayService.getRecommendedDjs()
         }
     }
 }

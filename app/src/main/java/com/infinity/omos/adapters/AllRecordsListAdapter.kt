@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.record.CategoryRecordsActivity
 import com.infinity.omos.R
+import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.record.SumRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
@@ -59,12 +60,12 @@ class AllRecordsListAdapter internal constructor(context: Context)
                 }
             }
 
-            val mAdapter = HorizontalRecordListAdapter(context)
+/*            val mAdapter = HorizontalRecordListAdapter(context)
             mAdapter.setRecords(content.category)
             binding.rvCategory.apply{
                 adapter = mAdapter
                 layoutManager = LinearLayoutManager(context).also { it.orientation = LinearLayoutManager.HORIZONTAL }
-            }
+            }*/
 
             // 레코드가 없을 때,
             if (content.category!!.isNotEmpty()){

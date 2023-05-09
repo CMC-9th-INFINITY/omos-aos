@@ -2,6 +2,7 @@ package com.infinity.omos.repository.user
 
 import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.user.*
+import com.infinity.omos.data.user.login.*
 
 interface UserRepository {
 

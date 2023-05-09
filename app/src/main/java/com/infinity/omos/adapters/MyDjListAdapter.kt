@@ -1,8 +1,6 @@
 package com.infinity.omos.adapters
 
 import android.content.Context
-import android.content.res.ColorStateList
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.infinity.omos.R
-import com.infinity.omos.data.Profile
+import com.infinity.omos.data.user.Profile
 import com.infinity.omos.databinding.ListMydjItemBinding
 
 class MyDjListAdapter internal constructor(context: Context):
@@ -61,16 +59,16 @@ class MyDjListAdapter internal constructor(context: Context):
                 isChecked.add(num, false)
             }
 
-            Glide.with(binding.imgAlbumCover.context)
+            Glide.with(binding.ivAlbumCover.context)
                 .load(dj.profileUrl)
                 .error(R.drawable.ic_profile)
                 .fallback(R.drawable.ic_profile)
-                .into(binding.imgAlbumCover)
+                .into(binding.ivAlbumCover)
 
             if (isChecked[num]){
-                binding.imgAlbumCover.background = ContextCompat.getDrawable(context, R.drawable.border)
+                binding.ivAlbumCover.background = ContextCompat.getDrawable(context, R.drawable.border)
             } else{
-                binding.imgAlbumCover.background = ContextCompat.getDrawable(context, R.drawable.no_border)
+                binding.ivAlbumCover.background = ContextCompat.getDrawable(context, R.drawable.no_border)
             }
 
             val pos = adapterPosition
