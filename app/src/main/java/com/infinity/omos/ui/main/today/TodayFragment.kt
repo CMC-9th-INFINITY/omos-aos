@@ -1,6 +1,6 @@
 package com.infinity.omos.ui.main.today
 
-import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,8 +12,6 @@ import com.infinity.omos.BuildConfig
 import com.infinity.omos.adapters.dj.RecommendedDjListAdapter
 import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
-import com.infinity.omos.ui.record.DetailRecordActivity
-import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -41,10 +39,19 @@ class TodayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        onFullScreen()
         setAdapter()
         setMainImage()
         initListener()
         collectData()
+    }
+
+    private fun onFullScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireActivity().window.setDecorFitsSystemWindows(false)
+        } else {
+            requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        }
     }
 
     private fun setAdapter() {
@@ -100,5 +107,19 @@ class TodayFragment : Fragment() {
         Glide.with(binding.ivMain.context)
             .load(BuildConfig.S3_BASE_URL + "main/$day.png")
             .into(binding.ivMain)
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        offFullScreen()
+    }
+
+    private fun offFullScreen() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            requireActivity().window.setDecorFitsSystemWindows(true)
+        } else {
+            requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
+        }
     }
 }
