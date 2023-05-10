@@ -38,4 +38,9 @@ class DataStoreManager @Inject constructor(
     fun getUserId(): Int {
         return runBlocking { tokenFlow.first().userId }
     }
+
+    fun isExistToken(): Boolean {
+        val userId = getUserId()
+        return userId != -1
+    }
 }
