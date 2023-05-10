@@ -4,4 +4,8 @@
         <item name="android:textColor">?attr/colorOnSurface</item>
         <item name="android:backgroundTint">@color/bg_black</item>
     </style>
+
+    <style name="Theme.Omos.BottomNavTextSize" parent="TextAppearance.AppCompat">
+        <item name="android:textSize">10sp</item>
+    </style>
 </resources>

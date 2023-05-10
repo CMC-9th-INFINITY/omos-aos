@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.SearchMusic
 import com.infinity.omos.databinding.ListSearchItemBinding
@@ -42,9 +42,9 @@ class SearchListAdapter internal constructor(private val context: Context)
             binding.tvMusicTitle.text = music.musicTitle
 
             // keyword 색상 변경
-            var start = music.musicTitle.lowercase().indexOf(MainActivity.keyword.lowercase())
+            var start = music.musicTitle.lowercase().indexOf(FakeMainActivity.keyword.lowercase())
             if (start != -1){
-                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + MainActivity.keyword.length, R.color.orange)
+                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + FakeMainActivity.keyword.length, R.color.orange)
             }
 
             val pos = adapterPosition

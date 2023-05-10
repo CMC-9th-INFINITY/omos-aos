@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.search.DetailArtistActivity
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Artists
 import com.infinity.omos.databinding.ListArtistItemBinding
@@ -69,9 +69,9 @@ class ArtistListAdapter internal constructor(private val context: Context):
             binding.tvArtistName.text = artist.artistName
 
             // keyword 색상 변경
-            var start = artist.artistName.lowercase().indexOf(MainActivity.keyword.lowercase())
+            var start = artist.artistName.lowercase().indexOf(FakeMainActivity.keyword.lowercase())
             if (start != -1){
-                GlobalFunction.changeTextColor(context, binding.tvArtistName, start, start + MainActivity.keyword.length, R.color.orange)
+                GlobalFunction.changeTextColor(context, binding.tvArtistName, start, start + FakeMainActivity.keyword.length, R.color.orange)
             }
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩

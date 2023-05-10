@@ -15,7 +15,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.ArtistListAdapter
 import com.infinity.omos.databinding.FragmentArtistBinding
@@ -68,7 +68,7 @@ class ArtistFragment : Fragment() {
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreArtist(MainActivity.keyword, pageSize, 0)
+        viewModel.loadMoreArtist(FakeMainActivity.keyword, pageSize, 0)
         viewModel.getArtist().observe(viewLifecycleOwner, Observer { artist ->
             artist?.let {
                 isLoading = if (it.isEmpty()) {
@@ -125,7 +125,7 @@ class ArtistFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && itemTotalCount > -1) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreArtist(MainActivity.keyword, pageSize, ++page * pageSize)
+                    viewModel.loadMoreArtist(FakeMainActivity.keyword, pageSize, ++page * pageSize)
                 }
             }
         })

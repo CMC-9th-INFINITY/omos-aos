@@ -8,8 +8,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.ui.main.MainActivity.Companion.isWrite
-import com.infinity.omos.ui.main.MainActivity.Companion.keyword
+import com.infinity.omos.ui.main.FakeMainActivity.Companion.isWrite
+import com.infinity.omos.ui.main.FakeMainActivity.Companion.keyword
 import com.infinity.omos.ui.record.MusicRecordActivity
 import com.infinity.omos.R
 import com.infinity.omos.ui.write.SelectCategoryActivity

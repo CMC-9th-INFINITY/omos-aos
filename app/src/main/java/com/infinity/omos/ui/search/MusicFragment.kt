@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.MusicListAdapter
 import com.infinity.omos.databinding.FragmentMusicBinding
@@ -66,7 +66,7 @@ class MusicFragment : Fragment() {
         }
 
         // 스크롤 시 앨범 업데이트
-        viewModel.loadMoreMusic(MainActivity.keyword, pageSize, 0)
+        viewModel.loadMoreMusic(FakeMainActivity.keyword, pageSize, 0)
         viewModel.getMusic().observe(viewLifecycleOwner) { music ->
             music?.let {
                 isLoading = if (it.isEmpty()) {
@@ -123,7 +123,7 @@ class MusicFragment : Fragment() {
                 if (!binding.recyclerView.canScrollVertically(1) && lastVisibleItemPosition == itemTotalCount && !isLoading && itemTotalCount > -1) {
                     isLoading = true
                     mAdapter.deleteLoading()
-                    viewModel.loadMoreMusic(MainActivity.keyword, pageSize, ++page*pageSize)
+                    viewModel.loadMoreMusic(FakeMainActivity.keyword, pageSize, ++page*pageSize)
                 }
             }
         })

@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.search.DetailAlbumActivity
 import com.infinity.omos.ui.search.DetailArtistActivity
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.Album
 import com.infinity.omos.databinding.ListAlbumItemBinding
@@ -73,9 +73,9 @@ class AlbumListAdapter internal constructor(private val context: Context):
             binding.tvAlbumTitle.text = album.albumTitle
 
             // keyword 색상 변경
-            var start = album.albumTitle.lowercase().indexOf(MainActivity.keyword.lowercase())
+            var start = album.albumTitle.lowercase().indexOf(FakeMainActivity.keyword.lowercase())
             if (start != -1 && context.javaClass != DetailArtistActivity::class.java){
-                GlobalFunction.changeTextColor(context, binding.tvAlbumTitle, start, start + MainActivity.keyword.length, R.color.orange)
+                GlobalFunction.changeTextColor(context, binding.tvAlbumTitle, start, start + FakeMainActivity.keyword.length, R.color.orange)
             }
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩

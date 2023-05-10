@@ -16,7 +16,7 @@ import com.infinity.omos.databinding.ActivitySettingBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.OnboardingActivity
+import com.infinity.omos.ui.MainActivity
 import com.infinity.omos.utils.MyReceiver
 import com.infinity.omos.viewmodels.SettingViewModel
 import com.kakao.sdk.user.UserApiClient
@@ -69,7 +69,7 @@ class SettingActivity : AppCompatActivity() {
                             viewModel.doLogout(userId)
                             OmosApplication.prefs.setUserToken(null, null, -1)
 
-                            val intent = Intent(this, OnboardingActivity::class.java)
+                            val intent = Intent(this, MainActivity::class.java)
                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
 

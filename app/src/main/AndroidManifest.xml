@@ -17,7 +17,7 @@
         android:theme="@style/Theme.Omos.Splash"
         android:usesCleartextTraffic="true">
         <activity
-            android:name=".OnboardingActivity"
+            android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
 
@@ -160,7 +160,7 @@
             android:exported="false"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ui.main.MainActivity"
+            android:name=".ui.main.FakeMainActivity"
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/MainStatusBarStyle" />

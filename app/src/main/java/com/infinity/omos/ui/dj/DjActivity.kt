@@ -15,7 +15,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.res.ResourcesCompat
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
 import com.infinity.omos.databinding.ActivityDjBinding
@@ -167,7 +167,7 @@ class DjActivity : AppCompatActivity() {
                         intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent4)
 
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, FakeMainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                         startActivity(intent)
                         Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()
@@ -201,7 +201,7 @@ class DjActivity : AppCompatActivity() {
                         intent4.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent4)
 
-                        val intent = Intent(this, MainActivity::class.java)
+                        val intent = Intent(this, FakeMainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_SINGLE_TOP or Intent.FLAG_ACTIVITY_CLEAR_TOP
                         startActivity(intent)
                         Toast.makeText(this, "완료", Toast.LENGTH_SHORT).show()

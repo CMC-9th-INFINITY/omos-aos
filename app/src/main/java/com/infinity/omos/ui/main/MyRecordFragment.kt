@@ -90,7 +90,7 @@ class MyRecordFragment : Fragment() {
         }
 
         // 검색
-        (activity as MainActivity).setFilterListener(object : MainActivity.OnFilterListener{
+        (activity as FakeMainActivity).setFilterListener(object : FakeMainActivity.OnFilterListener{
             override fun onFilter(str: String) {
                 mAdapter.filter.filter(str)
             }

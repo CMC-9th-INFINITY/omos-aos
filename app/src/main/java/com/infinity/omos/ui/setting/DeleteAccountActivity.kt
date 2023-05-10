@@ -13,7 +13,7 @@ import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.main.MyPageFragment
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.OnboardingActivity
+import com.infinity.omos.ui.MainActivity
 import com.infinity.omos.viewmodels.DeleteAccountViewModel
 
 class DeleteAccountActivity : AppCompatActivity() {
@@ -38,7 +38,7 @@ class DeleteAccountActivity : AppCompatActivity() {
                     Constant.ApiState.DONE -> {
                         OmosApplication.prefs.setUserToken(null, null, -1)
 
-                        val intent = Intent(this, OnboardingActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 

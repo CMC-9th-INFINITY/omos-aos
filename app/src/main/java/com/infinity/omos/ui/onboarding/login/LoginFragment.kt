@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.databinding.FragmentLoginBinding
 import com.infinity.omos.ui.onboarding.error.ErrorMessage
 import com.infinity.omos.ui.onboarding.base.OnboardingState
@@ -102,7 +102,7 @@ class LoginFragment : Fragment() {
             viewModel.state.collect { state ->
                 when (state) {
                     OnboardingState.Success -> {
-                        val intent = Intent(context, MainActivity::class.java).apply {
+                        val intent = Intent(context, FakeMainActivity::class.java).apply {
                             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         }
                         startActivity(intent)

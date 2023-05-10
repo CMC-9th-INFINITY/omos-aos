@@ -7,6 +7,6 @@
 
     <include
         android:id="@+id/nav_on_boarding"
-        app:graph="@navigation/nav_on_boarding" />
+        app:graph="@navigation/nav_on_boarding"/>
 
 </navigation>

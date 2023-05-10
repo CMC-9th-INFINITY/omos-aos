@@ -13,7 +13,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.infinity.omos.ui.main.MainActivity.Companion.keyword
+import com.infinity.omos.ui.main.FakeMainActivity.Companion.keyword
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AlbumListAdapter
 import com.infinity.omos.adapters.ArtistListAdapter

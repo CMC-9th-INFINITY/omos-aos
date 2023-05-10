@@ -21,7 +21,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.SaveRecord
 import com.infinity.omos.data.Update
@@ -212,7 +212,7 @@ class WriteRecordActivity : AppCompatActivity() {
                     intent2.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                     sendBroadcast(intent2)
 
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this, FakeMainActivity::class.java)
                     intent.putExtra("save", true)
                     intent.flags =
                         Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP

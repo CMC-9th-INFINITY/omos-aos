@@ -5,7 +5,7 @@ import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
-import com.infinity.omos.OnboardingActivity
+import com.infinity.omos.ui.MainActivity
 import com.infinity.omos.R
 import com.infinity.omos.ui.custom.OmosViewActions
 import com.infinity.omos.ui.custom.OmosViewMatchers
@@ -22,7 +22,7 @@ import org.junit.rules.RuleChain
 class ForgotPasswordFragmentTest {
 
     private val hiltRule = HiltAndroidRule(this)
-    private val activityTestRule = ActivityScenarioRule(OnboardingActivity::class.java)
+    private val activityTestRule = ActivityScenarioRule(MainActivity::class.java)
 
     @get:Rule
     val rule: RuleChain = RuleChain

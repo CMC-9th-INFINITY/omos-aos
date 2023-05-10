@@ -10,7 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.OnBoardingRepository
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.kakao.sdk.user.UserApiClient
 
 
@@ -62,11 +63,11 @@ class SplashActivity : AppCompatActivity() {
                 // 이메일 로그인 상태 확인
                 if (OmosApplication.prefs.getInt("userId") == -1) {
                     Log.d("SplashActivity", "토큰 불러오기 실패")
-                    val intent = Intent(activity, OnboardingActivity::class.java)
+                    val intent = Intent(activity, MainActivity::class.java)
                     activity.startActivity(intent)
                 } else {
                     Log.d("SplashActivity", "토큰 불러오기 성공")
-                    val intent = Intent(activity, MainActivity::class.java)
+                    val intent = Intent(activity, FakeMainActivity::class.java)
                     activity.startActivity(intent)
                 }
             } else if (tokenInfo != null) {
@@ -83,11 +84,11 @@ class SplashActivity : AppCompatActivity() {
                         }
                     }
 
-                    val intent = Intent(activity, OnboardingActivity::class.java)
+                    val intent = Intent(activity, MainActivity::class.java)
                     activity.startActivity(intent)
                 } else {
                     Log.d("SplashActivity", "토큰 불러오기 성공")
-                    val intent = Intent(activity, MainActivity::class.java)
+                    val intent = Intent(activity, FakeMainActivity::class.java)
                     activity.startActivity(intent)
                 }
             }

@@ -28,7 +28,7 @@ import com.infinity.omos.OmosApplication
 import com.infinity.omos.R
 import com.infinity.omos.adapters.SearchListAdapter
 import com.infinity.omos.adapters.ViewPagerAdapter
-import com.infinity.omos.databinding.ActivityMainBinding
+import com.infinity.omos.databinding.ActivityFakeMainBinding
 import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.ui.bottomnav.*
@@ -38,13 +38,12 @@ import com.infinity.omos.utils.BackKeyHandler
 import com.infinity.omos.utils.InAppUpdate
 import com.infinity.omos.viewmodels.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.activity_main.*
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class FakeMainActivity : AppCompatActivity() {
 
     private val viewModel: MainViewModel by viewModels()
-    private lateinit var binding: ActivityMainBinding
+    private lateinit var binding: ActivityFakeMainBinding
 
     // Bottom Navigation
     private val fragmentToday by lazy { TodayFragment() }
@@ -113,7 +112,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_fake_main)
         binding.vm = viewModel
         binding.lifecycleOwner = this
 
@@ -150,7 +149,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // EditText 초기화
-        btn_remove.setOnClickListener {
+        binding.btnRemove.setOnClickListener {
             binding.etSearch.setText("")
         }
 
@@ -225,13 +224,13 @@ class MainActivity : AppCompatActivity() {
         })
 
         // 검색 완료
-        et_search.setOnKeyListener { _, i, keyEvent ->
+        binding.etSearch.setOnKeyListener { _, i, keyEvent ->
             when (i) {
                 KeyEvent.KEYCODE_ENTER -> {
                     if (keyEvent.action != KeyEvent.ACTION_DOWN) {
                         if (isMusicSearch) {
-                            if (et_search.length() > 0) {
-                                keyword = et_search.text.toString()
+                            if (binding.etSearch.length() > 0) {
+                                keyword = binding.etSearch.text.toString()
                                 var intent = Intent("SEARCH_UPDATE")
                                 intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                                 intent.putExtra("keyword", keyword)
@@ -261,8 +260,8 @@ class MainActivity : AppCompatActivity() {
             window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
         }
 
-        toolbar.title = ""
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = ""
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         // OMOS 텍스트 이미지 추가
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -271,10 +270,10 @@ class MainActivity : AppCompatActivity() {
 
     private fun initTabLayout() {
         val viewpagerFragmentAdapter = ViewPagerAdapter(this)
-        viewPager.adapter = viewpagerFragmentAdapter
-        viewPager.isUserInputEnabled = false
+        binding.viewPager.adapter = viewpagerFragmentAdapter
+        binding.viewPager.isUserInputEnabled = false
         val tabTitles = listOf("전체", "노래", "앨범", "아티스트")
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
 
@@ -282,7 +281,7 @@ class MainActivity : AppCompatActivity() {
         val allFragment = viewpagerFragmentAdapter.getFragment()
         allFragment.setCurrentItem(object : AllFragment.OnItemClickListener {
             override fun setCurrentItem(position: Int) {
-                viewPager.currentItem = position
+                binding.viewPager.currentItem = position
             }
         })
     }
@@ -292,8 +291,8 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.run {
             setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.menu_today -> {
-                        toolbar.title = ""
+                    R.id.today_fragment -> {
+                        binding.toolbar.title = ""
                         supportActionBar?.setDisplayHomeAsUpEnabled(true)
                         stateWrite = false
                         stateSearch = false
@@ -303,11 +302,11 @@ class MainActivity : AppCompatActivity() {
                         invalidateOptionsMenu()
                         changeFragment("Today", fragmentToday)
                         item.setIcon(R.drawable.ic_selected_today)
-                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
-                        bottom_nav.menu.findItem(R.id.menu_allrecords)
-                            .setIcon(R.drawable.ic_allrecords)
-                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
-                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+                        binding.bottomNav.menu.findItem(R.id.my_record_fragment).setIcon(R.drawable.ic_my_record)
+                        binding.bottomNav.menu.findItem(R.id.all_records_fragment)
+                            .setIcon(R.drawable.ic_all_records)
+                        binding.bottomNav.menu.findItem(R.id.my_dj_fragment).setIcon(R.drawable.ic_my_dj)
+                        binding.bottomNav.menu.findItem(R.id.my_page_fragment).setIcon(R.drawable.ic_my_page)
 
                         if (binding.searchView.visibility == View.VISIBLE) {
                             cancelSearch()
@@ -316,8 +315,8 @@ class MainActivity : AppCompatActivity() {
                         binding.lnToolbar.visibility = View.GONE
                         binding.btnFloating.visibility = View.VISIBLE
                     }
-                    R.id.menu_myrecord -> {
-                        toolbar.title = "MY 레코드"
+                    R.id.my_record_fragment -> {
+                        binding.toolbar.title = "MY 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = true
                         stateSearch = true
@@ -332,18 +331,18 @@ class MainActivity : AppCompatActivity() {
                         invalidateOptionsMenu()
                         changeFragment("MyRecord", fragmentMyRecord)
                         item.setIcon(R.drawable.ic_selected_myrecord)
-                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
-                        bottom_nav.menu.findItem(R.id.menu_allrecords)
-                            .setIcon(R.drawable.ic_allrecords)
-                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
-                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+                        binding.bottomNav.menu.findItem(R.id.today_fragment).setIcon(R.drawable.ic_today)
+                        binding.bottomNav.menu.findItem(R.id.all_records_fragment)
+                            .setIcon(R.drawable.ic_all_records)
+                        binding.bottomNav.menu.findItem(R.id.my_dj_fragment).setIcon(R.drawable.ic_my_dj)
+                        binding.bottomNav.menu.findItem(R.id.my_page_fragment).setIcon(R.drawable.ic_my_page)
 
                         if (binding.searchView.visibility == View.VISIBLE) {
                             cancelSearch()
                         }
                     }
-                    R.id.menu_allrecords -> {
-                        toolbar.title = "전체 레코드"
+                    R.id.all_records_fragment -> {
+                        binding.toolbar.title = "전체 레코드"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
                         stateSearch = true
@@ -358,17 +357,17 @@ class MainActivity : AppCompatActivity() {
                         invalidateOptionsMenu()
                         changeFragment("AllRecords", fragmentAllRecords)
                         item.setIcon(R.drawable.ic_selected_allrecords)
-                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
-                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
-                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
-                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+                        binding.bottomNav.menu.findItem(R.id.today_fragment).setIcon(R.drawable.ic_today)
+                        binding.bottomNav.menu.findItem(R.id.my_record_fragment).setIcon(R.drawable.ic_my_record)
+                        binding.bottomNav.menu.findItem(R.id.my_dj_fragment).setIcon(R.drawable.ic_my_dj)
+                        binding.bottomNav.menu.findItem(R.id.my_page_fragment).setIcon(R.drawable.ic_my_page)
 
                         if (binding.searchView.visibility == View.VISIBLE) {
                             cancelSearch()
                         }
                     }
-                    R.id.menu_mydj -> {
-                        toolbar.title = "MY DJ"
+                    R.id.my_dj_fragment -> {
+                        binding.toolbar.title = "MY DJ"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
                         stateSearch = false
@@ -383,18 +382,18 @@ class MainActivity : AppCompatActivity() {
                         invalidateOptionsMenu()
                         changeFragment("MyDJ", fragmentMyDj)
                         item.setIcon(R.drawable.ic_selected_mydj)
-                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
-                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
-                        bottom_nav.menu.findItem(R.id.menu_allrecords)
-                            .setIcon(R.drawable.ic_allrecords)
-                        bottom_nav.menu.findItem(R.id.menu_mypage).setIcon(R.drawable.ic_mypage)
+                        binding.bottomNav.menu.findItem(R.id.today_fragment).setIcon(R.drawable.ic_today)
+                        binding.bottomNav.menu.findItem(R.id.my_record_fragment).setIcon(R.drawable.ic_my_record)
+                        binding.bottomNav.menu.findItem(R.id.all_records_fragment)
+                            .setIcon(R.drawable.ic_all_records)
+                        binding.bottomNav.menu.findItem(R.id.my_page_fragment).setIcon(R.drawable.ic_my_page)
 
                         if (binding.searchView.visibility == View.VISIBLE) {
                             cancelSearch()
                         }
                     }
-                    R.id.menu_mypage -> {
-                        toolbar.title = "MY 페이지"
+                    R.id.my_page_fragment -> {
+                        binding.toolbar.title = "MY 페이지"
                         supportActionBar?.setDisplayHomeAsUpEnabled(false)
                         stateWrite = false
                         stateSearch = false
@@ -409,11 +408,11 @@ class MainActivity : AppCompatActivity() {
                         invalidateOptionsMenu()
                         changeFragment("MyPage", fragmentMyPage)
                         item.setIcon(R.drawable.ic_selected_mypage)
-                        bottom_nav.menu.findItem(R.id.menu_today).setIcon(R.drawable.ic_today)
-                        bottom_nav.menu.findItem(R.id.menu_myrecord).setIcon(R.drawable.ic_myrecord)
-                        bottom_nav.menu.findItem(R.id.menu_allrecords)
-                            .setIcon(R.drawable.ic_allrecords)
-                        bottom_nav.menu.findItem(R.id.menu_mydj).setIcon(R.drawable.ic_mydj)
+                        binding.bottomNav.menu.findItem(R.id.today_fragment).setIcon(R.drawable.ic_today)
+                        binding.bottomNav.menu.findItem(R.id.my_record_fragment).setIcon(R.drawable.ic_my_record)
+                        binding.bottomNav.menu.findItem(R.id.all_records_fragment)
+                            .setIcon(R.drawable.ic_all_records)
+                        binding.bottomNav.menu.findItem(R.id.my_dj_fragment).setIcon(R.drawable.ic_my_dj)
 
                         if (binding.searchView.visibility == View.VISIBLE) {
                             cancelSearch()
@@ -422,7 +421,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 true
             }
-            selectedItemId = R.id.menu_today // 초기 프래그먼트
+            selectedItemId = R.id.today_fragment // 초기 프래그먼트
         }
     }
 
@@ -463,7 +462,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_search -> {
-                if (binding.bottomNav.selectedItemId == R.id.menu_myrecord) {
+                if (binding.bottomNav.selectedItemId == R.id.my_record_fragment) {
                     binding.lnToolbar.visibility = View.GONE
                     binding.searchView.visibility = View.VISIBLE
                     isMusicSearch = false
@@ -473,7 +472,7 @@ class MainActivity : AppCompatActivity() {
                     binding.bottomNav.visibility = View.GONE
                     binding.searchView.visibility = View.VISIBLE
 
-                    if (binding.bottomNav.selectedItemId != R.id.menu_mydj) {
+                    if (binding.bottomNav.selectedItemId != R.id.my_dj_fragment) {
                         binding.lnRanking.visibility = View.VISIBLE
                     }
 
@@ -482,11 +481,11 @@ class MainActivity : AppCompatActivity() {
                 isWrite = false
 
                 // editText 포커스 주기
-                et_search.isFocusableInTouchMode = true
-                et_search.requestFocus()
+                binding.etSearch.isFocusableInTouchMode = true
+                binding.etSearch.requestFocus()
                 val inputMethodManager =
                     getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.showSoftInput(et_search, 0)
+                inputMethodManager.showSoftInput(binding.etSearch, 0)
 
                 true
             }
@@ -500,11 +499,11 @@ class MainActivity : AppCompatActivity() {
                 isMusicSearch = true
 
                 // editText 포커스 주기
-                et_search.isFocusableInTouchMode = true
-                et_search.requestFocus()
+                binding.etSearch.isFocusableInTouchMode = true
+                binding.etSearch.requestFocus()
                 val inputMethodManager =
                     getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-                inputMethodManager.showSoftInput(et_search, 0)
+                inputMethodManager.showSoftInput(binding.etSearch, 0)
 
                 true
             }
@@ -521,19 +520,19 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.visibility = View.VISIBLE
 
         // today는 툴바 없음
-        if (binding.bottomNav.selectedItemId != R.id.menu_today) {
+        if (binding.bottomNav.selectedItemId != R.id.today_fragment) {
             binding.lnToolbar.visibility = View.VISIBLE
         } else {
             binding.btnFloating.visibility = View.VISIBLE
         }
 
-        viewPager.currentItem = 0
-        et_search.setText("")
+        binding.viewPager.currentItem = 0
+        binding.etSearch.setText("")
 
         // 키보드 내리기
         val inputMethodManager =
             getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(et_search.windowToken, 0)
+        inputMethodManager.hideSoftInputFromWindow(binding.etSearch.windowToken, 0)
     }
 
     // 뒤로가기 핸들러

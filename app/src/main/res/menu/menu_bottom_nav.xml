@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/today_fragment"
+        android:icon="@drawable/ic_today"
+        android:title="@string/today" />
+
+    <item
+        android:id="@+id/my_record_fragment"
+        android:icon="@drawable/ic_my_record"
+        android:title="@string/my_record" />
+
+    <item
+        android:id="@+id/all_records_fragment"
+        android:icon="@drawable/ic_all_records"
+        android:title="@string/all_records" />
+
+    <item
+        android:id="@+id/my_dj_fragment"
+        android:icon="@drawable/ic_my_dj"
+        android:title="@string/my_dj" />
+
+    <item
+        android:id="@+id/my_page_fragment"
+        android:icon="@drawable/ic_my_page"
+        android:title="@string/my_page" />
+
+</menu>
