@@ -6,9 +6,11 @@ import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.infinity.omos.R
+import com.infinity.omos.ui.main.today.UiState
 import com.infinity.omos.ui.view.OmosFieldView
 import com.infinity.omos.ui.onboarding.error.ErrorField
 import de.hdodenhof.circleimageview.CircleImageView
+import timber.log.Timber
 
 @BindingAdapter("isGone")
 fun bindGone(view: View, isGone: Boolean) {

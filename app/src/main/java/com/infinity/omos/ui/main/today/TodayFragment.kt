@@ -32,6 +32,7 @@ class TodayFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentTodayBinding.inflate(inflater, container, false).apply {
+            vm = viewModel
             lifecycleOwner = viewLifecycleOwner
         }
         return binding.root
