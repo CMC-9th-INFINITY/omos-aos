@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.main
+package com.infinity.omos.ui.main.myrecord
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -14,14 +14,16 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
 import com.infinity.omos.adapters.MyRecordListAdapter
-import com.infinity.omos.databinding.FragmentMyRecordBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.databinding.FragmentFakeMyRecordBinding
+import com.infinity.omos.ui.main.FakeMainActivity
+import com.infinity.omos.ui.main.SharedViewModel
 
-class MyRecordFragment : Fragment() {
+class FakeMyRecordFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
-    private lateinit var binding: FragmentMyRecordBinding
+    private lateinit var binding: FragmentFakeMyRecordBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = OmosApplication.prefs.getInt("userId")
@@ -35,7 +37,7 @@ class MyRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_record, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fake_my_record, container, false)
         activity?.let{
             binding.vm = viewModel
             binding.lifecycleOwner = viewLifecycleOwner
@@ -90,7 +92,8 @@ class MyRecordFragment : Fragment() {
         }
 
         // 검색
-        (activity as FakeMainActivity).setFilterListener(object : FakeMainActivity.OnFilterListener{
+        (activity as FakeMainActivity).setFilterListener(object :
+            FakeMainActivity.OnFilterListener {
             override fun onFilter(str: String) {
                 mAdapter.filter.filter(str)
             }

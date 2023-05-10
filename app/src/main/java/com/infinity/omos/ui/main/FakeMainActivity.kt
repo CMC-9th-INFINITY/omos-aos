@@ -31,6 +31,7 @@ import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityFakeMainBinding
 import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
+import com.infinity.omos.ui.main.myrecord.FakeMyRecordFragment
 import com.infinity.omos.ui.main.today.TodayFragment
 import com.infinity.omos.ui.search.AllFragment
 import com.infinity.omos.utils.BackKeyHandler
@@ -46,7 +47,7 @@ class FakeMainActivity : AppCompatActivity() {
 
     // Bottom Navigation
     private val fragmentToday by lazy { TodayFragment() }
-    private val fragmentMyRecord by lazy { MyRecordFragment() }
+    private val fragmentMyRecord by lazy { FakeMyRecordFragment() }
     private val fragmentAllRecords by lazy { AllRecordFragment() }
     private val fragmentMyDj by lazy { MyDjFragment() }
     private val fragmentMyPage by lazy { MyPageFragment() }
