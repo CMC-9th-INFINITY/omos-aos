@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         setTopLevelDestinations(navController)
-        // setActionBar(navController)
+        setActionBar(navController)
     }
 
     /**
@@ -60,15 +60,12 @@ class MainActivity : AppCompatActivity() {
     /**
      * Today 제외하고 ActionBar 추가
      */
-/*    private fun setActionBar(navController: NavController) {
+    private fun setActionBar(navController: NavController) {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
                 R.id.my_record_fragment,
-                R.id.all_records_fragment,
-                R.id.my_dj_fragment,
-                R.id.my_page_fragment
             )
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-    }*/
+        // setupActionBarWithNavController(navController, appBarConfiguration)
+    }
 }
