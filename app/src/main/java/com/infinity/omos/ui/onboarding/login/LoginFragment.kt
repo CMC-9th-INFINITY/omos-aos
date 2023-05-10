@@ -102,10 +102,9 @@ class LoginFragment : Fragment() {
             viewModel.state.collect { state ->
                 when (state) {
                     OnboardingState.Success -> {
-                        val intent = Intent(context, FakeMainActivity::class.java).apply {
-                            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                        }
-                        startActivity(intent)
+                        val directions =
+                            LoginFragmentDirections.actionLoginFragmentToNavMain()
+                        findNavController().navigate(directions)
                     }
                     OnboardingState.Failure(ErrorMessage.NOT_EXIST_USER_ERROR_MESSAGE) -> {
                         // TODO: 회언가입 닉네임 입력 페이지 이동

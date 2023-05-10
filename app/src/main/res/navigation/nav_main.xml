@@ -2,7 +2,8 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nav_main">
+    android:id="@+id/nav_main"
+    app:startDestination="@id/today_fragment">
 
     <fragment
         android:id="@+id/today_fragment"
@@ -14,9 +15,9 @@
 
     <fragment
         android:id="@+id/my_record_fragment"
-        android:name="com.infinity.omos.ui.main.myrecord.FakeMyRecordFragment"
+        android:name="com.infinity.omos.ui.main.myrecord.MyRecordFragment"
         android:label="My Record Fragment"
-        tools:layout="@layout/fragment_fake_my_record">
+        tools:layout="@layout/fragment_my_record">
 
     </fragment>
 

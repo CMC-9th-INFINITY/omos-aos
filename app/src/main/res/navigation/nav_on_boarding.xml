@@ -26,6 +26,13 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_login_fragment_to_nav_main"
+            app:destination="@id/nav_main"
+            app:popUpTo="@id/login_fragment"
+            app:popUpToInclusive="true" />
+
     </fragment>
 
     <fragment
@@ -106,5 +113,9 @@
             app:argType="string" />
 
     </fragment>
+
+    <include
+        android:id="@+id/nav_main"
+        app:graph="@navigation/nav_main" />
 
 </navigation>
