@@ -2,12 +2,12 @@ package com.infinity.omos.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.isVisible
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityMainBinding
@@ -17,6 +17,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val viewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
@@ -24,17 +25,28 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setBottomNav()
-    }
-
-    private fun setBottomNav() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
-        binding.bottomNav.setupWithNavController(navController)
 
-        setTopLevelDestinations(navController)
+        setGraph(navController)
         setActionBar(navController)
+        setBottomNav(navController)
+    }
+
+    private fun setGraph(navController: NavController) {
+        val navGraph = navController.navInflater.inflate(R.navigation.nav_graph)
+        if (viewModel.isExistToken) {
+            navGraph.setStartDestination(R.id.nav_main)
+        } else {
+            navGraph.setStartDestination(R.id.nav_on_boarding)
+        }
+        navController.graph = navGraph
+    }
+
+    private fun setBottomNav(navController: NavController) {
+        binding.bottomNav.setupWithNavController(navController)
+        setTopLevelDestinations(navController)
     }
 
     /**
