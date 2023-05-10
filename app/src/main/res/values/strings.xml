@@ -287,4 +287,6 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="spotify_logo">스포티파이 로고</string>
     <string name="team_infinity">팀 인피니티</string>
     <string name="c_team_infinity">© TEAM INFINITY</string>
+    <string name="music_icon">♫</string>
+    <string name="lock">자물쇠</string>
 </resources>
