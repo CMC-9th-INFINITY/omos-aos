@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_main">
+
+    <fragment
+        android:id="@+id/today_fragment"
+        android:name="com.infinity.omos.ui.main.today.TodayFragment"
+        android:label="Today Fragment"
+        tools:layout="@layout/fragment_today">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/my_record_fragment"
+        android:name="com.infinity.omos.ui.main.MyRecordFragment"
+        android:label="My Record Fragment"
+        tools:layout="@layout/fragment_my_record">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/all_records_fragment"
+        android:name="com.infinity.omos.ui.main.AllRecordFragment"
+        android:label="All Records Fragment"
+        tools:layout="@layout/fragment_all_records">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/my_dj_fragment"
+        android:name="com.infinity.omos.ui.main.MyDjFragment"
+        android:label="My DJ Fragment"
+        tools:layout="@layout/fragment_my_dj">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/my_page_fragment"
+        android:name="com.infinity.omos.ui.main.MyPageFragment"
+        android:label="My Page Fragment"
+        tools:layout="@layout/fragment_my_page">
+
+    </fragment>
+
+</navigation>

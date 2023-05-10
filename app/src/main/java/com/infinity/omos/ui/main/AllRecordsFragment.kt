@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.bottomnav
+package com.infinity.omos.ui.main
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -20,7 +20,6 @@ import com.infinity.omos.data.Category
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.ui.main.SharedViewModel
 
 class AllRecordFragment : Fragment() {
 

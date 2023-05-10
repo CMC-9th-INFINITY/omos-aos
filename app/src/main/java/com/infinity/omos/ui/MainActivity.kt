@@ -3,26 +3,31 @@ package com.infinity.omos.ui
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.isVisible
+import androidx.databinding.DataBindingUtil
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.setupWithNavController
 import com.infinity.omos.R
+import com.infinity.omos.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * onboarding Navigation component 적용을 위한 Activity
- * 추후 MainActivity로 변경 예정
- */
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        // setBottomNav()
+        setBottomNav()
     }
-/*
+
     private fun setBottomNav() {
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
@@ -30,24 +35,40 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNav.setupWithNavController(navController)
 
         setTopLevelDestinations(navController)
-
-        binding.fab.setOnClickListener {
-            navController.navigate(R.id.add_moment_navigation)
-        }
+        // setActionBar(navController)
     }
 
+    /**
+     * Main 화면에서만 BottomNav 노출
+     */
     private fun setTopLevelDestinations(navController: NavController) {
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.home_fragment,
-                R.id.globe_fragment
+                R.id.today_fragment,
+                R.id.my_record_fragment,
+                R.id.all_records_fragment,
+                R.id.my_dj_fragment,
+                R.id.my_page_fragment
             )
         )
-
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isTopDest = appBarConfiguration.topLevelDestinations.contains(destination.id)
-            binding.bottomAppBar.isVisible = isTopDest
-            if (isTopDest) binding.fab.show() else binding.fab.hide()
+            binding.bottomNav.isVisible = isTopDest
         }
+    }
+
+    /**
+     * Today 제외하고 ActionBar 추가
+     */
+/*    private fun setActionBar(navController: NavController) {
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.my_record_fragment,
+                R.id.all_records_fragment,
+                R.id.my_dj_fragment,
+                R.id.my_page_fragment
+            )
+        )
+        setupActionBarWithNavController(navController, appBarConfiguration)
     }*/
 }

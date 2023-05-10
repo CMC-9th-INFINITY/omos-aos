@@ -31,7 +31,6 @@ import com.infinity.omos.adapters.ViewPagerAdapter
 import com.infinity.omos.databinding.ActivityFakeMainBinding
 import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
-import com.infinity.omos.ui.bottomnav.*
 import com.infinity.omos.ui.main.today.TodayFragment
 import com.infinity.omos.ui.search.AllFragment
 import com.infinity.omos.utils.BackKeyHandler
