@@ -289,4 +289,6 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="c_team_infinity">© TEAM INFINITY</string>
     <string name="music_icon">♫</string>
     <string name="lock">자물쇠</string>
+    <string name="search">검색</string>
+    <string name="write">작성</string>
 </resources>
