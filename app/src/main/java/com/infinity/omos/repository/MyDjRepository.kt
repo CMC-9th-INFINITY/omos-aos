@@ -3,7 +3,7 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.FollowService
-import com.infinity.omos.api.RecordService
+import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
@@ -19,7 +19,7 @@ class MyDjRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val followApi = retrofit.create(FollowService::class.java)
-    private val myDjRecordApi = retrofit.create(RecordService::class.java)
+    private val myDjRecordApi = retrofit.create(FakeRecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
     var myDjAllRecords = MutableLiveData<List<Record>>()

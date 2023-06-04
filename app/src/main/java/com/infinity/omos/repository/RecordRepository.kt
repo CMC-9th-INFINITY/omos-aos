@@ -3,7 +3,7 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.LikeService
-import com.infinity.omos.api.RecordService
+import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.ScrapService
 import com.infinity.omos.data.Record
@@ -19,7 +19,7 @@ import retrofit2.Retrofit
 class RecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val recordApi = retrofit.create(RecordService::class.java)
+    private val recordApi = retrofit.create(FakeRecordService::class.java)
     private val likeApi = retrofit.create(LikeService::class.java)
     private val scrapApi = retrofit.create(ScrapService::class.java)
     private val onBoardingRepository = OnBoardingRepository()

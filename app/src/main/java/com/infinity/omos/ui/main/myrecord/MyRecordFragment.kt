@@ -5,16 +5,22 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.infinity.omos.R
+import com.infinity.omos.adapters.record.VerticalRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
+import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MyRecordFragment : Fragment() {
 
     private lateinit var binding: FragmentMyRecordBinding
     private val viewModel: MyRecordViewModel by viewModels()
+
+    private val adapter = VerticalRecordListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -27,5 +33,20 @@ class MyRecordFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.rvMyRecord.adapter = adapter
+
+        collectData()
+    }
+
+    private fun collectData() {
+        repeatOnStarted {
+            viewModel.uiState.collect { state ->
+                binding.progress.frameProgressBar.isVisible = state is UiState.Loading
+                if (state is UiState.Success) {
+                    Timber.d("jaemin ${state.records}")
+                    adapter.submitList(state.records)
+                }
+            }
+        }
     }
 }

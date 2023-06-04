@@ -2,7 +2,7 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.RecordService
+import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.SearchService
 import com.infinity.omos.data.*
@@ -19,7 +19,7 @@ class SearchRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val searchApi = retrofit.create(SearchService::class.java)
-    private val musicRecordApi = retrofit.create(RecordService::class.java)
+    private val musicRecordApi = retrofit.create(FakeRecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
     var musicRecord = MutableLiveData<List<Record>>()
