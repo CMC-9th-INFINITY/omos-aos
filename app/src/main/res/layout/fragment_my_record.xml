@@ -37,7 +37,12 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar"
-            tools:listitem="@layout/list_item_my_record" />
+            tools:listitem="@layout/list_item_vertical_record" />
+
+        <include
+            android:id="@+id/progress"
+            layout="@layout/layout_progress"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

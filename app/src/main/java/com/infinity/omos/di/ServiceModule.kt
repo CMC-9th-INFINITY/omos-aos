@@ -55,6 +55,14 @@ object ServiceModule {
 
     @Provides
     @Singleton
+    fun provideRecordService(
+        retrofit: Retrofit
+    ): RecordService {
+        return retrofit.create(RecordService::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideFakeUserService(
         retrofit: Retrofit
     ): FakeUserService {

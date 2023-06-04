@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="record"
+            type="com.infinity.omos.data.record.VerticalRecordModel" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -42,6 +49,7 @@
                     android:layout_marginStart="8dp"
                     android:ellipsize="end"
                     android:maxLines="1"
+                    android:text="@{record.musicTitle}"
                     android:textColor="@color/gray_01"
                     android:textSize="12sp"
                     tools:text="pov" />
@@ -52,6 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4dp"
                     android:singleLine="true"
+                    android:text="@{record.artistName}"
                     android:textColor="@color/gray_04"
                     android:textSize="12sp"
                     tools:text="Ariana Grande" />
@@ -76,6 +85,8 @@
                 android:layout_width="62dp"
                 android:layout_height="62dp"
                 android:layout_marginTop="9dp"
+                android:contentDescription="@string/album_cover"
+                app:imageFromUrl="@{record.albumImageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/linear_music_info"
@@ -88,6 +99,7 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{record.recordTitle}"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_record_contents"
@@ -103,6 +115,7 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{record.recordContent}"
                 android:textColor="@color/gray_05"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_date_and_category"
@@ -118,6 +131,7 @@
                 android:layout_marginStart="10dp"
                 android:ellipsize="end"
                 android:maxLines="1"
+                android:text="@{record.dateAndCategory}"
                 android:textColor="@color/gray_05"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_album_cover"
