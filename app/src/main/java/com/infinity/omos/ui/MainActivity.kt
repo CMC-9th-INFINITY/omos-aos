@@ -11,6 +11,8 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityMainBinding
+import com.infinity.omos.utils.offFullScreen
+import com.infinity.omos.utils.onFullScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -30,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         setGraph(navController)
-        setActionBar(navController)
         setBottomNav(navController)
     }
 
@@ -65,18 +66,12 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             val isTopDest = appBarConfiguration.topLevelDestinations.contains(destination.id)
             binding.bottomNav.isVisible = isTopDest
-        }
-    }
 
-    /**
-     * Today 제외하고 ActionBar 추가
-     */
-    private fun setActionBar(navController: NavController) {
-        val appBarConfiguration = AppBarConfiguration(
-            setOf(
-                R.id.my_record_fragment,
-            )
-        )
-        // setupActionBarWithNavController(navController, appBarConfiguration)
+            if (isTopDest) {
+                onFullScreen()
+            } else {
+                offFullScreen()
+            }
+        }
     }
 }

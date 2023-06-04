@@ -39,19 +39,10 @@ class TodayFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        onFullScreen()
         setAdapter()
         setMainImage()
         initListener()
         collectData()
-    }
-
-    private fun onFullScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            requireActivity().window.setDecorFitsSystemWindows(false)
-        } else {
-            requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-        }
     }
 
     private fun setAdapter() {
@@ -107,19 +98,5 @@ class TodayFragment : Fragment() {
         Glide.with(binding.ivMain.context)
             .load(BuildConfig.S3_BASE_URL + "main/$day.png")
             .into(binding.ivMain)
-    }
-
-    override fun onStop() {
-        super.onStop()
-
-        offFullScreen()
-    }
-
-    private fun offFullScreen() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            requireActivity().window.setDecorFitsSystemWindows(true)
-        } else {
-            requireActivity().window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
-        }
     }
 }
