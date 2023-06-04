@@ -2,7 +2,7 @@ package com.infinity.omos.data.record
 
 import com.infinity.omos.data.music.MusicModel
 
-data class SumRecordModel(
+data class HorizontalRecordModel(
     val music: MusicModel,
     val nickname: String,
     val recordId: Int,
