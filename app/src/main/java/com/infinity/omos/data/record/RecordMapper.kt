@@ -22,6 +22,7 @@ fun MyRecord.toPresentation(): VerticalRecordModel {
         recordTitle = recordTitle,
         recordContent = recordContents,
         albumImageUrl = music.albumImageUrl,
-        dateAndCategory = "${DateUtil.convertToUiRecordDate(createDate)} | ${RecordCategory.valueOf(category).str}"
+        dateAndCategory = "${DateUtil.convertToUiRecordDate(createDate)} | ${RecordCategory.valueOf(category).str}",
+        isPublic = isPublic
     )
 }

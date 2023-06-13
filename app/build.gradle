@@ -157,4 +157,7 @@ dependencies {
 
     // Splash
     implementation "androidx.core:core-splashscreen:$rootProject.splashVersion"
+
+    // Skeleton - Facebook shimmer
+    implementation "com.facebook.shimmer:shimmer:$rootProject.shimmerVersion"
 }

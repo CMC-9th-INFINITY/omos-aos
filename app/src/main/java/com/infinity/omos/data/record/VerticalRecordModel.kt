@@ -7,5 +7,6 @@ data class VerticalRecordModel(
     val recordTitle: String,
     val recordContent: String,
     val albumImageUrl: String,
-    val dateAndCategory: String
+    val dateAndCategory: String,
+    val isPublic: Boolean
 )
