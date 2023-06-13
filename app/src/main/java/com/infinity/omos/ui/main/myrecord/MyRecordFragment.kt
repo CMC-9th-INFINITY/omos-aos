@@ -41,9 +41,9 @@ class MyRecordFragment : Fragment() {
     private fun collectData() {
         repeatOnStarted {
             viewModel.uiState.collect { state ->
-                binding.progress.frameProgressBar.isVisible = state is UiState.Loading
+                binding.sflMyRecord.isVisible = state is UiState.Loading
                 if (state is UiState.Success) {
-                    Timber.d("jaemin ${state.records}")
+                    binding.sflMyRecord.stopShimmer()
                     adapter.submitList(state.records)
                 }
             }

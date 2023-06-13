@@ -39,10 +39,44 @@
             app:layout_constraintTop_toBottomOf="@id/appbar"
             tools:listitem="@layout/list_item_vertical_record" />
 
-        <include
-            android:id="@+id/progress"
-            layout="@layout/layout_progress"
-            tools:visibility="gone" />
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sfl_my_record"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar"
+            app:shimmer_auto_start="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

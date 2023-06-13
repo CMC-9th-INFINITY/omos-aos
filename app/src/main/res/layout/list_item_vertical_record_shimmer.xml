@@ -3,13 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-
-        <variable
-            name="record"
-            type="com.infinity.omos.data.record.VerticalRecordModel" />
-    </data>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -22,7 +15,7 @@
 
             <LinearLayout
                 android:id="@+id/linear_music_info"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:background="@drawable/bg_stroke_gray"
@@ -41,29 +34,6 @@
                     android:text="@string/music_icon"
                     android:textColor="@color/gray_01"
                     android:textSize="12sp" />
-
-                <TextView
-                    android:id="@+id/tv_music_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="8dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:text="@{record.musicTitle}"
-                    android:textColor="@color/gray_01"
-                    android:textSize="12sp"
-                    tools:text="pov" />
-
-                <TextView
-                    android:id="@+id/tv_artist"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:singleLine="true"
-                    android:text="@{record.artistName}"
-                    android:textColor="@color/gray_04"
-                    android:textSize="12sp"
-                    tools:text="Ariana Grande" />
 
             </LinearLayout>
 
@@ -85,67 +55,61 @@
                 android:layout_width="62dp"
                 android:layout_height="62dp"
                 android:layout_marginTop="9dp"
+                android:background="@color/gray_06"
                 android:contentDescription="@string/album_cover"
-                app:imageFromUrl="@{record.albumImageUrl}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/linear_music_info"
-                tools:background="@color/gray_06" />
+                app:layout_constraintTop_toBottomOf="@+id/linear_music_info" />
 
             <TextView
                 android:id="@+id/tv_record_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:background="@color/gray_06"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{record.recordTitle}"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="16sp"
                 app:layout_constraintBottom_toTopOf="@+id/tv_record_contents"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/iv_album_cover"
-                app:layout_constraintTop_toTopOf="@id/iv_album_cover"
-                tools:text="네가 사랑해주는 나를, 나도 한번 사랑해볼게 너도 사랑해줄꺼지?" />
+                app:layout_constraintTop_toTopOf="@id/iv_album_cover" />
 
             <TextView
                 android:id="@+id/tv_record_contents"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:background="@color/gray_06"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{record.recordContent}"
                 android:textColor="@color/gray_05"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toTopOf="@id/tv_date_and_category"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/iv_album_cover"
-                app:layout_constraintTop_toBottomOf="@id/tv_record_title"
-                tools:text="I wanna love me(Ooh)" />
+                app:layout_constraintTop_toBottomOf="@id/tv_record_title" />
 
             <TextView
                 android:id="@+id/tv_date_and_category"
-                android:layout_width="0dp"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:background="@color/gray_06"
                 android:ellipsize="end"
                 android:maxLines="1"
-                android:text="@{record.dateAndCategory}"
                 android:textColor="@color/gray_05"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_album_cover"
-                app:layout_constraintEnd_toStartOf="@id/iv_lock"
                 app:layout_constraintStart_toEndOf="@id/iv_album_cover"
-                app:layout_constraintTop_toBottomOf="@id/tv_record_contents"
-                tools:text="2022.6.8 | 나만의 가사 해석" />
+                app:layout_constraintTop_toBottomOf="@id/tv_record_contents" />
 
             <ImageView
                 android:id="@+id/iv_lock"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/lock"
-                app:isPublic="@{record.isPublic}"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:src="@drawable/ic_public" />
