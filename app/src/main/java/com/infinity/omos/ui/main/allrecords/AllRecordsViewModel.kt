@@ -27,6 +27,10 @@ class AllRecordsViewModel @Inject constructor(
         fetchAllRecords()
     }
 
+    fun refresh() {
+        fetchAllRecords()
+    }
+
     private fun fetchAllRecords() {
         viewModelScope.launch {
             recordRepository.getAllRecords(userId).mapCatching { categories ->
