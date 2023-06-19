@@ -30,9 +30,10 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_category"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/appbar"
@@ -49,22 +50,28 @@
             app:shimmer_auto_start="true"
             tools:visibility="gone">
 
-            <LinearLayout
+            <ScrollView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:layout_height="match_parent">
 
-                <include layout="@layout/list_item_category_shimmer" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
 
-                <include layout="@layout/list_item_category_shimmer" />
+                    <include layout="@layout/list_item_category_shimmer" />
 
-                <include layout="@layout/list_item_category_shimmer" />
+                    <include layout="@layout/list_item_category_shimmer" />
 
-                <include layout="@layout/list_item_category_shimmer" />
+                    <include layout="@layout/list_item_category_shimmer" />
 
-                <include layout="@layout/list_item_category_shimmer" />
+                    <include layout="@layout/list_item_category_shimmer" />
 
-            </LinearLayout>
+                    <include layout="@layout/list_item_category_shimmer" />
+
+                </LinearLayout>
+
+            </ScrollView>
 
         </com.facebook.shimmer.ShimmerFrameLayout>
 

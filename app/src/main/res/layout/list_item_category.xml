@@ -18,9 +18,9 @@
             android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{category.category.str}"
             android:layout_marginStart="@dimen/normal_padding"
             android:layout_marginTop="22dp"
+            android:text="@{category.category.str}"
             android:textColor="@color/gray_01"
             android:textSize="20sp"
             app:layout_constraintEnd_toStartOf="@id/iv_move"
@@ -55,6 +55,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_category"
             tools:listitem="@layout/list_item_horizontal_record" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="22dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_preview_records" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
