@@ -17,14 +17,14 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.AllRecordsListAdapter
 import com.infinity.omos.data.AllRecords
 import com.infinity.omos.data.Category
-import com.infinity.omos.databinding.FragmentAllRecordsBinding
+import com.infinity.omos.databinding.FragmentFakeAllRecordsBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 
 class AllRecordFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
-    private lateinit var binding: FragmentAllRecordsBinding
+    private lateinit var binding: FragmentFakeAllRecordsBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = OmosApplication.prefs.getInt("userId")
@@ -38,8 +38,8 @@ class AllRecordFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate<FragmentAllRecordsBinding?>(inflater,
-            R.layout.fragment_all_records,
+        binding = DataBindingUtil.inflate<FragmentFakeAllRecordsBinding?>(inflater,
+            R.layout.fragment_fake_all_records,
             container,
             false
         ).apply {
