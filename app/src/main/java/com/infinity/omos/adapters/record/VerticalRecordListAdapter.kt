@@ -5,11 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.data.record.VerticalRecordModel
+import com.infinity.omos.data.record.VerticalPreviewRecordModel
 import com.infinity.omos.databinding.ListItemVerticalRecordBinding
 
 class VerticalRecordListAdapter :
-    ListAdapter<VerticalRecordModel, RecyclerView.ViewHolder>(VerticalRecordDiffCallback()) {
+    ListAdapter<VerticalPreviewRecordModel, RecyclerView.ViewHolder>(VerticalRecordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return VerticalRecordViewHolder(
@@ -36,7 +36,7 @@ class VerticalRecordListAdapter :
             }
         }
 
-        fun bind(item: VerticalRecordModel) {
+        fun bind(item: VerticalPreviewRecordModel) {
             binding.apply {
                 record = item
                 executePendingBindings()
@@ -45,18 +45,18 @@ class VerticalRecordListAdapter :
     }
 }
 
-private class VerticalRecordDiffCallback : DiffUtil.ItemCallback<VerticalRecordModel>() {
+private class VerticalRecordDiffCallback : DiffUtil.ItemCallback<VerticalPreviewRecordModel>() {
 
     override fun areItemsTheSame(
-        oldItem: VerticalRecordModel,
-        newItem: VerticalRecordModel
+        oldItem: VerticalPreviewRecordModel,
+        newItem: VerticalPreviewRecordModel
     ): Boolean {
         return oldItem.recordId == newItem.recordId
     }
 
     override fun areContentsTheSame(
-        oldItem: VerticalRecordModel,
-        newItem: VerticalRecordModel
+        oldItem: VerticalPreviewRecordModel,
+        newItem: VerticalPreviewRecordModel
     ): Boolean {
         return oldItem == newItem
     }

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.music.LovedMusicModel
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.toPresentation
-import com.infinity.omos.data.record.HorizontalRecordModel
+import com.infinity.omos.data.record.HorizontalPreviewRecordModel
 import com.infinity.omos.data.record.toPresentation
 import com.infinity.omos.data.user.ProfileModel
 import com.infinity.omos.data.user.toPresentation
@@ -117,7 +117,7 @@ sealed interface TodayMusicUiState {
 }
 
 sealed interface FamousRecordsUiState {
-    data class Success(val famousRecords: List<HorizontalRecordModel>) : FamousRecordsUiState
+    data class Success(val famousRecords: List<HorizontalPreviewRecordModel>) : FamousRecordsUiState
     object Error : FamousRecordsUiState
     object Loading : FamousRecordsUiState
 }

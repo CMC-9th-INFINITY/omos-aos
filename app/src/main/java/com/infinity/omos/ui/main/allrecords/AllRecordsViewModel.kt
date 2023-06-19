@@ -1,8 +1,8 @@
-package com.infinity.omos.ui.main.myrecord
+package com.infinity.omos.ui.main.allrecords
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.infinity.omos.data.record.VerticalPreviewRecordModel
+import com.infinity.omos.data.record.CategoryModel
 import com.infinity.omos.data.record.toPresentation
 import com.infinity.omos.repository.record.RecordRepository
 import com.infinity.omos.utils.DataStoreManager
@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MyRecordViewModel @Inject constructor(
+class AllRecordsViewModel @Inject constructor(
     dataStoreManager: DataStoreManager,
     private val recordRepository: RecordRepository
 ) : ViewModel() {
@@ -24,16 +24,16 @@ class MyRecordViewModel @Inject constructor(
     val uiState = _uiState.asStateFlow()
 
     init {
-        fetchMyRecords()
+        fetchAllRecords()
     }
 
-    private fun fetchMyRecords() {
+    private fun fetchAllRecords() {
         viewModelScope.launch {
-            recordRepository.getMyRecords(userId).mapCatching { records ->
-                records.map { it.toPresentation() }
+            recordRepository.getAllRecords(userId).mapCatching { categories ->
+                categories.toPresentation()
             }
-                .onSuccess { records ->
-                    _uiState.value = UiState.Success(records)
+                .onSuccess { categories ->
+                    _uiState.value = UiState.Success(categories)
                 }
                 .onFailure { _uiState.value = UiState.Error }
         }
@@ -42,6 +42,6 @@ class MyRecordViewModel @Inject constructor(
 
 sealed interface UiState {
     object Loading : UiState
-    data class Success(val records: List<VerticalPreviewRecordModel>) : UiState
+    data class Success(val categories: List<CategoryModel>) : UiState
     object Error : UiState
 }

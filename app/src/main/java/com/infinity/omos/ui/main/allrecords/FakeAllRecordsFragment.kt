@@ -15,7 +15,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.infinity.omos.R
 import com.infinity.omos.adapters.AllRecordsListAdapter
-import com.infinity.omos.data.AllRecords
+import com.infinity.omos.data.FakeAllRecords
 import com.infinity.omos.data.Category
 import com.infinity.omos.databinding.FragmentFakeAllRecordsBinding
 import com.infinity.omos.etc.Constant
@@ -96,13 +96,13 @@ class AllRecordFragment : Fragment() {
         }
     }
 
-    private fun addCategory(category: Category): List<AllRecords> {
+    private fun addCategory(category: Category): List<FakeAllRecords> {
         return listOf(
-            AllRecords(resources.getString(R.string.a_line), category.a_line),
-            AllRecords(resources.getString(R.string.ost), category.ost),
-            AllRecords(resources.getString(R.string.story), category.story),
-            AllRecords(resources.getString(R.string.lyrics), category.lyrics),
-            AllRecords(resources.getString(R.string.free), category.free)
+            FakeAllRecords(resources.getString(R.string.a_line), category.a_line),
+            FakeAllRecords(resources.getString(R.string.ost), category.ost),
+            FakeAllRecords(resources.getString(R.string.story), category.story),
+            FakeAllRecords(resources.getString(R.string.lyrics), category.lyrics),
+            FakeAllRecords(resources.getString(R.string.free), category.free)
         )
     }
 

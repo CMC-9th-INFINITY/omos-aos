@@ -23,9 +23,9 @@
 
     <fragment
         android:id="@+id/all_records_fragment"
-        android:name="com.infinity.omos.ui.main.AllRecordFragment"
+        android:name="com.infinity.omos.ui.main.allrecords.AllRecordsFragment"
         android:label="All Records Fragment"
-        tools:layout="@layout/fragment_fake_all_records">
+        tools:layout="@layout/fragment_all_records">
 
     </fragment>
 

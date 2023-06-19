@@ -1,30 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <data>
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_padding"
+        android:layout_marginTop="22dp"
+        android:background="@color/gray_06"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/iv_move"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <variable
-            name="record"
-            type="com.infinity.omos.data.record.HorizontalPreviewRecordModel" />
-    </data>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <ImageView
+        android:id="@+id/iv_move"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:paddingStart="0dp"
-        android:paddingEnd="2dp">
+        android:contentDescription="@string/move_detail_category"
+        android:paddingHorizontal="@dimen/normal_padding"
+        android:src="@drawable/ic_next"
+        app:layout_constraintBottom_toBottomOf="@id/tv_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_category"
+        app:layout_constraintTop_toTopOf="@id/tv_category" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_padding"
+        android:layout_marginTop="12dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category">
 
         <ImageView
             android:id="@+id/iv_album_cover"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:background="@color/gray_06"
             android:contentDescription="@string/album_cover"
-            app:imageFromUrl="@{record.music.albumImageUrl}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:background="@color/gray_06" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="0dp"
@@ -41,30 +62,23 @@
                 android:id="@+id/tv_music_title"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{record.music.musicTitle}"
-                android:textColor="?attr/colorSecondary"
+                android:background="@color/gray_06"
                 app:layout_constraintBottom_toTopOf="@+id/tv_artist"
                 app:layout_constraintEnd_toStartOf="@id/iv_spotify"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="Angel Baby" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tv_artist"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="@{record.music.artistsAndAlbumTitle}"
-                android:textColor="?attr/colorSecondaryVariant"
+                android:layout_marginTop="2dp"
+                android:background="@color/gray_06"
                 android:textSize="12sp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/iv_spotify"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_music_title"
-                tools:text="Troye Sivan - Angel Baby" />
+                app:layout_constraintTop_toBottomOf="@id/tv_music_title" />
 
             <ImageView
                 android:id="@+id/iv_spotify"
@@ -82,39 +96,25 @@
 
         <ImageView
             android:id="@+id/iv_record"
-            android:layout_width="274dp"
+            android:layout_width="0dp"
             android:layout_height="160dp"
+            android:background="@color/black_02"
             android:contentDescription="@string/record_image"
-            android:scaleType="centerCrop"
-            app:imageFromUrl="@{record.recordImageUrl}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/iv_album_cover" />
 
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@drawable/bg_gradient_02"
-            android:contentDescription="@string/record_image"
-            app:layout_constraintBottom_toBottomOf="@id/iv_record"
-            app:layout_constraintEnd_toEndOf="@id/iv_record"
-            app:layout_constraintStart_toStartOf="@id/iv_record"
-            app:layout_constraintTop_toTopOf="@id/iv_record" />
-
         <TextView
             android:id="@+id/tv_nick"
-            android:layout_width="0dp"
+            android:layout_width="84dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="4dp"
-            android:text="@{record.nickname}"
-            android:textColor="?attr/colorSecondary"
+            android:background="@color/gray_06"
             android:textSize="12sp"
             app:layout_constraintBottom_toTopOf="@id/tv_record_title"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="by. 유니" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
             android:id="@+id/tv_record_title"
@@ -122,16 +122,12 @@
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="16dp"
             android:layout_marginBottom="22dp"
-            android:ellipsize="end"
-            android:maxLines="2"
-            android:text="@{record.recordTitle}"
-            android:textColor="?attr/colorSecondary"
+            android:background="@color/gray_06"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            tools:text="듣자마자 천국가는 노래, Troye Sivan의 Angel Baby" />
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-</layout>
+</androidx.constraintlayout.widget.ConstraintLayout>

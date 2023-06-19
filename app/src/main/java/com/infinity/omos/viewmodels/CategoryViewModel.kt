@@ -7,13 +7,13 @@ import com.infinity.omos.data.Record
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.AllRecordsRepository
-import com.infinity.omos.repository.RecordRepository
+import com.infinity.omos.repository.FakeRecordRepository
 import com.infinity.omos.repository.ReportBlockRepository
 
 class CategoryViewModel(application: Application): AndroidViewModel(application) {
 
     private val allRecordRepository: AllRecordsRepository = AllRecordsRepository()
-    private val recordRepository: RecordRepository = RecordRepository()
+    private val fakeRecordRepository: FakeRecordRepository = FakeRecordRepository()
     private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
     fun setCategoryRecord(category: String, postId: Int?, size: Int, sortType: String, userId: Int){
@@ -27,19 +27,19 @@ class CategoryViewModel(application: Application): AndroidViewModel(application)
     }
 
     fun saveLike(postId: Int, userId: Int){
-        recordRepository.saveLike(postId, userId)
+        fakeRecordRepository.saveLike(postId, userId)
     }
 
     fun deleteLike(postId: Int, userId: Int){
-        recordRepository.deleteLike(postId, userId)
+        fakeRecordRepository.deleteLike(postId, userId)
     }
 
     fun saveScrap(postId: Int, userId: Int){
-        recordRepository.saveScrap(postId, userId)
+        fakeRecordRepository.saveScrap(postId, userId)
     }
 
     fun deleteScrap(postId: Int, userId: Int){
-        recordRepository.deleteScrap(postId, userId)
+        fakeRecordRepository.deleteScrap(postId, userId)
     }
 
     fun reportObject(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){

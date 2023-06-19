@@ -5,10 +5,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.data.record.HorizontalRecordModel
+import com.infinity.omos.data.record.HorizontalPreviewRecordModel
 import com.infinity.omos.databinding.ListItemHorizontalRecordBinding
 
-class HorizontalRecordListAdapter : ListAdapter<HorizontalRecordModel, RecyclerView.ViewHolder>(HorizontalRecordDiffCallback()) {
+class HorizontalRecordListAdapter : ListAdapter<HorizontalPreviewRecordModel, RecyclerView.ViewHolder>(HorizontalRecordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HorizontalRecordViewHolder(
@@ -35,7 +35,7 @@ class HorizontalRecordListAdapter : ListAdapter<HorizontalRecordModel, RecyclerV
             }
         }
 
-        fun bind(item: HorizontalRecordModel) {
+        fun bind(item: HorizontalPreviewRecordModel) {
             binding.apply {
                 record = item
                 executePendingBindings()
@@ -44,13 +44,13 @@ class HorizontalRecordListAdapter : ListAdapter<HorizontalRecordModel, RecyclerV
     }
 }
 
-private class HorizontalRecordDiffCallback : DiffUtil.ItemCallback<HorizontalRecordModel>() {
+private class HorizontalRecordDiffCallback : DiffUtil.ItemCallback<HorizontalPreviewRecordModel>() {
 
-    override fun areItemsTheSame(oldItem: HorizontalRecordModel, newItem: HorizontalRecordModel): Boolean {
+    override fun areItemsTheSame(oldItem: HorizontalPreviewRecordModel, newItem: HorizontalPreviewRecordModel): Boolean {
         return oldItem.recordId == newItem.recordId
     }
 
-    override fun areContentsTheSame(oldItem: HorizontalRecordModel, newItem: HorizontalRecordModel): Boolean {
+    override fun areContentsTheSame(oldItem: HorizontalPreviewRecordModel, newItem: HorizontalPreviewRecordModel): Boolean {
         return oldItem == newItem
     }
 }

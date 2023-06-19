@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.*
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
-import com.infinity.omos.data.record.SumRecord
+import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.data.user.Profile
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.*
@@ -25,7 +25,7 @@ class SharedViewModel @Inject constructor(
     private val allRecordsRepository: AllRecordsRepository = AllRecordsRepository()
     private val myDjRepository: MyDjRepository = MyDjRepository()
     private val myPageRepository: MyPageRepository = MyPageRepository()
-    private val recordRepository: RecordRepository = RecordRepository()
+    private val fakeRecordRepository: FakeRecordRepository = FakeRecordRepository()
     private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
     // Today
@@ -33,7 +33,7 @@ class SharedViewModel @Inject constructor(
     fun setFamousRecord(){
         fakeTodayRepository.getFamousRecord()
     }
-    fun getFamousRecord(): LiveData<List<SumRecord>>{
+    fun getFamousRecord(): LiveData<List<PreviewRecord>>{
         return fakeTodayRepository.famousRecord
     }
     fun getStateFamousRecord(): LiveData<Constant.ApiState>{
@@ -154,19 +154,19 @@ class SharedViewModel @Inject constructor(
 
     // 스크랩, 공감 클릭
     fun saveLike(postId: Int, userId: Int){
-        recordRepository.saveLike(postId, userId)
+        fakeRecordRepository.saveLike(postId, userId)
     }
 
     fun deleteLike(postId: Int, userId: Int){
-        recordRepository.deleteLike(postId, userId)
+        fakeRecordRepository.deleteLike(postId, userId)
     }
 
     fun saveScrap(postId: Int, userId: Int){
-        recordRepository.saveScrap(postId, userId)
+        fakeRecordRepository.saveScrap(postId, userId)
     }
 
     fun deleteScrap(postId: Int, userId: Int){
-        recordRepository.deleteScrap(postId, userId)
+        fakeRecordRepository.deleteScrap(postId, userId)
     }
 
     fun reportObject(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){

@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="category"
+            type="com.infinity.omos.data.record.CategoryModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -11,6 +18,7 @@
             android:id="@+id/tv_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@{category.category.str}"
             android:layout_marginStart="@dimen/normal_padding"
             android:layout_marginTop="22dp"
             android:textColor="@color/gray_01"
