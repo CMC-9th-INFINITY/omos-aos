@@ -35,7 +35,15 @@ class AllRecordsFragment : Fragment() {
 
         binding.rvCategory.adapter = adapter
 
+        initListener()
         collectData()
+    }
+
+    private fun initListener() {
+        binding.swipeRefresh.setOnRefreshListener {
+            viewModel.refresh()
+            binding.swipeRefresh.isRefreshing = false
+        }
     }
 
     private fun collectData() {
