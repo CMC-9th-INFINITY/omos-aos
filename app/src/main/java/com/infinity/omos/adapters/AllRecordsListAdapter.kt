@@ -6,13 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.record.CategoryRecordsActivity
 import com.infinity.omos.R
-import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
-import com.infinity.omos.data.AllRecords
-import com.infinity.omos.data.record.SumRecord
+import com.infinity.omos.data.FakeAllRecords
+import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.databinding.ListAllrecordsItemBinding
 import com.infinity.omos.etc.GlobalFunction.Companion.changeTextColor
 import kotlinx.android.synthetic.main.list_allrecords_item.view.*
@@ -22,7 +20,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private val context = context
-    private var category = emptyList<AllRecords>()
+    private var category = emptyList<FakeAllRecords>()
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -44,7 +42,7 @@ class AllRecordsListAdapter internal constructor(context: Context)
     }
 
     inner class AllRecordsViewHolder(val binding: ListAllrecordsItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(content: AllRecords){
+        fun bind(content: FakeAllRecords){
             binding.category = content
 
             val pos = adapterPosition
@@ -78,12 +76,12 @@ class AllRecordsListAdapter internal constructor(context: Context)
         }
     }
 
-    internal fun setCategory(category: List<AllRecords>) {
+    internal fun setCategory(category: List<FakeAllRecords>) {
         this.category = category
         notifyDataSetChanged()
     }
 
-    internal fun updateCategory(record: List<SumRecord>?, pos: Int) {
+    internal fun updateCategory(record: List<PreviewRecord>?, pos: Int) {
         this.category[pos].category = record
         notifyDataSetChanged()
     }

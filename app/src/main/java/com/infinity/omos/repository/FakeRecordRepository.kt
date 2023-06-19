@@ -16,7 +16,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 
-class RecordRepository {
+class FakeRecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val recordApi = retrofit.create(FakeRecordService::class.java)

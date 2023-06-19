@@ -1,19 +1,13 @@
 package com.infinity.omos.repository
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.TodayService
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.user.Profile
-import com.infinity.omos.data.record.SumRecord
+import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.OmosApplication
-import com.infinity.omos.utils.NetworkUtil
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import retrofit2.Retrofit
 
 class FakeTodayRepository {
@@ -22,7 +16,7 @@ class FakeTodayRepository {
     private val todayApi = retrofit.create(TodayService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    var famousRecord = MutableLiveData<List<SumRecord>>()
+    var famousRecord = MutableLiveData<List<PreviewRecord>>()
     var stateFamousRecord = MutableLiveData<Constant.ApiState>()
     fun getFamousRecord(){
         stateFamousRecord.value = Constant.ApiState.LOADING

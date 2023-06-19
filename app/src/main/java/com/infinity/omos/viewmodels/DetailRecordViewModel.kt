@@ -7,12 +7,12 @@ import com.infinity.omos.data.Record
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyRecordRepository
-import com.infinity.omos.repository.RecordRepository
+import com.infinity.omos.repository.FakeRecordRepository
 import com.infinity.omos.repository.ReportBlockRepository
 
 class DetailRecordViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: RecordRepository = RecordRepository()
+    private val repository: FakeRecordRepository = FakeRecordRepository()
     private val myRecordRepository = MyRecordRepository()
     private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 

@@ -4,14 +4,14 @@ import com.infinity.omos.api.TodayService
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.user.Profile
-import com.infinity.omos.data.record.SumRecord
+import com.infinity.omos.data.record.PreviewRecord
 import javax.inject.Inject
 
 class TodayRemoteDataSourceImpl @Inject constructor(
     private val todayService: TodayService
 ) : TodayRemoteDataSource {
 
-    override suspend fun getFamousRecords(): Result<List<SumRecord>> {
+    override suspend fun getFamousRecords(): Result<List<PreviewRecord>> {
         return Result.runCatching {
             todayService.getFamousRecords()
         }

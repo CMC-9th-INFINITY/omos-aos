@@ -3,7 +3,7 @@ package com.infinity.omos.repository.today
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.user.Profile
-import com.infinity.omos.data.record.SumRecord
+import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.source.remote.today.TodayRemoteDataSource
 import javax.inject.Inject
 
@@ -15,7 +15,7 @@ class TodayRepositoryImpl @Inject constructor(
         return todayRemoteDataSource.getTodayMusic()
     }
 
-    override suspend fun getFamousRecords(): Result<List<SumRecord>> {
+    override suspend fun getFamousRecords(): Result<List<PreviewRecord>> {
         return todayRemoteDataSource.getFamousRecords()
     }
 

@@ -1,6 +1,6 @@
 package com.infinity.omos.data.record
 
-data class VerticalRecordModel(
+data class VerticalPreviewRecordModel(
     val musicTitle: String,
     val artistName: String,
     val recordId: Int,

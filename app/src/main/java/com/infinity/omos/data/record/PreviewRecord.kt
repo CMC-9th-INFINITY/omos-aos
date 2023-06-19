@@ -5,7 +5,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SumRecord(
+data class PreviewRecord(
     @SerialName("music") val music: Music,
     @SerialName("nickname") val nickname: String,
     @SerialName("recordId") val recordId: Int,
