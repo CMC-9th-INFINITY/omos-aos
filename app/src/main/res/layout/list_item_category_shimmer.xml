@@ -29,105 +29,33 @@
         app:layout_constraintStart_toEndOf="@id/tv_category"
         app:layout_constraintTop_toTopOf="@id/tv_category" />
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="0dp"
+    <include
+        android:id="@+id/layout_record_1"
+        layout="@layout/layout_horizontal_record_shimmer"
+        android:layout_width="274dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="@dimen/normal_padding"
         android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+    <include
+        android:id="@+id/layout_record_2"
+        layout="@layout/layout_horizontal_record_shimmer"
+        android:layout_width="274dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/layout_record_1"
+        app:layout_constraintStart_toEndOf="@id/layout_record_1"
+        app:layout_constraintTop_toTopOf="@id/layout_record_1" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_category">
-
-        <ImageView
-            android:id="@+id/iv_album_cover"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@color/gray_06"
-            android:contentDescription="@string/album_cover"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="@color/black_01"
-            android:paddingHorizontal="10dp"
-            android:paddingVertical="6dp"
-            app:layout_constraintBottom_toBottomOf="@+id/iv_album_cover"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/iv_album_cover"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <TextView
-                android:id="@+id/tv_music_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="@color/gray_06"
-                app:layout_constraintBottom_toTopOf="@+id/tv_artist"
-                app:layout_constraintEnd_toStartOf="@id/iv_spotify"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/tv_artist"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="2dp"
-                android:background="@color/gray_06"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@id/iv_spotify"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_music_title" />
-
-            <ImageView
-                android:id="@+id/iv_spotify"
-                android:layout_width="31dp"
-                android:layout_height="21dp"
-                android:contentDescription="@string/spotify_icon"
-                android:paddingStart="10dp"
-                android:paddingEnd="0dp"
-                android:src="@drawable/ic_spotify"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <ImageView
-            android:id="@+id/iv_record"
-            android:layout_width="0dp"
-            android:layout_height="160dp"
-            android:background="@color/black_02"
-            android:contentDescription="@string/record_image"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/iv_album_cover" />
-
-        <TextView
-            android:id="@+id/tv_nick"
-            android:layout_width="84dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="4dp"
-            android:background="@color/gray_06"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toTopOf="@id/tv_record_title"
-            app:layout_constraintStart_toStartOf="parent" />
-
-        <TextView
-            android:id="@+id/tv_record_title"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="16dp"
-            android:layout_marginBottom="22dp"
-            android:background="@color/gray_06"
-            android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        app:layout_constraintTop_toBottomOf="@id/layout_record_1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
