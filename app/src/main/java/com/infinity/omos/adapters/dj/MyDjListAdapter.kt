@@ -7,8 +7,13 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.user.ProfileModel
 import com.infinity.omos.databinding.ListItemMyDjBinding
+import timber.log.Timber
 
-class MyDjListAdapter : ListAdapter<ProfileModel, RecyclerView.ViewHolder>(MyDjDiffCallback()) {
+class MyDjListAdapter(
+    private val onItemClick: () -> Unit
+) : ListAdapter<ProfileModel, RecyclerView.ViewHolder>(MyDjDiffCallback()) {
+
+    val selectedPosition = SelectedPosition(RecyclerView.NO_POSITION, RecyclerView.NO_POSITION)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MyDjViewHolder(
@@ -16,28 +21,40 @@ class MyDjListAdapter : ListAdapter<ProfileModel, RecyclerView.ViewHolder>(MyDjD
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ),
+            selectedPosition,
+            onItemClick
         )
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = getItem(position)
-        (holder as MyDjViewHolder).bind(item)
+        (holder as MyDjViewHolder).bind(item, position)
     }
 
     class MyDjViewHolder(
-        private val binding: ListItemMyDjBinding
+        private val binding: ListItemMyDjBinding,
+        private val selectedPosition: SelectedPosition,
+        private val onItemClick: () -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
-                // TODO: 테두리 생성
+                selectedPosition.apply {
+                    prevPosition = newPosition
+                    newPosition = adapterPosition
+                }
+                onItemClick()
             }
         }
 
-        fun bind(item: ProfileModel) {
+        fun bind(
+            item: ProfileModel,
+            position: Int
+        ) {
             binding.apply {
                 profile = item
+                binding.ivProfile.isSelected = position == selectedPosition.newPosition
                 executePendingBindings()
             }
         }
@@ -53,3 +70,8 @@ private class MyDjDiffCallback : DiffUtil.ItemCallback<ProfileModel>() {
         return oldItem == newItem
     }
 }
+
+data class SelectedPosition(
+    var prevPosition: Int,
+    var newPosition: Int
+)

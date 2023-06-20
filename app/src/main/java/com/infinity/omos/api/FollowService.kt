@@ -21,6 +21,14 @@ interface FollowService {
         @Path("userId") userId: Int
     ): List<Profile>
 
+    @GET("api/follow/select/myDj/{userId}")
+    suspend fun getMyDjs(
+        @Path("userId") userId: Int
+    ): List<Profile>
+
+
+
+
     @DELETE("api/follow/delete/{fromUserId}/{toUserId}")
     fun deleteFollow(
         @Path("fromUserId") fromUserId: Int,

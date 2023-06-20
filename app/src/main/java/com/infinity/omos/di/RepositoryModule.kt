@@ -2,6 +2,8 @@ package com.infinity.omos.di
 
 import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.repository.auth.AuthRepositoryImpl
+import com.infinity.omos.repository.follow.FollowRepository
+import com.infinity.omos.repository.follow.FollowRepositoryImpl
 import com.infinity.omos.repository.record.RecordRepository
 import com.infinity.omos.repository.record.RecordRepositoryImpl
 import com.infinity.omos.repository.today.TodayRepository
@@ -41,4 +43,10 @@ interface RepositoryModule {
     fun bindRecordRepository(
         recordRepositoryImpl: RecordRepositoryImpl
     ): RecordRepository
+
+    @Binds
+    @Singleton
+    fun bindFollowRepository(
+        followRepositoryImpl: FollowRepositoryImpl
+    ): FollowRepository
 }

@@ -360,22 +360,12 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <FrameLayout
-            android:id="@+id/frame_progress_bar"
+        <include
+            android:id="@+id/progress_bar"
+            layout="@layout/layout_progress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_black_50"
-            app:isGone="@{!(vm.uiState instanceof UiState.Loading)}"
-            tools:visibility="gone">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="@dimen/normal_padding" />
-
-        </FrameLayout>
+            app:isGone="@{!(vm.uiState instanceof UiState.Loading)}" />
 
     </FrameLayout>
 
