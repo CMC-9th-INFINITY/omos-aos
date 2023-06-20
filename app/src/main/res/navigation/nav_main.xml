@@ -31,9 +31,9 @@
 
     <fragment
         android:id="@+id/my_dj_fragment"
-        android:name="com.infinity.omos.ui.main.mydj.FakeMyDjFragment"
+        android:name="com.infinity.omos.ui.main.mydj.MyDjFragment"
         android:label="My DJ Fragment"
-        tools:layout="@layout/fragment_fake_my_dj">
+        tools:layout="@layout/fragment_my_dj">
 
     </fragment>
 
