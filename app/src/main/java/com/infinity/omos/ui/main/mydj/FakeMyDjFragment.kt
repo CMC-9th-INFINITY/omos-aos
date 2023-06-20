@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.main
+package com.infinity.omos.ui.main.mydj
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -18,15 +18,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.R
 import com.infinity.omos.adapters.DetailCategoryListAdapter
 import com.infinity.omos.adapters.MyDjListAdapter
-import com.infinity.omos.databinding.FragmentMyDjBinding
+import com.infinity.omos.databinding.FragmentFakeMyDjBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.ui.main.SharedViewModel
 
-class MyDjFragment : Fragment() {
+class FakeMyDjFragment : Fragment() {
 
     private lateinit var viewModel: SharedViewModel
-    private lateinit var binding: FragmentMyDjBinding
+    private lateinit var binding: FragmentFakeMyDjBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private val fromUserId = OmosApplication.prefs.getInt("userId")
@@ -51,7 +52,7 @@ class MyDjFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_dj, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fake_my_dj, container, false)
         activity?.let{
             viewModel = ViewModelProvider(it).get(SharedViewModel::class.java)
             binding.vm = viewModel
