@@ -9,6 +9,7 @@ import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -22,17 +23,17 @@ class SearchRepository {
     private val musicRecordApi = retrofit.create(FakeRecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    var musicRecord = MutableLiveData<List<Record>>()
+    var musicDetailRecord = MutableLiveData<List<DetailRecord>>()
     var stateMusicRecord = MutableLiveData<Constant.ApiState>()
     fun getMusicRecord(musicId: String, postId: Int?, size: Int, sortType: String, userId: Int){
         stateMusicRecord.value = Constant.ApiState.LOADING
-        musicRecordApi.getMusicRecord(musicId, postId, size, sortType, userId).enqueue(object: Callback<List<Record>> {
-            override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
+        musicRecordApi.getMusicRecord(musicId, postId, size, sortType, userId).enqueue(object: Callback<List<DetailRecord>> {
+            override fun onResponse(call: Call<List<DetailRecord>>, response: Response<List<DetailRecord>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MusicRecordAPI", "Success")
-                        musicRecord.postValue(body!!)
+                        musicDetailRecord.postValue(body!!)
                         stateMusicRecord.value = Constant.ApiState.DONE
                     }
 
@@ -45,7 +46,7 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("MusicRecordAPI", errorBody!!.message)
-                        musicRecord.postValue(emptyList())
+                        musicDetailRecord.postValue(emptyList())
                         stateMusicRecord.value = Constant.ApiState.ERROR
                     }
 
@@ -55,7 +56,7 @@ class SearchRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+            override fun onFailure(call: Call<List<DetailRecord>>, t: Throwable) {
                 Log.d("MusicRecordAPI", t.message.toString())
                 t.stackTrace
             }

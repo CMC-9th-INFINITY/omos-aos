@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.Category
-import com.infinity.omos.data.Record
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.utils.NetworkUtil
@@ -59,15 +59,15 @@ class AllRecordsRepository {
         })
     }
 
-    var _category = MutableLiveData<List<Record>>()
+    var _category = MutableLiveData<List<DetailRecord>>()
     var stateCategory = MutableLiveData<Constant.ApiState>()
     fun getCategory(category: String, postId: Int?, size: Int, sortType: String, userId: Int){
         stateCategory.value = Constant.ApiState.LOADING
         recordApi.getCategory(category, postId, size, sortType, userId).enqueue(object:
-            Callback<List<Record>> {
+            Callback<List<DetailRecord>> {
             override fun onResponse(
-                call: Call<List<Record>>,
-                response: Response<List<Record>>
+                call: Call<List<DetailRecord>>,
+                response: Response<List<DetailRecord>>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -95,7 +95,7 @@ class AllRecordsRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+            override fun onFailure(call: Call<List<DetailRecord>>, t: Throwable) {
                 Log.d("CategoryAPI", t.message.toString())
                 t.stackTrace
             }

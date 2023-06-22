@@ -35,7 +35,8 @@
                     android:id="@+id/rv_detail_records"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:listitem="@layout/list_detail_category_item" />
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/list_item_detail_record" />
 
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
@@ -50,20 +51,20 @@
                     android:layout_width="match_parent"
                     android:layout_height="?attr/actionBarSize"
                     android:layout_marginTop="@dimen/status_bar_height"
-                    app:titleTextColor="@color/white"
                     app:menu="@menu/menu_my_dj"
-                    app:title="@string/my_dj" />
+                    app:title="@string/my_dj"
+                    app:titleTextColor="@color/white" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_my_djs"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:paddingTop="5dp"
-                    android:paddingBottom="10dp"
                     android:clipToPadding="false"
                     android:orientation="horizontal"
                     android:paddingStart="@dimen/normal_padding"
+                    android:paddingTop="5dp"
                     android:paddingEnd="0dp"
+                    android:paddingBottom="24dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     app:layout_scrollFlags="scroll|enterAlways"
                     tools:listitem="@layout/list_item_my_dj" />

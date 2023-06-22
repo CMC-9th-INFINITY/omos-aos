@@ -1,8 +1,11 @@
 package com.infinity.omos.repository.record
 
+import androidx.paging.PagingData
 import com.infinity.omos.data.record.AllRecords
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyRecord
 import com.infinity.omos.source.remote.record.RecordRemoteDataSource
+import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RecordRepositoryImpl @Inject constructor(
@@ -15,5 +18,9 @@ class RecordRepositoryImpl @Inject constructor(
 
     override suspend fun getAllRecords(userId: Int): Result<AllRecords> {
         return recordRemoteDataSource.getAllRecords(userId)
+    }
+
+    override fun getDetailRecordsStream(userId: Int): Flow<PagingData<DetailRecord>> {
+        return recordRemoteDataSource.getDetailRecordsStream(userId)
     }
 }

@@ -8,6 +8,7 @@ import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.user.Profile
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
@@ -22,14 +23,14 @@ class MyDjRepository {
     private val myDjRecordApi = retrofit.create(FakeRecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    var myDjAllRecords = MutableLiveData<List<Record>>()
+    var myDjAllRecords = MutableLiveData<List<DetailRecord>>()
     var stateMyDjAllRecords = MutableLiveData<Constant.ApiState>()
     fun getMyDjAllRecords(userId: Int, postId: Int?, size: Int){
         stateMyDjAllRecords.value = Constant.ApiState.LOADING
-        myDjRecordApi.getMyDjAllRecords(userId, postId, size).enqueue(object: Callback<List<Record>> {
+        myDjRecordApi.getMyDjAllRecords(userId, postId, size).enqueue(object: Callback<List<DetailRecord>> {
             override fun onResponse(
-                call: Call<List<Record>>,
-                response: Response<List<Record>>
+                call: Call<List<DetailRecord>>,
+                response: Response<List<DetailRecord>>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -57,7 +58,7 @@ class MyDjRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+            override fun onFailure(call: Call<List<DetailRecord>>, t: Throwable) {
                 Log.d("MyDjAllRecordsAPI", t.message.toString())
                 t.stackTrace
             }
@@ -226,20 +227,20 @@ class MyDjRepository {
         })
     }
 
-    var myDjRecord = MutableLiveData<List<Record>>()
+    var myDjDetailRecord = MutableLiveData<List<DetailRecord>>()
     var stateMyDjRecord = MutableLiveData<Constant.ApiState>()
     fun getMyDjRecord(fromUserId: Int, toUserId: Int){
         stateMyDjRecord.value = Constant.ApiState.LOADING
-        myDjRecordApi.getMyDjRecord(fromUserId, toUserId).enqueue(object: Callback<List<Record>> {
+        myDjRecordApi.getMyDjRecord(fromUserId, toUserId).enqueue(object: Callback<List<DetailRecord>> {
             override fun onResponse(
-                call: Call<List<Record>>,
-                response: Response<List<Record>>
+                call: Call<List<DetailRecord>>,
+                response: Response<List<DetailRecord>>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MyDjRecordAPI", "Success")
-                        myDjRecord.postValue(body!!)
+                        myDjDetailRecord.postValue(body!!)
                         stateMyDjRecord.value = Constant.ApiState.DONE
                     }
 
@@ -261,7 +262,7 @@ class MyDjRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+            override fun onFailure(call: Call<List<DetailRecord>>, t: Throwable) {
                 Log.d("MyDjRecordAPI", t.message.toString())
                 t.stackTrace
             }

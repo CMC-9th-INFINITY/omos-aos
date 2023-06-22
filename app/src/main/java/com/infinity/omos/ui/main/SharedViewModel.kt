@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.*
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.data.user.Profile
 import com.infinity.omos.etc.Constant
@@ -108,11 +109,11 @@ class SharedViewModel @Inject constructor(
     }
 
     // 선택된 DJ 레코드
-    private val myDjRecord = myDjRepository.myDjRecord
+    private val myDjRecord = myDjRepository.myDjDetailRecord
     fun setMyDjRecord(fromUserId: Int, toUserId: Int){
         myDjRepository.getMyDjRecord(fromUserId, toUserId)
     }
-    fun getMyDjRecord(): LiveData<List<Record>>{
+    fun getMyDjRecord(): LiveData<List<DetailRecord>>{
         return myDjRecord
     }
     fun getStateDjRecord(): LiveData<Constant.ApiState>{
@@ -123,7 +124,7 @@ class SharedViewModel @Inject constructor(
     fun setDjAllRecords(userId: Int, postId: Int?, size: Int){
         myDjRepository.getMyDjAllRecords(userId, postId, size)
     }
-    fun getDjAllRecords(): LiveData<List<Record>>{
+    fun getDjAllRecords(): LiveData<List<DetailRecord>>{
         return myDjRepository.myDjAllRecords
     }
     fun getStateDjAllRecords(): LiveData<Constant.ApiState>{
