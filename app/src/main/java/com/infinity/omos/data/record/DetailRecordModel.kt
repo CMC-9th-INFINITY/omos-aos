@@ -7,7 +7,7 @@ data class DetailRecordModel(
     val recordId: Int,
     val recordImageUrl: String,
     val recordTitle: String,
-    val recordContent: String,
+    val recordContents: String,
     val userId: Int,
     val nickname: String,
     val category: RecordCategory,

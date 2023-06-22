@@ -6,7 +6,7 @@ import com.infinity.omos.api.LikeService
 import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.ScrapService
-import com.infinity.omos.data.Record
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
@@ -168,14 +168,14 @@ class FakeRecordRepository {
         })
     }
 
-    val detailRecord = MutableLiveData<Record>()
+    val detailRecord = MutableLiveData<DetailRecord>()
     val stateDetailRecord = MutableLiveData<Constant.ApiState>()
     fun getDetailRecord(postId: Int, userId: Int){
         stateDetailRecord.value = Constant.ApiState.LOADING
-        recordApi.getDetailRecord(postId, userId).enqueue(object: Callback<Record> {
+        recordApi.getDetailRecord(postId, userId).enqueue(object: Callback<DetailRecord> {
             override fun onResponse(
-                call: Call<Record>,
-                response: Response<Record>
+                call: Call<DetailRecord>,
+                response: Response<DetailRecord>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
@@ -203,7 +203,7 @@ class FakeRecordRepository {
                 }
             }
 
-            override fun onFailure(call: Call<Record>, t: Throwable) {
+            override fun onFailure(call: Call<DetailRecord>, t: Throwable) {
                 Log.d("DetailRecordAPI", t.message.toString())
                 stateDetailRecord.value = Constant.ApiState.NETWORK
                 t.stackTrace

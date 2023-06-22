@@ -160,4 +160,7 @@ dependencies {
 
     // Skeleton - Facebook shimmer
     implementation "com.facebook.shimmer:shimmer:$rootProject.shimmerVersion"
+
+    // Paging3
+    implementation "androidx.paging:paging-runtime-ktx:$rootProject.pagingVersion"
 }

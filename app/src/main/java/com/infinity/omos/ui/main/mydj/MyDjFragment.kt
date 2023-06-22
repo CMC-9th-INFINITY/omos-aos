@@ -7,9 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.infinity.omos.adapters.dj.MyDjListAdapter
+import com.infinity.omos.adapters.record.DetailRecordPagingAdapter
 import com.infinity.omos.databinding.FragmentMyDjBinding
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collectLatest
 
 @AndroidEntryPoint
 class MyDjFragment : Fragment() {
@@ -18,6 +20,7 @@ class MyDjFragment : Fragment() {
     private val viewModel: MyDjViewModel by viewModels()
 
     private val myDjAdapter = MyDjListAdapter(::clickItem)
+    private val detailRecordAdapter = DetailRecordPagingAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,6 +49,7 @@ class MyDjFragment : Fragment() {
 
     private fun setAdapter() {
         binding.rvMyDjs.adapter = myDjAdapter
+        binding.rvDetailRecords.adapter = detailRecordAdapter
     }
 
     private fun initListener() {
@@ -61,6 +65,12 @@ class MyDjFragment : Fragment() {
                 if (state is UiState.Success) {
                     myDjAdapter.submitList(state.djs)
                 }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.detailRecords.collectLatest { records ->
+                detailRecordAdapter.submitData(records)
             }
         }
     }

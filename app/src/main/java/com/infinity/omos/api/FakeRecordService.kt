@@ -1,6 +1,7 @@
 package com.infinity.omos.api
 
 import com.infinity.omos.data.*
+import com.infinity.omos.data.record.DetailRecord
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -34,14 +35,14 @@ interface FakeRecordService {
     fun getDetailRecord(
         @Path("postId") postId: Int,
         @Path("userId") userId: Int
-    ): Call<Record>
+    ): Call<DetailRecord>
 
     @GET("api/records/select/{userId}/my-dj")
     fun getMyDjAllRecords(
         @Path("userId") userId: Int,
         @Query("postId") postId: Int?,
         @Query("size") size: Int
-    ): Call<List<Record>>
+    ): Call<List<DetailRecord>>
 
     @GET("api/records/select/category/{category}")
     fun getCategory(
@@ -50,7 +51,7 @@ interface FakeRecordService {
         @Query("size") size: Int,
         @Query("sortType") sortType: String,
         @Query("userid") userid: Int
-    ): Call<List<Record>>
+    ): Call<List<DetailRecord>>
 
     @GET("api/records/select/music/{musicId}")
     fun getMusicRecord(
@@ -59,13 +60,13 @@ interface FakeRecordService {
         @Query("size") size: Int,
         @Query("sortType") sortType: String,
         @Query("userId") userId: Int
-    ): Call<List<Record>>
+    ): Call<List<DetailRecord>>
 
     @GET("api/records/select/user/{fromUserId}/{toUserId}")
     fun getMyDjRecord(
         @Path("fromUserId") fromUserId: Int,
         @Path("toUserId") toUserId: Int
-    ): Call<List<Record>>
+    ): Call<List<DetailRecord>>
 
     @PUT("api/records/update/{postId}")
     fun updateRecord(

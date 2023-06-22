@@ -22,7 +22,7 @@ fun MyRecord.toPresentation(): VerticalPreviewRecordModel {
         recordTitle = recordTitle,
         recordContent = recordContents,
         albumImageUrl = music.albumImageUrl,
-        dateAndCategory = "${DateUtil.convertToUiRecordDate(createDate)} | ${RecordCategory.valueOf(category).str}",
+        dateAndCategory = getDateAndCategory(createDate, category),
         isPublic = isPublic
     )
 }
@@ -51,3 +51,23 @@ fun AllRecords.toPresentation(): List<CategoryModel> {
         )
     )
 }
+
+fun DetailRecord.toPresentation(): DetailRecordModel {
+    return DetailRecordModel(
+        music = music.toPresentation(),
+        recordId = recordId,
+        recordImageUrl = recordImageUrl,
+        recordTitle = recordTitle,
+        recordContents = recordContents,
+        userId = userId,
+        nickname = "DJ $nickname",
+        category = RecordCategory.valueOf(category),
+        dateAndCategory = getDateAndCategory(createdDate, category),
+        isPublic = isPublic,
+        scrapCount = scrapCnt,
+        sympathyCount = likeCnt
+    )
+}
+
+private fun getDateAndCategory(createDate: String, category: String): String =
+    "${DateUtil.convertToUiRecordDate(createDate)} | ${RecordCategory.valueOf(category).str}"

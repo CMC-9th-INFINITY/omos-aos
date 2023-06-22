@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.R
 import com.infinity.omos.data.LikeScrap
-import com.infinity.omos.data.Record
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.databinding.ListDetailCategoryItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction
@@ -25,12 +25,12 @@ import kotlinx.android.synthetic.main.list_detail_category_item.view.*
 class DetailCategoryListAdapter internal constructor(
     private val context: Context
 ):
-    ListAdapter<Record, RecyclerView.ViewHolder>(
+    ListAdapter<DetailRecord, RecyclerView.ViewHolder>(
         DetailCategoryDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var category = ArrayList<Record?>()
+    private var category = ArrayList<DetailRecord?>()
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -79,7 +79,7 @@ class DetailCategoryListAdapter internal constructor(
     }
 
     inner class CategoryViewHolder(private val binding: ListDetailCategoryItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(category: Record, num: Int){
+        fun bind(category: DetailRecord, num: Int){
             binding.data = category
             binding.tvArtist.text = setArtist(category.music.artists) + " - " + category.music.albumTitle
             binding.tvCategory.text = setCategoryText(context, category.category)
@@ -248,13 +248,13 @@ class DetailCategoryListAdapter internal constructor(
         notifyDataSetChanged()
     }
 
-    internal fun setCategory(category: List<Record>){
+    internal fun setCategory(category: List<DetailRecord>){
         clearCategory()
         this.category.addAll(category)
         notifyDataSetChanged()
     }
 
-    internal fun addCategory(category: List<Record>){
+    internal fun addCategory(category: List<DetailRecord>){
         this.category.addAll(category)
         this.category.add(null)
     }
@@ -299,13 +299,13 @@ class DetailCategoryListAdapter internal constructor(
         }
     }
 
-    companion object DetailCategoryDiffUtil: DiffUtil.ItemCallback<Record>(){
-        override fun areItemsTheSame(oldItem: Record, newItem: Record): Boolean {
+    companion object DetailCategoryDiffUtil: DiffUtil.ItemCallback<DetailRecord>(){
+        override fun areItemsTheSame(oldItem: DetailRecord, newItem: DetailRecord): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: Record, newItem: Record): Boolean {
+        override fun areContentsTheSame(oldItem: DetailRecord, newItem: DetailRecord): Boolean {
             return oldItem==newItem
         }
     }

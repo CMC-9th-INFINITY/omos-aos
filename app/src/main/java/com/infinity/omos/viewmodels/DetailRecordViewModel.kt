@@ -3,7 +3,7 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.infinity.omos.data.Record
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyRecordRepository
@@ -20,7 +20,7 @@ class DetailRecordViewModel(application: Application): AndroidViewModel(applicat
     fun setDetailRecord(postId: Int, userId: Int){
         repository.getDetailRecord(postId, userId)
     }
-    fun getDetailRecord(): LiveData<Record>{
+    fun getDetailRecord(): LiveData<DetailRecord>{
         return repository.detailRecord
     }
     fun getStateDetailRecord(): LiveData<Constant.ApiState>{

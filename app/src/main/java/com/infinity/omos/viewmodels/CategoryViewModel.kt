@@ -3,7 +3,7 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.infinity.omos.data.Record
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.AllRecordsRepository
@@ -19,7 +19,7 @@ class CategoryViewModel(application: Application): AndroidViewModel(application)
     fun setCategoryRecord(category: String, postId: Int?, size: Int, sortType: String, userId: Int){
         allRecordRepository.getCategory(category, postId, size, sortType, userId)
     }
-    fun getCategoryRecord(): LiveData<List<Record>>{
+    fun getCategoryRecord(): LiveData<List<DetailRecord>>{
         return allRecordRepository._category
     }
     fun getStateCategory(): LiveData<Constant.ApiState>{

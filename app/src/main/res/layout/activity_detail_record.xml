@@ -11,7 +11,7 @@
 
         <variable
             name="data"
-            type="com.infinity.omos.data.Record" />
+            type="com.infinity.omos.data.record.DetailRecord" />
 
     </data>
 

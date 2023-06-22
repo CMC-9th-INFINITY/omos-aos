@@ -14,7 +14,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/iv_album_cover"
@@ -174,7 +174,7 @@
                 android:layout_height="wrap_content"
                 android:maxLength="794"
                 android:padding="@dimen/normal_padding"
-                android:text="@{record.recordContent}"
+                android:text="@{record.recordContents}"
                 android:textColor="@color/gray_02"
                 android:textSize="16sp"
                 app:isGone="@{record.category == RecordCategory.A_LINE}"
@@ -190,7 +190,7 @@
                 android:maxLength="50"
                 android:paddingHorizontal="40dp"
                 android:paddingVertical="58dp"
-                android:text="@{record.recordContent}"
+                android:text="@{record.recordContents}"
                 android:textColor="@color/gray_02"
                 android:textSize="24sp"
                 app:isGone="@{!(record.category == RecordCategory.A_LINE)}"
@@ -223,8 +223,9 @@
             android:id="@+id/tv_sympathy_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:paddingHorizontal="@dimen/normal_padding"
-            android:text="@{record.sympathyCount}"
+            android:text="@{@string/count(record.sympathyCount)}"
             android:textColor="@color/gray_03"
             android:textSize="12sp"
             app:drawableTopCompat="@drawable/selector_heart"
@@ -237,8 +238,9 @@
             android:id="@+id/tv_scrap_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:paddingHorizontal="@dimen/normal_padding"
-            android:text="@{record.scrapCount}"
+            android:text="@{@string/count(record.scrapCount)}"
             android:textColor="@color/gray_03"
             android:textSize="12sp"
             app:drawableTopCompat="@drawable/selector_star"
@@ -246,6 +248,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tv_nick"
             tools:text="000" />
+
+        <com.google.android.material.divider.MaterialDivider
+            android:layout_width="0dp"
+            android:layout_height="8dp"
+            android:layout_marginTop="4dp"
+            android:background="@color/black"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_nick" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
