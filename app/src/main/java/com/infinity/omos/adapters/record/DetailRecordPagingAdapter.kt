@@ -7,11 +7,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.record.DetailRecordModel
 import com.infinity.omos.databinding.ListItemDetailRecordBinding
+import com.infinity.omos.utils.DataStoreManager
+import javax.inject.Inject
 
-class DetailRecordPagingAdapter : PagingDataAdapter<DetailRecordModel, RecyclerView.ViewHolder>(DetailRecordDiffCallback()) {
+class DetailRecordPagingAdapter @Inject constructor(
+    private val dataStoreManager: DataStoreManager
+) : PagingDataAdapter<DetailRecordModel, RecyclerView.ViewHolder>(DetailRecordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return DetailRecordViewHolder(
+            dataStoreManager.getUserId(),
             ListItemDetailRecordBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -28,12 +33,14 @@ class DetailRecordPagingAdapter : PagingDataAdapter<DetailRecordModel, RecyclerV
     }
 
     class DetailRecordViewHolder(
+        private val id: Int,
         private val binding: ListItemDetailRecordBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(item: DetailRecordModel) {
             binding.apply {
                 record = item
+                userId = id
                 executePendingBindings()
             }
         }

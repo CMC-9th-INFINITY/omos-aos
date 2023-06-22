@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class MyRecord(
     @SerialName("category") val category: String,
-    @SerialName("createdDate") val createDate: String,
+    @SerialName("createdDate") val createdDate: String,
     @SerialName("isPublic") val isPublic: Boolean,
     @SerialName("music") val music: Music,
     @SerialName("recordContents") val recordContents: String,

@@ -11,7 +11,7 @@ data class DetailRecordModel(
     val userId: Int,
     val nickname: String,
     val category: RecordCategory,
-    val dateAndCategory: String,
+    val date: String,
     val isPublic: Boolean,
     val scrapCount: Int,
     val sympathyCount: Int

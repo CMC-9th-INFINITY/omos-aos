@@ -5,6 +5,10 @@
     <data>
 
         <variable
+            name="userId"
+            type="Integer" />
+
+        <variable
             name="record"
             type="com.infinity.omos.data.record.DetailRecordModel" />
     </data>
@@ -18,7 +22,8 @@
             layout="@layout/layout_detail_record"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:record="@{record}" />
+            app:record="@{record}"
+            app:userId="@{userId}" />
 
     </FrameLayout>
 
