@@ -292,4 +292,6 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="search">검색</string>
     <string name="write">작성</string>
     <string name="move_detail_category">상세 카테고리 이동</string>
+    <string name="report_button">신고 버튼</string>
+    <string name="scrap_button">스크랩 버튼</string>
 </resources>

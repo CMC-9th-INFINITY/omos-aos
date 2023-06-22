@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="com.infinity.omos.data.record.RecordCategory" />
+
+        <variable
+            name="record"
+            type="com.infinity.omos.data.record.DetailRecordModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/iv_album_cover"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:contentDescription="@string/album_cover"
+            app:imageFromUrl="@{record.music.albumImageUrl}"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:background="@color/gray_06" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/black_01"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="6dp"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_album_cover"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/iv_album_cover"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <TextView
+                android:id="@+id/tv_music_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{record.music.musicTitle}"
+                android:textColor="?attr/colorSecondary"
+                app:layout_constraintBottom_toTopOf="@+id/tv_artist"
+                app:layout_constraintEnd_toStartOf="@id/iv_spotify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Angel Baby" />
+
+            <TextView
+                android:id="@+id/tv_artist"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="@{record.music.artistsAndAlbumTitle}"
+                android:textColor="?attr/colorSecondaryVariant"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/iv_spotify"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_music_title"
+                tools:text="Troye Sivan - Angel Baby" />
+
+            <ImageView
+                android:id="@+id/iv_spotify"
+                android:layout_width="31dp"
+                android:layout_height="21dp"
+                android:contentDescription="@string/spotify_icon"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_spotify"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/iv_record"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:contentDescription="@string/record_image"
+            android:scaleType="centerCrop"
+            app:imageFromUrl="@{record.recordImageUrl}"
+            app:layout_constraintBottom_toBottomOf="@id/constraint_layout"
+            app:layout_constraintEnd_toEndOf="@id/constraint_layout"
+            app:layout_constraintStart_toStartOf="@id/constraint_layout"
+            app:layout_constraintTop_toTopOf="@id/constraint_layout" />
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_gradient_02"
+            android:contentDescription="@string/record_image"
+            app:layout_constraintBottom_toBottomOf="@id/iv_record"
+            app:layout_constraintEnd_toEndOf="@id/iv_record"
+            app:layout_constraintStart_toStartOf="@id/iv_record"
+            app:layout_constraintTop_toTopOf="@id/iv_record" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_layout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/normal_padding"
+            android:paddingVertical="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/iv_album_cover">
+
+            <ImageView
+                android:id="@+id/iv_report"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/report_button"
+                android:src="@drawable/ic_report"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tv_record_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="36dp"
+                android:maxLines="2"
+                android:text="@{record.recordTitle}"
+                android:textColor="?attr/colorSecondary"
+                android:textSize="22sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/iv_report"
+                tools:text="레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다레코드제목두줄까지가능합니다" />
+
+            <TextView
+                android:id="@+id/tv_date_and_category"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:textColor="@color/gray_05"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_record_title"
+                tools:text="2022.6.8 | 나만의 가사 해석" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/lock"
+                app:isPublic="@{record.isPublic}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:src="@drawable/ic_private" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <FrameLayout
+            android:id="@+id/frame_record_contents"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/constraint_layout">
+
+            <TextView
+                android:id="@+id/tv_record_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="794"
+                android:padding="@dimen/normal_padding"
+                android:text="@{record.recordContent}"
+                android:textColor="@color/gray_02"
+                android:textSize="16sp"
+                app:isGone="@{record.category == RecordCategory.A_LINE}"
+                tools:text="레코드내용이들어갑니다레코드내용이들어갑니다레코드내용이들어갑니다레코드내용이들어갑니다레코드내용이들어갑니다"
+                tools:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_a_line_record_contents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/cafe24oneprettynight"
+                android:gravity="center"
+                android:maxLength="50"
+                android:paddingHorizontal="40dp"
+                android:paddingVertical="58dp"
+                android:text="@{record.recordContent}"
+                android:textColor="@color/gray_02"
+                android:textSize="24sp"
+                app:isGone="@{!(record.category == RecordCategory.A_LINE)}"
+                tools:text="레코드내용이들어갑니다레코드내용이들어갑니다레코드내용이들어갑니다레코드내용이들어갑니다레코드내용이들어갑니다" />
+
+        </FrameLayout>
+
+        <com.google.android.material.divider.MaterialDivider
+            android:id="@+id/divider"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginHorizontal="@dimen/normal_padding"
+            android:layout_marginTop="@dimen/normal_padding"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/frame_record_contents" />
+
+        <TextView
+            android:id="@+id/tv_nick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/normal_padding"
+            android:text="@{record.nickname}"
+            android:textColor="@color/gray_04"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider"
+            tools:text="DJ 닉네임열두글자까지만허용임" />
+
+        <TextView
+            android:id="@+id/tv_sympathy_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/normal_padding"
+            android:text="@{record.sympathyCount}"
+            android:textColor="@color/gray_03"
+            android:textSize="12sp"
+            app:drawableTopCompat="@drawable/selector_heart"
+            app:layout_constraintBottom_toBottomOf="@id/tv_nick"
+            app:layout_constraintEnd_toStartOf="@id/tv_scrap_count"
+            app:layout_constraintTop_toTopOf="@id/tv_nick"
+            tools:text="000" />
+
+        <TextView
+            android:id="@+id/tv_scrap_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="@dimen/normal_padding"
+            android:text="@{record.scrapCount}"
+            android:textColor="@color/gray_03"
+            android:textSize="12sp"
+            app:drawableTopCompat="@drawable/selector_star"
+            app:layout_constraintBottom_toBottomOf="@id/tv_nick"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/tv_nick"
+            tools:text="000" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
