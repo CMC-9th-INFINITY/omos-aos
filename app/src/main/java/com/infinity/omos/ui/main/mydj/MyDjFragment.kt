@@ -5,7 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
+import androidx.paging.LoadState
+import com.infinity.omos.adapters.OmosLoadStateAdapter
 import com.infinity.omos.adapters.dj.MyDjListAdapter
 import com.infinity.omos.adapters.record.DetailRecordPagingAdapter
 import com.infinity.omos.databinding.FragmentMyDjBinding
@@ -49,13 +52,21 @@ class MyDjFragment : Fragment() {
 
     private fun setAdapter() {
         binding.rvMyDjs.adapter = myDjAdapter
-        binding.rvDetailRecords.adapter = detailRecordAdapter
+        binding.rvDetailRecords.adapter = detailRecordAdapter.withLoadStateFooter(
+            footer = OmosLoadStateAdapter { detailRecordAdapter.retry() }
+        )
     }
 
     private fun initListener() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
+            detailRecordAdapter.refresh()
             binding.swipeRefresh.isRefreshing = false
+        }
+
+        detailRecordAdapter.addLoadStateListener { combinedLoadStates ->
+            binding.progressBar.frameProgressBar.isVisible =
+                combinedLoadStates.source.refresh is LoadState.Loading
         }
     }
 

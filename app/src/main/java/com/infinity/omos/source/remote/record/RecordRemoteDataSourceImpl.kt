@@ -38,6 +38,6 @@ class RecordRemoteDataSourceImpl @Inject constructor(
     }
 
     companion object {
-        private const val DETAIL_RECORD_PAGE_SIZE = 5
+        private const val DETAIL_RECORD_PAGE_SIZE = 10
     }
 }
