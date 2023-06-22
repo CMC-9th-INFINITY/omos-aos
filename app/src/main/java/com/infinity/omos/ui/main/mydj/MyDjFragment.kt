@@ -12,9 +12,11 @@ import com.infinity.omos.adapters.OmosLoadStateAdapter
 import com.infinity.omos.adapters.dj.MyDjListAdapter
 import com.infinity.omos.adapters.record.DetailRecordPagingAdapter
 import com.infinity.omos.databinding.FragmentMyDjBinding
+import com.infinity.omos.utils.DataStoreManager
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MyDjFragment : Fragment() {
@@ -23,7 +25,9 @@ class MyDjFragment : Fragment() {
     private val viewModel: MyDjViewModel by viewModels()
 
     private val myDjAdapter = MyDjListAdapter(::clickItem)
-    private val detailRecordAdapter = DetailRecordPagingAdapter()
+
+    @Inject
+    lateinit var detailRecordAdapter: DetailRecordPagingAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

@@ -6,7 +6,7 @@ import java.util.Locale
 object DateUtil {
 
     private const val REMOTE_RECORD_DATE_PATTERN = "yyyy-MM-dd'T'HH:mm:ss"
-    private const val UI_RECORD_DATE_PATTERN = "yyyy.MM.dd"
+    private const val UI_RECORD_DATE_PATTERN = "yyyy/MM/dd"
 
     private val remoteRecordDateFormat = SimpleDateFormat(REMOTE_RECORD_DATE_PATTERN, Locale.KOREA)
     private val uiRecordDateFormat = SimpleDateFormat(UI_RECORD_DATE_PATTERN, Locale.KOREA)
