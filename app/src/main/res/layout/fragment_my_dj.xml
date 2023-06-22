@@ -78,7 +78,6 @@
             layout="@layout/layout_progress"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:isGone="@{!(vm.uiState instanceof UiState.Loading)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
