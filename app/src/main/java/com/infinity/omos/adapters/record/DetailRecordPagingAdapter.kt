@@ -49,7 +49,7 @@ class DetailRecordPagingAdapter @Inject constructor(
 
 private class DetailRecordDiffCallback : DiffUtil.ItemCallback<DetailRecordModel>() {
     override fun areItemsTheSame(oldItem: DetailRecordModel, newItem: DetailRecordModel): Boolean {
-        return oldItem.recordId == newItem.recordId
+        return false
     }
 
     override fun areContentsTheSame(

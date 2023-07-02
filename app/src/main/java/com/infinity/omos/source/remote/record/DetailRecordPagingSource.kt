@@ -8,14 +8,14 @@ import com.infinity.omos.data.record.DetailRecord
 class DetailRecordPagingSource(
     private val recordService: RecordService,
     private val fromUserId: Int,
-    private val toUserId: Int?
+    private val toUserId: Int
 ) : PagingSource<Int, DetailRecord>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, DetailRecord> {
         val page = params.key
         return try {
 
-            val response = if (toUserId == null) {
+            val response = if (toUserId == -1) {
                 recordService.getDetailRecords(fromUserId, page, params.loadSize)
             } else {
                 recordService.getDetailRecords(fromUserId, toUserId)
@@ -23,7 +23,7 @@ class DetailRecordPagingSource(
             LoadResult.Page(
                 data = response,
                 prevKey = null,
-                nextKey = response.last().recordId
+                nextKey = if (toUserId == -1) response.last().recordId else null
             )
         } catch (exception: Exception) {
             LoadResult.Error(exception)

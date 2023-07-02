@@ -12,7 +12,6 @@ import com.infinity.omos.adapters.OmosLoadStateAdapter
 import com.infinity.omos.adapters.dj.MyDjListAdapter
 import com.infinity.omos.adapters.record.DetailRecordPagingAdapter
 import com.infinity.omos.databinding.FragmentMyDjBinding
-import com.infinity.omos.utils.DataStoreManager
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
@@ -48,9 +47,10 @@ class MyDjFragment : Fragment() {
         collectData()
     }
 
-    private fun clickItem() {
+    private fun clickItem(toUserId: Int, isSelected: Boolean) {
         myDjAdapter.notifyItemChanged(myDjAdapter.selectedPosition.prevPosition)
         myDjAdapter.notifyItemChanged(myDjAdapter.selectedPosition.newPosition)
+        viewModel.changeToUserId(isSelected, toUserId)
         viewModel.fetchDetailRecords()
     }
 
