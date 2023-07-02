@@ -7,10 +7,9 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.user.ProfileModel
 import com.infinity.omos.databinding.ListItemMyDjBinding
-import timber.log.Timber
 
 class MyDjListAdapter(
-    private val onItemClick: () -> Unit
+    private val onItemClick: (Int, Boolean) -> Unit
 ) : ListAdapter<ProfileModel, RecyclerView.ViewHolder>(MyDjDiffCallback()) {
 
     val selectedPosition = SelectedPosition(RecyclerView.NO_POSITION, RecyclerView.NO_POSITION)
@@ -35,16 +34,22 @@ class MyDjListAdapter(
     class MyDjViewHolder(
         private val binding: ListItemMyDjBinding,
         private val selectedPosition: SelectedPosition,
-        private val onItemClick: () -> Unit
+        private val onItemClick: (Int, Boolean) -> Unit
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
+            var isSelected = true
             itemView.setOnClickListener {
                 selectedPosition.apply {
                     prevPosition = newPosition
-                    newPosition = adapterPosition
+                    newPosition = absoluteAdapterPosition
+
+                    if (prevPosition == newPosition) {
+                        newPosition = RecyclerView.NO_POSITION
+                        isSelected = false
+                    }
                 }
-                onItemClick()
+                onItemClick(binding.profile?.userId ?: -1, isSelected)
             }
         }
 
@@ -54,7 +59,8 @@ class MyDjListAdapter(
         ) {
             binding.apply {
                 profile = item
-                binding.ivProfile.isSelected = position == selectedPosition.newPosition
+                binding.ivProfile.isSelected =
+                    position == selectedPosition.newPosition
                 executePendingBindings()
             }
         }

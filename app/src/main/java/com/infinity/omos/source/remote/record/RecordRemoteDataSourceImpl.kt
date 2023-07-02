@@ -30,7 +30,7 @@ class RecordRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getDetailRecordsStream(toUserId: Int?): Flow<PagingData<DetailRecord>> {
+    override fun getDetailRecordsStream(toUserId: Int): Flow<PagingData<DetailRecord>> {
         return Pager(
             config = PagingConfig(
                 enablePlaceholders = false,

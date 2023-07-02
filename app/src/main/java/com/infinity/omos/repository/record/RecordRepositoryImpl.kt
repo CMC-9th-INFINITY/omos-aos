@@ -20,7 +20,7 @@ class RecordRepositoryImpl @Inject constructor(
         return recordRemoteDataSource.getAllRecords(userId)
     }
 
-    override fun getDetailRecordsStream(toUserId: Int?): Flow<PagingData<DetailRecord>> {
+    override fun getDetailRecordsStream(toUserId: Int): Flow<PagingData<DetailRecord>> {
         return recordRemoteDataSource.getDetailRecordsStream(toUserId)
     }
 }

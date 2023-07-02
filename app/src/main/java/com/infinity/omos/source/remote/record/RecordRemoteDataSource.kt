@@ -12,5 +12,5 @@ interface RecordRemoteDataSource {
 
     suspend fun getAllRecords(userId: Int) : Result<AllRecords>
 
-    fun getDetailRecordsStream(toUserId: Int?): Flow<PagingData<DetailRecord>>
+    fun getDetailRecordsStream(toUserId: Int): Flow<PagingData<DetailRecord>>
 }

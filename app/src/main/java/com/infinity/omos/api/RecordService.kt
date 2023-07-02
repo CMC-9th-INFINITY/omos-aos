@@ -27,7 +27,7 @@ interface RecordService {
     ): List<DetailRecord>
 
     @GET("api/records/select/user/{fromUserId}/{toUserId}")
-    fun getDetailRecords(
+    suspend fun getDetailRecords(
         @Path("fromUserId") fromUserId: Int,
         @Path("toUserId") toUserId: Int
     ): List<DetailRecord>

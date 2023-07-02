@@ -13,37 +13,46 @@ import com.infinity.omos.repository.follow.FollowRepository
 import com.infinity.omos.repository.record.RecordRepository
 import com.infinity.omos.utils.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MyDjViewModel @Inject constructor(
     dataStoreManager: DataStoreManager,
-    recordRepository: RecordRepository,
+    private val recordRepository: RecordRepository,
     private val followRepository: FollowRepository
 ) : ViewModel() {
 
     private val userId = dataStoreManager.getUserId()
 
-    val detailRecords: Flow<PagingData<DetailRecordModel>> =
-        recordRepository.getDetailRecordsStream().map { records ->
-            records.map { it.toPresentation() }
-        }.cachedIn(viewModelScope)
+    private var toUserId = -1
+
+    val detailRecords: MutableStateFlow<PagingData<DetailRecordModel>> =
+        MutableStateFlow(PagingData.empty())
 
     private var _uiState = MutableStateFlow<UiState>(UiState.Loading)
     val uiState = _uiState.asStateFlow()
 
     init {
         fetchMyDjs()
+        fetchDetailRecords()
     }
 
     fun refresh() {
-        fetchMyDjs()
+        fetchDetailRecords()
+    }
+
+    fun changeToUserId(isSelected: Boolean, userId: Int) {
+        toUserId = if (isSelected) {
+            userId
+        } else {
+            -1
+        }
     }
 
     private fun fetchMyDjs() {
@@ -61,8 +70,18 @@ class MyDjViewModel @Inject constructor(
         }
     }
 
+    /**
+     * toUserId 가 -1 인 경우는 모든 DJ 레코드들을 불러온다.
+     */
     fun fetchDetailRecords() {
-
+        recordRepository.getDetailRecordsStream(toUserId).map { records ->
+            records.map { it.toPresentation() }
+        }
+            .onEach { pagingData ->
+                detailRecords.value = pagingData
+            }
+            .cachedIn(viewModelScope)
+            .launchIn(viewModelScope)
     }
 }
 
