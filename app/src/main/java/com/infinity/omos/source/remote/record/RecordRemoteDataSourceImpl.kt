@@ -7,12 +7,16 @@ import com.infinity.omos.api.RecordService
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyRecord
+import com.infinity.omos.utils.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class RecordRemoteDataSourceImpl @Inject constructor(
+    dataStoreManager: DataStoreManager,
     private val recordService: RecordService
 ) : RecordRemoteDataSource {
+
+    private val userId = dataStoreManager.getUserId()
 
     override suspend fun getMyRecords(userId: Int): Result<List<MyRecord>> {
         return Result.runCatching {
@@ -26,14 +30,14 @@ class RecordRemoteDataSourceImpl @Inject constructor(
         }
     }
 
-    override fun getDetailRecordsStream(userId: Int): Flow<PagingData<DetailRecord>> {
+    override fun getDetailRecordsStream(toUserId: Int?): Flow<PagingData<DetailRecord>> {
         return Pager(
             config = PagingConfig(
                 enablePlaceholders = false,
                 initialLoadSize = DETAIL_RECORD_PAGE_SIZE,
                 pageSize = DETAIL_RECORD_PAGE_SIZE
             ),
-            pagingSourceFactory = { DetailRecordPagingSource(recordService, userId) }
+            pagingSourceFactory = { DetailRecordPagingSource(recordService, userId, toUserId) }
         ).flow
     }
 

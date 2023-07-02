@@ -31,7 +31,7 @@ class MyDjViewModel @Inject constructor(
     private val userId = dataStoreManager.getUserId()
 
     val detailRecords: Flow<PagingData<DetailRecordModel>> =
-        recordRepository.getDetailRecordsStream(userId).map { records ->
+        recordRepository.getDetailRecordsStream().map { records ->
             records.map { it.toPresentation() }
         }.cachedIn(viewModelScope)
 

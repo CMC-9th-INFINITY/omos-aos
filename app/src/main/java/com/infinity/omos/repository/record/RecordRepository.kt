@@ -12,5 +12,5 @@ interface RecordRepository {
 
     suspend fun getAllRecords(userId: Int): Result<AllRecords>
 
-    fun getDetailRecordsStream(userId: Int): Flow<PagingData<DetailRecord>>
+    fun getDetailRecordsStream(toUserId: Int? = null): Flow<PagingData<DetailRecord>>
 }
