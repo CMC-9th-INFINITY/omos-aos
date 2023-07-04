@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.infinity.omos.data.DjProfile" />
+            type="com.infinity.omos.data.user.profile.DjProfile" />
 
         <variable
             name="scrap1"

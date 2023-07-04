@@ -4,8 +4,8 @@ import com.infinity.omos.source.local.user.UserLocalDataSource
 import com.infinity.omos.source.local.user.UserLocalDataSourceImpl
 import com.infinity.omos.source.remote.auth.AuthRemoteDataSource
 import com.infinity.omos.source.remote.auth.AuthRemoteDataSourceImpl
-import com.infinity.omos.source.remote.follow.FollowRemoteDataSource
-import com.infinity.omos.source.remote.follow.FollowRemoteDataSourceImpl
+import com.infinity.omos.source.remote.dj.DjRemoteDataSource
+import com.infinity.omos.source.remote.dj.DjRemoteDataSourceImpl
 import com.infinity.omos.source.remote.record.RecordRemoteDataSource
 import com.infinity.omos.source.remote.record.RecordRemoteDataSourceImpl
 import com.infinity.omos.source.remote.today.TodayRemoteDataSource
@@ -54,7 +54,7 @@ interface DataSourceModule {
 
     @Binds
     @Singleton
-    fun bindFollowRemoteDataSource(
-        followRemoteDataSourceImpl: FollowRemoteDataSourceImpl
-    ): FollowRemoteDataSource
+    fun bindDjRemoteDataSource(
+        djRemoteDataSourceImpl: DjRemoteDataSourceImpl
+    ): DjRemoteDataSource
 }

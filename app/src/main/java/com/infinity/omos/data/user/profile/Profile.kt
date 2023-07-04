@@ -1,4 +1,4 @@
-package com.infinity.omos.data.user
+package com.infinity.omos.data.user.profile
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="profile"
+            type="com.infinity.omos.data.user.profile.DjProfileModel" />
+    </data>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -38,6 +45,7 @@
                 android:layout_marginTop="@dimen/small_padding"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/appbar"
+                app:profileImageFromUrl="@{profile.profile.profileUrl}"
                 tools:src="@color/gray_01" />
 
             <TextView
@@ -45,6 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
+                android:text="@{profile.profile.nickname}"
                 android:textColor="?attr/colorOnBackground"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toBottomOf="@id/iv_profile"
@@ -81,6 +90,7 @@
                     android:id="@+id/tv_record_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(profile.count.recordsCount)}"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="20sp"
                     tools:text="0" />
@@ -113,6 +123,7 @@
                     android:id="@+id/tv_follower_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(profile.count.followerCount)}"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="20sp"
                     tools:text="0" />
@@ -145,6 +156,7 @@
                     android:id="@+id/tv_following_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(profile.count.followingCount)}"
                     android:textColor="?attr/colorOnBackground"
                     android:textSize="20sp"
                     tools:text="0" />

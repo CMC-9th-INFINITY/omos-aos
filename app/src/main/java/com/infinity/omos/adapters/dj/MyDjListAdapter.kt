@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.data.user.ProfileModel
+import com.infinity.omos.data.user.profile.ProfileModel
 import com.infinity.omos.databinding.ListItemMyDjBinding
 
 class MyDjListAdapter(
