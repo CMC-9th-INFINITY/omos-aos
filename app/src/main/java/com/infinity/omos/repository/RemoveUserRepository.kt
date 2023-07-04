@@ -1,7 +1,7 @@
 package com.infinity.omos.repository
 
 import com.infinity.omos.api.FakeUserService
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

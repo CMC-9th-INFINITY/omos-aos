@@ -79,7 +79,7 @@ class DjActivity : AppCompatActivity() {
                 binding.data = it
                 followerCnt = it.count.followerCount
 
-                if (it.isFollowed){
+                if (it.isFollowed!!){
                     followerCnt -= 1
                     setFollowing()
                 } else{

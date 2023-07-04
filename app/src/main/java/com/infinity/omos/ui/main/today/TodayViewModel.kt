@@ -7,7 +7,7 @@ import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.toPresentation
 import com.infinity.omos.data.record.HorizontalPreviewRecordModel
 import com.infinity.omos.data.record.toPresentation
-import com.infinity.omos.data.user.ProfileModel
+import com.infinity.omos.data.user.profile.ProfileModel
 import com.infinity.omos.data.user.toPresentation
 import com.infinity.omos.repository.today.TodayRepository
 import com.infinity.omos.utils.DataStoreManager

@@ -22,7 +22,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.ui.main.mypage.FakeMyPageFragment

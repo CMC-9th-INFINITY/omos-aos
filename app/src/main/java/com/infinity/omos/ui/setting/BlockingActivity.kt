@@ -10,7 +10,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.lifecycleScope
 import com.infinity.omos.R
 import com.infinity.omos.adapters.BlockedListAdapter
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.databinding.ActivityBlockingBinding
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication

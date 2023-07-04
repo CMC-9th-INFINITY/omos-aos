@@ -1,4 +1,4 @@
-package com.infinity.omos.data.user
+package com.infinity.omos.data.user.profile
 
 data class ProfileModel(
     val nickname: String,

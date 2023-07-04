@@ -3,7 +3,7 @@ package com.infinity.omos.source.remote.today
 import com.infinity.omos.api.TodayService
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.data.record.PreviewRecord
 import javax.inject.Inject
 

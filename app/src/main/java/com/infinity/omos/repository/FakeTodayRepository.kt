@@ -5,7 +5,7 @@ import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.TodayService
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.etc.Constant
 import retrofit2.Retrofit

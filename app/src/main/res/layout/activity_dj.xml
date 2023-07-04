@@ -10,7 +10,7 @@
 
         <variable
             name="data"
-            type="com.infinity.omos.data.DjProfile" />
+            type="com.infinity.omos.data.user.profile.DjProfile" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

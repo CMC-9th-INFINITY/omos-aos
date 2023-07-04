@@ -1,6 +1,6 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.data.ReportBlock
 import com.infinity.omos.data.ResultState
 import retrofit2.Call

@@ -2,7 +2,7 @@ package com.infinity.omos.repository.today
 
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.data.record.PreviewRecord
 
 interface TodayRepository {

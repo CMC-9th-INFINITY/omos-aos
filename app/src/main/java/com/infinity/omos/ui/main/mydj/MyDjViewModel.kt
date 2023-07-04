@@ -7,9 +7,9 @@ import androidx.paging.cachedIn
 import androidx.paging.map
 import com.infinity.omos.data.record.DetailRecordModel
 import com.infinity.omos.data.record.toPresentation
-import com.infinity.omos.data.user.ProfileModel
+import com.infinity.omos.data.user.profile.ProfileModel
 import com.infinity.omos.data.user.toPresentation
-import com.infinity.omos.repository.follow.FollowRepository
+import com.infinity.omos.repository.dj.DjRepository
 import com.infinity.omos.repository.record.RecordRepository
 import com.infinity.omos.utils.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -25,7 +25,7 @@ import javax.inject.Inject
 class MyDjViewModel @Inject constructor(
     dataStoreManager: DataStoreManager,
     private val recordRepository: RecordRepository,
-    private val followRepository: FollowRepository
+    private val djRepository: DjRepository
 ) : ViewModel() {
 
     private val userId = dataStoreManager.getUserId()
@@ -58,7 +58,7 @@ class MyDjViewModel @Inject constructor(
     private fun fetchMyDjs() {
         _uiState.value = UiState.Loading
         viewModelScope.launch {
-            followRepository.getMyDjs(userId).mapCatching { djs ->
+            djRepository.getMyDjs(userId).mapCatching { djs ->
                 djs.map { it.toPresentation() }
             }
                 .onSuccess { djs ->

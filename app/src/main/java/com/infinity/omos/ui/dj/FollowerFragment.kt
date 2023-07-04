@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.infinity.omos.adapters.FollowerListAdapter
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.databinding.FragmentFollowerBinding
 import com.infinity.omos.viewmodels.FollowViewModel
 import dagger.hilt.android.AndroidEntryPoint
