@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.main
+package com.infinity.omos.ui.main.mypage
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,16 +15,17 @@ import com.infinity.omos.ui.record.DetailRecordActivity
 import com.infinity.omos.ui.record.MyLikeRecordActivity
 import com.infinity.omos.ui.record.MyScrapRecordActivity
 import com.infinity.omos.R
-import com.infinity.omos.databinding.FragmentMyPageBinding
+import com.infinity.omos.databinding.FragmentFakeMyPageBinding
 import com.infinity.omos.etc.GlobalFunction
 import com.infinity.omos.ui.dj.FollowActivity
 import com.infinity.omos.ui.setting.SettingActivity
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.ui.main.SharedViewModel
 
-class MyPageFragment : Fragment() {
+class FakeMyPageFragment : Fragment() {
 
     private val viewModel: SharedViewModel by viewModels()
-    private lateinit var binding: FragmentMyPageBinding
+    private lateinit var binding: FragmentFakeMyPageBinding
     lateinit var broadcastReceiver: BroadcastReceiver
 
     private val userId = OmosApplication.prefs.getInt("userId")
@@ -45,7 +46,7 @@ class MyPageFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_my_page, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_fake_my_page, container, false)
         activity?.let{
             binding.lifecycleOwner = viewLifecycleOwner
         }
@@ -71,7 +72,7 @@ class MyPageFragment : Fragment() {
         }
 
         viewModel.setDjProfile(userId, userId)
-        viewModel.getDjProfile().observe(this) { profile ->
+        viewModel.getDjProfile().observe(viewLifecycleOwner) { profile ->
             profile?.let {
                 binding.data = it
                 myNickname = it.profile.nickname
@@ -81,7 +82,7 @@ class MyPageFragment : Fragment() {
         }
 
         viewModel.setMyPageData(userId)
-        viewModel.getMyPageData().observe(this) { state ->
+        viewModel.getMyPageData().observe(viewLifecycleOwner) { state ->
             state?.let {
                 when(it.scrappedRecords.size){
                     2 -> {

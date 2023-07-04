@@ -39,7 +39,7 @@
 
     <fragment
         android:id="@+id/my_page_fragment"
-        android:name="com.infinity.omos.ui.main.MyPageFragment"
+        android:name="com.infinity.omos.ui.main.mypage.MyPageFragment"
         android:label="My Page Fragment"
         tools:layout="@layout/fragment_my_page">
 

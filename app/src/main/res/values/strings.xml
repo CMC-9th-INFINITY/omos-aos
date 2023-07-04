@@ -296,4 +296,10 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="move_detail_category">상세 카테고리 이동</string>
     <string name="report_button">신고 버튼</string>
     <string name="scrap_button">스크랩 버튼</string>
+    <string name="setting">설정</string>
+    <string name="record">레코드</string>
+    <string name="follower">팔로워</string>
+    <string name="following">팔로잉</string>
+    <string name="scraped_record">스크랩한 레코드</string>
+    <string name="liked_record">공감한 레코드</string>
 </resources>
