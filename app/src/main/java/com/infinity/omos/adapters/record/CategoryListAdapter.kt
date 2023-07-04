@@ -33,7 +33,7 @@ class CategoryListAdapter :
         private val adapter = HorizontalRecordListAdapter()
 
         init {
-            binding.ivMove.setOnClickListener {
+            binding.layoutCategory.ivMove.setOnClickListener {
                 // TODO: 상세 카테고리 이동
             }
         }
@@ -41,7 +41,7 @@ class CategoryListAdapter :
         fun bind(item: CategoryModel) {
             binding.apply {
                 category = item
-                rvPreviewRecords.adapter = adapter
+                layoutCategory.rvPreviewRecords.adapter = adapter
                 adapter.submitList(item.records)
                 executePendingBindings()
             }

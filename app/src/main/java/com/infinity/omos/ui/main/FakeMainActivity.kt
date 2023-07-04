@@ -32,6 +32,7 @@ import com.infinity.omos.databinding.ActivityFakeMainBinding
 import com.infinity.omos.service.MyFirebaseMessagingService
 import com.infinity.omos.support.PermissionSupport
 import com.infinity.omos.ui.main.mydj.FakeMyDjFragment
+import com.infinity.omos.ui.main.mypage.FakeMyPageFragment
 import com.infinity.omos.ui.main.myrecord.FakeMyRecordFragment
 import com.infinity.omos.ui.main.today.TodayFragment
 import com.infinity.omos.ui.search.AllFragment
@@ -51,7 +52,7 @@ class FakeMainActivity : AppCompatActivity() {
     private val fragmentMyRecord by lazy { FakeMyRecordFragment() }
     private val fragmentAllRecords by lazy { AllRecordFragment() }
     private val fragmentMyDj by lazy { FakeMyDjFragment() }
-    private val fragmentMyPage by lazy { MyPageFragment() }
+    private val fragmentMyPage by lazy { FakeMyPageFragment() }
 
     private var stateWrite = false
     private var stateNoti = false

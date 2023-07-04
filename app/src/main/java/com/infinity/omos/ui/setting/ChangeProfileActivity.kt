@@ -25,7 +25,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.user.Profile
 import com.infinity.omos.databinding.ActivityChangeProfileBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.ui.main.MyPageFragment
+import com.infinity.omos.ui.main.mypage.FakeMyPageFragment
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
@@ -51,8 +51,8 @@ class ChangeProfileActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_change_profile)
         binding.lifecycleOwner = this
-        binding.data = Profile(MyPageFragment.myNickname, MyPageFragment.myProfileUrl, userId)
-        tempImageUrl = MyPageFragment.myProfileUrl
+        binding.data = Profile(FakeMyPageFragment.myNickname, FakeMyPageFragment.myProfileUrl, userId)
+        tempImageUrl = FakeMyPageFragment.myProfileUrl
         initToolBar()
 
         binding.btnProfile.setOnClickListener {
@@ -135,10 +135,10 @@ class ChangeProfileActivity : AppCompatActivity() {
 
             if (tempImageUrl == ""){
                 viewModel.updateProfile(binding.etNick.text.toString(), "", userId)
-                MyPageFragment.myProfileUrl = ""
+                FakeMyPageFragment.myProfileUrl = ""
             } else{
                 viewModel.updateProfile(binding.etNick.text.toString(), "${BuildConfig.S3_BASE_URL}profile/${userId}.png", userId)
-                MyPageFragment.myProfileUrl = "${BuildConfig.S3_BASE_URL}profile/${userId}.png"
+                FakeMyPageFragment.myProfileUrl = "${BuildConfig.S3_BASE_URL}profile/${userId}.png"
             }
         }
 
@@ -146,7 +146,7 @@ class ChangeProfileActivity : AppCompatActivity() {
             state?.let {
                 when (it) {
                     Constant.ApiState.DONE -> {
-                        MyPageFragment.myNickname = binding.etNick.text.toString()
+                        FakeMyPageFragment.myNickname = binding.etNick.text.toString()
                         val intent = Intent("PROFILE_UPDATE")
                         intent.addFlags(Intent.FLAG_RECEIVER_REPLACE_PENDING)
                         sendBroadcast(intent)
