@@ -6,6 +6,7 @@ import com.infinity.omos.data.*
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.record.DetailRecord
+import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.PreviewRecord
 import com.infinity.omos.data.user.profile.DjProfile
 import com.infinity.omos.data.user.profile.Profile
@@ -147,8 +148,8 @@ class SharedViewModel @Inject constructor(
     fun setMyPageData(userId: Int){
         myPageRepository.getMyPageData(userId)
     }
-    fun getMyPageData(): LiveData<MyPage>{
-        return myPageRepository.myPageData
+    fun getMyPageData(): LiveData<MyPageRecord>{
+        return myPageRepository.myPageRecordData
     }
     fun getStateMyPageData(): LiveData<Constant.ApiState>{
         return myPageRepository.stateMyPageData

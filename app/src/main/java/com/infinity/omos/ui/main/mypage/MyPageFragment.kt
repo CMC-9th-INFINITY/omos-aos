@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyPageBinding
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
@@ -15,6 +16,9 @@ class MyPageFragment : Fragment() {
 
     private lateinit var binding: FragmentMyPageBinding
     private val viewModel: MyPageViewModel by viewModels()
+
+    private val scrapedAdapter = HorizontalRecordListAdapter()
+    private val likedAdapter = HorizontalRecordListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,8 +33,14 @@ class MyPageFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setAdapter()
         initListener()
         collectData()
+    }
+
+    private fun setAdapter() {
+        binding.layoutScrapedRecords.rvPreviewRecords.adapter = scrapedAdapter
+        binding.layoutLikedRecords.rvPreviewRecords.adapter = likedAdapter
     }
 
     private fun initListener() {
@@ -42,6 +52,15 @@ class MyPageFragment : Fragment() {
             viewModel.profile.collect { state ->
                 if (state is ProfileUiState.Success) {
                     binding.profile = state.profile
+                }
+            }
+        }
+
+        repeatOnStarted {
+            viewModel.myPageRecords.collect { state ->
+                if (state is MyPageRecordUiState.Success) {
+                    scrapedAdapter.submitList(state.myPageRecords.scrappedRecords)
+                    likedAdapter.submitList(state.myPageRecords.likedRecords)
                 }
             }
         }

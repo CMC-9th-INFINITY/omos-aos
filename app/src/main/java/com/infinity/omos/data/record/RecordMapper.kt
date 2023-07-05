@@ -69,5 +69,12 @@ fun DetailRecord.toPresentation(): DetailRecordModel {
     )
 }
 
+fun MyPageRecord.toPresentation(): MyPageRecordModel {
+    return MyPageRecordModel(
+        likedRecords = likedRecords.map { it.toPresentation() },
+        scrappedRecords = scrappedRecords.map { it.toPresentation() }
+    )
+}
+
 private fun getDateAndCategory(createdDate: String, category: String): String =
     "${DateUtil.convertToUiRecordDate(createdDate)} | ${RecordCategory.valueOf(category).str}"
