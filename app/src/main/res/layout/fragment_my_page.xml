@@ -8,6 +8,10 @@
         <variable
             name="profile"
             type="com.infinity.omos.data.user.profile.DjProfileModel" />
+
+        <variable
+            name="records"
+            type="com.infinity.omos.data.record.MyPageRecordModel" />
     </data>
 
     <ScrollView
@@ -190,7 +194,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/divider"
-                app:title="@string/scraped_record" />
+                app:title="@{@string/scraped_record}" />
 
             <include
                 android:id="@+id/layout_liked_records"
@@ -201,7 +205,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layout_scraped_records"
-                app:title="@string/liked_record" />
+                app:title="@{@string/liked_record}" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

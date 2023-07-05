@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.infinity.omos.api.RecordService
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
+import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.MyRecord
 import com.infinity.omos.utils.DataStoreManager
 import kotlinx.coroutines.flow.Flow
@@ -39,6 +40,12 @@ class RecordRemoteDataSourceImpl @Inject constructor(
             ),
             pagingSourceFactory = { DetailRecordPagingSource(recordService, userId, toUserId) }
         ).flow
+    }
+
+    override suspend fun getMyPageRecords(userId: Int): Result<MyPageRecord> {
+        return Result.runCatching {
+            recordService.getMyPageRecords(userId)
+        }
     }
 
     companion object {

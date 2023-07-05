@@ -1,5 +1,6 @@
 package com.infinity.omos.api
 
+import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyRecord
@@ -31,4 +32,9 @@ interface RecordService {
         @Path("fromUserId") fromUserId: Int,
         @Path("toUserId") toUserId: Int
     ): List<DetailRecord>
+
+    @GET("/api/records/select/{userId}/my-records")
+    suspend fun getMyPageRecords(
+        @Path("userId") userId: Int
+    ): MyPageRecord
 }
