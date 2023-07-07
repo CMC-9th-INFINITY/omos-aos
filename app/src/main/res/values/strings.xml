@@ -302,4 +302,5 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="following">팔로잉</string>
     <string name="scraped_record">스크랩한 레코드</string>
     <string name="liked_record">공감한 레코드</string>
+    <string name="floating_button">플로팅 버튼</string>
 </resources>

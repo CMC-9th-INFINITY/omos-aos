@@ -54,6 +54,10 @@ class TodayFragment : Fragment() {
             viewModel.refresh()
             binding.swipeRefresh.isRefreshing = false
         }
+
+        binding.btnFloating.setOnClickListener {
+            // TODO: 노래 선택 페이지 이동
+        }
     }
 
     private fun collectData() {
