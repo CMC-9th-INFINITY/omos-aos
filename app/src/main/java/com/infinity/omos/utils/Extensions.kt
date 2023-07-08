@@ -6,14 +6,12 @@ import android.text.SpannableStringBuilder
 import android.text.style.ForegroundColorSpan
 import android.view.View
 import android.widget.TextView
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-
 
 fun LifecycleOwner.repeatOnStarted(block: suspend CoroutineScope.() -> Unit) {
     lifecycleScope.launch {
@@ -38,16 +36,16 @@ fun Activity.offFullScreen() {
 }
 
 fun TextView.changeTextColor(word: String) {
+    if (text.isEmpty() || !text.contains(word)) return
+
     val start = text.indexOf(word)
     val end = start + word.length
     val ssb = SpannableStringBuilder(text)
     ssb.setSpan(
-        ForegroundColorSpan(
-            ContextCompat.getColor(
-                context,
-                ColorUtil.getPrimaryColor(context)
-            )
-        ), start, end, SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE
+        ForegroundColorSpan(ColorUtil.getPrimaryColor(context)),
+        start,
+        end,
+        SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE
     )
     text = ssb
 }

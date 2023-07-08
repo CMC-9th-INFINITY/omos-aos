@@ -8,7 +8,9 @@ import android.view.ViewGroup
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import com.infinity.omos.adapters.music.MusicTitleListAdapter
 import com.infinity.omos.databinding.FragmentSearchMusicBinding
+import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -16,6 +18,8 @@ class SearchMusicFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchMusicBinding
     private val viewModel: SearchMusicViewModel by viewModels()
+
+    private val musicTitleAdapter = MusicTitleListAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,7 +35,13 @@ class SearchMusicFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setAdapter()
         initListener()
+        collectData()
+    }
+
+    private fun setAdapter() {
+        binding.rvKeyword.adapter = musicTitleAdapter
     }
 
     private fun initListener() {
@@ -39,10 +49,29 @@ class SearchMusicFragment : Fragment() {
             view.findNavController().navigateUp()
         }
 
+        binding.etSearch.setOnFocusChangeListener { _, b ->
+            if (b) {
+                hideTopSearched()
+            }
+        }
+
         binding.etSearch.addTextChangedListener {
-            viewModel.keyword = it.toString()
-            viewModel.changeMusicKeywordVisibility()
-            viewModel.fetchSearchMusic()
+            viewModel.setKeyword(it.toString())
+        }
+    }
+
+    private fun hideTopSearched() {
+        binding.constraintTopSearched.visibility = View.GONE
+        binding.appbar.visibility = View.GONE
+    }
+
+    private fun collectData() {
+        repeatOnStarted {
+            viewModel.musicTitles.collect { state ->
+                if (state is MusicTitleUiState.Success) {
+                    musicTitleAdapter.submitList(state.titles)
+                }
+            }
         }
     }
 }
