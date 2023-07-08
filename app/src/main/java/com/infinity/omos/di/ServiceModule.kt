@@ -63,6 +63,14 @@ object ServiceModule {
 
     @Provides
     @Singleton
+    fun provideMusicService(
+        retrofit: Retrofit
+    ): MusicService {
+        return retrofit.create(MusicService::class.java)
+    }
+
+    @Provides
+    @Singleton
     fun provideFakeUserService(
         retrofit: Retrofit
     ): FakeUserService {

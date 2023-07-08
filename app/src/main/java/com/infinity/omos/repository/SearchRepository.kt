@@ -9,6 +9,7 @@ import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
 import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.music.MusicTitle
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
@@ -297,12 +298,12 @@ class SearchRepository {
         })
     }
 
-    var searchMusic = MutableLiveData<List<SearchMusic>>()
+    var searchMusic = MutableLiveData<List<MusicTitle>>()
     var stateSearchMusic = MutableLiveData<Constant.ApiState>()
     fun getSearchMusic(keyword: String, limit: Int, offset: Int){
         stateSearchMusic.value = Constant.ApiState.LOADING
-        searchApi.getSearchMusic(keyword, limit, offset).enqueue(object: Callback<List<SearchMusic>>{
-            override fun onResponse(call: Call<List<SearchMusic>>, response: Response<List<SearchMusic>>) {
+        searchApi.getSearchMusic(keyword, limit, offset).enqueue(object: Callback<List<MusicTitle>>{
+            override fun onResponse(call: Call<List<MusicTitle>>, response: Response<List<MusicTitle>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
@@ -329,7 +330,7 @@ class SearchRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<SearchMusic>>, t: Throwable) {
+            override fun onFailure(call: Call<List<MusicTitle>>, t: Throwable) {
                 Log.d("SearchMusicAPI", t.message.toString())
                 t.stackTrace
             }

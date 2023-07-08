@@ -2,6 +2,7 @@ package com.infinity.omos.api
 
 import com.infinity.omos.data.*
 import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.music.MusicTitle
 import retrofit2.Call
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -53,5 +54,5 @@ interface SearchService {
         @Query("limit") limit: Int,
         @Query("offset") offset: Int,
         @Query("type") type: Int = 1
-    ): Call<List<SearchMusic>>
+    ): Call<List<MusicTitle>>
 }

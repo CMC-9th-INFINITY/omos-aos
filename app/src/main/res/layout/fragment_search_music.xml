@@ -20,7 +20,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.Omos.Appbar"
-            app:isGone="@{vm.searching}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -72,12 +71,12 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/constraint_top_searched"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginStart="@dimen/normal_padding"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="@dimen/normal_padding"
-            app:isGone="@{vm.searching}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

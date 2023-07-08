@@ -18,3 +18,10 @@ fun LovedMusic.toPresentation(): LovedMusicModel {
         recordImageUrl = recordImageUrl
     )
 }
+
+fun MusicTitle.toPresentation(keyword: String): MusicTitleModel {
+    return MusicTitleModel(
+        keyword = keyword,
+        title = title
+    )
+}
