@@ -3,6 +3,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+
+        <variable
+            name="vm"
+            type="com.infinity.omos.ui.music.SearchMusicViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,6 +20,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.Omos.Appbar"
+            app:isGone="@{vm.searching}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -44,6 +52,8 @@
             android:layout_marginTop="8dp"
             android:background="@drawable/bg_rounded_rectangle_2"
             app:boxBackgroundMode="none"
+            app:endIconDrawable="@drawable/ic_clear"
+            app:endIconMode="clear_text"
             app:hintEnabled="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -61,40 +71,64 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <TextView
-            android:id="@+id/tv_top_searched"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/normal_padding"
             android:layout_marginTop="28dp"
-            android:text="@string/top_searched"
-            android:textColor="?attr/colorOnBackground"
-            android:textSize="20sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_input" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/normal_padding"
-            android:text="@string/standard_yesterday"
-            android:textColor="@color/gray_04"
-            android:textSize="12sp"
-            app:layout_constraintBottom_toBottomOf="@id/tv_top_searched"
+            app:isGone="@{vm.searching}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/tv_top_searched" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_input">
+
+            <TextView
+                android:id="@+id/tv_top_searched"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/top_searched"
+                android:textColor="?attr/colorOnBackground"
+                android:textSize="20sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/standard_yesterday"
+                android:textColor="@color/gray_04"
+                android:textSize="12sp"
+                app:layout_constraintBottom_toBottomOf="@id/tv_top_searched"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tv_top_searched" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_top_searched"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_top_searched"
+                tools:listitem="@layout/list_item_top_searched" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_top_searched"
+            android:id="@+id/rv_keyword"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/normal_padding"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="14dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_top_searched"
-            tools:listitem="@layout/list_item_top_searched" />
+            app:layout_constraintTop_toBottomOf="@id/text_input"
+            tools:listitem="@layout/list_item_keyword"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
