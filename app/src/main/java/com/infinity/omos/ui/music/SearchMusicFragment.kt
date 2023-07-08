@@ -19,7 +19,7 @@ class SearchMusicFragment : Fragment() {
     private lateinit var binding: FragmentSearchMusicBinding
     private val viewModel: SearchMusicViewModel by viewModels()
 
-    private val musicTitleAdapter = MusicTitleListAdapter()
+    private val musicTitleAdapter = MusicTitleListAdapter(::setSearchTextByTitle)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,5 +73,10 @@ class SearchMusicFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun setSearchTextByTitle(title: String) {
+        binding.etSearch.setText(title)
+        binding.etSearch.setSelection(title.length)
     }
 }

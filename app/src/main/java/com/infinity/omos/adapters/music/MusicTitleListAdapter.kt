@@ -9,10 +9,13 @@ import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.databinding.ListItemKeywordBinding
 import com.infinity.omos.utils.changeTextColor
 
-class MusicTitleListAdapter : ListAdapter<MusicTitleModel, RecyclerView.ViewHolder>(MusicTitleDiffCallback()) {
+class MusicTitleListAdapter(
+    private val onClick: (String) -> Unit
+) : ListAdapter<MusicTitleModel, RecyclerView.ViewHolder>(MusicTitleDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return MusicTitleViewHolder(
+            onClick,
             ListItemKeywordBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -27,11 +30,14 @@ class MusicTitleListAdapter : ListAdapter<MusicTitleModel, RecyclerView.ViewHold
     }
 
     class MusicTitleViewHolder(
+        onClick: (String) -> Unit,
         private val binding: ListItemKeywordBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
-
+            itemView.setOnClickListener {
+                onClick(binding.title ?: "")
+            }
         }
 
         fun bind(item: MusicTitleModel) {
