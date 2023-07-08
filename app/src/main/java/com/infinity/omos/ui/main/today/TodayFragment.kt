@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.adapters.dj.RecommendedDjListAdapter
@@ -56,7 +57,9 @@ class TodayFragment : Fragment() {
         }
 
         binding.btnFloating.setOnClickListener {
-            // TODO: 노래 선택 페이지 이동
+            val directions =
+                TodayFragmentDirections.actionTodayFragmentToSelectMusicFragment()
+            findNavController().navigate(directions)
         }
     }
 

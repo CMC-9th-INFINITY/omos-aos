@@ -303,4 +303,8 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="scraped_record">스크랩한 레코드</string>
     <string name="liked_record">공감한 레코드</string>
     <string name="floating_button">플로팅 버튼</string>
+    <string name="search_music">음악 검색</string>
+    <string name="please_search_music">음악을 검색해주세요.</string>
+    <string name="top_searched">인기 검색어</string>
+    <string name="standard_yesterday">전일 기준</string>
 </resources>
