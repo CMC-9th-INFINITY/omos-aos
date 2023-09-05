@@ -5,6 +5,8 @@
 
     <data>
 
+        <import type="com.infinity.omos.ui.music.SearchState" />
+
         <variable
             name="vm"
             type="com.infinity.omos.ui.music.SearchMusicViewModel" />
@@ -20,6 +22,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:theme="@style/Theme.Omos.Appbar"
+            app:isGone="@{vm.searchState != SearchState.BEFORE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -61,6 +64,7 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_search"
+                android:text="@={vm.keyword}"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/please_search_music"
@@ -79,6 +83,7 @@
             android:layout_marginStart="@dimen/normal_padding"
             android:layout_marginTop="28dp"
             android:layout_marginEnd="@dimen/normal_padding"
+            app:isGone="@{vm.searchState != SearchState.BEFORE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -123,12 +128,24 @@
             android:layout_height="0dp"
             android:layout_marginHorizontal="@dimen/normal_padding"
             android:layout_marginTop="14dp"
+            app:isGone="@{vm.searchState != SearchState.ING}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_input"
             tools:listitem="@layout/list_item_keyword"
+            tools:visibility="gone" />
+
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/compose_view"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:isGone="@{vm.searchState != SearchState.AFTER}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_input"
             tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,7 +2,6 @@ package com.infinity.omos.ui.music
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.infinity.omos.data.music.MusicTitle
 import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.data.music.toPresentation
 import com.infinity.omos.repository.music.MusicRepository
@@ -24,12 +23,15 @@ class SearchMusicViewModel @Inject constructor(
     private val musicRepository: MusicRepository
 ) : ViewModel() {
 
-    private var keyword = ""
+    var keyword = MutableStateFlow("")
 
     private val searchedFlow = MutableSharedFlow<String>()
 
     private var _musicTitles = MutableStateFlow<MusicTitleUiState>(MusicTitleUiState.Loading)
     val musicTitles = _musicTitles.asStateFlow()
+
+    private var _searchState = MutableStateFlow(SearchState.BEFORE)
+    val searchState = _searchState.asStateFlow()
 
     init {
         fetchSearchMusic()
@@ -38,7 +40,7 @@ class SearchMusicViewModel @Inject constructor(
     private fun fetchSearchMusic() {
         viewModelScope.launch {
             searchedFlow
-                .debounce(300) // 적절한 시간 간격 (밀리초 단위)을 설정합니다.
+                .debounce(100) // 적절한 시간 간격 (밀리초 단위)을 설정합니다.
                 .distinctUntilChanged()
                 .mapLatest { keyword ->
                     musicRepository.getMusicTitle(keyword)
@@ -46,7 +48,7 @@ class SearchMusicViewModel @Inject constructor(
                 .collect { result ->
                     result.mapCatching { titles ->
                         titles.map { title ->
-                            title.toPresentation(keyword)
+                            title.toPresentation(keyword.value)
                         }
                     }
                         .onSuccess { titles ->
@@ -60,10 +62,14 @@ class SearchMusicViewModel @Inject constructor(
     }
 
     fun setKeyword(text: String) {
-        keyword = text
+        keyword.value = text
         viewModelScope.launch {
             searchedFlow.emit(text)
         }
+    }
+
+    fun setSearchState(state: SearchState) {
+        _searchState.value = state
     }
 }
 
