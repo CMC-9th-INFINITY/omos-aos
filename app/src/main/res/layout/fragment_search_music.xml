@@ -5,17 +5,17 @@
 
     <data>
 
-        <import type="com.infinity.omos.ui.music.SearchState" />
+        <import type="com.infinity.omos.ui.music.search.SearchState" />
 
         <variable
             name="vm"
-            type="com.infinity.omos.ui.music.SearchMusicViewModel" />
+            type="com.infinity.omos.ui.music.search.SearchMusicViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.music.SearchMusicFragment">
+        tools:context=".ui.music.search.SearchMusicFragment">
 
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/appbar"

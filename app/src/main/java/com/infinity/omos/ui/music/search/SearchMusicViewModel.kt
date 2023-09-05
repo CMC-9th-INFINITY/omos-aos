@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.music
+package com.infinity.omos.ui.music.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

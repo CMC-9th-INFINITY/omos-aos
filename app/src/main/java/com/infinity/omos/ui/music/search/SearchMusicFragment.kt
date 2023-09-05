@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.music
+package com.infinity.omos.ui.music.search
 
 import android.os.Bundle
 import android.view.KeyEvent

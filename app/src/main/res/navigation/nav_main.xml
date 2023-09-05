@@ -50,7 +50,7 @@
 
     <fragment
         android:id="@+id/select_music_fragment"
-        android:name="com.infinity.omos.ui.music.SearchMusicFragment"
+        android:name="com.infinity.omos.ui.music.search.SearchMusicFragment"
         android:label="Search Music Fragment"
         tools:layout="@layout/fragment_search_music">
 
