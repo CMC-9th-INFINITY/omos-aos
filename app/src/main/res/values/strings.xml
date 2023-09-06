@@ -6,6 +6,11 @@
     <string name="my_dj">MY DJ</string>
     <string name="my_page">MY 페이지</string>
 
+    <string name="all">전체</string>
+    <string name="music">노래</string>
+    <string name="album">앨범</string>
+    <string name="artist">아티스트</string>
+
     <string name="error_input_email">이메일을 입력해주세요.</string>
     <string name="error_input_password">비밀번호를 입력해주세요.</string>
     <string name="again_check">입력하신 내용을 다시 확인해주세요.</string>
