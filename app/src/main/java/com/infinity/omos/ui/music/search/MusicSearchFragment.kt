@@ -16,7 +16,7 @@ import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class SearchMusicFragment : Fragment() {
+class MusicSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchMusicBinding
     private val viewModel: SearchMusicViewModel by viewModels()
@@ -53,7 +53,7 @@ class SearchMusicFragment : Fragment() {
 
         binding.etSearch.setOnFocusChangeListener { _, b ->
             if (b) {
-                viewModel.setSearchState(SearchState.ING)
+                viewModel.setSearchState(MusicSearchState.ING)
             }
         }
 
@@ -63,7 +63,7 @@ class SearchMusicFragment : Fragment() {
 
         binding.etSearch.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-                viewModel.setSearchState(SearchState.AFTER)
+                viewModel.setSearchState(MusicSearchState.AFTER)
             }
 
             false
@@ -82,7 +82,7 @@ class SearchMusicFragment : Fragment() {
 
     private fun setSearchTextByTitle(title: String) {
         viewModel.setKeyword(title)
-        viewModel.setSearchState(SearchState.AFTER)
+        viewModel.setSearchState(MusicSearchState.AFTER)
         binding.etSearch.clearFocus()
     }
 }

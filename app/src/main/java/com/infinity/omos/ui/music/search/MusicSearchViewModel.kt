@@ -30,8 +30,8 @@ class SearchMusicViewModel @Inject constructor(
     private var _musicTitles = MutableStateFlow<MusicTitleUiState>(MusicTitleUiState.Loading)
     val musicTitles = _musicTitles.asStateFlow()
 
-    private var _searchState = MutableStateFlow(SearchState.BEFORE)
-    val searchState = _searchState.asStateFlow()
+    private var _Music_searchState = MutableStateFlow(MusicSearchState.BEFORE)
+    val searchState = _Music_searchState.asStateFlow()
 
     init {
         fetchSearchMusic()
@@ -68,8 +68,8 @@ class SearchMusicViewModel @Inject constructor(
         }
     }
 
-    fun setSearchState(state: SearchState) {
-        _searchState.value = state
+    fun setSearchState(state: MusicSearchState) {
+        _Music_searchState.value = state
     }
 }
 
