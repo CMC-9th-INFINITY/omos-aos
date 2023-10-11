@@ -7,13 +7,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import com.infinity.omos.adapters.music.MusicTitleListAdapter
 import com.infinity.omos.databinding.FragmentSearchMusicBinding
+import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -36,7 +36,7 @@ class MusicSearchFragment : Fragment() {
         binding.composeView.apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
-                MaterialTheme {
+                OmosTheme {
                     MusicSearchPagerScreen()
                 }
             }

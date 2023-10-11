@@ -21,7 +21,7 @@
             android:id="@+id/appbar"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:theme="@style/Theme.Omos.Appbar"
+            android:backgroundTint="@color/bg_black"
             app:isGone="@{vm.searchState != MusicSearchState.BEFORE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,8 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="@string/search_music"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/white"/>
 
             </com.google.android.material.appbar.MaterialToolbar>
 
@@ -141,6 +142,7 @@
             android:id="@+id/compose_view"
             android:layout_width="0dp"
             android:layout_height="0dp"
+            android:layout_marginTop="8dp"
             app:isGone="@{vm.searchState != MusicSearchState.AFTER}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

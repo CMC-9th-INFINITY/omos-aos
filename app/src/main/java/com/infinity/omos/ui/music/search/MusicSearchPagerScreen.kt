@@ -17,6 +17,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.infinity.omos.R
+import com.infinity.omos.ui.theme.OmosTheme
+import com.infinity.omos.ui.theme.grey_03
 import kotlinx.coroutines.launch
 
 enum class MusicSearchPage(
@@ -39,7 +41,8 @@ fun MusicSearchPagerScreen(
         val coroutineScope = rememberCoroutineScope()
         
         TabRow(
-            selectedTabIndex = pagerState.currentPage
+            selectedTabIndex = pagerState.currentPage,
+            containerColor = MaterialTheme.colorScheme.background
         ) {
             pages.forEachIndexed { index, page ->
                 val title = stringResource(id = page.titleResId)
@@ -47,7 +50,7 @@ fun MusicSearchPagerScreen(
                     selected = pagerState.currentPage == index,
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
                     text = { Text(text = title) },
-                    unselectedContentColor = MaterialTheme.colorScheme.secondary
+                    unselectedContentColor = grey_03
                 )
             }
         }
@@ -83,5 +86,7 @@ fun MusicSearchPagerScreen(
 @Preview
 @Composable
 private fun MusicSearchPagerScreenPreview() {
-    MusicSearchPagerScreen()
+    OmosTheme {
+        MusicSearchPagerScreen()
+    }
 }
