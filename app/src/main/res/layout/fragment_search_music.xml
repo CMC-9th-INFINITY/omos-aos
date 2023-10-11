@@ -9,7 +9,7 @@
 
         <variable
             name="vm"
-            type="com.infinity.omos.ui.music.search.SearchMusicViewModel" />
+            type="com.infinity.omos.ui.music.search.MusicSearchViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

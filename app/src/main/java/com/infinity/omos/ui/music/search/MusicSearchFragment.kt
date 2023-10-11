@@ -21,7 +21,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class MusicSearchFragment : Fragment() {
 
     private lateinit var binding: FragmentSearchMusicBinding
-    private val viewModel: SearchMusicViewModel by viewModels()
+    private val viewModel: MusicSearchViewModel by viewModels()
 
     private val musicTitleAdapter = MusicTitleListAdapter(::setSearchTextByTitle)
 
@@ -73,7 +73,7 @@ class MusicSearchFragment : Fragment() {
 
         binding.etSearch.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
-                viewModel.setSearchState(MusicSearchState.AFTER)
+                search()
             }
 
             false
@@ -92,7 +92,12 @@ class MusicSearchFragment : Fragment() {
 
     private fun setSearchTextByTitle(title: String) {
         viewModel.setKeyword(title)
-        viewModel.setSearchState(MusicSearchState.AFTER)
         binding.etSearch.clearFocus()
+        search()
+    }
+
+    private fun search() {
+        viewModel.setSearchState(MusicSearchState.AFTER)
+        viewModel.search()
     }
 }

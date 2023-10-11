@@ -4,6 +4,7 @@ import androidx.annotation.StringRes
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.MaterialTheme
@@ -17,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.infinity.omos.R
+import com.infinity.omos.ui.music.search.pager.AllScreen
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.grey_03
 import kotlinx.coroutines.launch
@@ -64,7 +66,7 @@ fun MusicSearchPagerScreen(
         ) { index ->
             when (pages[index]) {
                 MusicSearchPage.ALL -> {
-
+                    AllScreen(modifier = Modifier.fillMaxSize())
                 }
 
                 MusicSearchPage.MUSIC -> {

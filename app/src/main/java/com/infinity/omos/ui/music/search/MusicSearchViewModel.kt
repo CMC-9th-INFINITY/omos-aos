@@ -2,24 +2,30 @@ package com.infinity.omos.ui.music.search
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import androidx.paging.map
+import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.data.music.toPresentation
 import com.infinity.omos.repository.music.MusicRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.mapLatest
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @OptIn(ExperimentalCoroutinesApi::class, FlowPreview::class)
 @HiltViewModel
-class SearchMusicViewModel @Inject constructor(
+class MusicSearchViewModel @Inject constructor(
     private val musicRepository: MusicRepository
 ) : ViewModel() {
 
@@ -30,8 +36,10 @@ class SearchMusicViewModel @Inject constructor(
     private var _musicTitles = MutableStateFlow<MusicTitleUiState>(MusicTitleUiState.Loading)
     val musicTitles = _musicTitles.asStateFlow()
 
-    private var _Music_searchState = MutableStateFlow(MusicSearchState.BEFORE)
-    val searchState = _Music_searchState.asStateFlow()
+    private var _searchState = MutableStateFlow(MusicSearchState.BEFORE)
+    val searchState = _searchState.asStateFlow()
+
+    lateinit var musicStream: Flow<PagingData<MusicModel>>
 
     init {
         fetchSearchMusic()
@@ -69,7 +77,17 @@ class SearchMusicViewModel @Inject constructor(
     }
 
     fun setSearchState(state: MusicSearchState) {
-        _Music_searchState.value = state
+        _searchState.value = state
+    }
+
+    fun search() {
+        musicStream = musicRepository.getMusicStream(keyword.value)
+            .map { pagingData ->
+                pagingData.map { music ->
+                    music.toPresentation()
+                }
+            }
+            .cachedIn(viewModelScope)
     }
 }
 
