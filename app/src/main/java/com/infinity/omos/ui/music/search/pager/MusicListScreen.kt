@@ -11,6 +11,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
@@ -33,6 +35,7 @@ import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.white
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
+import timber.log.Timber
 
 @Composable
 fun MusicListScreen(
@@ -40,6 +43,11 @@ fun MusicListScreen(
     modifier: Modifier = Modifier,
     viewModel: MusicSearchViewModel = hiltViewModel()
 ) {
+    val state = viewModel.searchState.collectAsState().value
+    LaunchedEffect(state) {
+        Timber.d("Update paging items")
+    }
+
     MusicListScreen(
         modifier = modifier,
         musicStream = viewModel.musicStream,
