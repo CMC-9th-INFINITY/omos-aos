@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.infinity.omos.R
+import com.infinity.omos.ui.music.search.pager.AlbumListScreen
 import com.infinity.omos.ui.music.search.pager.AllScreen
 import com.infinity.omos.ui.music.search.pager.MusicListScreen
 import com.infinity.omos.ui.theme.OmosTheme
@@ -69,8 +70,11 @@ fun MusicSearchPagerScreen(
                 MusicSearchPage.ALL -> {
                     AllScreen(
                         modifier = Modifier.fillMaxSize(),
-                        onMoreClick = {
+                        onMusicMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.MUSIC.ordinal) }
+                        },
+                        onAlbumMoreClick = {
+                            coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.ALBUM.ordinal) }
                         }
                     )
                 }
@@ -79,12 +83,14 @@ fun MusicSearchPagerScreen(
                     MusicListScreen(
                         modifier = Modifier.fillMaxSize(),
                         onMusicClick = {}, // TODO: 음악 클릭 시 화면 이동
-                        onMoreClick = {}
                     )
                 }
 
                 MusicSearchPage.ALBUM -> {
-
+                    AlbumListScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        onItemClick = {}
+                    )
                 }
 
                 MusicSearchPage.ARTIST -> {

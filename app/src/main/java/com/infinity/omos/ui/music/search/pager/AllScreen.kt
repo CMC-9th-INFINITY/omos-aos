@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.music.search.pager
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
@@ -12,14 +13,22 @@ private const val ARTIST_MAX_SIZE = 3
 @Composable
 fun AllScreen(
     modifier: Modifier = Modifier,
-    onMoreClick: () -> Unit = {}
+    onMusicMoreClick: () -> Unit = {},
+    onAlbumMoreClick: () -> Unit = {},
+    onArtistMoreClick: () -> Unit = {}
 ) {
-    MusicListScreen(
-        modifier = modifier,
-        itemCount = MUSIC_MAX_SIZE,
-        onMusicClick = {},
-        onMoreClick = onMoreClick
-    )
+    Column(modifier = modifier) {
+        MusicListScreen(
+            itemCount = MUSIC_MAX_SIZE,
+            onMusicClick = {},
+            onMoreClick = onMusicMoreClick
+        )
+        AlbumListScreen(
+            itemCount = ALBUM_MAX_SIZE,
+            onItemClick = {},
+            onMoreClick = onAlbumMoreClick
+        )
+    }
 }
 
 @Preview

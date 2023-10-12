@@ -4,6 +4,7 @@ import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.artist.ArtistModel
+import com.infinity.omos.utils.DateUtil
 
 fun Music.toPresentation(): MusicModel {
     return MusicModel(
@@ -22,7 +23,7 @@ fun Album.toPresentation(): AlbumModel {
         albumId = albumId,
         albumImageUrl = albumImageUrl,
         albumTitle = albumTitle,
-        releaseDate = releaseDate
+        releaseDate = DateUtil.convertToUiAlbumReleaseDate(releaseDate)
     )
 }
 

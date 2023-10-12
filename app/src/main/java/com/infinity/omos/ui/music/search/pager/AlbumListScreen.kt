@@ -1,6 +1,5 @@
 package com.infinity.omos.ui.music.search.pager
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -13,16 +12,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.tooling.preview.PreviewParameter
-import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
@@ -31,49 +25,46 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.infinity.omos.R
-import com.infinity.omos.data.music.artist.Artist
-import com.infinity.omos.data.music.MusicModel
+import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.music.search.MusicSearchViewModel
 import com.infinity.omos.ui.theme.OmosTheme
-import com.infinity.omos.ui.theme.white
+import com.infinity.omos.ui.theme.grey_03
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import timber.log.Timber
-import java.lang.Integer.min
 
 @Composable
-fun MusicListScreen(
+fun AlbumListScreen(
     modifier: Modifier = Modifier,
     viewModel: MusicSearchViewModel = hiltViewModel(),
     itemCount: Int = -1,
-    onMusicClick: (String) -> Unit,
-    onMoreClick: () -> Unit = {},
+    onItemClick: (String) -> Unit,
+    onMoreClick: () -> Unit = {}
 ) {
     val state = viewModel.searchState.collectAsState().value
     LaunchedEffect(state) {
         Timber.d("Update paging items")
     }
 
-    MusicListScreen(
+    AlbumListScreen(
         modifier = modifier,
-        musicStream = viewModel.musicStream,
+        albumStream = viewModel.albumStream,
         itemCount = itemCount,
-        onMusicClick = onMusicClick,
+        onItemClick = onItemClick,
         onMoreClick = onMoreClick
     )
 }
 
 @Composable
-fun MusicListScreen(
+fun AlbumListScreen(
     modifier: Modifier = Modifier,
-    musicStream: Flow<PagingData<MusicModel>>,
+    albumStream: Flow<PagingData<AlbumModel>>,
     itemCount: Int = -1,
-    onMusicClick: (String) -> Unit = {},
+    onItemClick: (String) -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
-    val pagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
+    val pagingItems: LazyPagingItems<AlbumModel> = albumStream.collectAsLazyPagingItems()
     val (count, isVisibleMore) = if (itemCount == -1) {
         pagingItems.itemCount to false
     } else {
@@ -82,24 +73,24 @@ fun MusicListScreen(
     LazyColumn(modifier = modifier) {
         item {
             PageHeader(
-                title = stringResource(id = R.string.music),
+                title = stringResource(id = R.string.album),
                 isVisibleMore = isVisibleMore,
                 onMoreClick = onMoreClick
             )
         }
         items(
-            count = min(count, pagingItems.itemCount),
+            count = Integer.min(count, pagingItems.itemCount),
             key = { index ->
-                val music = pagingItems[index]
-                "${music?.musicId ?: ""}${index}"
+                val album = pagingItems[index]
+                "${album?.albumId ?: ""}${index}"
             }
         ) { index ->
-            val music = pagingItems[index] ?: return@items
-            MusicListItem(
-                music = music,
+            val album = pagingItems[index] ?: return@items
+            AlbumListItem(
+                album = album,
                 modifier = modifier
             ) {
-                onMusicClick(music.musicId)
+                onItemClick(album.albumId)
             }
         }
     }
@@ -107,14 +98,14 @@ fun MusicListScreen(
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
 @Composable
-fun MusicListItem(
-    music: MusicModel,
+fun AlbumListItem(
+    album: AlbumModel,
     modifier: Modifier,
     onClick: () -> Unit
 ) {
     Surface(
         modifier = modifier
-            .padding(start = Dimens.PaddingNormal)
+            .padding(horizontal = Dimens.PaddingNormal)
             .padding(bottom = Dimens.PaddingNormal),
         onClick = onClick,
         color = MaterialTheme.colorScheme.background
@@ -122,8 +113,8 @@ fun MusicListItem(
         Row {
             GlideImage(
                 modifier = Modifier
-                    .size(52.dp),
-                model = music.albumImageUrl,
+                    .size(68.dp),
+                model = album.albumImageUrl,
                 contentDescription = stringResource(id = R.string.album_cover)
             )
             Column(
@@ -133,62 +124,33 @@ fun MusicListItem(
                     .weight(1f),
             ) {
                 Text(
-                    text = music.musicTitle,
+                    text = album.albumTitle,
                     style = MaterialTheme.typography.bodyLarge,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
                 Text(
-                    text = music.artistsAndAlbumTitle,
+                    text = album.artists,
                     style = MaterialTheme.typography.labelMedium,
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis
                 )
+                Text(
+                    text = album.releaseDate,
+                    style = MaterialTheme.typography.labelMedium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    color = grey_03
+                )
             }
-            Image(
-                modifier = Modifier
-                    .padding(horizontal = Dimens.PaddingNormal)
-                    .align(Alignment.CenterVertically),
-                painter = painterResource(id = R.drawable.ic_edit),
-                contentDescription = stringResource(id = R.string.write),
-                colorFilter = ColorFilter.tint(white)
-            )
         }
     }
 }
 
 @Preview
 @Composable
-fun MusicListScreenPreview(
-    @PreviewParameter(MusicListPreviewParamProvider::class) musicData: PagingData<MusicModel>
-) {
+fun AlbumListScreenPreview() {
     OmosTheme {
-        val musicStream = remember { MutableStateFlow(musicData) }
-        MusicListScreen(musicStream = musicStream.asStateFlow())
+        AlbumListScreen(albumStream = emptyFlow())
     }
-}
-
-private class MusicListPreviewParamProvider : PreviewParameterProvider<PagingData<MusicModel>> {
-    override val values: Sequence<PagingData<MusicModel>> =
-        sequenceOf(
-            PagingData.empty(),
-            PagingData.from(
-                listOf(
-                    MusicModel(
-                        musicId = "0",
-                        musicTitle = "음악 타이틀",
-                        artists = listOf(
-                            Artist(
-                                artistId = "0",
-                                artistImageUrl = "",
-                                artistName = "아티스트 이름"
-                            )
-                        ),
-                        albumTitle = "앨범 타이틀",
-                        albumImageUrl = "",
-                        artistsAndAlbumTitle = "가수 이름 - 앨범 타이틀"
-                    )
-                )
-            )
-        )
 }
