@@ -67,7 +67,9 @@ fun MusicSearchPagerScreen(
         ) { index ->
             when (pages[index]) {
                 MusicSearchPage.ALL -> {
-                    AllScreen(modifier = Modifier.fillMaxSize())
+                    AllScreen(
+                        modifier = Modifier.fillMaxSize()
+                    )
                 }
 
                 MusicSearchPage.MUSIC -> {
