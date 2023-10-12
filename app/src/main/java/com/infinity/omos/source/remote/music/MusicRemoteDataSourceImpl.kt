@@ -21,12 +21,16 @@ class MusicRemoteDataSourceImpl @Inject constructor(
 
     override fun getMusicStream(keyword: String): Flow<PagingData<Music>> {
         return Pager(
-            config = PagingConfig(enablePlaceholders = false, pageSize = NETWORK_PAGE_SIZE),
+            config = PagingConfig(
+                enablePlaceholders = false,
+                pageSize = NETWORK_PAGE_SIZE,
+                initialLoadSize = NETWORK_PAGE_SIZE
+            ),
             pagingSourceFactory = { MusicPagingSource(musicService, keyword) }
         ).flow
     }
 
     companion object {
-        private const val NETWORK_PAGE_SIZE = 25
+        private const val NETWORK_PAGE_SIZE = 15
     }
 }

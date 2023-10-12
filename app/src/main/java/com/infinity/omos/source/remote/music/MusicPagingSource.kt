@@ -5,7 +5,7 @@ import androidx.paging.PagingState
 import com.infinity.omos.api.MusicService
 import com.infinity.omos.data.music.Music
 
-private const val MUSIC_STARTING_PAGE_INDEX = 1
+private const val MUSIC_STARTING_PAGE_INDEX = 0
 
 class MusicPagingSource(
     private val service: MusicService,
@@ -15,7 +15,7 @@ class MusicPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Music> {
         val page = params.key ?: MUSIC_STARTING_PAGE_INDEX
         return try {
-            val response = service.getMusic(keyword, page, params.loadSize)
+            val response = service.getMusic(keyword, params.loadSize, page * params.loadSize)
             LoadResult.Page(
                 data = response,
                 prevKey = if (page == MUSIC_STARTING_PAGE_INDEX) null else page - 1,
