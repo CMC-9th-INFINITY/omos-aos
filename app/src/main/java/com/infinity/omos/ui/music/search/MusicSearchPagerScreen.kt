@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.infinity.omos.R
 import com.infinity.omos.ui.music.search.pager.AlbumListScreen
 import com.infinity.omos.ui.music.search.pager.AllScreen
+import com.infinity.omos.ui.music.search.pager.ArtistListScreen
 import com.infinity.omos.ui.music.search.pager.MusicListScreen
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.grey_03
@@ -43,7 +44,7 @@ fun MusicSearchPagerScreen(
 
     Column {
         val coroutineScope = rememberCoroutineScope()
-        
+
         TabRow(
             selectedTabIndex = pagerState.currentPage,
             containerColor = MaterialTheme.colorScheme.background
@@ -69,12 +70,14 @@ fun MusicSearchPagerScreen(
             when (pages[index]) {
                 MusicSearchPage.ALL -> {
                     AllScreen(
-                        modifier = Modifier.fillMaxSize(),
                         onMusicMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.MUSIC.ordinal) }
                         },
                         onAlbumMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.ALBUM.ordinal) }
+                        },
+                        onArtistMoreClick = {
+                            coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.ARTIST.ordinal) }
                         }
                     )
                 }
@@ -94,7 +97,10 @@ fun MusicSearchPagerScreen(
                 }
 
                 MusicSearchPage.ARTIST -> {
-
+                    ArtistListScreen(
+                        modifier = Modifier.fillMaxSize(),
+                        onItemClick = {}
+                    )
                 }
             }
         }

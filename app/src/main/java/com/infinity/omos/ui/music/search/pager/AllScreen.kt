@@ -17,7 +17,7 @@ fun AllScreen(
     onAlbumMoreClick: () -> Unit = {},
     onArtistMoreClick: () -> Unit = {}
 ) {
-    Column(modifier = modifier) {
+    Column {
         MusicListScreen(
             itemCount = MUSIC_MAX_SIZE,
             onMusicClick = {},
@@ -27,6 +27,11 @@ fun AllScreen(
             itemCount = ALBUM_MAX_SIZE,
             onItemClick = {},
             onMoreClick = onAlbumMoreClick
+        )
+        ArtistListScreen(
+            itemCount = ARTIST_MAX_SIZE,
+            onItemClick = {},
+            onMoreClick = onArtistMoreClick
         )
     }
 }

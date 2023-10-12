@@ -1,5 +1,6 @@
 package com.infinity.omos.utils
 
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -27,11 +28,15 @@ object DateUtil {
     }
 
     fun convertToUiAlbumReleaseDate(str: String): String {
-        val date = remoteAlbumReleaseDateFormat.parse(str)
-        return if (date != null) {
-            uiAlbumReleaseDateFormat.format(date)
-        } else {
-            "DATE ERROR"
+        return try {
+            val date = remoteAlbumReleaseDateFormat.parse(str)
+            if (date != null) {
+                uiAlbumReleaseDateFormat.format(date)
+            } else {
+                "DATE ERROR"
+            }
+        } catch (e: ParseException) {
+            str
         }
     }
 }

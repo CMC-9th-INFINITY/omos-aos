@@ -13,13 +13,13 @@ fun Music.toPresentation(): MusicModel {
         artists = artists,
         albumTitle = albumTitle,
         albumImageUrl = albumImageUrl,
-        artistsAndAlbumTitle = "${artists.joinToString(separator = ", ") { it.artistName }} - $albumTitle"
+        artistsAndAlbumTitle = "${artists.joinToString(separator = " & ") { it.artistName }} - $albumTitle"
     )
 }
 
 fun Album.toPresentation(): AlbumModel {
     return AlbumModel(
-        artists = artists.joinToString(", "),
+        artists = artists.joinToString(separator = " & ") { it.artistName },
         albumId = albumId,
         albumImageUrl = albumImageUrl,
         albumTitle = albumTitle,
@@ -30,9 +30,9 @@ fun Album.toPresentation(): AlbumModel {
 fun Artist.toPresentation(): ArtistModel {
     return ArtistModel(
         artistId = artistId,
-        artistImageUrl = artistImageUrl,
+        artistImageUrl = artistImageUrl ?: "",
         artistName = artistName,
-        genres = genres.joinToString(", ")
+        genres = genres.joinToString(" & ")
     )
 }
 

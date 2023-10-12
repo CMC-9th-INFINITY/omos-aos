@@ -32,7 +32,7 @@ interface MusicService {
         @Query("offset") offset: Int
     ): List<Album>
 
-    @GET("api/search/track")
+    @GET("api/search/artist")
     suspend fun getArtistList(
         @Query("keyword") keyword: String,
         @Query("limit") limit: Int,
