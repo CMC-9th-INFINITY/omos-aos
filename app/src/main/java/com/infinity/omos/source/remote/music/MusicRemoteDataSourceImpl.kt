@@ -4,6 +4,8 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.infinity.omos.api.MusicService
+import com.infinity.omos.data.music.album.Album
+import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.music.MusicTitle
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +17,7 @@ class MusicRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun getMusicTitle(keyword: String): Result<List<MusicTitle>> {
         return Result.runCatching {
-            musicService.getMusicTitle(keyword)
+            musicService.getMusicTitleList(keyword)
         }
     }
 
@@ -27,6 +29,28 @@ class MusicRemoteDataSourceImpl @Inject constructor(
                 initialLoadSize = NETWORK_PAGE_SIZE
             ),
             pagingSourceFactory = { MusicPagingSource(musicService, keyword) }
+        ).flow
+    }
+
+    override fun getAlbumStream(keyword: String): Flow<PagingData<Album>> {
+        return Pager(
+            config = PagingConfig(
+                enablePlaceholders = false,
+                pageSize = NETWORK_PAGE_SIZE,
+                initialLoadSize = NETWORK_PAGE_SIZE
+            ),
+            pagingSourceFactory = { AlbumPagingSource(musicService, keyword) }
+        ).flow
+    }
+
+    override fun getArtistStream(keyword: String): Flow<PagingData<Artist>> {
+        return Pager(
+            config = PagingConfig(
+                enablePlaceholders = false,
+                pageSize = NETWORK_PAGE_SIZE,
+                initialLoadSize = NETWORK_PAGE_SIZE
+            ),
+            pagingSourceFactory = { ArtistPagingSource(musicService, keyword) }
         ).flow
     }
 

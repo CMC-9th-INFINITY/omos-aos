@@ -1,5 +1,10 @@
 package com.infinity.omos.data.music
 
+import com.infinity.omos.data.music.album.Album
+import com.infinity.omos.data.music.album.AlbumModel
+import com.infinity.omos.data.music.artist.Artist
+import com.infinity.omos.data.music.artist.ArtistModel
+
 fun Music.toPresentation(): MusicModel {
     return MusicModel(
         musicTitle = musicTitle,
@@ -8,6 +13,25 @@ fun Music.toPresentation(): MusicModel {
         albumTitle = albumTitle,
         albumImageUrl = albumImageUrl,
         artistsAndAlbumTitle = "${artists.joinToString(separator = ", ") { it.artistName }} - $albumTitle"
+    )
+}
+
+fun Album.toPresentation(): AlbumModel {
+    return AlbumModel(
+        artists = artists.joinToString(", "),
+        albumId = albumId,
+        albumImageUrl = albumImageUrl,
+        albumTitle = albumTitle,
+        releaseDate = releaseDate
+    )
+}
+
+fun Artist.toPresentation(): ArtistModel {
+    return ArtistModel(
+        artistId = artistId,
+        artistImageUrl = artistImageUrl,
+        artistName = artistName,
+        genres = genres.joinToString(", ")
     )
 }
 

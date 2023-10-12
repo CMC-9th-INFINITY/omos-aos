@@ -1,10 +1,10 @@
-package com.infinity.omos.data
+package com.infinity.omos.data.music.artist
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class Artists(
+data class Artist(
     @SerialName("artistId") val artistId: String,
     @SerialName("artistImageUrl") val artistImageUrl: String = "",
     @SerialName("artistName") val artistName: String,

@@ -3,11 +3,9 @@ package com.infinity.omos.ui.music.search.pager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,7 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -34,7 +31,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.infinity.omos.R
-import com.infinity.omos.data.Artists
+import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.music.search.MusicSearchViewModel
@@ -76,36 +73,18 @@ fun MusicListScreen(
     onMusicClick: (String) -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
-    val isVisibleMore = itemCount != -1
     val pagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
-    val count = if (itemCount == -1) {
-        pagingItems.itemCount
+    val (count, isVisibleMore) = if (itemCount == -1) {
+        pagingItems.itemCount to false
     } else {
-        itemCount
+        itemCount to true
     }
     LazyColumn(modifier = modifier) {
         item {
-            Row(
-                modifier = Modifier
-                    .padding(top = 29.dp)
-                    .padding(bottom = Dimens.PaddingNormal)
-                    .padding(horizontal = Dimens.PaddingNormal),
-            ) {
-                Text(
-                    text = stringResource(id = R.string.music),
-                    style = MaterialTheme.typography.titleMedium
-                )
-                Spacer(modifier = Modifier.weight(1f))
-                if (isVisibleMore) {
-                    ClickableText(
-                        modifier = Modifier.align(Alignment.Bottom),
-                        text = AnnotatedString(stringResource(id = R.string.more)),
-                        style = MaterialTheme.typography.labelMedium
-                    ) {
-                        onMoreClick()
-                    }
-                }
-            }
+            PageHeader(
+                isVisibleMore = isVisibleMore,
+                onMoreClick = onMoreClick
+            )
         }
         items(
             count = min(count, pagingItems.itemCount),
@@ -198,7 +177,7 @@ private class MusicListPreviewParamProvider : PreviewParameterProvider<PagingDat
                         musicId = "0",
                         musicTitle = "음악 타이틀",
                         artists = listOf(
-                            Artists(
+                            Artist(
                                 artistId = "0",
                                 artistImageUrl = "",
                                 artistName = "아티스트 이름"

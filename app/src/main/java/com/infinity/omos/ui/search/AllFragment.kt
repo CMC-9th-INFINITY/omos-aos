@@ -59,7 +59,7 @@ class AllFragment : Fragment() {
 
         // 풀스크린 시 밑에 짤리는 현상 해결
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            binding.scrollView.setPadding(0, 0, 0, context!!.navigationHeight())
+            binding.scrollView.setPadding(0, 0, 0, requireContext().navigationHeight())
         }
 
         return binding.root
@@ -91,8 +91,8 @@ class AllFragment : Fragment() {
         viewModel.loadMoreArtist(keyword, 5, 0)
 
         // 노래 초기화
-        viewModel.getMusic().observe(viewLifecycleOwner) { music ->
-            music?.let {
+        viewModel.getMusic().observe(viewLifecycleOwner) {
+            it.let {
                 mAdapter.clearRecord() // 기존 리스트 삭제
                 mAdapter.setRecord(it) // 검색된 리스트 추가
                 mAdapter.deleteLoading() // 로딩 리스트 삭제
@@ -111,8 +111,8 @@ class AllFragment : Fragment() {
         }
 
         // 앨범 초기화
-        viewModel.getAlbum().observe(viewLifecycleOwner) { album ->
-            album?.let {
+        viewModel.getAlbum().observe(viewLifecycleOwner) {
+            it.let {
                 aAdapter.clearRecord() // 기존 리스트 삭제
                 aAdapter.setRecord(it) // 검색된 리스트 추가
                 aAdapter.deleteLoading() // 로딩 리스트 삭제

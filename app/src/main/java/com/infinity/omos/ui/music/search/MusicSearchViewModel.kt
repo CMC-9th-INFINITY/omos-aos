@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import androidx.paging.map
+import com.infinity.omos.data.music.album.AlbumModel
+import com.infinity.omos.data.music.artist.ArtistModel
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.data.music.toPresentation
@@ -40,6 +42,10 @@ class MusicSearchViewModel @Inject constructor(
     val searchState = _searchState.asStateFlow()
 
     lateinit var musicStream: Flow<PagingData<MusicModel>>
+
+    lateinit var albumStream: Flow<PagingData<AlbumModel>>
+
+    lateinit var artistStream: Flow<PagingData<ArtistModel>>
 
     init {
         fetchSearchMusic()
@@ -85,6 +91,22 @@ class MusicSearchViewModel @Inject constructor(
             .map { pagingData ->
                 pagingData.map { music ->
                     music.toPresentation()
+                }
+            }
+            .cachedIn(viewModelScope)
+
+        albumStream = musicRepository.getAlbumStream(keyword.value)
+            .map { pagingData ->
+                pagingData.map { album ->
+                    album.toPresentation()
+                }
+            }
+            .cachedIn(viewModelScope)
+
+        artistStream = musicRepository.getArtistStream(keyword.value)
+            .map { pagingData ->
+                pagingData.map { artist ->
+                    artist.toPresentation()
                 }
             }
             .cachedIn(viewModelScope)
