@@ -19,6 +19,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.infinity.omos.R
 import com.infinity.omos.ui.music.search.pager.AllScreen
+import com.infinity.omos.ui.music.search.pager.MusicListScreen
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.grey_03
 import kotlinx.coroutines.launch
@@ -70,7 +71,10 @@ fun MusicSearchPagerScreen(
                 }
 
                 MusicSearchPage.MUSIC -> {
-
+                    MusicListScreen(
+                        onMusicClick = {}, // TODO: 음악 클릭 시 화면 이동
+                        modifier = Modifier.fillMaxSize(),
+                    )
                 }
 
                 MusicSearchPage.ALBUM -> {
