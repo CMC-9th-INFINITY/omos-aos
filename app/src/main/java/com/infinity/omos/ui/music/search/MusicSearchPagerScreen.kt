@@ -68,14 +68,18 @@ fun MusicSearchPagerScreen(
             when (pages[index]) {
                 MusicSearchPage.ALL -> {
                     AllScreen(
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
+                        onMoreClick = {
+                            coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.MUSIC.ordinal) }
+                        }
                     )
                 }
 
                 MusicSearchPage.MUSIC -> {
                     MusicListScreen(
-                        onMusicClick = {}, // TODO: 음악 클릭 시 화면 이동
                         modifier = Modifier.fillMaxSize(),
+                        onMusicClick = {}, // TODO: 음악 클릭 시 화면 이동
+                        onMoreClick = {}
                     )
                 }
 

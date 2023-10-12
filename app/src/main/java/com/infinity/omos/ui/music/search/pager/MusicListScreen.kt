@@ -3,9 +3,11 @@ package com.infinity.omos.ui.music.search.pager
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -19,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.tooling.preview.PreviewParameter
@@ -45,9 +48,11 @@ import java.lang.Integer.min
 
 @Composable
 fun MusicListScreen(
-    onMusicClick: (String) -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: MusicSearchViewModel = hiltViewModel()
+    viewModel: MusicSearchViewModel = hiltViewModel(),
+    itemCount: Int = -1,
+    onMusicClick: (String) -> Unit,
+    onMoreClick: () -> Unit = {},
 ) {
     val state = viewModel.searchState.collectAsState().value
     LaunchedEffect(state) {
@@ -57,17 +62,21 @@ fun MusicListScreen(
     MusicListScreen(
         modifier = modifier,
         musicStream = viewModel.musicStream,
-        onMusicClick = onMusicClick
+        itemCount = itemCount,
+        onMusicClick = onMusicClick,
+        onMoreClick = onMoreClick
     )
 }
 
 @Composable
 fun MusicListScreen(
-    musicStream: Flow<PagingData<MusicModel>>,
     modifier: Modifier = Modifier,
-    onMusicClick: (String) -> Unit = {},
+    musicStream: Flow<PagingData<MusicModel>>,
     itemCount: Int = -1,
+    onMusicClick: (String) -> Unit = {},
+    onMoreClick: () -> Unit = {}
 ) {
+    val isVisibleMore = itemCount != -1
     val pagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
     val count = if (itemCount == -1) {
         pagingItems.itemCount
@@ -76,14 +85,27 @@ fun MusicListScreen(
     }
     LazyColumn(modifier = modifier) {
         item {
-            Text(
+            Row(
                 modifier = Modifier
                     .padding(top = 29.dp)
                     .padding(bottom = Dimens.PaddingNormal)
                     .padding(horizontal = Dimens.PaddingNormal),
-                text = stringResource(id = R.string.music),
-                style = MaterialTheme.typography.titleMedium
-            )
+            ) {
+                Text(
+                    text = stringResource(id = R.string.music),
+                    style = MaterialTheme.typography.titleMedium
+                )
+                Spacer(modifier = Modifier.weight(1f))
+                if (isVisibleMore) {
+                    ClickableText(
+                        modifier = Modifier.align(Alignment.Bottom),
+                        text = AnnotatedString(stringResource(id = R.string.more)),
+                        style = MaterialTheme.typography.labelMedium
+                    ) {
+                        onMoreClick()
+                    }
+                }
+            }
         }
         items(
             count = min(count, pagingItems.itemCount),
