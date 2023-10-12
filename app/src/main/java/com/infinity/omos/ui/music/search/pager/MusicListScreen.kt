@@ -53,32 +53,31 @@ fun MusicListScreen(
     modifier: Modifier = Modifier,
     onMusicClick: (String) -> Unit = {}
 ) {
-    Column(modifier = modifier) {
-        Text(
-            modifier = Modifier
-                .padding(top = 29.dp)
-                .padding(bottom = Dimens.PaddingNormal)
-                .padding(horizontal = Dimens.PaddingNormal),
-            text = stringResource(id = R.string.music),
-            style = MaterialTheme.typography.titleMedium
-        )
-
-        val pagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
-        LazyColumn(modifier = modifier) {
-            items(
-                count = pagingItems.itemCount,
-                key = {index ->
-                    val music = pagingItems[index]
-                    "${music?.musicId ?: ""}${index}"
-                }
-            ) { index ->
-                val music = pagingItems[index] ?: return@items
-                MusicListItem(
-                    music = music,
-                    modifier = modifier
-                ) {
-                    onMusicClick(music.musicId)
-                }
+    val pagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
+    LazyColumn(modifier = modifier) {
+        item {
+            Text(
+                modifier = Modifier
+                    .padding(top = 29.dp)
+                    .padding(bottom = Dimens.PaddingNormal)
+                    .padding(horizontal = Dimens.PaddingNormal),
+                text = stringResource(id = R.string.music),
+                style = MaterialTheme.typography.titleMedium
+            )
+        }
+        items(
+            count = pagingItems.itemCount,
+            key = {index ->
+                val music = pagingItems[index]
+                "${music?.musicId ?: ""}${index}"
+            }
+        ) { index ->
+            val music = pagingItems[index] ?: return@items
+            MusicListItem(
+                music = music,
+                modifier = modifier
+            ) {
+                onMusicClick(music.musicId)
             }
         }
     }
