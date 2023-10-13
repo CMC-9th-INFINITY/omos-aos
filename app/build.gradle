@@ -93,7 +93,7 @@ dependencies {
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation 'androidx.hilt:hilt-navigation-compose:1.0.0'
     implementation "androidx.paging:paging-compose:3.2.1"
-    implementation "com.github.bumptech.glide:compose:1.0.0-alpha.1"
+    implementation "com.github.skydoves:landscapist-glide:2.1.0"
 
     // Test
     testImplementation "junit:junit:$rootProject.junitVersion"

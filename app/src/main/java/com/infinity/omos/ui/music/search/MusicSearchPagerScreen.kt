@@ -70,6 +70,7 @@ fun MusicSearchPagerScreen(
             when (pages[index]) {
                 MusicSearchPage.ALL -> {
                     AllScreen(
+                        modifier = Modifier.fillMaxSize(),
                         onMusicMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.MUSIC.ordinal) }
                         },
@@ -78,7 +79,10 @@ fun MusicSearchPagerScreen(
                         },
                         onArtistMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.ARTIST.ordinal) }
-                        }
+                        },
+                        onMusicClick = {},
+                        onAlbumClick = {},
+                        onArtistClick = {}
                     )
                 }
 

@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.music.search.pager
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -28,26 +29,24 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.infinity.omos.R
 import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.music.search.MusicSearchViewModel
 import com.infinity.omos.ui.theme.OmosTheme
+import com.infinity.omos.ui.theme.grey_04
 import com.infinity.omos.ui.theme.white
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
-import java.lang.Integer.min
 
 @Composable
 fun MusicListScreen(
     modifier: Modifier = Modifier,
     viewModel: MusicSearchViewModel = hiltViewModel(),
-    itemCount: Int = -1,
     onMusicClick: (String) -> Unit,
     onMoreClick: () -> Unit = {},
 ) {
@@ -59,7 +58,6 @@ fun MusicListScreen(
     MusicListScreen(
         modifier = modifier,
         musicStream = viewModel.musicStream,
-        itemCount = itemCount,
         onMusicClick = onMusicClick,
         onMoreClick = onMoreClick
     )
@@ -69,26 +67,20 @@ fun MusicListScreen(
 fun MusicListScreen(
     modifier: Modifier = Modifier,
     musicStream: Flow<PagingData<MusicModel>>,
-    itemCount: Int = -1,
     onMusicClick: (String) -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
     val pagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
-    val (count, isVisibleMore) = if (itemCount == -1) {
-        pagingItems.itemCount to false
-    } else {
-        itemCount to true
-    }
     LazyColumn(modifier = modifier) {
         item {
             PageHeader(
                 title = stringResource(id = R.string.music),
-                isVisibleMore = isVisibleMore,
+                isVisibleMore = false,
                 onMoreClick = onMoreClick
             )
         }
         items(
-            count = min(count, pagingItems.itemCount),
+            count = pagingItems.itemCount,
             key = { index ->
                 val music = pagingItems[index]
                 "${music?.musicId ?: ""}${index}"
@@ -105,7 +97,7 @@ fun MusicListScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicListItem(
     music: MusicModel,
@@ -122,9 +114,16 @@ fun MusicListItem(
         Row {
             GlideImage(
                 modifier = Modifier
-                    .size(52.dp),
-                model = music.albumImageUrl,
-                contentDescription = stringResource(id = R.string.album_cover)
+                    .size(52.dp)
+                    .background(color = grey_04),
+                imageModel = { music.albumImageUrl },
+                failure = {
+                    Image(
+                        modifier = Modifier.align(Alignment.Center),
+                        painter = painterResource(id = R.drawable.ic_music),
+                        contentDescription = stringResource(id = R.string.music_icon)
+                    )
+                }
             )
             Column(
                 modifier = Modifier

@@ -1,5 +1,7 @@
 package com.infinity.omos.ui.music.search.pager
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -14,6 +16,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -22,14 +25,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
 import com.infinity.omos.R
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.music.search.MusicSearchViewModel
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.grey_03
+import com.infinity.omos.ui.theme.grey_04
+import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
 import timber.log.Timber
@@ -38,7 +41,6 @@ import timber.log.Timber
 fun AlbumListScreen(
     modifier: Modifier = Modifier,
     viewModel: MusicSearchViewModel = hiltViewModel(),
-    itemCount: Int = -1,
     onItemClick: (String) -> Unit,
     onMoreClick: () -> Unit = {}
 ) {
@@ -50,7 +52,6 @@ fun AlbumListScreen(
     AlbumListScreen(
         modifier = modifier,
         albumStream = viewModel.albumStream,
-        itemCount = itemCount,
         onItemClick = onItemClick,
         onMoreClick = onMoreClick
     )
@@ -60,26 +61,20 @@ fun AlbumListScreen(
 fun AlbumListScreen(
     modifier: Modifier = Modifier,
     albumStream: Flow<PagingData<AlbumModel>>,
-    itemCount: Int = -1,
     onItemClick: (String) -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
     val pagingItems: LazyPagingItems<AlbumModel> = albumStream.collectAsLazyPagingItems()
-    val (count, isVisibleMore) = if (itemCount == -1) {
-        pagingItems.itemCount to false
-    } else {
-        itemCount to true
-    }
     LazyColumn(modifier = modifier) {
         item {
             PageHeader(
                 title = stringResource(id = R.string.album),
-                isVisibleMore = isVisibleMore,
+                isVisibleMore = false,
                 onMoreClick = onMoreClick
             )
         }
         items(
-            count = Integer.min(count, pagingItems.itemCount),
+            count = pagingItems.itemCount,
             key = { index ->
                 val album = pagingItems[index]
                 "${album?.albumId ?: ""}${index}"
@@ -96,7 +91,7 @@ fun AlbumListScreen(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalGlideComposeApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlbumListItem(
     album: AlbumModel,
@@ -113,9 +108,16 @@ fun AlbumListItem(
         Row {
             GlideImage(
                 modifier = Modifier
-                    .size(68.dp),
-                model = album.albumImageUrl,
-                contentDescription = stringResource(id = R.string.album_cover)
+                    .size(68.dp)
+                    .background(color = grey_04),
+                imageModel = { album.albumImageUrl },
+                failure = {
+                    Image(
+                        modifier = Modifier.align(Alignment.Center),
+                        painter = painterResource(id = R.drawable.ic_music),
+                        contentDescription = stringResource(id = R.string.music_icon)
+                    )
+                }
             )
             Column(
                 modifier = Modifier
