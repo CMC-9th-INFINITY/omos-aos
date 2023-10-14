@@ -5,6 +5,7 @@ import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.music.MusicTitle
+import com.infinity.omos.data.music.album.AlbumMusic
 import com.infinity.omos.source.remote.music.MusicRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -27,5 +28,13 @@ class MusicRepositoryImpl @Inject constructor(
 
     override fun getArtistStream(keyword: String): Flow<PagingData<Artist>> {
         return musicRemoteDataSource.getArtistStream(keyword)
+    }
+
+    override suspend fun getAlbumMusicList(albumId: String): Result<List<AlbumMusic>> {
+        return musicRemoteDataSource.getAlbumMusicList(albumId)
+    }
+
+    override fun getArtistAlbumStream(artistId: String): Flow<PagingData<Album>> {
+        return musicRemoteDataSource.getArtistAlbumStream(artistId)
     }
 }

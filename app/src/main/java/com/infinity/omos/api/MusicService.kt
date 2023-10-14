@@ -4,7 +4,9 @@ import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.music.MusicTitle
+import com.infinity.omos.data.music.album.AlbumMusic
 import retrofit2.http.GET
+import retrofit2.http.Path
 import retrofit2.http.Query
 
 interface MusicService {
@@ -38,4 +40,16 @@ interface MusicService {
         @Query("limit") limit: Int,
         @Query("offset") offset: Int
     ): List<Artist>
+
+    @GET("api/search/album/{albumId}")
+    suspend fun getAlbumMusicList(
+        @Path("albumId") albumId: String
+    ): List<AlbumMusic>
+
+    @GET("api/search/artist/{artistId}/albums")
+    suspend fun getArtistAlbumList(
+        @Path("artistId") artistId: String,
+        @Query("limit") limit: Int,
+        @Query("offset") offset: Int
+    ): List<Album>
 }

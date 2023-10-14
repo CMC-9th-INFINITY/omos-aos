@@ -8,6 +8,7 @@ import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.music.MusicTitle
+import com.infinity.omos.data.music.album.AlbumMusic
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
@@ -51,6 +52,23 @@ class MusicRemoteDataSourceImpl @Inject constructor(
                 initialLoadSize = NETWORK_PAGE_SIZE
             ),
             pagingSourceFactory = { ArtistPagingSource(musicService, keyword) }
+        ).flow
+    }
+
+    override suspend fun getAlbumMusicList(albumId: String): Result<List<AlbumMusic>> {
+        return Result.runCatching {
+            musicService.getAlbumMusicList(albumId)
+        }
+    }
+
+    override fun getArtistAlbumStream(artistId: String): Flow<PagingData<Album>> {
+        return Pager(
+            config = PagingConfig(
+                enablePlaceholders = false,
+                pageSize = NETWORK_PAGE_SIZE,
+                initialLoadSize = NETWORK_PAGE_SIZE
+            ),
+            pagingSourceFactory = { ArtistAlbumPagingSource(musicService, artistId) }
         ).flow
     }
 

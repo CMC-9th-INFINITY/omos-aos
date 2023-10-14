@@ -5,6 +5,7 @@ import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
 import com.infinity.omos.data.music.MusicTitle
+import com.infinity.omos.data.music.album.AlbumMusic
 import kotlinx.coroutines.flow.Flow
 
 interface MusicRepository {
@@ -16,4 +17,8 @@ interface MusicRepository {
     fun getAlbumStream(keyword: String): Flow<PagingData<Album>>
 
     fun getArtistStream(keyword: String): Flow<PagingData<Artist>>
+
+    suspend fun getAlbumMusicList(albumId: String): Result<List<AlbumMusic>>
+
+    fun getArtistAlbumStream(artistId: String): Flow<PagingData<Album>>
 }
