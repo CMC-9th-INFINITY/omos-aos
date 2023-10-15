@@ -27,7 +27,8 @@ fun MusicSearchNavHost(
         composable("pager") {
             MusicSearchPagerScreen(
                 onAlbumClick = {
-                    navController.navigate("album/${it.albumId}/${it.albumTitle}/${it.albumImageUrl}/${it.artists}/${it.releaseDate}")
+                    val destination = "album/${it.albumId}/${it.albumTitle}/${it.artists}/${it.releaseDate}?albumImageUrl=${it.albumImageUrl}"
+                    navController.navigate(destination)
                 },
                 onArtistClick = {
 
@@ -36,7 +37,7 @@ fun MusicSearchNavHost(
             )
         }
         composable(
-            "album/{albumId}/{albumTitle}/{albumImageUrl}/{artists}/{releaseDate}",
+            "album/{albumId}/{albumTitle}/{artists}/{releaseDate}?albumImageUrl={albumImageUrl}",
             arguments = listOf(
                 navArgument("albumId") { type = NavType.StringType },
                 navArgument("albumTitle") { type = NavType.StringType },

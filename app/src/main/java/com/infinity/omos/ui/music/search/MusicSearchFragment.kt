@@ -16,7 +16,6 @@ import com.infinity.omos.databinding.FragmentSearchMusicBinding
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MusicSearchFragment : Fragment() {
@@ -99,7 +98,6 @@ class MusicSearchFragment : Fragment() {
 
     private fun search() {
         viewModel.setSearchState(MusicSearchState.AFTER)
-        Timber.d("jaemin click Search!")
         viewModel.search()
     }
 }
