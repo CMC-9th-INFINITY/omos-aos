@@ -16,6 +16,7 @@ import com.infinity.omos.databinding.FragmentSearchMusicBinding
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
+import timber.log.Timber
 
 @AndroidEntryPoint
 class MusicSearchFragment : Fragment() {
@@ -37,7 +38,7 @@ class MusicSearchFragment : Fragment() {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
                 OmosTheme {
-                    MusicSearchPagerScreen()
+                    MusicSearchApp()
                 }
             }
         }
@@ -72,7 +73,7 @@ class MusicSearchFragment : Fragment() {
         }
 
         binding.etSearch.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER)) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH || (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action != KeyEvent.ACTION_DOWN)) {
                 search()
             }
 
@@ -98,6 +99,7 @@ class MusicSearchFragment : Fragment() {
 
     private fun search() {
         viewModel.setSearchState(MusicSearchState.AFTER)
+        Timber.d("jaemin click Search!")
         viewModel.search()
     }
 }

@@ -41,7 +41,7 @@ import timber.log.Timber
 fun AlbumListScreen(
     modifier: Modifier = Modifier,
     viewModel: MusicSearchViewModel = hiltViewModel(),
-    onItemClick: (String) -> Unit,
+    onAlbumClick: (AlbumModel) -> Unit,
     onMoreClick: () -> Unit = {}
 ) {
     val state = viewModel.searchState.collectAsState().value
@@ -52,7 +52,7 @@ fun AlbumListScreen(
     AlbumListScreen(
         modifier = modifier,
         albumStream = viewModel.albumStream,
-        onItemClick = onItemClick,
+        onAlbumClick = onAlbumClick,
         onMoreClick = onMoreClick
     )
 }
@@ -61,7 +61,7 @@ fun AlbumListScreen(
 fun AlbumListScreen(
     modifier: Modifier = Modifier,
     albumStream: Flow<PagingData<AlbumModel>>,
-    onItemClick: (String) -> Unit = {},
+    onAlbumClick: (AlbumModel) -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
     val pagingItems: LazyPagingItems<AlbumModel> = albumStream.collectAsLazyPagingItems()
@@ -85,7 +85,7 @@ fun AlbumListScreen(
                 album = album,
                 modifier = modifier
             ) {
-                onItemClick(album.albumId)
+                onAlbumClick(album)
             }
         }
     }
@@ -96,13 +96,13 @@ fun AlbumListScreen(
 fun AlbumListItem(
     album: AlbumModel,
     modifier: Modifier,
-    onClick: () -> Unit
+    onAlbumClick: () -> Unit
 ) {
     Surface(
         modifier = modifier
             .padding(horizontal = Dimens.PaddingNormal)
             .padding(bottom = Dimens.PaddingNormal),
-        onClick = onClick,
+        onClick = onAlbumClick,
         color = MaterialTheme.colorScheme.background
     ) {
         Row {

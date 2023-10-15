@@ -17,7 +17,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
+import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.pager.AlbumListScreen
 import com.infinity.omos.ui.music.search.pager.AllScreen
 import com.infinity.omos.ui.music.search.pager.ArtistListScreen
@@ -38,7 +40,11 @@ enum class MusicSearchPage(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MusicSearchPagerScreen(
-    pages: Array<MusicSearchPage> = MusicSearchPage.values()
+    viewModel: MusicSearchViewModel = hiltViewModel(),
+    pages: Array<MusicSearchPage> = MusicSearchPage.values(),
+    onMusicClick: (String) -> Unit = {},
+    onAlbumClick: (AlbumModel) -> Unit = {},
+    onArtistClick: (String) -> Unit = {},
 ) {
     val pagerState = rememberPagerState()
 
@@ -71,6 +77,7 @@ fun MusicSearchPagerScreen(
                 MusicSearchPage.ALL -> {
                     AllScreen(
                         modifier = Modifier.fillMaxSize(),
+                        viewModel = viewModel,
                         onMusicMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.MUSIC.ordinal) }
                         },
@@ -80,30 +87,33 @@ fun MusicSearchPagerScreen(
                         onArtistMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.ARTIST.ordinal) }
                         },
-                        onMusicClick = {},
-                        onAlbumClick = {},
-                        onArtistClick = {}
+                        onMusicClick = onMusicClick,
+                        onAlbumClick = onAlbumClick,
+                        onArtistClick = onArtistClick
                     )
                 }
 
                 MusicSearchPage.MUSIC -> {
                     MusicListScreen(
                         modifier = Modifier.fillMaxSize(),
-                        onMusicClick = {}, // TODO: 음악 클릭 시 화면 이동
+                        viewModel = viewModel,
+                        onMusicClick = onMusicClick,
                     )
                 }
 
                 MusicSearchPage.ALBUM -> {
                     AlbumListScreen(
                         modifier = Modifier.fillMaxSize(),
-                        onItemClick = {}
+                        viewModel = viewModel,
+                        onAlbumClick = onAlbumClick
                     )
                 }
 
                 MusicSearchPage.ARTIST -> {
                     ArtistListScreen(
                         modifier = Modifier.fillMaxSize(),
-                        onItemClick = {}
+                        viewModel = viewModel,
+                        onArtistClick = onArtistClick
                     )
                 }
             }

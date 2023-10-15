@@ -13,7 +13,7 @@
 
         <action
             android:id="@+id/action_today_fragment_to_select_music_fragment"
-            app:destination="@id/select_music_fragment" />
+            app:destination="@id/music_search_fragment" />
     </fragment>
 
     <fragment
@@ -49,7 +49,7 @@
     </fragment>
 
     <fragment
-        android:id="@+id/select_music_fragment"
+        android:id="@+id/music_search_fragment"
         android:name="com.infinity.omos.ui.music.search.MusicSearchFragment"
         android:label="Search Music Fragment"
         tools:layout="@layout/fragment_search_music">

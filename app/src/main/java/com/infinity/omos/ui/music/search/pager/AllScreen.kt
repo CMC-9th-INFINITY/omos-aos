@@ -34,7 +34,7 @@ fun AllScreen(
     onAlbumMoreClick: () -> Unit,
     onArtistMoreClick: () -> Unit,
     onMusicClick: (String) -> Unit,
-    onAlbumClick: (String) -> Unit,
+    onAlbumClick: (AlbumModel) -> Unit,
     onArtistClick: (String) -> Unit
 ) {
     val state = viewModel.searchState.collectAsState().value
@@ -66,7 +66,7 @@ fun AllScreen(
     onAlbumMoreClick: () -> Unit = {},
     onArtistMoreClick: () -> Unit = {},
     onMusicClick: (String) -> Unit = {},
-    onAlbumClick: (String) -> Unit = {},
+    onAlbumClick: (AlbumModel) -> Unit = {},
     onArtistClick: (String) -> Unit = {}
 ) {
     val musicPagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
@@ -116,7 +116,7 @@ fun AllScreen(
                 album = album,
                 modifier = modifier
             ) {
-                onAlbumClick(album.albumId)
+                onAlbumClick(album)
             }
         }
 
