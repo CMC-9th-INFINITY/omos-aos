@@ -40,7 +40,6 @@ enum class MusicSearchPage(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MusicSearchPagerScreen(
-    viewModel: MusicSearchViewModel = hiltViewModel(),
     pages: Array<MusicSearchPage> = MusicSearchPage.values(),
     onMusicClick: (String) -> Unit = {},
     onAlbumClick: (AlbumModel) -> Unit = {},
@@ -66,7 +65,6 @@ fun MusicSearchPagerScreen(
             }
         }
 
-        // Pages
         HorizontalPager(
             modifier = Modifier.background(MaterialTheme.colorScheme.background),
             pageCount = pages.size,
@@ -77,7 +75,6 @@ fun MusicSearchPagerScreen(
                 MusicSearchPage.ALL -> {
                     AllScreen(
                         modifier = Modifier.fillMaxSize(),
-                        viewModel = viewModel,
                         onMusicMoreClick = {
                             coroutineScope.launch { pagerState.animateScrollToPage(MusicSearchPage.MUSIC.ordinal) }
                         },
@@ -96,7 +93,6 @@ fun MusicSearchPagerScreen(
                 MusicSearchPage.MUSIC -> {
                     MusicListScreen(
                         modifier = Modifier.fillMaxSize(),
-                        viewModel = viewModel,
                         onMusicClick = onMusicClick,
                     )
                 }
@@ -104,7 +100,6 @@ fun MusicSearchPagerScreen(
                 MusicSearchPage.ALBUM -> {
                     AlbumListScreen(
                         modifier = Modifier.fillMaxSize(),
-                        viewModel = viewModel,
                         onAlbumClick = onAlbumClick
                     )
                 }
@@ -112,7 +107,6 @@ fun MusicSearchPagerScreen(
                 MusicSearchPage.ARTIST -> {
                     ArtistListScreen(
                         modifier = Modifier.fillMaxSize(),
-                        viewModel = viewModel,
                         onArtistClick = onArtistClick
                     )
                 }

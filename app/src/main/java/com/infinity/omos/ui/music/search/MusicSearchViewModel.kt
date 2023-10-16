@@ -80,6 +80,7 @@ class MusicSearchViewModel @Inject constructor(
         viewModelScope.launch {
             searchedFlow.emit(text)
         }
+        setSearchState(MusicSearchState.ING)
     }
 
     fun setSearchState(state: MusicSearchState) {
@@ -87,6 +88,7 @@ class MusicSearchViewModel @Inject constructor(
     }
 
     fun search() {
+        setSearchState(MusicSearchState.AFTER)
         musicStream = musicRepository.getMusicStream(keyword.value)
             .map { pagingData ->
                 pagingData.map { music ->

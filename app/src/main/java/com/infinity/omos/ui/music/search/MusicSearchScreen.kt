@@ -30,7 +30,11 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -57,14 +61,16 @@ fun MusicSearchScreen(
 ) {
     val musicTitlesUiState = viewModel.musicTitlesUiState.collectAsState().value
     val keyword = viewModel.keyword.collectAsState().value
+    val searchState = viewModel.searchState.collectAsState().value
 
     MusicSearchScreen(
         musicTitlesUiState = musicTitlesUiState,
         keyword = keyword,
+        searchState = searchState,
         onBackClick = onBackClick,
-        onKeywordChange = {
-            viewModel.setKeyword(it)
-        }
+        onKeywordChange = { viewModel.setKeyword(it) },
+        onClearText = { viewModel.setKeyword("") },
+        onSearch = { viewModel.search() },
     )
 }
 
@@ -73,12 +79,15 @@ fun MusicSearchScreen(
 fun MusicSearchScreen(
     musicTitlesUiState: MusicTitleUiState = MusicTitleUiState.Loading,
     keyword: String,
+    searchState: MusicSearchState,
     onBackClick: () -> Unit = {},
-    onKeywordChange: (String) -> Unit = {}
+    onKeywordChange: (String) -> Unit = {},
+    onClearText: () -> Unit = {},
+    onSearch: (String) -> Unit = {},
 ) {
     Scaffold(
         topBar = {
-            if (keyword.isEmpty()) {
+            if (searchState == MusicSearchState.BEFORE) {
                 OmosTopAppBar(
                     title = stringResource(id = R.string.search_music),
                     style = MaterialTheme.typography.titleSmall,
@@ -103,18 +112,20 @@ fun MusicSearchScreen(
         ) {
             SearchBar(
                 modifier = Modifier.padding(top = Dimens.PaddingSmall),
-                onSearch = {},
-                onKeywordChange = onKeywordChange
+                onSearch = onSearch,
+                onKeywordChange = onKeywordChange,
+                onClearText = onClearText
             )
 
-            if (keyword.isEmpty()) {
-                TopSearchedList(modifier = Modifier.padding(top = 28.dp))
-            } else {
-                MusicTitleList(
+            when (searchState) {
+                MusicSearchState.BEFORE -> TopSearchedList(modifier = Modifier.padding(top = 28.dp))
+                MusicSearchState.ING -> MusicTitleList(
                     modifier = Modifier.padding(top = 28.dp),
                     musicTitlesUiState = musicTitlesUiState,
                     keyword = keyword,
                 )
+
+                MusicSearchState.AFTER -> TopSearchedList(modifier = Modifier)
             }
         }
 
@@ -127,12 +138,22 @@ fun MusicSearchScreen(
 fun SearchBar(
     modifier: Modifier,
     onSearch: (String) -> Unit,
-    onKeywordChange: (String) -> Unit
+    onKeywordChange: (String) -> Unit,
+    onClearText: () -> Unit
 ) {
+    val focusManager = LocalFocusManager.current
+    val focusRequester = remember { FocusRequester() }
     var keyword by remember { mutableStateOf("") }
 
     TextField(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .fillMaxWidth()
+            .focusRequester(focusRequester)
+            .onFocusChanged {
+                if (it.isFocused) {
+                    onKeywordChange(keyword)
+                }
+            },
         value = keyword,
         onValueChange = {
             keyword = it
@@ -148,14 +169,21 @@ fun SearchBar(
         trailingIcon = {
             if (keyword.isNotEmpty()) {
                 Icon(
-                    modifier = Modifier.clickable { keyword = "" },
+                    modifier = Modifier.clickable {
+                        keyword = ""
+                        focusRequester.requestFocus()
+                        onClearText()
+                    },
                     painter = painterResource(id = R.drawable.ic_clear),
                     contentDescription = stringResource(R.string.clear)
                 )
             }
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-        keyboardActions = KeyboardActions { onSearch(keyword) },
+        keyboardActions = KeyboardActions {
+            focusManager.clearFocus()
+            onSearch(keyword)
+        },
         shape = MaterialTheme.shapes.field,
         textStyle = MaterialTheme.typography.bodyLarge,
         colors = TextFieldDefaults.textFieldColors(
@@ -282,7 +310,10 @@ fun MusicTitleListItem(
 @Composable
 fun TopSearchedScreenPreview() {
     OmosTheme {
-        MusicSearchScreen(keyword = "")
+        MusicSearchScreen(
+            keyword = "",
+            searchState = MusicSearchState.BEFORE
+        )
     }
 }
 
@@ -294,6 +325,7 @@ fun MusicTitlesScreenPreview(
     OmosTheme {
         MusicSearchScreen(
             keyword = "안녕",
+            searchState = MusicSearchState.ING,
             musicTitlesUiState = MusicTitleUiState.Success(
                 titles = musicTitles
             )
@@ -311,4 +343,15 @@ private class MusicTitlesPreviewParamProvider : PreviewParameterProvider<List<Mu
                 MusicTitleModel("너 왜 안녕이라고 하는거야?"),
             )
         )
+}
+
+@Preview(name = "pager")
+@Composable
+fun PagerScreenPreview() {
+    OmosTheme {
+        MusicSearchScreen(
+            keyword = "안녕",
+            searchState = MusicSearchState.AFTER
+        )
+    }
 }
