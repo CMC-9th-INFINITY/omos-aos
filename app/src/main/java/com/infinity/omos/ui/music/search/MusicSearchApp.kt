@@ -3,7 +3,6 @@ package com.infinity.omos.ui.music.search
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -23,8 +22,12 @@ fun MusicSearchNavHost(
     navController: NavHostController,
     viewModel: MusicSearchViewModel = hiltViewModel()
 ) {
-    NavHost(navController = navController, startDestination = "pager") {
-        composable("pager") {
+    NavHost(navController = navController, startDestination = "musicSearch") {
+        composable("musicSearch") {
+            MusicSearchScreen()
+        }
+
+        /*composable("pager") {
             MusicSearchPagerScreen(
                 onAlbumClick = {
                     val destination = "album/${it.albumId}/${it.albumTitle}/${it.artists}/${it.releaseDate}?albumImageUrl=${it.albumImageUrl}"
@@ -47,6 +50,6 @@ fun MusicSearchNavHost(
             )
         ) {
             AlbumScreen()
-        }
+        }*/
     }
 }
