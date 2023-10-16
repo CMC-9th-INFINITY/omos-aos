@@ -1,6 +1,5 @@
 package com.infinity.omos.ui.theme
 
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
@@ -9,11 +8,12 @@ import androidx.compose.ui.unit.sp
 
 // Set of Material typography styles to start with
 val Typography = Typography(
-    bodyLarge = TextStyle(
+    titleLarge = TextStyle(
         fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp,
-        lineHeight = 16.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 22.sp,
+        lineHeight = 22.sp,
+        color = white
     ),
     titleMedium = TextStyle(
         fontFamily = FontFamily.Default,
@@ -21,6 +21,12 @@ val Typography = Typography(
         fontSize = 18.sp,
         lineHeight = 18.sp,
         color = white
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp,
+        lineHeight = 16.sp
     ),
     labelMedium = TextStyle(
         fontFamily = FontFamily.Default,

@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.main.today
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import com.infinity.omos.BuildConfig
 import com.infinity.omos.adapters.dj.RecommendedDjListAdapter
 import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
+import com.infinity.omos.ui.music.search.MusicSearchActivity
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -57,9 +59,8 @@ class TodayFragment : Fragment() {
         }
 
         binding.btnFloating.setOnClickListener {
-            val directions =
-                TodayFragmentDirections.actionTodayFragmentToSelectMusicFragment()
-            findNavController().navigate(directions)
+            val intent = Intent(context, MusicSearchActivity::class.java)
+            startActivity(intent)
         }
     }
 

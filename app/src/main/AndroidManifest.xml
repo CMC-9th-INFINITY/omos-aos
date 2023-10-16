@@ -17,10 +17,14 @@
         android:theme="@style/Theme.Omos.Splash"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".ui.music.search.MusicSearchActivity"
+            android:exported="false"
+            android:label="@string/title_activity_music_search"
+            android:theme="@style/Theme.Omos" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,14 +35,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-
         <activity
             android:name=".SplashActivity"
             android:exported="true"
-            android:screenOrientation="portrait">
-
-        </activity>
-
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.kakao.sdk.auth.AuthCodeHandlerActivity"
             android:exported="true">
@@ -53,8 +53,6 @@
                     android:scheme="kakao${KAKAO_OAUTH_KEY}" />
             </intent-filter>
         </activity>
-
-
         <activity
             android:name=".ui.dj.FollowActivity"
             android:exported="false"
@@ -164,12 +162,9 @@
             android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/MainStatusBarStyle" />
-
         <activity
             android:name=".ui.onboarding.LoginActivity"
-            android:screenOrientation="portrait" />
-
-        <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
+            android:screenOrientation="portrait" /> <!-- 외부 저장소 사용을 위한 FileProvider auth 추가. -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.infinity.omos.fileprovider"
