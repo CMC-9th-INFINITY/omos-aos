@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.adapters.dj.RecommendedDjListAdapter
@@ -53,6 +54,12 @@ class TodayFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
             binding.swipeRefresh.isRefreshing = false
+        }
+
+        binding.btnFloating.setOnClickListener {
+            val directions =
+                TodayFragmentDirections.actionTodayFragmentToSelectMusicFragment()
+            findNavController().navigate(directions)
         }
     }
 

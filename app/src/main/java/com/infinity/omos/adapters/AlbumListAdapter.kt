@@ -12,7 +12,7 @@ import com.infinity.omos.ui.search.DetailAlbumActivity
 import com.infinity.omos.ui.search.DetailArtistActivity
 import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.Album
+import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.databinding.ListAlbumItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction

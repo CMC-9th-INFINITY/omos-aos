@@ -11,6 +11,9 @@
         android:label="Today Fragment"
         tools:layout="@layout/fragment_today">
 
+        <action
+            android:id="@+id/action_today_fragment_to_select_music_fragment"
+            app:destination="@id/music_search_fragment" />
     </fragment>
 
     <fragment
@@ -42,6 +45,14 @@
         android:name="com.infinity.omos.ui.main.mypage.MyPageFragment"
         android:label="My Page Fragment"
         tools:layout="@layout/fragment_my_page">
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/music_search_fragment"
+        android:name="com.infinity.omos.ui.music.search.MusicSearchFragment"
+        android:label="Search Music Fragment"
+        tools:layout="@layout/fragment_search_music">
 
     </fragment>
 

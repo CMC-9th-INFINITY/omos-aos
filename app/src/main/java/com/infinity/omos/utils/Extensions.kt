@@ -2,7 +2,10 @@ package com.infinity.omos.utils
 
 import android.app.Activity
 import android.os.Build
+import android.text.SpannableStringBuilder
+import android.text.style.ForegroundColorSpan
 import android.view.View
+import android.widget.TextView
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
@@ -30,4 +33,19 @@ fun Activity.offFullScreen() {
     } else {
         window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_VISIBLE
     }
+}
+
+fun TextView.changeTextColor(word: String) {
+    if (text.isEmpty() || !text.contains(word)) return
+
+    val start = text.indexOf(word)
+    val end = start + word.length
+    val ssb = SpannableStringBuilder(text)
+    ssb.setSpan(
+        ForegroundColorSpan(ColorUtil.getPrimaryColor(context)),
+        start,
+        end,
+        SpannableStringBuilder.SPAN_EXCLUSIVE_EXCLUSIVE
+    )
+    text = ssb
 }

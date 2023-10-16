@@ -6,6 +6,11 @@
     <string name="my_dj">MY DJ</string>
     <string name="my_page">MY 페이지</string>
 
+    <string name="all">전체</string>
+    <string name="music">노래</string>
+    <string name="album">앨범</string>
+    <string name="artist">아티스트</string>
+
     <string name="error_input_email">이메일을 입력해주세요.</string>
     <string name="error_input_password">비밀번호를 입력해주세요.</string>
     <string name="again_check">입력하신 내용을 다시 확인해주세요.</string>
@@ -31,6 +36,8 @@
     <string name="count">%03d</string>
 
     <string name="no_record">%s의\n첫번째 주인공이 되어봐요!</string>
+
+    <string name="more">더보기</string>
 
     <string name="tos_view">
         Omos 이용약관\n
@@ -302,4 +309,9 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="following">팔로잉</string>
     <string name="scraped_record">스크랩한 레코드</string>
     <string name="liked_record">공감한 레코드</string>
+    <string name="floating_button">플로팅 버튼</string>
+    <string name="search_music">음악 검색</string>
+    <string name="please_search_music">음악을 검색해주세요.</string>
+    <string name="top_searched">인기 검색어</string>
+    <string name="standard_yesterday">전일 기준</string>
 </resources>
