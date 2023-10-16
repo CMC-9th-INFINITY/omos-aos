@@ -5,7 +5,7 @@ import androidx.compose.ui.graphics.Color
 /** 배경 색상 **/
 val black_01 = Color(0xFF121212)
 val black_02 = Color(0xFF1A1A1A)
-val black_03 = Color(0xFF2C2C2E)
+val black_03 = Color(0xFF2C2C2C)
 
 /** 포인트 색상 **/
 val main = Color(0xFFFF0F97)
