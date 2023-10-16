@@ -25,7 +25,7 @@ fun PageHeader(title: String, isVisibleMore: Boolean, onMoreClick: () -> Unit) {
     ) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleSmall
         )
         Spacer(modifier = Modifier.weight(1f))
         if (isVisibleMore) {
