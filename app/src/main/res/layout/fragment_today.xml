@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="com.infinity.omos.ui.main.today.UiState" />
 
         <variable
@@ -30,6 +31,7 @@
             tools:context=".ui.main.today.TodayFragment">
 
             <ScrollView
+                android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
@@ -181,9 +183,11 @@
                         android:id="@+id/rv_famous_records"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normal_padding"
                         android:layout_marginTop="@dimen/normal_padding"
+                        android:clipToPadding="false"
                         android:orientation="horizontal"
+                        android:paddingStart="@dimen/normal_padding"
+                        android:paddingEnd="0dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -206,9 +210,11 @@
                         android:id="@+id/rv_dj"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/normal_padding"
                         android:layout_marginTop="@dimen/normal_padding"
+                        android:clipToPadding="false"
                         android:orientation="horizontal"
+                        android:paddingStart="@dimen/normal_padding"
+                        android:paddingEnd="0dp"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
@@ -354,21 +360,25 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <FrameLayout
-            android:id="@+id/frame_progress_bar"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btn_floating"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            app:borderWidth="0dp"
+            android:layout_marginEnd="@dimen/normal_padding"
+            android:layout_marginBottom="46dp"
+            android:backgroundTint="@color/gray_04_25"
+            android:contentDescription="@string/floating_button"
+            android:src="@drawable/ic_write_gray08" />
+
+        <include
+            android:id="@+id/progress_bar"
+            layout="@layout/layout_progress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bg_black_50"
-            app:isGone="@{!(vm.uiState instanceof UiState.Loading)}">
-
-            <ProgressBar
-                android:id="@+id/progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/normal_padding"
-                android:layout_gravity="center" />
-
-        </FrameLayout>
+            app:isGone="@{!(vm.uiState instanceof UiState.Loading)}"
+            tools:visibility="gone" />
 
     </FrameLayout>
 

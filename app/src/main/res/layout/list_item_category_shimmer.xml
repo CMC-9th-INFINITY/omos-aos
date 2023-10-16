@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="128dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_padding"
+        android:layout_marginTop="22dp"
+        android:background="@color/gray_06"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@id/iv_move"
+        app:layout_constraintHorizontal_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_move"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="@string/move_detail_category"
+        android:paddingHorizontal="@dimen/normal_padding"
+        android:src="@drawable/ic_next"
+        app:layout_constraintBottom_toBottomOf="@id/tv_category"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/tv_category"
+        app:layout_constraintTop_toTopOf="@id/tv_category" />
+
+    <include
+        android:id="@+id/layout_record_1"
+        layout="@layout/layout_horizontal_record_shimmer"
+        android:layout_width="274dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/normal_padding"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_category" />
+
+    <include
+        android:id="@+id/layout_record_2"
+        layout="@layout/layout_horizontal_record_shimmer"
+        android:layout_width="274dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        app:layout_constraintBottom_toBottomOf="@id/layout_record_1"
+        app:layout_constraintStart_toEndOf="@id/layout_record_1"
+        app:layout_constraintTop_toTopOf="@id/layout_record_1" />
+
+    <com.google.android.material.divider.MaterialDivider
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginTop="22dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layout_record_1" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

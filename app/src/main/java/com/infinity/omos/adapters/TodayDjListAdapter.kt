@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.infinity.omos.ui.dj.DjActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.databinding.ListTodayDjItemBinding
 
 class TodayDjListAdapter internal constructor(context: Context):

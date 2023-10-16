@@ -7,7 +7,7 @@
 
         <variable
             name="profile"
-            type="com.infinity.omos.data.user.ProfileModel" />
+            type="com.infinity.omos.data.user.profile.ProfileModel" />
     </data>
 
     <LinearLayout

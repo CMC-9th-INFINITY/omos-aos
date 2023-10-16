@@ -9,20 +9,20 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.ui.search.DetailArtistActivity
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.Artists
+import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.databinding.ListArtistItemBinding
 import com.infinity.omos.databinding.ListLoadingItemBinding
 import com.infinity.omos.etc.GlobalFunction
 
 class ArtistListAdapter internal constructor(private val context: Context):
-    ListAdapter<Artists, RecyclerView.ViewHolder>(
+    ListAdapter<Artist, RecyclerView.ViewHolder>(
         ArtistDiffUtil
     ){
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var artist = ArrayList<Artists?>()
+    private var artist = ArrayList<Artist?>()
 
     private val VIEW_TYPE_ITEM = 0
     private val VIEW_TYPE_LOADING = 1
@@ -30,7 +30,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
     private lateinit var itemClickListener: OnItemClickListener
 
     interface OnItemClickListener{
-        fun onClick(v: View, position: Int, artist: Artists, tvGenres: String)
+        fun onClick(v: View, position: Int, artist: Artist, tvGenres: String)
     }
 
     interface OnItemLongClickListener{
@@ -63,15 +63,15 @@ class ArtistListAdapter internal constructor(private val context: Context):
     }
 
     inner class ArtistViewHoler(private val binding: ListArtistItemBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(artist: Artists) {
+        fun bind(artist: Artist) {
             binding.data = artist
             binding.tvGenres.text = setGenres(artist.genres)
             binding.tvArtistName.text = artist.artistName
 
             // keyword 색상 변경
-            var start = artist.artistName.lowercase().indexOf(MainActivity.keyword.lowercase())
+            var start = artist.artistName.lowercase().indexOf(FakeMainActivity.keyword.lowercase())
             if (start != -1){
-                GlobalFunction.changeTextColor(context, binding.tvArtistName, start, start + MainActivity.keyword.length, R.color.orange)
+                GlobalFunction.changeTextColor(context, binding.tvArtistName, start, start + FakeMainActivity.keyword.length, R.color.orange)
             }
 
             binding.executePendingBindings() //데이터가 수정되면 즉각 바인딩
@@ -107,7 +107,7 @@ class ArtistListAdapter internal constructor(private val context: Context):
         return str
     }
 
-    internal fun setRecord(ab: List<Artists>) {
+    internal fun setRecord(ab: List<Artist>) {
         artist.addAll(ab)
         artist.add(null)
     }
@@ -133,13 +133,13 @@ class ArtistListAdapter internal constructor(private val context: Context):
         return artist.size
     }
 
-    companion object ArtistDiffUtil: DiffUtil.ItemCallback<Artists>(){
-        override fun areItemsTheSame(oldItem: Artists, newItem: Artists): Boolean {
+    companion object ArtistDiffUtil: DiffUtil.ItemCallback<Artist>(){
+        override fun areItemsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             //각 아이템들의 고유한 값을 비교해야 한다.
             return oldItem==newItem
         }
 
-        override fun areContentsTheSame(oldItem: Artists, newItem: Artists): Boolean {
+        override fun areContentsTheSame(oldItem: Artist, newItem: Artist): Boolean {
             return oldItem==newItem
         }
     }

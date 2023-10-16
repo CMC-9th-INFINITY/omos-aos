@@ -3,10 +3,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/nav_on_boarding">
+    tools:ignore="InvalidNavigation">
 
     <include
         android:id="@+id/nav_on_boarding"
         app:graph="@navigation/nav_on_boarding" />
+
+    <include
+        android:id="@+id/nav_main"
+        app:graph="@navigation/nav_main" />
 
 </navigation>

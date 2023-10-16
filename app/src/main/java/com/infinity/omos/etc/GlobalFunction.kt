@@ -6,7 +6,7 @@ import android.text.style.ForegroundColorSpan
 import android.widget.TextView
 import androidx.core.content.ContextCompat
 import com.infinity.omos.R
-import com.infinity.omos.data.Artists
+import com.infinity.omos.data.music.artist.Artist
 
 class GlobalFunction {
     companion object{
@@ -98,7 +98,7 @@ class GlobalFunction {
             tv.text = ssb
         }
 
-        fun setArtist(artists: List<Artists>): String{
+        fun setArtist(artists: List<Artist>): String{
             var str = ""
             for (s in artists){
                 str += s.artistName + " & "

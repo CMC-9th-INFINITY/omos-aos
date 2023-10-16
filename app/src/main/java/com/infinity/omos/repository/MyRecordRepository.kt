@@ -3,7 +3,7 @@ package com.infinity.omos.repository
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.infinity.omos.api.ImageService
-import com.infinity.omos.api.RecordService
+import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.data.SaveRecord
@@ -20,7 +20,7 @@ import retrofit2.Retrofit
 class MyRecordRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
-    private val recordApi = retrofit.create(RecordService::class.java)
+    private val recordApi = retrofit.create(FakeRecordService::class.java)
     private val imageApi = retrofit.create(ImageService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 

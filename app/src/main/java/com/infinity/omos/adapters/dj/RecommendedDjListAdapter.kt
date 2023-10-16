@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
-import com.infinity.omos.data.user.ProfileModel
+import com.infinity.omos.data.user.profile.ProfileModel
 import com.infinity.omos.databinding.ListItemRecommendedDjBinding
 
 class RecommendedDjListAdapter :  ListAdapter<ProfileModel, RecyclerView.ViewHolder>(RecommendedDjDiffCallback()) {

@@ -1,7 +1,7 @@
 package com.infinity.omos.viewmodels
 
 import androidx.lifecycle.ViewModel
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.repository.FollowRepository
 import com.infinity.omos.repository.RemoveUserRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

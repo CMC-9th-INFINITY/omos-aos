@@ -6,7 +6,7 @@
     <data>
         <variable
             name="data"
-            type="com.infinity.omos.data.Album" />
+            type="com.infinity.omos.data.music.album.Album" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

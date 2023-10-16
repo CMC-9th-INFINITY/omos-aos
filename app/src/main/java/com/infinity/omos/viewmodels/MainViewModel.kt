@@ -3,10 +3,10 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.infinity.omos.data.Album
-import com.infinity.omos.data.Artists
+import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
-import com.infinity.omos.data.SearchMusic
+import com.infinity.omos.data.music.MusicTitle
+import com.infinity.omos.data.music.album.Album
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.SearchRepository
 
@@ -43,7 +43,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun loadMoreArtist(keyword: String, limit: Int, offset: Int){
         repository.getArtist(keyword, limit, offset)
     }
-    fun getArtist(): LiveData<List<Artists>>{
+    fun getArtist(): LiveData<List<Artist>>{
         return artist
     }
     fun getStateArtist(): LiveData<Constant.ApiState>{
@@ -54,7 +54,7 @@ class MainViewModel(application: Application): AndroidViewModel(application) {
     fun setSearchMusic(keyword: String, limit: Int, offset: Int){
         repository.getSearchMusic(keyword, limit, offset)
     }
-    fun getSearchMusic(): LiveData<List<SearchMusic>> {
+    fun getSearchMusic(): LiveData<List<MusicTitle>> {
         return repository.searchMusic
     }
     fun getStateSearchMusic(): LiveData<Constant.ApiState> {

@@ -4,6 +4,12 @@ import com.infinity.omos.source.local.user.UserLocalDataSource
 import com.infinity.omos.source.local.user.UserLocalDataSourceImpl
 import com.infinity.omos.source.remote.auth.AuthRemoteDataSource
 import com.infinity.omos.source.remote.auth.AuthRemoteDataSourceImpl
+import com.infinity.omos.source.remote.dj.DjRemoteDataSource
+import com.infinity.omos.source.remote.dj.DjRemoteDataSourceImpl
+import com.infinity.omos.source.remote.music.MusicRemoteDataSource
+import com.infinity.omos.source.remote.music.MusicRemoteDataSourceImpl
+import com.infinity.omos.source.remote.record.RecordRemoteDataSource
+import com.infinity.omos.source.remote.record.RecordRemoteDataSourceImpl
 import com.infinity.omos.source.remote.today.TodayRemoteDataSource
 import com.infinity.omos.source.remote.today.TodayRemoteDataSourceImpl
 import com.infinity.omos.source.remote.user.UserRemoteDataSource
@@ -41,4 +47,22 @@ interface DataSourceModule {
     fun bindTodayRemoteDataSource(
         todayRemoteDataSourceImpl: TodayRemoteDataSourceImpl
     ): TodayRemoteDataSource
+
+    @Binds
+    @Singleton
+    fun bindRecordRemoteDataSource(
+        recordRemoteDataSourceImpl: RecordRemoteDataSourceImpl
+    ): RecordRemoteDataSource
+
+    @Binds
+    @Singleton
+    fun bindDjRemoteDataSource(
+        djRemoteDataSourceImpl: DjRemoteDataSourceImpl
+    ): DjRemoteDataSource
+
+    @Binds
+    @Singleton
+    fun bindMusicRemoteDataSource(
+        musicRemoteDataSourceImpl: MusicRemoteDataSourceImpl
+    ): MusicRemoteDataSource
 }

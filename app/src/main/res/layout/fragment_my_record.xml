@@ -1,53 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <data>
-        <variable
-            name="vm"
-            type="com.infinity.omos.ui.main.SharedViewModel" />
-    </data>
-
-    <FrameLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.main.MyRecordFragment">
+        tools:context=".ui.main.myrecord.MyRecordFragment">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:theme="@style/Theme.Omos.Appbar"
+            app:layout_constraintBottom_toTopOf="@id/rv_my_record"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/status_bar_height"
+                app:menu="@menu/menu_my_record"
+                app:title="@string/my_record" />
+
+        </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_myrecord_item"/>
+            android:id="@+id/rv_my_record"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar"
+            tools:listitem="@layout/list_item_vertical_record" />
 
-        <LinearLayout
-            android:id="@+id/ln_norecord"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:gravity="center"
-            android:visibility="gone">
+        <com.facebook.shimmer.ShimmerFrameLayout
+            android:id="@+id/sfl_my_record"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/appbar"
+            app:shimmer_auto_start="true"
+            tools:visibility="gone">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="18dp"
-                android:src="@drawable/ic_norecord"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="작성된 레코드가 없어요!"
-                android:textSize="18sp"
-                android:textColor="@color/gray_03"/>
+                <include layout="@layout/list_item_vertical_record_shimmer" />
 
-        </LinearLayout>
+                <include layout="@layout/list_item_vertical_record_shimmer" />
 
-        <ProgressBar
-            android:id="@+id/progressBar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:visibility="gone"/>
+                <include layout="@layout/list_item_vertical_record_shimmer" />
 
-    </FrameLayout>
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+                <include layout="@layout/list_item_vertical_record_shimmer" />
+
+            </LinearLayout>
+
+        </com.facebook.shimmer.ShimmerFrameLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

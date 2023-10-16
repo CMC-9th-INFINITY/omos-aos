@@ -2,6 +2,7 @@ package com.infinity.omos.adapters
 
 import android.view.View
 import android.widget.ImageView
+import androidx.core.content.ContextCompat
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
@@ -33,12 +34,19 @@ fun bindImageFromUrl(view: ImageView, imageUrl: String?) {
 
 @BindingAdapter("profileImageFromUrl")
 fun bindProfileImageFromUrl(view: ImageView, imageUrl: String?) {
-    if (!imageUrl.isNullOrEmpty()) {
-        Glide.with(view.context)
-            .load(imageUrl)
-            .error(R.drawable.ic_profile)
-            .fallback(R.drawable.ic_profile)
-            .placeholder(R.drawable.ic_profile)
-            .into(view)
+    Glide.with(view.context)
+        .load(imageUrl)
+        .error(R.drawable.ic_profile)
+        .fallback(R.drawable.ic_profile)
+        .placeholder(R.drawable.ic_profile)
+        .into(view)
+}
+
+@BindingAdapter("isPublic")
+fun bindIsPublic(view: ImageView, isPublic: Boolean) {
+    if (isPublic) {
+        view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.ic_public))
+    } else {
+        view.setImageDrawable(ContextCompat.getDrawable(view.context, R.drawable.ic_private))
     }
 }

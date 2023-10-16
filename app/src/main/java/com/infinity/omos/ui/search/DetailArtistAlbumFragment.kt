@@ -58,8 +58,8 @@ class DetailArtistAlbumFragment : Fragment() {
 
         // 스크롤 시 앨범 업데이트
         viewModel.setArtistAlbum(artistId, pageSize, 0)
-        viewModel.getArtistAlbum().observe(viewLifecycleOwner, Observer { album ->
-            album?.let {
+        viewModel.getArtistAlbum().observe(viewLifecycleOwner, Observer {
+            it.let {
                 isLoading = if (it.isEmpty()) {
                     mAdapter.notifyItemRemoved(mAdapter.itemCount)
                     true

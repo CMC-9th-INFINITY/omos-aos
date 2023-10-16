@@ -10,7 +10,7 @@ import android.content.Intent
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
 import com.infinity.omos.etc.Constant.Companion.CHANNEL_ID
 import com.infinity.omos.etc.Constant.Companion.NOTI_ID
@@ -30,7 +30,7 @@ class MyReceiver : BroadcastReceiver() {
         builder.setContentText("오늘 하루, 당신의 음악은 무엇이었나요?")
         builder.setAutoCancel(true)
         builder.color = ContextCompat.getColor(context, R.color.orange)
-        val notificationIntent = Intent(context, MainActivity::class.java)
+        val notificationIntent = Intent(context, FakeMainActivity::class.java)
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_SINGLE_TOP)
         val pendingIntent = PendingIntent.getActivity(context, 0, notificationIntent, 0)
         builder.setContentIntent(pendingIntent) // 알림 클릭 시 이동

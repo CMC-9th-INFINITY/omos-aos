@@ -47,10 +47,26 @@ object ServiceModule {
 
     @Provides
     @Singleton
-    fun provideFollowService(
+    fun provideRecordService(
         retrofit: Retrofit
-    ): FollowService {
-        return retrofit.create(FollowService::class.java)
+    ): RecordService {
+        return retrofit.create(RecordService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideDjService(
+        retrofit: Retrofit
+    ): DjService {
+        return retrofit.create(DjService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideMusicService(
+        retrofit: Retrofit
+    ): MusicService {
+        return retrofit.create(MusicService::class.java)
     }
 
     @Provides
@@ -59,5 +75,13 @@ object ServiceModule {
         retrofit: Retrofit
     ): FakeUserService {
         return retrofit.create(FakeUserService::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideFollowService(
+        retrofit: Retrofit
+    ): FollowService {
+        return retrofit.create(FollowService::class.java)
     }
 }

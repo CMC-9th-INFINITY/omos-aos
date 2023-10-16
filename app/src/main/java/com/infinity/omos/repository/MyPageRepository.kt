@@ -7,7 +7,8 @@ import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.record.MyPageRecord
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -20,20 +21,20 @@ class MyPageRepository {
     private val myPageApi = retrofit.create(MyPageService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    var myPageData = MutableLiveData<MyPage>()
+    var myPageRecordData = MutableLiveData<MyPageRecord>()
     var stateMyPageData = MutableLiveData<Constant.ApiState>()
     fun getMyPageData(userId: Int){
         stateMyPageData.value = Constant.ApiState.LOADING
-        myPageApi.getMyPageData(userId).enqueue(object: Callback<MyPage> {
+        myPageApi.getMyPageData(userId).enqueue(object: Callback<MyPageRecord> {
             override fun onResponse(
-                call: Call<MyPage>,
-                response: Response<MyPage>
+                call: Call<MyPageRecord>,
+                response: Response<MyPageRecord>
             ) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MyPageDataAPI", "Success")
-                        myPageData.postValue(body!!)
+                        myPageRecordData.postValue(body!!)
                         stateMyPageData.value = Constant.ApiState.DONE
                     }
 
@@ -55,7 +56,7 @@ class MyPageRepository {
                 }
             }
 
-            override fun onFailure(call: Call<MyPage>, t: Throwable) {
+            override fun onFailure(call: Call<MyPageRecord>, t: Throwable) {
                 Log.d("MyPageDataAPI", t.message.toString())
                 t.stackTrace
             }

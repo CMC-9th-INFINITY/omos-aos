@@ -2,13 +2,17 @@ package com.infinity.omos.repository
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import com.infinity.omos.api.RecordService
+import com.infinity.omos.api.FakeRecordService
 import com.infinity.omos.api.RetrofitAPI
 import com.infinity.omos.api.SearchService
 import com.infinity.omos.data.*
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.OmosApplication
+import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.Music
+import com.infinity.omos.data.music.MusicTitle
+import com.infinity.omos.data.music.album.Album
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.utils.NetworkUtil
 import retrofit2.Call
 import retrofit2.Callback
@@ -19,20 +23,20 @@ class SearchRepository {
 
     private val retrofit: Retrofit = RetrofitAPI.getInstnace()
     private val searchApi = retrofit.create(SearchService::class.java)
-    private val musicRecordApi = retrofit.create(RecordService::class.java)
+    private val musicRecordApi = retrofit.create(FakeRecordService::class.java)
     private val onBoardingRepository = OnBoardingRepository()
 
-    var musicRecord = MutableLiveData<List<Record>>()
+    var musicDetailRecord = MutableLiveData<List<DetailRecord>>()
     var stateMusicRecord = MutableLiveData<Constant.ApiState>()
     fun getMusicRecord(musicId: String, postId: Int?, size: Int, sortType: String, userId: Int){
         stateMusicRecord.value = Constant.ApiState.LOADING
-        musicRecordApi.getMusicRecord(musicId, postId, size, sortType, userId).enqueue(object: Callback<List<Record>> {
-            override fun onResponse(call: Call<List<Record>>, response: Response<List<Record>>) {
+        musicRecordApi.getMusicRecord(musicId, postId, size, sortType, userId).enqueue(object: Callback<List<DetailRecord>> {
+            override fun onResponse(call: Call<List<DetailRecord>>, response: Response<List<DetailRecord>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
                         Log.d("MusicRecordAPI", "Success")
-                        musicRecord.postValue(body!!)
+                        musicDetailRecord.postValue(body!!)
                         stateMusicRecord.value = Constant.ApiState.DONE
                     }
 
@@ -45,7 +49,7 @@ class SearchRepository {
                     500 -> {
                         val errorBody = NetworkUtil.getErrorResponse(response.errorBody()!!)
                         Log.d("MusicRecordAPI", errorBody!!.message)
-                        musicRecord.postValue(emptyList())
+                        musicDetailRecord.postValue(emptyList())
                         stateMusicRecord.value = Constant.ApiState.ERROR
                     }
 
@@ -55,7 +59,7 @@ class SearchRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Record>>, t: Throwable) {
+            override fun onFailure(call: Call<List<DetailRecord>>, t: Throwable) {
                 Log.d("MusicRecordAPI", t.message.toString())
                 t.stackTrace
             }
@@ -179,12 +183,12 @@ class SearchRepository {
         })
     }
 
-    var artist = MutableLiveData<List<Artists>>()
+    var artist = MutableLiveData<List<Artist>>()
     var stateArtist = MutableLiveData<Constant.ApiState>()
     fun getArtist(keyword: String, limit: Int, offset: Int){
         stateArtist.value = Constant.ApiState.LOADING
-        searchApi.getArtist(keyword, limit, offset).enqueue(object: Callback<List<Artists>>{
-            override fun onResponse(call: Call<List<Artists>>, response: Response<List<Artists>>) {
+        searchApi.getArtist(keyword, limit, offset).enqueue(object: Callback<List<Artist>>{
+            override fun onResponse(call: Call<List<Artist>>, response: Response<List<Artist>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
@@ -211,7 +215,7 @@ class SearchRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<Artists>>, t: Throwable) {
+            override fun onFailure(call: Call<List<Artist>>, t: Throwable) {
                 Log.d("ArtistAPI", t.message.toString())
                 t.stackTrace
             }
@@ -296,12 +300,12 @@ class SearchRepository {
         })
     }
 
-    var searchMusic = MutableLiveData<List<SearchMusic>>()
+    var searchMusic = MutableLiveData<List<MusicTitle>>()
     var stateSearchMusic = MutableLiveData<Constant.ApiState>()
     fun getSearchMusic(keyword: String, limit: Int, offset: Int){
         stateSearchMusic.value = Constant.ApiState.LOADING
-        searchApi.getSearchMusic(keyword, limit, offset).enqueue(object: Callback<List<SearchMusic>>{
-            override fun onResponse(call: Call<List<SearchMusic>>, response: Response<List<SearchMusic>>) {
+        searchApi.getSearchMusic(keyword, limit, offset).enqueue(object: Callback<List<MusicTitle>>{
+            override fun onResponse(call: Call<List<MusicTitle>>, response: Response<List<MusicTitle>>) {
                 val body = response.body()
                 when(val code = response.code()){
                     in 200..300 -> {
@@ -328,7 +332,7 @@ class SearchRepository {
                 }
             }
 
-            override fun onFailure(call: Call<List<SearchMusic>>, t: Throwable) {
+            override fun onFailure(call: Call<List<MusicTitle>>, t: Throwable) {
                 Log.d("SearchMusicAPI", t.message.toString())
                 t.stackTrace
             }

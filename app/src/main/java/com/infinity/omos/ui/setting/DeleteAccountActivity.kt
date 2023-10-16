@@ -10,10 +10,10 @@ import androidx.databinding.DataBindingUtil
 import com.infinity.omos.R
 import com.infinity.omos.databinding.ActivityDeleteAccountBinding
 import com.infinity.omos.etc.Constant
-import com.infinity.omos.ui.main.MyPageFragment
+import com.infinity.omos.ui.main.mypage.FakeMyPageFragment
 import com.infinity.omos.utils.CustomDialog
 import com.infinity.omos.OmosApplication
-import com.infinity.omos.OnboardingActivity
+import com.infinity.omos.ui.MainActivity
 import com.infinity.omos.viewmodels.DeleteAccountViewModel
 
 class DeleteAccountActivity : AppCompatActivity() {
@@ -27,7 +27,7 @@ class DeleteAccountActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_delete_account)
         binding.lifecycleOwner = this
-        binding.tvNick.text = MyPageFragment.myNickname
+        binding.tvNick.text = FakeMyPageFragment.myNickname
 
         initToolBar()
 
@@ -38,7 +38,7 @@ class DeleteAccountActivity : AppCompatActivity() {
                     Constant.ApiState.DONE -> {
                         OmosApplication.prefs.setUserToken(null, null, -1)
 
-                        val intent = Intent(this, OnboardingActivity::class.java)
+                        val intent = Intent(this, MainActivity::class.java)
                         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
 

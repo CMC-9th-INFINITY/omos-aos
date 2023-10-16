@@ -5,9 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.infinity.omos.ui.main.MainActivity
+import com.infinity.omos.ui.main.FakeMainActivity
 import com.infinity.omos.R
-import com.infinity.omos.data.SearchMusic
+import com.infinity.omos.data.music.MusicTitle
 import com.infinity.omos.databinding.ListSearchItemBinding
 import com.infinity.omos.etc.GlobalFunction
 import kotlinx.android.synthetic.main.list_search_item.view.*
@@ -16,7 +16,7 @@ class SearchListAdapter internal constructor(private val context: Context)
     : RecyclerView.Adapter<SearchListAdapter.SearchViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
-    private var nameList = ArrayList<SearchMusic>()
+    private var nameList = ArrayList<MusicTitle>()
 
     private lateinit var itemClickListener: OnItemClickListener
 
@@ -38,25 +38,25 @@ class SearchListAdapter internal constructor(private val context: Context)
     }
 
     inner class SearchViewHolder(val binding: ListSearchItemBinding): RecyclerView.ViewHolder(binding.root) {
-        fun bind(music: SearchMusic) {
-            binding.tvMusicTitle.text = music.musicTitle
+        fun bind(music: MusicTitle) {
+            binding.tvMusicTitle.text = music.title
 
             // keyword 색상 변경
-            var start = music.musicTitle.lowercase().indexOf(MainActivity.keyword.lowercase())
+            var start = music.title.lowercase().indexOf(FakeMainActivity.keyword.lowercase())
             if (start != -1){
-                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + MainActivity.keyword.length, R.color.orange)
+                GlobalFunction.changeTextColor(context, binding.tvMusicTitle, start, start + FakeMainActivity.keyword.length, R.color.orange)
             }
 
             val pos = adapterPosition
             if (pos != RecyclerView.NO_POSITION) {
                 itemView.btn_music.setOnClickListener {
-                    itemClickListener.onClick(itemView, pos, music.musicTitle)
+                    itemClickListener.onClick(itemView, pos, music.title)
                 }
             }
         }
     }
 
-    internal fun setMusicTitle(name: List<SearchMusic>) {
+    internal fun setMusicTitle(name: List<MusicTitle>) {
         nameList.clear()
         nameList.addAll(name)
         notifyDataSetChanged()

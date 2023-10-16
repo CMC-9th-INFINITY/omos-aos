@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.music.LovedMusicModel
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.toPresentation
-import com.infinity.omos.data.record.SumRecordModel
+import com.infinity.omos.data.record.HorizontalPreviewRecordModel
 import com.infinity.omos.data.record.toPresentation
-import com.infinity.omos.data.user.ProfileModel
+import com.infinity.omos.data.user.profile.ProfileModel
 import com.infinity.omos.data.user.toPresentation
 import com.infinity.omos.repository.today.TodayRepository
 import com.infinity.omos.utils.DataStoreManager
@@ -15,7 +15,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -118,7 +117,7 @@ sealed interface TodayMusicUiState {
 }
 
 sealed interface FamousRecordsUiState {
-    data class Success(val famousRecords: List<SumRecordModel>) : FamousRecordsUiState
+    data class Success(val famousRecords: List<HorizontalPreviewRecordModel>) : FamousRecordsUiState
     object Error : FamousRecordsUiState
     object Loading : FamousRecordsUiState
 }

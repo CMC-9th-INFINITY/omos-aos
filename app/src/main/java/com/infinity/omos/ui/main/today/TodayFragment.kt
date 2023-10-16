@@ -1,19 +1,17 @@
 package com.infinity.omos.ui.main.today
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.adapters.dj.RecommendedDjListAdapter
 import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
-import com.infinity.omos.ui.record.DetailRecordActivity
-import com.infinity.omos.ui.write.SelectCategoryActivity
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -56,6 +54,12 @@ class TodayFragment : Fragment() {
         binding.swipeRefresh.setOnRefreshListener {
             viewModel.refresh()
             binding.swipeRefresh.isRefreshing = false
+        }
+
+        binding.btnFloating.setOnClickListener {
+            val directions =
+                TodayFragmentDirections.actionTodayFragmentToSelectMusicFragment()
+            findNavController().navigate(directions)
         }
     }
 

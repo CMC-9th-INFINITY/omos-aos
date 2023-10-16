@@ -1,7 +1,7 @@
 package com.infinity.omos.api
 
-import com.infinity.omos.data.DjProfile
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.user.profile.DjProfile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.data.ResultState
 import retrofit2.Call
 import retrofit2.http.DELETE
@@ -20,6 +20,14 @@ interface FollowService {
     suspend fun getFollowing(
         @Path("userId") userId: Int
     ): List<Profile>
+
+    @GET("api/follow/select/myDj/{userId}")
+    suspend fun getMyDjs(
+        @Path("userId") userId: Int
+    ): List<Profile>
+
+
+
 
     @DELETE("api/follow/delete/{fromUserId}/{toUserId}")
     fun deleteFollow(

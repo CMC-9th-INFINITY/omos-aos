@@ -3,16 +3,16 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.infinity.omos.data.Record
+import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.MyRecordRepository
-import com.infinity.omos.repository.RecordRepository
+import com.infinity.omos.repository.FakeRecordRepository
 import com.infinity.omos.repository.ReportBlockRepository
 
 class DetailRecordViewModel(application: Application): AndroidViewModel(application) {
 
-    private val repository: RecordRepository = RecordRepository()
+    private val repository: FakeRecordRepository = FakeRecordRepository()
     private val myRecordRepository = MyRecordRepository()
     private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
@@ -20,7 +20,7 @@ class DetailRecordViewModel(application: Application): AndroidViewModel(applicat
     fun setDetailRecord(postId: Int, userId: Int){
         repository.getDetailRecord(postId, userId)
     }
-    fun getDetailRecord(): LiveData<Record>{
+    fun getDetailRecord(): LiveData<DetailRecord>{
         return repository.detailRecord
     }
     fun getStateDetailRecord(): LiveData<Constant.ApiState>{

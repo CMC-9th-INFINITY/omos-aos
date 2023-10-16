@@ -1,10 +1,15 @@
 <resources>
     <string name="app_name">omos</string>
-    <string name="today_title">투데이</string>
-    <string name="myrecord_title">MY 레코드</string>
-    <string name="allrecord_title">전체 레코드</string>
-    <string name="mydj_title">MY DJ</string>
-    <string name="mypage_title">MY 페이지</string>
+    <string name="today">투데이</string>
+    <string name="my_record">MY 레코드</string>
+    <string name="all_records">전체 레코드</string>
+    <string name="my_dj">MY DJ</string>
+    <string name="my_page">MY 페이지</string>
+
+    <string name="all">전체</string>
+    <string name="music">노래</string>
+    <string name="album">앨범</string>
+    <string name="artist">아티스트</string>
 
     <string name="error_input_email">이메일을 입력해주세요.</string>
     <string name="error_input_password">비밀번호를 입력해주세요.</string>
@@ -28,7 +33,11 @@
     <string name="lyrics">나만의 가사해석</string>
     <string name="free">자유 공간</string>
 
+    <string name="count">%03d</string>
+
     <string name="no_record">%s의\n첫번째 주인공이 되어봐요!</string>
+
+    <string name="more">더보기</string>
 
     <string name="tos_view">
         Omos 이용약관\n
@@ -287,4 +296,22 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="spotify_logo">스포티파이 로고</string>
     <string name="team_infinity">팀 인피니티</string>
     <string name="c_team_infinity">© TEAM INFINITY</string>
+    <string name="music_icon">♫</string>
+    <string name="lock">자물쇠</string>
+    <string name="search">검색</string>
+    <string name="write">작성</string>
+    <string name="move_detail_category">상세 카테고리 이동</string>
+    <string name="report_button">신고 버튼</string>
+    <string name="scrap_button">스크랩 버튼</string>
+    <string name="setting">설정</string>
+    <string name="record">레코드</string>
+    <string name="follower">팔로워</string>
+    <string name="following">팔로잉</string>
+    <string name="scraped_record">스크랩한 레코드</string>
+    <string name="liked_record">공감한 레코드</string>
+    <string name="floating_button">플로팅 버튼</string>
+    <string name="search_music">음악 검색</string>
+    <string name="please_search_music">음악을 검색해주세요.</string>
+    <string name="top_searched">인기 검색어</string>
+    <string name="standard_yesterday">전일 기준</string>
 </resources>

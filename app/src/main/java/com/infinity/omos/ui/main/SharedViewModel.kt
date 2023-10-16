@@ -5,8 +5,11 @@ import androidx.lifecycle.ViewModel
 import com.infinity.omos.data.*
 import com.infinity.omos.data.music.LovedMusic
 import com.infinity.omos.data.music.Music
-import com.infinity.omos.data.record.SumRecord
-import com.infinity.omos.data.user.Profile
+import com.infinity.omos.data.record.DetailRecord
+import com.infinity.omos.data.record.MyPageRecord
+import com.infinity.omos.data.record.PreviewRecord
+import com.infinity.omos.data.user.profile.DjProfile
+import com.infinity.omos.data.user.profile.Profile
 import com.infinity.omos.etc.Constant
 import com.infinity.omos.repository.*
 import com.infinity.omos.utils.DataStoreManager
@@ -25,7 +28,7 @@ class SharedViewModel @Inject constructor(
     private val allRecordsRepository: AllRecordsRepository = AllRecordsRepository()
     private val myDjRepository: MyDjRepository = MyDjRepository()
     private val myPageRepository: MyPageRepository = MyPageRepository()
-    private val recordRepository: RecordRepository = RecordRepository()
+    private val fakeRecordRepository: FakeRecordRepository = FakeRecordRepository()
     private val reportRepository: ReportBlockRepository = ReportBlockRepository()
 
     // Today
@@ -33,7 +36,7 @@ class SharedViewModel @Inject constructor(
     fun setFamousRecord(){
         fakeTodayRepository.getFamousRecord()
     }
-    fun getFamousRecord(): LiveData<List<SumRecord>>{
+    fun getFamousRecord(): LiveData<List<PreviewRecord>>{
         return fakeTodayRepository.famousRecord
     }
     fun getStateFamousRecord(): LiveData<Constant.ApiState>{
@@ -108,11 +111,11 @@ class SharedViewModel @Inject constructor(
     }
 
     // 선택된 DJ 레코드
-    private val myDjRecord = myDjRepository.myDjRecord
+    private val myDjRecord = myDjRepository.myDjDetailRecord
     fun setMyDjRecord(fromUserId: Int, toUserId: Int){
         myDjRepository.getMyDjRecord(fromUserId, toUserId)
     }
-    fun getMyDjRecord(): LiveData<List<Record>>{
+    fun getMyDjRecord(): LiveData<List<DetailRecord>>{
         return myDjRecord
     }
     fun getStateDjRecord(): LiveData<Constant.ApiState>{
@@ -123,7 +126,7 @@ class SharedViewModel @Inject constructor(
     fun setDjAllRecords(userId: Int, postId: Int?, size: Int){
         myDjRepository.getMyDjAllRecords(userId, postId, size)
     }
-    fun getDjAllRecords(): LiveData<List<Record>>{
+    fun getDjAllRecords(): LiveData<List<DetailRecord>>{
         return myDjRepository.myDjAllRecords
     }
     fun getStateDjAllRecords(): LiveData<Constant.ApiState>{
@@ -145,8 +148,8 @@ class SharedViewModel @Inject constructor(
     fun setMyPageData(userId: Int){
         myPageRepository.getMyPageData(userId)
     }
-    fun getMyPageData(): LiveData<MyPage>{
-        return myPageRepository.myPageData
+    fun getMyPageData(): LiveData<MyPageRecord>{
+        return myPageRepository.myPageRecordData
     }
     fun getStateMyPageData(): LiveData<Constant.ApiState>{
         return myPageRepository.stateMyPageData
@@ -154,19 +157,19 @@ class SharedViewModel @Inject constructor(
 
     // 스크랩, 공감 클릭
     fun saveLike(postId: Int, userId: Int){
-        recordRepository.saveLike(postId, userId)
+        fakeRecordRepository.saveLike(postId, userId)
     }
 
     fun deleteLike(postId: Int, userId: Int){
-        recordRepository.deleteLike(postId, userId)
+        fakeRecordRepository.deleteLike(postId, userId)
     }
 
     fun saveScrap(postId: Int, userId: Int){
-        recordRepository.saveScrap(postId, userId)
+        fakeRecordRepository.saveScrap(postId, userId)
     }
 
     fun deleteScrap(postId: Int, userId: Int){
-        recordRepository.deleteScrap(postId, userId)
+        fakeRecordRepository.deleteScrap(postId, userId)
     }
 
     fun reportObject(fromUserId: Int, recordId: Int?, reportReason: String?, toUserId: Int?, type: String){

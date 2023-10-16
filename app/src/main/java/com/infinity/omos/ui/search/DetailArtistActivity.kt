@@ -11,7 +11,6 @@ import com.infinity.omos.R
 import com.infinity.omos.adapters.ArtistViewPagerAdapter
 import com.infinity.omos.databinding.ActivityArtistBinding
 import com.infinity.omos.viewmodels.ArtistViewModel
-import kotlinx.android.synthetic.main.activity_main.*
 
 class DetailArtistActivity : AppCompatActivity() {
 
@@ -46,17 +45,17 @@ class DetailArtistActivity : AppCompatActivity() {
 
     private fun initTabLayout(){
         val viewpagerFragmentAdapter = ArtistViewPagerAdapter(this, artistId)
-        viewPager.adapter = viewpagerFragmentAdapter
-        viewPager.isUserInputEnabled = false
+        binding.viewPager.adapter = viewpagerFragmentAdapter
+        binding.viewPager.isUserInputEnabled = false
         val tabTitles = listOf("노래", "앨범")
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = tabTitles[position]
         }.attach()
     }
 
     private fun initToolBar(){
-        toolbar.title = ""
-        setSupportActionBar(toolbar) // 툴바 사용
+        binding.toolbar.title = ""
+        setSupportActionBar(binding.toolbar) // 툴바 사용
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }

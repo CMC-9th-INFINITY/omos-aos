@@ -2,6 +2,12 @@ package com.infinity.omos.di
 
 import com.infinity.omos.repository.auth.AuthRepository
 import com.infinity.omos.repository.auth.AuthRepositoryImpl
+import com.infinity.omos.repository.dj.DjRepository
+import com.infinity.omos.repository.dj.DjRepositoryImpl
+import com.infinity.omos.repository.music.MusicRepository
+import com.infinity.omos.repository.music.MusicRepositoryImpl
+import com.infinity.omos.repository.record.RecordRepository
+import com.infinity.omos.repository.record.RecordRepositoryImpl
 import com.infinity.omos.repository.today.TodayRepository
 import com.infinity.omos.repository.today.TodayRepositoryImpl
 import com.infinity.omos.repository.user.UserRepository
@@ -33,4 +39,22 @@ interface RepositoryModule {
     fun bindTodayRepository(
         todayRepositoryImpl: TodayRepositoryImpl
     ): TodayRepository
+
+    @Binds
+    @Singleton
+    fun bindRecordRepository(
+        recordRepositoryImpl: RecordRepositoryImpl
+    ): RecordRepository
+
+    @Binds
+    @Singleton
+    fun bindDjRepository(
+        djRepositoryImpl: DjRepositoryImpl
+    ): DjRepository
+
+    @Binds
+    @Singleton
+    fun bindMusicRepository(
+        musicRepositoryImpl: MusicRepositoryImpl
+    ): MusicRepository
 }

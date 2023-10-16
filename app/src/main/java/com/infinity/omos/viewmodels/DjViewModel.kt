@@ -3,7 +3,7 @@ package com.infinity.omos.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import com.infinity.omos.data.DjProfile
+import com.infinity.omos.data.user.profile.DjProfile
 import com.infinity.omos.data.ResultState
 import com.infinity.omos.data.SimpleRecord
 import com.infinity.omos.etc.Constant
