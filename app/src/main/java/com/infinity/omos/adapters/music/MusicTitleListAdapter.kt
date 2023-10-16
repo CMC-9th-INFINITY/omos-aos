@@ -44,7 +44,7 @@ class MusicTitleListAdapter(
             binding.apply {
                 title = item.title
                 executePendingBindings()
-                tvTitle.changeTextColor(item.keyword)
+                // tvTitle.changeTextColor(item.keyword)
             }
         }
     }

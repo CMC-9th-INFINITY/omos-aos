@@ -44,9 +44,8 @@ fun LovedMusic.toPresentation(): LovedMusicModel {
     )
 }
 
-fun MusicTitle.toPresentation(keyword: String): MusicTitleModel {
+fun MusicTitle.toPresentation(): MusicTitleModel {
     return MusicTitleModel(
-        keyword = keyword,
         title = title
     )
 }

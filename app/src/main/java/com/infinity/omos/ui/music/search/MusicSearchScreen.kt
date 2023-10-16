@@ -23,6 +23,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -36,13 +37,17 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
+import androidx.compose.ui.tooling.preview.PreviewParameterProvider
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
+import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.data.music.TopSearchedModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.field
+import com.infinity.omos.ui.view.HighlightKeywordInText
 import com.infinity.omos.ui.view.OmosTopAppBar
 
 @Composable
@@ -50,30 +55,45 @@ fun MusicSearchScreen(
     onBackClick: () -> Unit,
     viewModel: MusicSearchViewModel = hiltViewModel()
 ) {
+    val musicTitlesUiState = viewModel.musicTitlesUiState.collectAsState().value
+    val keyword = viewModel.keyword.collectAsState().value
 
+    MusicSearchScreen(
+        musicTitlesUiState = musicTitlesUiState,
+        keyword = keyword,
+        onBackClick = onBackClick,
+        onKeywordChange = {
+            viewModel.setKeyword(it)
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MusicSearchScreen(
+    musicTitlesUiState: MusicTitleUiState = MusicTitleUiState.Loading,
+    keyword: String,
     onBackClick: () -> Unit = {},
+    onKeywordChange: (String) -> Unit = {}
 ) {
     Scaffold(
         topBar = {
-            OmosTopAppBar(
-                title = stringResource(id = R.string.search_music),
-                style = MaterialTheme.typography.titleSmall,
-                textAlign = TextAlign.Center,
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Go back",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
+            if (keyword.isEmpty()) {
+                OmosTopAppBar(
+                    title = stringResource(id = R.string.search_music),
+                    style = MaterialTheme.typography.titleSmall,
+                    textAlign = TextAlign.Center,
+                    navigationIcon = {
+                        IconButton(onClick = onBackClick) {
+                            Icon(
+                                imageVector = Icons.Default.ArrowBack,
+                                contentDescription = "Go back",
+                                tint = MaterialTheme.colorScheme.onBackground
+                            )
+                        }
                     }
-                }
-            )
+                )
+            }
         }
     ) { padding ->
         Column(
@@ -84,10 +104,18 @@ fun MusicSearchScreen(
             SearchBar(
                 modifier = Modifier.padding(top = Dimens.PaddingSmall),
                 onSearch = {},
-                onKeywordChange = {}
+                onKeywordChange = onKeywordChange
             )
 
-            TopSearchedList(modifier = Modifier.padding(top = 28.dp))
+            if (keyword.isEmpty()) {
+                TopSearchedList(modifier = Modifier.padding(top = 28.dp))
+            } else {
+                MusicTitleList(
+                    modifier = Modifier.padding(top = 28.dp),
+                    musicTitlesUiState = musicTitlesUiState,
+                    keyword = keyword,
+                )
+            }
         }
 
         // 인기 검색어, 음악 타이틀, Pager
@@ -178,7 +206,7 @@ fun TopSearchedList(
 
         items(
             items = topSearchedList,
-            key = { it.keyword }
+            key = { it.ranking }
         ) {
             TopSearchedListItem(
                 topSearched = it
@@ -212,10 +240,75 @@ fun TopSearchedListItem(
     }
 }
 
-@Preview
 @Composable
-fun MusicSearchScreenPreview() {
-    OmosTheme {
-        MusicSearchScreen()
+fun MusicTitleList(
+    modifier: Modifier,
+    musicTitlesUiState: MusicTitleUiState,
+    keyword: String
+) {
+    val lazyListState = rememberLazyListState()
+
+    LazyColumn(
+        modifier = modifier.fillMaxSize(),
+        state = lazyListState
+    ) {
+        if (musicTitlesUiState is MusicTitleUiState.Success) {
+            items(
+                items = musicTitlesUiState.titles
+            ) {
+                MusicTitleListItem(
+                    musicTitle = it,
+                    keyword = keyword
+                )
+            }
+        }
     }
+}
+
+@Composable
+fun MusicTitleListItem(
+    musicTitle: MusicTitleModel,
+    keyword: String
+) {
+    HighlightKeywordInText(
+        modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
+        text = musicTitle.title,
+        keyword = keyword,
+        style = MaterialTheme.typography.bodyLarge,
+    )
+}
+
+@Preview(name = "top searched")
+@Composable
+fun TopSearchedScreenPreview() {
+    OmosTheme {
+        MusicSearchScreen(keyword = "")
+    }
+}
+
+@Preview(name = "music titles")
+@Composable
+fun MusicTitlesScreenPreview(
+    @PreviewParameter(MusicTitlesPreviewParamProvider::class) musicTitles: List<MusicTitleModel>
+) {
+    OmosTheme {
+        MusicSearchScreen(
+            keyword = "안녕",
+            musicTitlesUiState = MusicTitleUiState.Success(
+                titles = musicTitles
+            )
+        )
+    }
+}
+
+private class MusicTitlesPreviewParamProvider : PreviewParameterProvider<List<MusicTitleModel>> {
+    override val values: Sequence<List<MusicTitleModel>> =
+        sequenceOf(
+            listOf(
+                MusicTitleModel("안녕하세요"),
+                MusicTitleModel("안녕? 나는 나야"),
+                MusicTitleModel("내 이름은 안녕입니다."),
+                MusicTitleModel("너 왜 안녕이라고 하는거야?"),
+            )
+        )
 }
