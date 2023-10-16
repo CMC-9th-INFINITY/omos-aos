@@ -83,8 +83,10 @@ fun MusicSearchScreen(
     onBackClick: () -> Unit = {},
     onKeywordChange: (String) -> Unit = {},
     onClearText: () -> Unit = {},
-    onSearch: (String) -> Unit = {},
+    onSearch: () -> Unit = {},
 ) {
+    var newKeyword by remember { mutableStateOf(keyword) }
+
     Scaffold(
         topBar = {
             if (searchState == MusicSearchState.BEFORE) {
@@ -112,20 +114,35 @@ fun MusicSearchScreen(
         ) {
             SearchBar(
                 modifier = Modifier.padding(top = Dimens.PaddingSmall),
+                keyword = newKeyword,
                 onSearch = onSearch,
-                onKeywordChange = onKeywordChange,
-                onClearText = onClearText
+                onKeywordChange = {
+                    newKeyword = it
+                    onKeywordChange(it)
+                },
+                onClearText = {
+                    newKeyword = ""
+                    onClearText()
+                }
             )
 
             when (searchState) {
-                MusicSearchState.BEFORE -> TopSearchedList(modifier = Modifier.padding(top = 28.dp))
+                MusicSearchState.BEFORE -> TopSearchedList(
+                    modifier = Modifier.padding(top = 28.dp),
+                    onItemClick = {
+                        newKeyword = it
+                        onKeywordChange(it)
+                        onSearch()
+                    }
+                )
+
                 MusicSearchState.ING -> MusicTitleList(
                     modifier = Modifier.padding(top = 28.dp),
                     musicTitlesUiState = musicTitlesUiState,
-                    keyword = keyword,
+                    keyword = newKeyword,
                 )
 
-                MusicSearchState.AFTER -> TopSearchedList(modifier = Modifier)
+                MusicSearchState.AFTER -> {}
             }
         }
 
@@ -137,13 +154,13 @@ fun MusicSearchScreen(
 @Composable
 fun SearchBar(
     modifier: Modifier,
-    onSearch: (String) -> Unit,
+    keyword: String,
+    onSearch: () -> Unit,
     onKeywordChange: (String) -> Unit,
     onClearText: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
     val focusRequester = remember { FocusRequester() }
-    var keyword by remember { mutableStateOf("") }
 
     TextField(
         modifier = modifier
@@ -155,10 +172,7 @@ fun SearchBar(
                 }
             },
         value = keyword,
-        onValueChange = {
-            keyword = it
-            onKeywordChange(it)
-        },
+        onValueChange = { onKeywordChange(it) },
         placeholder = { Text(text = stringResource(id = R.string.please_search_music)) },
         leadingIcon = {
             Icon(
@@ -170,7 +184,6 @@ fun SearchBar(
             if (keyword.isNotEmpty()) {
                 Icon(
                     modifier = Modifier.clickable {
-                        keyword = ""
                         focusRequester.requestFocus()
                         onClearText()
                     },
@@ -182,7 +195,7 @@ fun SearchBar(
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
         keyboardActions = KeyboardActions {
             focusManager.clearFocus()
-            onSearch(keyword)
+            onSearch()
         },
         shape = MaterialTheme.shapes.field,
         textStyle = MaterialTheme.typography.bodyLarge,
@@ -196,7 +209,8 @@ fun SearchBar(
 
 @Composable
 fun TopSearchedList(
-    modifier: Modifier
+    modifier: Modifier,
+    onItemClick: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
 
@@ -237,7 +251,8 @@ fun TopSearchedList(
             key = { it.ranking }
         ) {
             TopSearchedListItem(
-                topSearched = it
+                topSearched = it,
+                onItemClick = onItemClick
             )
         }
     }
@@ -245,9 +260,16 @@ fun TopSearchedList(
 
 @Composable
 fun TopSearchedListItem(
-    topSearched: TopSearchedModel
+    topSearched: TopSearchedModel,
+    onItemClick: (String) -> Unit
 ) {
-    Row(modifier = Modifier.padding(vertical = 14.dp)) {
+    Row(
+        modifier = Modifier
+            .padding(vertical = 14.dp)
+            .clickable {
+                onItemClick(topSearched.keyword)
+            }
+    ) {
         Text(
             modifier = Modifier
                 .padding(horizontal = 4.dp)
