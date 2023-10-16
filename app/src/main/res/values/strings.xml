@@ -315,4 +315,5 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="top_searched">인기 검색어</string>
     <string name="standard_yesterday">전일 기준</string>
     <string name="title_activity_music_search">MusicSearchActivity</string>
+    <string name="clear">모든 텍스트 삭제</string>
 </resources>
