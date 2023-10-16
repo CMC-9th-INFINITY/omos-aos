@@ -24,7 +24,7 @@ fun MusicSearchNavHost(
 ) {
     NavHost(navController = navController, startDestination = "musicSearch") {
         composable("musicSearch") {
-            MusicSearchScreen()
+            MusicSearchScreen(onBackClick = {})
         }
 
         /*composable("pager") {

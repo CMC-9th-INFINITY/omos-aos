@@ -35,8 +35,8 @@ class MusicSearchViewModel @Inject constructor(
 
     private val searchedFlow = MutableSharedFlow<String>()
 
-    private var _musicTitles = MutableStateFlow<MusicTitleUiState>(MusicTitleUiState.Loading)
-    val musicTitles = _musicTitles.asStateFlow()
+    private var _musicTitlesUiState = MutableStateFlow<MusicTitleUiState>(MusicTitleUiState.Loading)
+    val musicTitlesUiState = _musicTitlesUiState.asStateFlow()
 
     private var _searchState = MutableStateFlow(MusicSearchState.BEFORE)
     val searchState = _searchState.asStateFlow()
@@ -62,14 +62,14 @@ class MusicSearchViewModel @Inject constructor(
                 .collect { result ->
                     result.mapCatching { titles ->
                         titles.map { title ->
-                            title.toPresentation(keyword.value)
+                            title.toPresentation()
                         }
                     }
                         .onSuccess { titles ->
-                            _musicTitles.value = MusicTitleUiState.Success(titles)
+                            _musicTitlesUiState.value = MusicTitleUiState.Success(titles)
                         }
                         .onFailure {
-                            _musicTitles.value = MusicTitleUiState.Error
+                            _musicTitlesUiState.value = MusicTitleUiState.Error
                         }
                 }
         }

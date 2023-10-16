@@ -82,7 +82,7 @@ class MusicSearchFragment : Fragment() {
 
     private fun collectData() {
         repeatOnStarted {
-            viewModel.musicTitles.collect { state ->
+            viewModel.musicTitlesUiState.collect { state ->
                 if (state is MusicTitleUiState.Success) {
                     musicTitleAdapter.submitList(state.titles)
                 }
