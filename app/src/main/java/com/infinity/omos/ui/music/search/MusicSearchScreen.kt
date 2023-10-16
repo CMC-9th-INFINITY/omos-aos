@@ -85,6 +85,7 @@ fun MusicSearchScreen(
     onClearText: () -> Unit = {},
     onSearch: () -> Unit = {},
 ) {
+    val focusManager = LocalFocusManager.current
     var newKeyword by remember { mutableStateOf(keyword) }
 
     Scaffold(
@@ -129,7 +130,7 @@ fun MusicSearchScreen(
             when (searchState) {
                 MusicSearchState.BEFORE -> TopSearchedList(
                     modifier = Modifier.padding(top = 28.dp),
-                    onItemClick = {
+                    onTopSearchedClick = {
                         newKeyword = it
                         onKeywordChange(it)
                         onSearch()
@@ -140,6 +141,12 @@ fun MusicSearchScreen(
                     modifier = Modifier.padding(top = 28.dp),
                     musicTitlesUiState = musicTitlesUiState,
                     keyword = newKeyword,
+                    onTitleClick = {
+                        newKeyword = it
+                        focusManager.clearFocus()
+                        onKeywordChange(it)
+                        onSearch()
+                    }
                 )
 
                 MusicSearchState.AFTER -> {}
@@ -210,7 +217,7 @@ fun SearchBar(
 @Composable
 fun TopSearchedList(
     modifier: Modifier,
-    onItemClick: (String) -> Unit
+    onTopSearchedClick: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
 
@@ -252,7 +259,7 @@ fun TopSearchedList(
         ) {
             TopSearchedListItem(
                 topSearched = it,
-                onItemClick = onItemClick
+                onTopSearchedClick = onTopSearchedClick
             )
         }
     }
@@ -261,14 +268,12 @@ fun TopSearchedList(
 @Composable
 fun TopSearchedListItem(
     topSearched: TopSearchedModel,
-    onItemClick: (String) -> Unit
+    onTopSearchedClick: (String) -> Unit
 ) {
     Row(
         modifier = Modifier
             .padding(vertical = 14.dp)
-            .clickable {
-                onItemClick(topSearched.keyword)
-            }
+            .clickable { onTopSearchedClick(topSearched.keyword) }
     ) {
         Text(
             modifier = Modifier
@@ -294,7 +299,8 @@ fun TopSearchedListItem(
 fun MusicTitleList(
     modifier: Modifier,
     musicTitlesUiState: MusicTitleUiState,
-    keyword: String
+    keyword: String,
+    onTitleClick: (String) -> Unit
 ) {
     val lazyListState = rememberLazyListState()
 
@@ -308,7 +314,8 @@ fun MusicTitleList(
             ) {
                 MusicTitleListItem(
                     musicTitle = it,
-                    keyword = keyword
+                    keyword = keyword,
+                    onTitleClick = onTitleClick
                 )
             }
         }
@@ -318,10 +325,14 @@ fun MusicTitleList(
 @Composable
 fun MusicTitleListItem(
     musicTitle: MusicTitleModel,
-    keyword: String
+    keyword: String,
+    onTitleClick: (String) -> Unit
 ) {
     HighlightKeywordInText(
-        modifier = Modifier.padding(bottom = Dimens.PaddingLarge),
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(bottom = Dimens.PaddingLarge)
+            .clickable { onTitleClick(musicTitle.title) },
         text = musicTitle.title,
         keyword = keyword,
         style = MaterialTheme.typography.bodyLarge,
