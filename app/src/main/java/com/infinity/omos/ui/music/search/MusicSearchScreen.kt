@@ -48,6 +48,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.data.music.TopSearchedModel
+import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.field
@@ -57,7 +58,10 @@ import com.infinity.omos.ui.view.OmosTopAppBar
 @Composable
 fun MusicSearchScreen(
     onBackClick: () -> Unit,
-    viewModel: MusicSearchViewModel = hiltViewModel()
+    viewModel: MusicSearchViewModel = hiltViewModel(),
+    onMusicClick: (String) -> Unit = {},
+    onAlbumClick: (AlbumModel) -> Unit = {},
+    onArtistClick: (String) -> Unit = {}
 ) {
     val musicTitlesUiState = viewModel.musicTitlesUiState.collectAsState().value
     val keyword = viewModel.keyword.collectAsState().value
@@ -71,6 +75,9 @@ fun MusicSearchScreen(
         onKeywordChange = { viewModel.setKeyword(it) },
         onClearText = { viewModel.setKeyword("") },
         onSearch = { viewModel.search() },
+        onMusicClick = onMusicClick,
+        onAlbumClick = onAlbumClick,
+        onArtistClick = onArtistClick
     )
 }
 
@@ -84,6 +91,9 @@ fun MusicSearchScreen(
     onKeywordChange: (String) -> Unit = {},
     onClearText: () -> Unit = {},
     onSearch: () -> Unit = {},
+    onMusicClick: (String) -> Unit = {},
+    onAlbumClick: (AlbumModel) -> Unit = {},
+    onArtistClick: (String) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     var newKeyword by remember { mutableStateOf(keyword) }
@@ -150,7 +160,10 @@ fun MusicSearchScreen(
                 )
 
                 MusicSearchState.AFTER -> MusicSearchPagerScreen(
-                    modifier = Modifier.fillMaxSize()
+                    modifier = Modifier.fillMaxSize(),
+                    onMusicClick = onMusicClick,
+                    onAlbumClick = onAlbumClick,
+                    onArtistClick = onArtistClick
                 )
             }
         }
