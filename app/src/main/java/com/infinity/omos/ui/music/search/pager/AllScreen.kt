@@ -2,8 +2,6 @@ package com.infinity.omos.ui.music.search.pager
 
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -19,7 +17,6 @@ import com.infinity.omos.ui.music.search.MusicSearchViewModel
 import com.infinity.omos.ui.theme.OmosTheme
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import timber.log.Timber
 import kotlin.math.min
 
 private const val MUSIC_MAX_SIZE = 4
@@ -37,11 +34,6 @@ fun AllScreen(
     onAlbumClick: (AlbumModel) -> Unit,
     onArtistClick: (String) -> Unit
 ) {
-    val state = viewModel.searchState.collectAsState().value
-    LaunchedEffect(state) {
-        Timber.d("Update paging items")
-    }
-
     AllScreen(
         modifier = modifier,
         musicStream = viewModel.musicStream,

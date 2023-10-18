@@ -12,8 +12,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -35,7 +33,6 @@ import com.infinity.omos.ui.theme.grey_04
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emptyFlow
-import timber.log.Timber
 
 @Composable
 fun AlbumListScreen(
@@ -44,11 +41,6 @@ fun AlbumListScreen(
     onAlbumClick: (AlbumModel) -> Unit,
     onMoreClick: () -> Unit = {}
 ) {
-    val state = viewModel.searchState.collectAsState().value
-    LaunchedEffect(state) {
-        Timber.d("Update paging items")
-    }
-
     AlbumListScreen(
         modifier = modifier,
         albumStream = viewModel.albumStream,
