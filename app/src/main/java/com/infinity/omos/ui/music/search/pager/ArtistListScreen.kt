@@ -39,7 +39,7 @@ import kotlinx.coroutines.flow.emptyFlow
 fun ArtistListScreen(
     modifier: Modifier = Modifier,
     viewModel: MusicSearchViewModel = hiltViewModel(),
-    onArtistClick: (String) -> Unit,
+    onArtistClick: (ArtistModel) -> Unit,
     onMoreClick: () -> Unit = {}
 ) {
     ArtistListScreen(
@@ -54,7 +54,7 @@ fun ArtistListScreen(
 fun ArtistListScreen(
     modifier: Modifier = Modifier,
     artistStream: Flow<PagingData<ArtistModel>>,
-    onArtistClick: (String) -> Unit = {},
+    onArtistClick: (ArtistModel) -> Unit = {},
     onMoreClick: () -> Unit = {}
 ) {
     val pagingItems: LazyPagingItems<ArtistModel> = artistStream.collectAsLazyPagingItems()
@@ -78,7 +78,7 @@ fun ArtistListScreen(
                 artist = artist,
                 modifier = modifier
             ) {
-                onArtistClick(artist.artistId)
+                onArtistClick(artist)
             }
         }
     }

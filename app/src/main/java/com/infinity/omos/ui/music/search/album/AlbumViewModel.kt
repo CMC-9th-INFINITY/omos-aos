@@ -32,7 +32,7 @@ class AlbumViewModel @Inject constructor(
         fetchAlbumMusic()
     }
 
-    fun fetchAlbumMusic() {
+    private fun fetchAlbumMusic() {
         viewModelScope.launch {
             musicRepository.getAlbumMusicList(albumId).mapCatching { musicList ->
                 musicList.map { it.toPresentation() }
@@ -41,8 +41,6 @@ class AlbumViewModel @Inject constructor(
                 .onFailure { Timber.d("Error") }
         }
     }
-
-    // 음악 리스트 가져오기
 
     companion object {
         private const val ALBUM_ID_SAVED_STATE_KEY = "albumId"

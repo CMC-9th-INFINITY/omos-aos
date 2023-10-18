@@ -1,13 +1,16 @@
 package com.infinity.omos.ui.music.search
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.album.AlbumScreen
+import com.infinity.omos.ui.music.search.artist.ArtistScreen
 
 @Composable
 fun MusicSearchApp() {
@@ -26,11 +29,12 @@ fun MusicSearchNavHost(
             MusicSearchScreen(
                 onBackClick = { navController.navigateUp() },
                 onMusicClick = {},
-                onAlbumClick = {
-                    val destination = "album/${it.albumId}/${it.albumTitle}/${it.artists}/${it.releaseDate}?albumImageUrl=${it.albumImageUrl}"
+                onAlbumClick = { navController.navigateAlbumScreen(it) },
+                onArtistClick = {
+                    val destination =
+                        "artist/${it.artistId}/${it.artistName}"
                     navController.navigate(destination)
-                },
-                onArtistClick = {}
+                }
             )
         }
         composable(
@@ -48,5 +52,23 @@ fun MusicSearchNavHost(
                 onMusicClick = {}
             )
         }
+        composable(
+            "artist/{artistId}/{artistName}",
+            arguments = listOf(
+                navArgument("artistId") { type = NavType.StringType },
+                navArgument("artistName") { type = NavType.StringType }
+            )
+        ) {
+            ArtistScreen(
+                onBackClick = { navController.navigateUp() },
+                onAlbumClick = { navController.navigateAlbumScreen(it) }
+            )
+        }
     }
+}
+
+fun NavController.navigateAlbumScreen(album: AlbumModel) {
+    val destination =
+        "album/${album.albumId}/${album.albumTitle}/${album.artists}/${album.releaseDate}?albumImageUrl=${album.albumImageUrl}"
+    navigate(destination)
 }

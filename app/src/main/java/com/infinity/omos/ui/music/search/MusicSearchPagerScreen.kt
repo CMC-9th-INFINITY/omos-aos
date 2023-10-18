@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.infinity.omos.R
 import com.infinity.omos.data.music.album.AlbumModel
+import com.infinity.omos.data.music.artist.ArtistModel
 import com.infinity.omos.ui.music.search.pager.AlbumListScreen
 import com.infinity.omos.ui.music.search.pager.AllScreen
 import com.infinity.omos.ui.music.search.pager.ArtistListScreen
@@ -41,7 +42,7 @@ fun MusicSearchPagerScreen(
     pages: Array<MusicSearchPage> = MusicSearchPage.values(),
     onMusicClick: (String) -> Unit = {},
     onAlbumClick: (AlbumModel) -> Unit = {},
-    onArtistClick: (String) -> Unit = {},
+    onArtistClick: (ArtistModel) -> Unit = {},
 ) {
     val pagerState = rememberPagerState()
 
