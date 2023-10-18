@@ -16,15 +16,12 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.pager.AlbumListScreen
 import com.infinity.omos.ui.music.search.pager.AllScreen
 import com.infinity.omos.ui.music.search.pager.ArtistListScreen
 import com.infinity.omos.ui.music.search.pager.MusicListScreen
-import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.grey_03
 import kotlinx.coroutines.launch
 
@@ -40,6 +37,7 @@ enum class MusicSearchPage(
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun MusicSearchPagerScreen(
+    modifier: Modifier,
     pages: Array<MusicSearchPage> = MusicSearchPage.values(),
     onMusicClick: (String) -> Unit = {},
     onAlbumClick: (AlbumModel) -> Unit = {},
@@ -47,7 +45,7 @@ fun MusicSearchPagerScreen(
 ) {
     val pagerState = rememberPagerState()
 
-    Column {
+    Column(modifier = modifier) {
         val coroutineScope = rememberCoroutineScope()
 
         TabRow(
@@ -59,7 +57,12 @@ fun MusicSearchPagerScreen(
                 Tab(
                     selected = pagerState.currentPage == index,
                     onClick = { coroutineScope.launch { pagerState.animateScrollToPage(index) } },
-                    text = { Text(text = title) },
+                    text = {
+                        Text(
+                            text = title,
+                            style = MaterialTheme.typography.bodyMedium
+                        )
+                    },
                     unselectedContentColor = grey_03
                 )
             }
@@ -112,13 +115,5 @@ fun MusicSearchPagerScreen(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-private fun MusicSearchPagerScreenPreview() {
-    OmosTheme {
-        MusicSearchPagerScreen()
     }
 }

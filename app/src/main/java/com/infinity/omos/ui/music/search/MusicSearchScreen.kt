@@ -149,7 +149,9 @@ fun MusicSearchScreen(
                     }
                 )
 
-                MusicSearchState.AFTER -> {}
+                MusicSearchState.AFTER -> MusicSearchPagerScreen(
+                    modifier = Modifier.fillMaxSize()
+                )
             }
         }
 
