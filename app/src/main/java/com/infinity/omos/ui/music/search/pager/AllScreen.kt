@@ -32,7 +32,7 @@ fun AllScreen(
     onArtistMoreClick: () -> Unit,
     onMusicClick: (String) -> Unit,
     onAlbumClick: (AlbumModel) -> Unit,
-    onArtistClick: (String) -> Unit
+    onArtistClick: (ArtistModel) -> Unit
 ) {
     AllScreen(
         modifier = modifier,
@@ -59,7 +59,7 @@ fun AllScreen(
     onArtistMoreClick: () -> Unit = {},
     onMusicClick: (String) -> Unit = {},
     onAlbumClick: (AlbumModel) -> Unit = {},
-    onArtistClick: (String) -> Unit = {}
+    onArtistClick: (ArtistModel) -> Unit = {}
 ) {
     val musicPagingItems: LazyPagingItems<MusicModel> = musicStream.collectAsLazyPagingItems()
     val albumPagingItems: LazyPagingItems<AlbumModel> = albumStream.collectAsLazyPagingItems()
@@ -131,7 +131,7 @@ fun AllScreen(
                 artist = artist,
                 modifier = modifier
             ) {
-                onArtistClick(artist.artistId)
+                onArtistClick(artist)
             }
         }
     }

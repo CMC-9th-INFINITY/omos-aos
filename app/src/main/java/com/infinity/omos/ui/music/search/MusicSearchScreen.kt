@@ -49,6 +49,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicTitleModel
 import com.infinity.omos.data.music.TopSearchedModel
 import com.infinity.omos.data.music.album.AlbumModel
+import com.infinity.omos.data.music.artist.ArtistModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.field
@@ -61,7 +62,7 @@ fun MusicSearchScreen(
     viewModel: MusicSearchViewModel = hiltViewModel(),
     onMusicClick: (String) -> Unit = {},
     onAlbumClick: (AlbumModel) -> Unit = {},
-    onArtistClick: (String) -> Unit = {}
+    onArtistClick: (ArtistModel) -> Unit = {}
 ) {
     val musicTitlesUiState = viewModel.musicTitlesUiState.collectAsState().value
     val keyword = viewModel.keyword.collectAsState().value
@@ -93,7 +94,7 @@ fun MusicSearchScreen(
     onSearch: () -> Unit = {},
     onMusicClick: (String) -> Unit = {},
     onAlbumClick: (AlbumModel) -> Unit = {},
-    onArtistClick: (String) -> Unit = {}
+    onArtistClick: (ArtistModel) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
     var newKeyword by remember { mutableStateOf(keyword) }
