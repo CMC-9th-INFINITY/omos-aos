@@ -9,6 +9,7 @@ import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.data.music.artist.ArtistModel
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.MusicTitleModel
+import com.infinity.omos.data.music.album.toPresentation
 import com.infinity.omos.data.music.toPresentation
 import com.infinity.omos.repository.music.MusicRepository
 import dagger.hilt.android.lifecycle.HiltViewModel

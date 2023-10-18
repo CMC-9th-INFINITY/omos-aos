@@ -16,7 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OmosTopAppBar(
-    title: String,
+    title: String = "",
     style: TextStyle = MaterialTheme.typography.titleLarge,
     textAlign: TextAlign = TextAlign.Start,
     navigationIcon: @Composable () -> Unit = {},

@@ -43,7 +43,10 @@ fun MusicSearchNavHost(
                 navArgument("releaseDate") { type = NavType.StringType },
             )
         ) {
-            AlbumScreen()
+            AlbumScreen(
+                onBackClick = { navController.navigateUp() },
+                onMusicClick = {}
+            )
         }
     }
 }
