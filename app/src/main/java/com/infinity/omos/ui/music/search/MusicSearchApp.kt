@@ -11,6 +11,7 @@ import androidx.navigation.navArgument
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.album.AlbumScreen
 import com.infinity.omos.ui.music.search.artist.ArtistScreen
+import com.infinity.omos.ui.record.write.SelectCategoryScreen
 
 @Composable
 fun MusicSearchApp() {
@@ -28,7 +29,7 @@ fun MusicSearchNavHost(
         composable("musicSearch") {
             MusicSearchScreen(
                 onBackClick = { navController.navigateUp() },
-                onMusicClick = {},
+                onMusicClick = { navController.navigateSelectCategoryScreen() },
                 onAlbumClick = { navController.navigateAlbumScreen(it) },
                 onArtistClick = {
                     val destination =
@@ -49,7 +50,7 @@ fun MusicSearchNavHost(
         ) {
             AlbumScreen(
                 onBackClick = { navController.navigateUp() },
-                onMusicClick = {}
+                onMusicClick = { navController.navigateSelectCategoryScreen() }
             )
         }
         composable(
@@ -64,7 +65,23 @@ fun MusicSearchNavHost(
                 onAlbumClick = { navController.navigateAlbumScreen(it) }
             )
         }
+        composable(
+            "selectCategory",
+            arguments = listOf(
+
+            )
+        ) {
+            SelectCategoryScreen(
+                onBackClick = { navController.navigateUp() },
+                onNextClick = {}
+            )
+        }
     }
+}
+
+fun NavController.navigateSelectCategoryScreen() {
+    val destination = "selectCategory"
+    navigate(destination)
 }
 
 fun NavController.navigateAlbumScreen(album: AlbumModel) {
