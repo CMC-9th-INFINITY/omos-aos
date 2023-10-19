@@ -12,6 +12,7 @@ import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.album.AlbumScreen
 import com.infinity.omos.ui.music.search.artist.ArtistScreen
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
+import com.infinity.omos.ui.record.write.SelectRecordFormScreen
 
 @Composable
 fun MusicSearchApp() {
@@ -72,6 +73,18 @@ fun MusicSearchNavHost(
             )
         ) {
             SelectCategoryScreen(
+                onBackClick = { navController.navigateUp() },
+                onNextClick = {
+                    val direction = "selectRecordForm"
+                    navController.navigate(direction)
+                }
+            )
+        }
+        composable(
+            "selectRecordForm",
+            arguments = listOf()
+        ) {
+            SelectRecordFormScreen(
                 onBackClick = { navController.navigateUp() },
                 onNextClick = {}
             )

@@ -322,4 +322,9 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="story_description">노래로 떠올려보는\n나의 이야기</string>
     <string name="lyrics_description">노래에 담긴 깊은 뜻을\n살펴볼까요?</string>
     <string name="free_description">당신이 노래를 통해 표현하고 싶은\n모든 것을 써내려가는 공간</string>
+    <string name="select_record_form">레코드 양식 선택</string>
+    <string name="write_record">글 작성하기</string>
+    <string name="write_record_description">나만의 글로 노래를 기록해보세요.</string>
+    <string name="select_keyword">키워드 선택하기</string>
+    <string name="select_keyword_description">키워드로 간편하게 노래를 기록해보세요.</string>
 </resources>
