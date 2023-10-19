@@ -316,4 +316,10 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="standard_yesterday">전일 기준</string>
     <string name="title_activity_music_search">MusicSearchActivity</string>
     <string name="clear">모든 텍스트 삭제</string>
+    <string name="select_category">카테고리 선택</string>
+    <string name="a_line_description">당신의 노래를 한 줄로\n표현한다면?</string>
+    <string name="ost_description">당신의 인생곡을\n알려주세요.</string>
+    <string name="story_description">노래로 떠올려보는\n나의 이야기</string>
+    <string name="lyrics_description">노래에 담긴 깊은 뜻을\n살펴볼까요?</string>
+    <string name="free_description">당신이 노래를 통해 표현하고 싶은\n모든 것을 써내려가는 공간</string>
 </resources>
