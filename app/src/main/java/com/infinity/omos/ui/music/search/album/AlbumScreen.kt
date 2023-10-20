@@ -12,11 +12,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -40,6 +36,7 @@ import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.grey_01
 import com.infinity.omos.ui.theme.grey_02
 import com.infinity.omos.ui.theme.grey_03
+import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 import com.skydoves.landscapist.ImageOptions
 import com.skydoves.landscapist.glide.GlideImage
@@ -80,15 +77,7 @@ fun AlbumScreen(
     Scaffold(
         topBar = {
             OmosTopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Go back",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                }
+                navigationIcon = { BackIcon(onClick = onBackClick) }
             )
         }
     ) { padding ->

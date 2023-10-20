@@ -8,12 +8,8 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,6 +35,7 @@ import com.infinity.omos.ui.record.write.MusicTopBar
 import com.infinity.omos.ui.record.write.TextCount
 import com.infinity.omos.ui.record.write.WriteRecordViewModel
 import com.infinity.omos.ui.theme.white
+import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 
 private const val MAX_TEXT_LENGTH = 250
@@ -76,15 +73,7 @@ fun WriteLyricsRecordScreen(
                 title = stringResource(R.string.record_write),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Go back",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                },
+                navigationIcon = { BackIcon(onClick = onBackClick) },
                 actions = {
                     Text(
                         modifier = Modifier

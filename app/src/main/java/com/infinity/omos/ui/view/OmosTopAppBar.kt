@@ -2,8 +2,12 @@ package com.infinity.omos.ui.view
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -50,6 +54,17 @@ fun OmosTopAppBar(
             navigationIcon = navigationIcon,
             actions = actions,
             colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = MaterialTheme.colorScheme.background)
+        )
+    }
+}
+
+@Composable
+fun BackIcon(onClick: () -> Unit) {
+    IconButton(onClick = onClick) {
+        Icon(
+            imageVector = Icons.Default.ArrowBack,
+            contentDescription = "Go back",
+            tint = MaterialTheme.colorScheme.onBackground
         )
     }
 }
