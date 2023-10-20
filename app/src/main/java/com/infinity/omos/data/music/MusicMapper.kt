@@ -7,7 +7,7 @@ fun Music.toPresentation(): MusicModel {
     return MusicModel(
         musicTitle = musicTitle,
         musicId = musicId,
-        artists = artists,
+        artists = artists.joinToString(separator = " & ") { it.artistName },
         albumTitle = albumTitle,
         albumImageUrl = albumImageUrl,
         artistsAndAlbumTitle = "${artists.joinToString(separator = " & ") { it.artistName }} - $albumTitle"

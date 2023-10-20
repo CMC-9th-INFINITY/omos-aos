@@ -12,6 +12,8 @@ interface MusicRepository {
 
     suspend fun getMusicTitle(keyword: String): Result<List<MusicTitle>>
 
+    suspend fun getMusic(musicId: String): Result<Music>
+
     fun getMusicStream(keyword: String): Flow<PagingData<Music>>
 
     fun getAlbumStream(keyword: String): Flow<PagingData<Album>>

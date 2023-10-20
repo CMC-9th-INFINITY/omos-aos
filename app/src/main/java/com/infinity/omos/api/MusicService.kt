@@ -27,6 +27,11 @@ interface MusicService {
         @Query("type") type: Int = 0
     ): List<Music>
 
+    @GET("api/search/track/{musicId}")
+    suspend fun getMusic(
+        @Path("musicId") musicId: String
+    ): Music
+
     @GET("api/search/album")
     suspend fun getAlbumList(
         @Query("keyword") keyword: String,

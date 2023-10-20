@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.music.search
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -11,8 +12,11 @@ import androidx.navigation.navArgument
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.album.AlbumScreen
 import com.infinity.omos.ui.music.search.artist.ArtistScreen
+import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
 import com.infinity.omos.ui.record.write.SelectRecordFormScreen
+import com.infinity.omos.ui.record.write.WriteRecordViewModel
+import com.infinity.omos.ui.record.write.writeform.WriteLyricsRecordScreen
 
 @Composable
 fun MusicSearchApp() {
@@ -24,13 +28,14 @@ fun MusicSearchApp() {
 
 @Composable
 fun MusicSearchNavHost(
+    writeRecordViewModel: WriteRecordViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
     NavHost(navController = navController, startDestination = "musicSearch") {
         composable("musicSearch") {
             MusicSearchScreen(
                 onBackClick = { navController.navigateUp() },
-                onMusicClick = { navController.navigateSelectCategoryScreen() },
+                onMusicClick = { navController.navigateSelectCategoryScreen(it) },
                 onAlbumClick = { navController.navigateAlbumScreen(it) },
                 onArtistClick = {
                     val destination =
@@ -51,7 +56,7 @@ fun MusicSearchNavHost(
         ) {
             AlbumScreen(
                 onBackClick = { navController.navigateUp() },
-                onMusicClick = { navController.navigateSelectCategoryScreen() }
+                onMusicClick = { navController.navigateSelectCategoryScreen(it) }
             )
         }
         composable(
@@ -67,12 +72,17 @@ fun MusicSearchNavHost(
             )
         }
         composable(
-            "selectCategory",
+            "selectCategory/{musicId}",
             arguments = listOf(
-
+                navArgument("musicId") { type = NavType.StringType }
             )
-        ) {
+        ) { backStackEntry ->
+
+            val musicId = backStackEntry.arguments?.getString("musicId") ?: ""
+
             SelectCategoryScreen(
+                viewModel = writeRecordViewModel,
+                musicId = musicId,
                 onBackClick = { navController.navigateUp() },
                 onNextClick = {
                     val direction = "selectRecordForm"
@@ -85,6 +95,27 @@ fun MusicSearchNavHost(
             arguments = listOf()
         ) {
             SelectRecordFormScreen(
+                viewModel = writeRecordViewModel,
+                onBackClick = { navController.navigateUp() },
+                onNextClick = { recordForm ->
+                    when(recordForm) {
+                        RecordForm.WRITE -> {
+                            val direction = "writeLyricsRecord"
+                            navController.navigate(direction)
+                        }
+                        RecordForm.KEYWORD -> {
+
+                        }
+                    }
+                }
+            )
+        }
+        composable(
+            "writeLyricsRecord",
+            arguments = listOf()
+        ) {
+            WriteLyricsRecordScreen(
+                viewModel = writeRecordViewModel,
                 onBackClick = { navController.navigateUp() },
                 onNextClick = {}
             )
@@ -92,8 +123,8 @@ fun MusicSearchNavHost(
     }
 }
 
-fun NavController.navigateSelectCategoryScreen() {
-    val destination = "selectCategory"
+fun NavController.navigateSelectCategoryScreen(musicId: String) {
+    val destination = "selectCategory/${musicId}"
     navigate(destination)
 }
 

@@ -47,10 +47,12 @@ private const val CARD_HEIGHT = 180
 @Composable
 fun SelectCategoryScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
+    musicId: String,
     onBackClick: () -> Unit,
     onNextClick: () -> Unit
 ) {
     val category = viewModel.category.collectAsState().value
+    viewModel.fetchMusic(musicId)
 
     SelectCategoryScreen(
         category = category,
