@@ -22,6 +22,12 @@ class MusicRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getMusic(musicId: String): Result<Music> {
+        return Result.runCatching {
+            musicService.getMusic(musicId)
+        }
+    }
+
     override fun getMusicStream(keyword: String): Flow<PagingData<Music>> {
         return Pager(
             config = PagingConfig(

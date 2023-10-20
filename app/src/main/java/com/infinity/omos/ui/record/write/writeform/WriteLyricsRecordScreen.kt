@@ -1,9 +1,8 @@
-package com.infinity.omos.ui.record.write
+package com.infinity.omos.ui.record.write.writeform
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -19,45 +18,41 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
+import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
-import com.infinity.omos.ui.record.RecordForm
-import com.infinity.omos.ui.theme.OmosTheme
+import com.infinity.omos.ui.record.write.MusicTopBar
+import com.infinity.omos.ui.record.write.WriteRecordViewModel
 import com.infinity.omos.ui.view.OmosTopAppBar
 
 @Composable
-fun SelectRecordFormScreen(
+fun WriteLyricsRecordScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: (RecordForm) -> Unit
+    onNextClick: () -> Unit,
 ) {
-    val recordForm = viewModel.recordForm.collectAsState().value
+    val music = viewModel.music.collectAsState().value
 
-    SelectRecordFormScreen(
-        recordForm = recordForm,
+    WriteLyricsRecordScreen(
+        music = music,
         onBackClick = onBackClick,
-        onNextClick = onNextClick,
-        onWriteClick = { viewModel.setRecordForm(RecordForm.WRITE) },
-        onKeywordClick = { viewModel.setRecordForm(RecordForm.KEYWORD) }
+        onNextClick = onNextClick
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SelectRecordFormScreen(
-    recordForm: RecordForm = RecordForm.WRITE,
+fun WriteLyricsRecordScreen(
+    music: MusicModel,
     onBackClick: () -> Unit = {},
-    onNextClick: (RecordForm) -> Unit = {},
-    onWriteClick: () -> Unit = {},
-    onKeywordClick: () -> Unit = {}
+    onNextClick: () -> Unit = {},
 ) {
     Scaffold(
         topBar = {
             OmosTopAppBar(
-                title = stringResource(R.string.select_record_form),
+                title = stringResource(R.string.record_write),
                 style = MaterialTheme.typography.titleSmall,
                 textAlign = TextAlign.Center,
                 navigationIcon = {
@@ -73,7 +68,7 @@ fun SelectRecordFormScreen(
                     Text(
                         modifier = Modifier
                             .padding(Dimens.PaddingNormal)
-                            .clickable { onNextClick(recordForm) },
+                            .clickable { onNextClick() },
                         text = stringResource(id = R.string.next),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground
@@ -83,38 +78,10 @@ fun SelectRecordFormScreen(
         }
     ) { paddingValues ->
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(
-                    top = paddingValues.calculateTopPadding() + 40.dp,
-                    start = Dimens.PaddingNormal,
-                    end = Dimens.PaddingNormal,
-                    bottom = paddingValues.calculateBottomPadding()
-                )
+            modifier = Modifier.padding(paddingValues)
         ) {
-            CategoryCard(
-                name = stringResource(R.string.write_record),
-                description = stringResource(R.string.write_record_description),
-                backgroundDrawable = R.drawable.img_write_record,
-                isClicked = recordForm == RecordForm.WRITE,
-                onClick = onWriteClick
-            )
-            Spacer(modifier = Modifier.height(Dimens.PaddingNormal))
-            CategoryCard(
-                name = stringResource(R.string.select_keyword),
-                description = stringResource(R.string.select_keyword_description),
-                backgroundDrawable = R.drawable.img_select_keyword,
-                isClicked = recordForm == RecordForm.KEYWORD,
-                onClick = onKeywordClick
-            )
+            Spacer(modifier = Modifier.height(12.dp))
+            MusicTopBar(music = music)
         }
-    }
-}
-
-@Preview
-@Composable
-fun SelectRecordFormScreenPreview() {
-    OmosTheme {
-        SelectRecordFormScreen()
     }
 }

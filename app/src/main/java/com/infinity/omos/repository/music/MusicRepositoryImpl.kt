@@ -18,6 +18,10 @@ class MusicRepositoryImpl @Inject constructor(
         return musicRemoteDataSource.getMusicTitle(keyword)
     }
 
+    override suspend fun getMusic(musicId: String): Result<Music> {
+        return musicRemoteDataSource.getMusic(musicId)
+    }
+
     override fun getMusicStream(keyword: String): Flow<PagingData<Music>> {
         return musicRemoteDataSource.getMusicStream(keyword)
     }

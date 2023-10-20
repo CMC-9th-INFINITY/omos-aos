@@ -28,7 +28,6 @@ import androidx.paging.PagingData
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.infinity.omos.R
-import com.infinity.omos.data.music.artist.Artist
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.music.search.MusicSearchViewModel
@@ -168,13 +167,7 @@ private class MusicListPreviewParamProvider : PreviewParameterProvider<PagingDat
                     MusicModel(
                         musicId = "0",
                         musicTitle = "음악 타이틀",
-                        artists = listOf(
-                            Artist(
-                                artistId = "0",
-                                artistImageUrl = "",
-                                artistName = "아티스트 이름"
-                            )
-                        ),
+                        artists = "아티스트 이름",
                         albumTitle = "앨범 타이틀",
                         albumImageUrl = "",
                         artistsAndAlbumTitle = "가수 이름 - 앨범 타이틀"
