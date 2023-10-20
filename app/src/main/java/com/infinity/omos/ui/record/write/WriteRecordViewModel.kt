@@ -25,8 +25,9 @@ class WriteRecordViewModel @Inject constructor(
     val music = _music.asStateFlow()
 
     val category = MutableStateFlow(Category.A_LINE)
-
     val recordForm = MutableStateFlow(RecordForm.WRITE)
+
+    val contents = MutableStateFlow("")
 
     fun setCategory(newCategory: Category) {
         category.value = newCategory
@@ -34,6 +35,10 @@ class WriteRecordViewModel @Inject constructor(
 
     fun setRecordForm(newRecordForm: RecordForm) {
         recordForm.value = newRecordForm
+    }
+
+    fun setContents(newContent: String) {
+        contents.value = newContent
     }
 
     fun fetchMusic(musicId: String) {
