@@ -20,7 +20,8 @@
             android:name=".ui.music.search.MusicSearchActivity"
             android:exported="false"
             android:label="@string/title_activity_music_search"
-            android:theme="@style/Theme.Omos" />
+            android:theme="@style/Theme.Omos"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"

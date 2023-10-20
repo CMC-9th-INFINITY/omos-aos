@@ -328,4 +328,5 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="select_keyword">키워드 선택하기</string>
     <string name="select_keyword_description">키워드로 간편하게 노래를 기록해보세요.</string>
     <string name="record_write">레코드 작성</string>
+    <string name="text_count">글자수</string>
 </resources>
