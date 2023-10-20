@@ -9,11 +9,7 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,6 +22,7 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.Dimens
+import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 import com.skydoves.landscapist.glide.GlideImage
 import kotlinx.coroutines.flow.Flow
@@ -58,15 +55,7 @@ fun ArtistScreen(
     Scaffold(
         topBar = {
             OmosTopAppBar(
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Go back",
-                            tint = MaterialTheme.colorScheme.onBackground
-                        )
-                    }
-                }
+                navigationIcon = { BackIcon(onClick = onBackClick) }
             )
         }
     ) { padding ->
