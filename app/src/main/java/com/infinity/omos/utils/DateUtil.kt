@@ -27,6 +27,8 @@ object DateUtil {
         }
     }
 
+    fun convertToUiRecordDate(ms: Long): String = uiRecordDateFormat.format(ms)
+
     fun convertToUiAlbumReleaseDate(str: String): String {
         return try {
             val date = remoteAlbumReleaseDateFormat.parse(str)

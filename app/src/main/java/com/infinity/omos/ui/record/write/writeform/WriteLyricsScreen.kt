@@ -41,7 +41,7 @@ import com.infinity.omos.ui.view.OmosTopAppBar
 private const val MAX_TEXT_LENGTH = 250
 
 @Composable
-fun WriteLyricsRecordScreen(
+fun WriteLyricsScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
     onNextClick: () -> Unit,
@@ -49,7 +49,7 @@ fun WriteLyricsRecordScreen(
     val music = viewModel.music.collectAsState().value
     val contents = viewModel.contents.collectAsState().value
 
-    WriteLyricsRecordScreen(
+    WriteLyricsScreen(
         music = music,
         contents = contents,
         onBackClick = onBackClick,
@@ -60,7 +60,7 @@ fun WriteLyricsRecordScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WriteLyricsRecordScreen(
+fun WriteLyricsScreen(
     music: MusicModel,
     contents: String,
     onBackClick: () -> Unit = {},
