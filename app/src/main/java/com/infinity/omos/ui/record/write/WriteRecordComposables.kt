@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -59,6 +60,7 @@ import com.infinity.omos.utils.DateUtil
 import com.infinity.omos.utils.requestPermission
 import com.infinity.omos.utils.useOpenImagePicker
 import com.skydoves.landscapist.glide.GlideImage
+import kotlin.random.Random
 
 private const val MAX_TITLE_LENGTH = 36
 
@@ -176,7 +178,13 @@ fun RecordTitleBox(
     ) {
         val imageBitmap = uriToBitmap(context, imageUri)?.asImageBitmap()
 
-        if (imageBitmap != null) {
+        if (imageBitmap == null) {
+            Image(
+                modifier = Modifier.fillMaxSize(),
+                painter = randomRecordImage(),
+                contentDescription = ""
+            )
+        } else {
             Image(
                 modifier = Modifier.fillMaxSize(),
                 bitmap = imageBitmap,
@@ -271,7 +279,7 @@ fun RecordTitleBoxPreview() {
     }
 }
 
-fun uriToBitmap(context: Context, uri: Uri?): Bitmap? {
+private fun uriToBitmap(context: Context, uri: Uri?): Bitmap? {
     if (uri == null) {
         return null
     }
@@ -283,4 +291,17 @@ fun uriToBitmap(context: Context, uri: Uri?): Bitmap? {
         @Suppress("DEPRECATION")
         MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
     }
+}
+
+@Composable
+private fun randomRecordImage(): Painter {
+    val images = listOf(
+        R.drawable.img_record_1,
+        R.drawable.img_record_2,
+        R.drawable.img_record_3
+    )
+    val randomNumber = remember { Random.nextInt(0, images.size) }
+    val drawable = images[randomNumber]
+
+    return painterResource(id = drawable)
 }
