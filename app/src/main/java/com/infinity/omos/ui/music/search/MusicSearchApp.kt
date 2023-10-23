@@ -16,7 +16,8 @@ import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
 import com.infinity.omos.ui.record.write.SelectRecordFormScreen
 import com.infinity.omos.ui.record.write.WriteRecordViewModel
-import com.infinity.omos.ui.record.write.writeform.WriteLyricsRecordScreen
+import com.infinity.omos.ui.record.write.writeform.WriteLyricsScreen
+import com.infinity.omos.ui.record.write.writeform.WriteRecordScreen
 
 @Composable
 fun MusicSearchApp() {
@@ -100,7 +101,7 @@ fun MusicSearchNavHost(
                 onNextClick = { recordForm ->
                     when(recordForm) {
                         RecordForm.WRITE -> {
-                            val direction = "writeLyricsRecord"
+                            val direction = "writeLyrics"
                             navController.navigate(direction)
                         }
                         RecordForm.KEYWORD -> {
@@ -111,13 +112,25 @@ fun MusicSearchNavHost(
             )
         }
         composable(
-            "writeLyricsRecord",
+            "writeLyrics",
             arguments = listOf()
         ) {
-            WriteLyricsRecordScreen(
+            WriteLyricsScreen(
                 viewModel = writeRecordViewModel,
                 onBackClick = { navController.navigateUp() },
-                onNextClick = {}
+                onNextClick = {
+                    val direction = "writeRecord"
+                    navController.navigate(direction)
+                }
+            )
+        }
+        composable(
+            "writeRecord"
+        ) {
+            WriteRecordScreen(
+                viewModel = writeRecordViewModel,
+                onBackClick = { navController.navigateUp() },
+                onCompleteClick = {}
             )
         }
     }
