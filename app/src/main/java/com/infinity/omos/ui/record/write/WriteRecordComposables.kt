@@ -1,12 +1,8 @@
 package com.infinity.omos.ui.record.write
 
 import android.Manifest
-import android.content.Context
-import android.graphics.Bitmap
-import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
-import android.provider.MediaStore
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -57,10 +52,11 @@ import com.infinity.omos.ui.theme.grey_02
 import com.infinity.omos.ui.theme.grey_03
 import com.infinity.omos.ui.theme.white
 import com.infinity.omos.utils.DateUtil
+import com.infinity.omos.utils.randomRecordImage
 import com.infinity.omos.utils.requestPermission
+import com.infinity.omos.utils.uriToBitmap
 import com.infinity.omos.utils.useOpenImagePicker
 import com.skydoves.landscapist.glide.GlideImage
-import kotlin.random.Random
 
 private const val MAX_TITLE_LENGTH = 36
 
@@ -141,8 +137,10 @@ fun TextCount(
 @Composable
 fun RecordTitleBox(
     title: String = "",
+    imageUri: Uri? = null,
     isPublic: Boolean = true,
     onTitleChange: (String) -> Unit = {},
+    onImageChange: (Uri) -> Unit = {},
     onLockClick: () -> Unit = {}
 ) {
     val context = LocalContext.current
@@ -156,14 +154,16 @@ fun RecordTitleBox(
         } else {
             rememberPermissionState(permission = Manifest.permission.READ_EXTERNAL_STORAGE)
         }
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
+    var uri by remember { mutableStateOf(imageUri) }
     val openImagePicker = useOpenImagePicker(
         context = context,
         width = componentSize.value.width.toInt(),
-        height = componentSize.value.height.toInt()
-    ) { uri ->
-        imageUri = uri
-    }
+        height = componentSize.value.height.toInt(),
+        onResult = {
+            uri = it
+            onImageChange(it)
+        }
+    )
 
     Box(
         modifier = Modifier
@@ -176,7 +176,7 @@ fun RecordTitleBox(
                 )
             }
     ) {
-        val imageBitmap = uriToBitmap(context, imageUri)?.asImageBitmap()
+        val imageBitmap = uriToBitmap(context, uri)?.asImageBitmap()
 
         if (imageBitmap == null) {
             Image(
@@ -277,31 +277,4 @@ fun RecordTitleBoxPreview() {
     OmosTheme {
         RecordTitleBox()
     }
-}
-
-private fun uriToBitmap(context: Context, uri: Uri?): Bitmap? {
-    if (uri == null) {
-        return null
-    }
-
-    return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
-        val source = ImageDecoder.createSource(context.contentResolver, uri)
-        ImageDecoder.decodeBitmap(source)
-    } else {
-        @Suppress("DEPRECATION")
-        MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
-    }
-}
-
-@Composable
-private fun randomRecordImage(): Painter {
-    val images = listOf(
-        R.drawable.img_record_1,
-        R.drawable.img_record_2,
-        R.drawable.img_record_3
-    )
-    val randomNumber = remember { Random.nextInt(0, images.size) }
-    val drawable = images[randomNumber]
-
-    return painterResource(id = drawable)
 }

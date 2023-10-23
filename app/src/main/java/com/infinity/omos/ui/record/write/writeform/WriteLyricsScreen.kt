@@ -47,14 +47,14 @@ fun WriteLyricsScreen(
     onNextClick: () -> Unit,
 ) {
     val music = viewModel.music.collectAsState().value
-    val contents = viewModel.contents.collectAsState().value
+    val contents = viewModel.lyrics.collectAsState().value
 
     WriteLyricsScreen(
         music = music,
         contents = contents,
         onBackClick = onBackClick,
         onNextClick = onNextClick,
-        onTextChange = { viewModel.setContents(it) }
+        onTextChange = { viewModel.setLyrics(it) }
     )
 }
 
