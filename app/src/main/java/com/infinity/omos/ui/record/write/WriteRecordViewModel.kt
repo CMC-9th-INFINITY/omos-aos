@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.record.write
 
+import android.net.Uri
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.music.MusicModel
@@ -28,7 +29,8 @@ class WriteRecordViewModel @Inject constructor(
     val recordForm = MutableStateFlow(RecordForm.WRITE)
 
     val title = MutableStateFlow("")
-    val contents = MutableStateFlow("")
+    val imageUri = MutableStateFlow<Uri?>(null)
+    val lyrics = MutableStateFlow("")
     val isPublic = MutableStateFlow(true)
 
     fun setCategory(newCategory: Category) {
@@ -43,8 +45,12 @@ class WriteRecordViewModel @Inject constructor(
         title.value = newTitle
     }
 
-    fun setContents(newContent: String) {
-        contents.value = newContent
+    fun setImageUri(uri: Uri) {
+        imageUri.value = uri
+    }
+
+    fun setLyrics(newLyrics: String) {
+        lyrics.value = newLyrics
     }
 
     fun changeLockState() {

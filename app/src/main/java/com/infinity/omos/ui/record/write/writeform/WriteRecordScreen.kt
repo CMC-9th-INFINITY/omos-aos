@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.record.write.writeform
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -32,15 +33,18 @@ fun WriteRecordScreen(
 ) {
     val music = viewModel.music.collectAsState().value
     val title = viewModel.title.collectAsState().value
+    val imageUri = viewModel.imageUri.collectAsState().value
     val isPublic = viewModel.isPublic.collectAsState().value
 
     WriteRecordScreen(
         music = music,
         title = title,
+        imageUri = imageUri,
         isPublic = isPublic,
         onBackClick = onBackClick,
         onCompleteClick = onCompleteClick,
         onTitleChange = { viewModel.setTitle(it) },
+        onImageChange = { viewModel.setImageUri(it) },
         onLockClick = { viewModel.changeLockState() }
     )
 }
@@ -50,10 +54,12 @@ fun WriteRecordScreen(
 fun WriteRecordScreen(
     music: MusicModel,
     title: String,
+    imageUri: Uri?,
     isPublic: Boolean,
     onBackClick: () -> Unit = {},
     onCompleteClick: () -> Unit = {},
     onTitleChange: (String) -> Unit = {},
+    onImageChange: (Uri) -> Unit = {},
     onLockClick: () -> Unit = {}
 ) {
     Scaffold(
@@ -82,8 +88,10 @@ fun WriteRecordScreen(
             MusicTopBar(music = music)
             RecordTitleBox(
                 title = title,
+                imageUri = imageUri,
                 isPublic = isPublic,
                 onTitleChange = onTitleChange,
+                onImageChange = onImageChange,
                 onLockClick = onLockClick
             )
 
