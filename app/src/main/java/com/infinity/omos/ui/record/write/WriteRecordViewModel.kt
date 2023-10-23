@@ -27,6 +27,7 @@ class WriteRecordViewModel @Inject constructor(
     val category = MutableStateFlow(Category.A_LINE)
     val recordForm = MutableStateFlow(RecordForm.WRITE)
 
+    val title = MutableStateFlow("")
     val contents = MutableStateFlow("")
     val isPublic = MutableStateFlow(true)
 
@@ -36,6 +37,10 @@ class WriteRecordViewModel @Inject constructor(
 
     fun setRecordForm(newRecordForm: RecordForm) {
         recordForm.value = newRecordForm
+    }
+
+    fun setTitle(newTitle: String) {
+        title.value = newTitle
     }
 
     fun setContents(newContent: String) {

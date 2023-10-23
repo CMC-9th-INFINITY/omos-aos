@@ -31,13 +31,16 @@ fun WriteRecordScreen(
     onCompleteClick: () -> Unit
 ) {
     val music = viewModel.music.collectAsState().value
+    val title = viewModel.title.collectAsState().value
     val isPublic = viewModel.isPublic.collectAsState().value
 
     WriteRecordScreen(
         music = music,
+        title = title,
         isPublic = isPublic,
         onBackClick = onBackClick,
         onCompleteClick = onCompleteClick,
+        onTitleChange = { viewModel.setTitle(it) },
         onLockClick = { viewModel.changeLockState() }
     )
 }
@@ -46,9 +49,11 @@ fun WriteRecordScreen(
 @Composable
 fun WriteRecordScreen(
     music: MusicModel,
+    title: String,
     isPublic: Boolean,
     onBackClick: () -> Unit = {},
     onCompleteClick: () -> Unit = {},
+    onTitleChange: (String) -> Unit = {},
     onLockClick: () -> Unit = {}
 ) {
     Scaffold(
@@ -76,7 +81,9 @@ fun WriteRecordScreen(
             Spacer(modifier = Modifier.height(12.dp))
             MusicTopBar(music = music)
             RecordTitleBox(
+                title = title,
                 isPublic = isPublic,
+                onTitleChange = onTitleChange,
                 onLockClick = onLockClick
             )
 
