@@ -1,6 +1,9 @@
 package com.infinity.omos.ui.music.search
 
+import android.app.Activity
+import android.widget.Toast
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
@@ -32,6 +35,8 @@ fun MusicSearchNavHost(
     writeRecordViewModel: WriteRecordViewModel = hiltViewModel(),
     navController: NavHostController
 ) {
+    val context = LocalContext.current
+
     NavHost(navController = navController, startDestination = "musicSearch") {
         composable("musicSearch") {
             MusicSearchScreen(
@@ -130,7 +135,10 @@ fun MusicSearchNavHost(
             WriteRecordScreen(
                 viewModel = writeRecordViewModel,
                 onBackClick = { navController.navigateUp() },
-                onCompleteClick = {}
+                onCompleteClick = {
+                    (context as? Activity)?.finish()
+                    Toast.makeText(context, "작성이 완료되었습니다.", Toast.LENGTH_SHORT).show()
+                }
             )
         }
     }

@@ -47,7 +47,7 @@ import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 
 private const val MAX_TITLE_LENGTH = 36
-private const val MAX_CONTENTS_LENGTH = 12
+private const val MAX_CONTENTS_LENGTH = 380
 
 @Composable
 fun WriteRecordScreen(
@@ -112,17 +112,12 @@ fun WriteRecordScreen(
         Column(
             modifier = Modifier
                 .padding(paddingValues)
-                .background(color = MaterialTheme.colorScheme.background)
+                .background(color = black_02)
         ) {
             val lyricsList = lyrics.split("\n")
             val lazyListState = rememberLazyListState()
             val contentsList = Array(lyricsList.size) { remember { mutableStateOf("") } }
 
-            Spacer(
-                modifier = Modifier
-                    .height(12.dp)
-                    .background(color = black_02)
-            )
             LazyColumn(
                 state = lazyListState,
                 modifier = Modifier
@@ -130,6 +125,12 @@ fun WriteRecordScreen(
                     .weight(1f)
             ) {
                 item {
+                    Spacer(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(12.dp)
+                            .background(color = MaterialTheme.colorScheme.background)
+                    )
                     MusicTopBar(music = music)
                     RecordTitleBox(
                         title = title,
