@@ -331,4 +331,5 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="text_count">글자수</string>
     <string name="input_record_title">레코드 제목을 입력해주세요</string>
     <string name="contents">내용</string>
+    <string name="a_line_hint">레코드 내용을 입력해주세요.</string>
 </resources>

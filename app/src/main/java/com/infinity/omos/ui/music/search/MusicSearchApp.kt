@@ -15,6 +15,7 @@ import androidx.navigation.navArgument
 import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.album.AlbumScreen
 import com.infinity.omos.ui.music.search.artist.ArtistScreen
+import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
 import com.infinity.omos.ui.record.write.SelectRecordFormScreen
@@ -103,10 +104,14 @@ fun MusicSearchNavHost(
             SelectRecordFormScreen(
                 viewModel = writeRecordViewModel,
                 onBackClick = { navController.navigateUp() },
-                onNextClick = { recordForm ->
+                onNextClick = { category, recordForm ->
                     when(recordForm) {
                         RecordForm.WRITE -> {
-                            val direction = "writeLyrics"
+                            val direction = if (category == Category.LYRICS) {
+                                "writeLyrics"
+                            } else {
+                                "writeRecord"
+                            }
                             navController.navigate(direction)
                         }
                         RecordForm.KEYWORD -> {
