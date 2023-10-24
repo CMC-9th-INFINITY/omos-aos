@@ -26,7 +26,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.res.stringResource
@@ -36,6 +35,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.infinity.omos.R
@@ -46,6 +46,7 @@ import com.infinity.omos.ui.record.write.MusicTopBar
 import com.infinity.omos.ui.record.write.RecordTitleBox
 import com.infinity.omos.ui.record.write.TextCount
 import com.infinity.omos.ui.record.write.WriteRecordViewModel
+import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.black_02
 import com.infinity.omos.ui.theme.grey_01
 import com.infinity.omos.ui.theme.grey_02
@@ -56,6 +57,7 @@ import com.infinity.omos.ui.view.OmosTopAppBar
 private const val MAX_TITLE_LENGTH = 36
 private const val MAX_LYRICS_CONTENTS_LENGTH = 380
 private const val MAX_A_LINE_CONTENTS_LENGTH = 50
+private const val MAX_CONTENTS_LENGTH = 164
 
 @Composable
 fun WriteRecordScreen(
@@ -91,10 +93,10 @@ fun WriteRecordScreen(
 fun WriteRecordScreen(
     category: Category,
     music: MusicModel,
-    title: String,
-    imageUri: Uri?,
-    isPublic: Boolean,
-    lyrics: String,
+    title: String = "",
+    imageUri: Uri? = null,
+    isPublic: Boolean = true,
+    lyrics: String = "",
     onBackClick: () -> Unit = {},
     onCompleteClick: () -> Unit = {},
     onTitleChange: (String) -> Unit = {},
@@ -122,6 +124,7 @@ fun WriteRecordScreen(
     ) { paddingValues ->
         Column(
             modifier = Modifier
+                .fillMaxSize()
                 .padding(paddingValues)
                 .background(color = black_02)
         ) {
@@ -161,9 +164,8 @@ fun WriteRecordScreen(
                         item {
                             BasicTextField(
                                 modifier = Modifier
-                                    .fillMaxSize()
-                                    .padding(48.dp)
-                                    .align(Alignment.CenterHorizontally),
+                                    .fillParentMaxSize()
+                                    .padding(48.dp),
                                 value = contents,
                                 onValueChange = {
                                     if (it.length <= MAX_A_LINE_CONTENTS_LENGTH) {
@@ -184,7 +186,7 @@ fun WriteRecordScreen(
                                 decorationBox = { innerTextField ->
                                     if (contents.isEmpty()) {
                                         Text(
-                                            text = stringResource(R.string.a_line_hint),
+                                            text = stringResource(R.string.a_line_contents_hint),
                                             style = TextStyle(
                                                 fontSize = 22.sp,
                                                 lineHeight = 29.04.sp,
@@ -196,7 +198,7 @@ fun WriteRecordScreen(
                                         )
                                     }
                                     innerTextField()
-                                },
+                                }
                             )
                         }
                     }
@@ -229,7 +231,32 @@ fun WriteRecordScreen(
 
                     else -> {
                         item {
-
+                            BasicTextField(
+                                modifier = Modifier
+                                    .fillParentMaxSize()
+                                    .padding(horizontal = Dimens.PaddingNormal),
+                                value = contents,
+                                onValueChange = {
+                                    if (it.length <= MAX_CONTENTS_LENGTH) {
+                                        contents = it
+                                        onContentsChange(it)
+                                    }
+                                },
+                                textStyle = MaterialTheme.typography.bodyLarge.copy(
+                                    lineHeight = 25.6.sp,
+                                    color = grey_01
+                                ),
+                                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+                                decorationBox = { innerTextField ->
+                                    if (contents.isEmpty()) {
+                                        Text(
+                                            text = stringResource(R.string.record_contents_hint),
+                                            style = MaterialTheme.typography.bodyLarge.copy(color = grey_02)
+                                        )
+                                    }
+                                    innerTextField()
+                                }
+                            )
                         }
                     }
                 }
@@ -298,5 +325,16 @@ fun LyricsItem(
             cursorBrush = SolidColor(MaterialTheme.colorScheme.primary)
         )
         Spacer(modifier = Modifier.height(32.dp))
+    }
+}
+
+@Preview
+@Composable
+fun WriteRecordScreenPreview() {
+    OmosTheme {
+        WriteRecordScreen(
+            category = Category.STORY,
+            music = MusicModel("", "", "", "", "", "")
+        )
     }
 }
