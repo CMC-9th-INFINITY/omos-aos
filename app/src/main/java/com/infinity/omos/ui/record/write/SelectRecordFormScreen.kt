@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
 import com.infinity.omos.ui.Dimens
+import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.view.BackIcon
@@ -29,14 +30,15 @@ import com.infinity.omos.ui.view.OmosTopAppBar
 fun SelectRecordFormScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: (RecordForm) -> Unit
+    onNextClick: (Category, RecordForm) -> Unit
 ) {
+    val category = viewModel.category.collectAsState().value
     val recordForm = viewModel.recordForm.collectAsState().value
 
     SelectRecordFormScreen(
         recordForm = recordForm,
         onBackClick = onBackClick,
-        onNextClick = onNextClick,
+        onNextClick = { onNextClick(category, recordForm) },
         onWriteClick = { viewModel.setRecordForm(RecordForm.WRITE) },
         onKeywordClick = { viewModel.setRecordForm(RecordForm.KEYWORD) }
     )
@@ -47,7 +49,7 @@ fun SelectRecordFormScreen(
 fun SelectRecordFormScreen(
     recordForm: RecordForm = RecordForm.WRITE,
     onBackClick: () -> Unit = {},
-    onNextClick: (RecordForm) -> Unit = {},
+    onNextClick: () -> Unit = {},
     onWriteClick: () -> Unit = {},
     onKeywordClick: () -> Unit = {}
 ) {
@@ -62,7 +64,7 @@ fun SelectRecordFormScreen(
                     Text(
                         modifier = Modifier
                             .padding(Dimens.PaddingNormal)
-                            .clickable { onNextClick(recordForm) },
+                            .clickable { onNextClick() },
                         text = stringResource(id = R.string.next),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground
