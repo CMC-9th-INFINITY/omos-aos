@@ -31,6 +31,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -182,7 +183,8 @@ fun RecordTitleBox(
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = randomRecordImage(),
-                contentDescription = ""
+                contentDescription = "",
+                contentScale = ContentScale.Crop
             )
         } else {
             Image(
