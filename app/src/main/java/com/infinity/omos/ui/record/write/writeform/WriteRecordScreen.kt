@@ -104,10 +104,17 @@ fun WriteRecordScreen(
     onLockClick: () -> Unit = {},
     onContentsChange: (String) -> Unit = {}
 ) {
+    val appBarTitle = when (category) {
+        Category.A_LINE -> stringResource(id = R.string.a_line)
+        Category.STORY -> stringResource(id = R.string.story)
+        Category.OST -> stringResource(id = R.string.ost)
+        Category.LYRICS -> stringResource(id = R.string.lyrics)
+        Category.FREE -> stringResource(id = R.string.free)
+    }
     Scaffold(
         topBar = {
             OmosTopAppBar(
-                title = stringResource(R.string.lyrics),
+                title = appBarTitle,
                 navigationIcon = { BackIcon(onClick = onBackClick) },
                 actions = {
                     Text(
