@@ -20,6 +20,7 @@ import androidx.compose.ui.text.style.TextAlign
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun OmosTopAppBar(
+    modifier: Modifier = Modifier,
     title: String = "",
     style: TextStyle = MaterialTheme.typography.titleLarge,
     textAlign: TextAlign = TextAlign.Start,
@@ -28,6 +29,7 @@ fun OmosTopAppBar(
 ) {
     if (textAlign == TextAlign.Start) {
         TopAppBar(
+            modifier = modifier,
             title = {
                 Text(
                     modifier = Modifier.fillMaxWidth(),
@@ -42,6 +44,7 @@ fun OmosTopAppBar(
         )
     } else if (textAlign == TextAlign.Center) {
         CenterAlignedTopAppBar(
+            modifier = modifier,
             title = {
                 Text(
                     modifier = Modifier.fillMaxWidth(),

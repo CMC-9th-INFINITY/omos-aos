@@ -44,7 +44,12 @@ fun MusicSearchPagerScreen(
     onAlbumClick: (AlbumModel) -> Unit = {},
     onArtistClick: (ArtistModel) -> Unit = {},
 ) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(
+        initialPage = 0,
+        initialPageOffsetFraction = 0f
+    ) {
+        pages.size
+    }
 
     Column(modifier = modifier) {
         val coroutineScope = rememberCoroutineScope()
@@ -71,7 +76,6 @@ fun MusicSearchPagerScreen(
 
         HorizontalPager(
             modifier = Modifier.background(MaterialTheme.colorScheme.background),
-            pageCount = pages.size,
             state = pagerState,
             verticalAlignment = Alignment.Top
         ) { index ->
