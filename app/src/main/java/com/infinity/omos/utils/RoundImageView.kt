@@ -45,11 +45,11 @@ class RoundImageView : androidx.appcompat.widget.AppCompatImageView {
         roundRect.set(0f, 0f, width.toFloat() - rectRadius, height.toFloat() - rectRadius)
     }
 
-    override fun draw(canvas: Canvas?) {
+/*    override fun draw(canvas: Canvas?) {
         canvas?.saveLayer(roundRect, zonePaint, Canvas.ALL_SAVE_FLAG)
         canvas?.drawRoundRect(roundRect, rectRadius, rectRadius, zonePaint)
         canvas?.saveLayer(roundRect, maskPaint, Canvas.ALL_SAVE_FLAG)
         super.draw(canvas)
         canvas?.restore()
-    }
+    }*/
 }

@@ -30,8 +30,9 @@ class WriteRecordViewModel @Inject constructor(
 
     val title = MutableStateFlow("")
     val imageUri = MutableStateFlow<Uri?>(null)
-    val lyrics = MutableStateFlow("")
     val isPublic = MutableStateFlow(true)
+    val lyrics = MutableStateFlow("")
+    val contents = MutableStateFlow("")
 
     fun setCategory(newCategory: Category) {
         category.value = newCategory
@@ -55,6 +56,10 @@ class WriteRecordViewModel @Inject constructor(
 
     fun changeLockState() {
         isPublic.value = !isPublic.value
+    }
+
+    fun setContents(newContents: String) {
+        contents.value = newContents
     }
 
     fun fetchMusic(musicId: String) {
