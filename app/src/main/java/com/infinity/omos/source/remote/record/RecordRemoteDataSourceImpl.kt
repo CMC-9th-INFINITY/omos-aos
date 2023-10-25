@@ -4,10 +4,12 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.infinity.omos.api.RecordService
+import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.MyRecord
+import com.infinity.omos.data.record.SaveRecordRequest
 import com.infinity.omos.utils.DataStoreManager
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -46,6 +48,10 @@ class RecordRemoteDataSourceImpl @Inject constructor(
         return Result.runCatching {
             recordService.getMyPageRecords(userId)
         }
+    }
+
+    override suspend fun saveRecord(record: SaveRecordRequest): NetworkResult {
+        return recordService.saveRecord(record)
     }
 
     companion object {
