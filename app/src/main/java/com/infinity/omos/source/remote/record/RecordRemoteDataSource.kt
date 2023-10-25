@@ -1,10 +1,12 @@
 package com.infinity.omos.source.remote.record
 
 import androidx.paging.PagingData
+import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.MyRecord
+import com.infinity.omos.data.record.SaveRecordRequest
 import kotlinx.coroutines.flow.Flow
 
 interface RecordRemoteDataSource {
@@ -16,4 +18,6 @@ interface RecordRemoteDataSource {
     fun getDetailRecordsStream(toUserId: Int): Flow<PagingData<DetailRecord>>
 
     suspend fun getMyPageRecords(userId: Int): Result<MyPageRecord>
+
+    suspend fun saveRecord(record: SaveRecordRequest): NetworkResult
 }

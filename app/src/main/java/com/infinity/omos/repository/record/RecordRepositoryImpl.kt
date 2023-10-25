@@ -1,10 +1,12 @@
 package com.infinity.omos.repository.record
 
 import androidx.paging.PagingData
+import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.MyRecord
+import com.infinity.omos.data.record.SaveRecordRequest
 import com.infinity.omos.source.remote.record.RecordRemoteDataSource
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -27,5 +29,9 @@ class RecordRepositoryImpl @Inject constructor(
 
     override suspend fun getMyPageRecords(userId: Int): Result<MyPageRecord> {
         return recordRemoteDataSource.getMyPageRecords(userId)
+    }
+
+    override suspend fun saveRecord(record: SaveRecordRequest): NetworkResult {
+        return recordRemoteDataSource.saveRecord(record)
     }
 }

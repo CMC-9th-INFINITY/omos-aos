@@ -5,9 +5,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.toPresentation
+import com.infinity.omos.data.record.SaveRecordRequest
 import com.infinity.omos.repository.music.MusicRepository
+import com.infinity.omos.repository.record.RecordRepository
 import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.RecordForm
+import com.infinity.omos.utils.DataStoreManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,8 +20,12 @@ import javax.inject.Inject
 
 @HiltViewModel
 class WriteRecordViewModel @Inject constructor(
-    private val musicRepository: MusicRepository
+    dataStoreManager: DataStoreManager,
+    private val musicRepository: MusicRepository,
+    private val recordRepository: RecordRepository
 ) : ViewModel() {
+
+    private val userId = dataStoreManager.getUserId()
 
     private val _music = MutableStateFlow(
         MusicModel("", "", "", "", "", "")
@@ -32,7 +39,7 @@ class WriteRecordViewModel @Inject constructor(
     val imageUri = MutableStateFlow<Uri?>(null)
     val isPublic = MutableStateFlow(true)
     val lyrics = MutableStateFlow("")
-    val contents = MutableStateFlow("")
+    private val contents = MutableStateFlow("")
 
     fun setCategory(newCategory: Category) {
         category.value = newCategory
@@ -67,6 +74,21 @@ class WriteRecordViewModel @Inject constructor(
             musicRepository.getMusic(musicId).mapCatching { it.toPresentation() }
                 .onSuccess { _music.value = it }
                 .onFailure { Timber.d("Error") }
+        }
+    }
+
+    fun saveRecord() {
+        val record = SaveRecordRequest(
+            category = category.value.name,
+            isPublic = isPublic.value,
+            musicId = music.value.musicId,
+            recordContents = contents.value,
+            recordImageUrl = "",
+            recordTitle = title.value,
+            userId = userId
+        )
+        viewModelScope.launch {
+            recordRepository.saveRecord(record)
         }
     }
 }

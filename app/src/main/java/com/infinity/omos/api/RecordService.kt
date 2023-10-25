@@ -1,10 +1,14 @@
 package com.infinity.omos.api
 
+import com.infinity.omos.data.NetworkResult
 import com.infinity.omos.data.record.MyPageRecord
 import com.infinity.omos.data.record.AllRecords
 import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyRecord
+import com.infinity.omos.data.record.SaveRecordRequest
+import retrofit2.http.Body
 import retrofit2.http.GET
+import retrofit2.http.POST
 import retrofit2.http.Path
 import retrofit2.http.Query
 
@@ -37,4 +41,9 @@ interface RecordService {
     suspend fun getMyPageRecords(
         @Path("userId") userId: Int
     ): MyPageRecord
+
+    @POST("/api/records/save")
+    suspend fun saveRecord(
+        @Body params: SaveRecordRequest
+    ): NetworkResult
 }

@@ -80,7 +80,10 @@ fun WriteRecordScreen(
         isPublic = isPublic,
         lyrics = lyrics,
         onBackClick = onBackClick,
-        onCompleteClick = onCompleteClick,
+        onCompleteClick = {
+            // viewModel.saveRecord()
+            onCompleteClick()
+        },
         onTitleChange = { viewModel.setTitle(it) },
         onImageChange = { viewModel.setImageUri(it) },
         onLockClick = { viewModel.changeLockState() },
