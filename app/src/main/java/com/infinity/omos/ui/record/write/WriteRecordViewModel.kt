@@ -39,7 +39,7 @@ class WriteRecordViewModel @Inject constructor(
     val imageUri = MutableStateFlow<Uri?>(null)
     val isPublic = MutableStateFlow(true)
     val lyrics = MutableStateFlow("")
-    private val contents = MutableStateFlow("")
+    val contents = MutableStateFlow("")
 
     fun setCategory(newCategory: Category) {
         category.value = newCategory

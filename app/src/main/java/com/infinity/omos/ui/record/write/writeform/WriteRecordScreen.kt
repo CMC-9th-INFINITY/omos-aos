@@ -1,6 +1,7 @@
 package com.infinity.omos.ui.record.write.writeform
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
@@ -28,6 +29,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
@@ -71,6 +73,8 @@ fun WriteRecordScreen(
     val imageUri = viewModel.imageUri.collectAsState().value
     val isPublic = viewModel.isPublic.collectAsState().value
     val lyrics = viewModel.lyrics.collectAsState().value
+    val recordContents = viewModel.contents.collectAsState().value
+
 
     WriteRecordScreen(
         category = category,
@@ -79,6 +83,7 @@ fun WriteRecordScreen(
         imageUri = imageUri,
         isPublic = isPublic,
         lyrics = lyrics,
+        recordContents = recordContents,
         onBackClick = onBackClick,
         onCompleteClick = {
             // viewModel.saveRecord()
@@ -100,6 +105,7 @@ fun WriteRecordScreen(
     imageUri: Uri? = null,
     isPublic: Boolean = true,
     lyrics: String = "",
+    recordContents: String = "",
     onBackClick: () -> Unit = {},
     onCompleteClick: () -> Unit = {},
     onTitleChange: (String) -> Unit = {},
@@ -107,6 +113,7 @@ fun WriteRecordScreen(
     onLockClick: () -> Unit = {},
     onContentsChange: (String) -> Unit = {}
 ) {
+    val context = LocalContext.current
     val appBarTitle = when (category) {
         Category.A_LINE -> stringResource(id = R.string.a_line)
         Category.STORY -> stringResource(id = R.string.story)
@@ -123,7 +130,15 @@ fun WriteRecordScreen(
                     Text(
                         modifier = Modifier
                             .padding(Dimens.PaddingNormal)
-                            .clickable { onCompleteClick() },
+                            .clickable {
+                                if (title.isEmpty()) {
+                                    Toast.makeText(context, "레코드 제목을 입력하세요.", Toast.LENGTH_SHORT).show()
+                                } else if (recordContents.isEmpty()) {
+                                    Toast.makeText(context, "레코드 내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    onCompleteClick()
+                                }
+                            },
                         text = stringResource(id = R.string.complete),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onBackground
