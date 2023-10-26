@@ -12,3 +12,19 @@ val Shapes.field: CornerBasedShape
         bottomStart = 8.dp,
         bottomEnd = 8.dp
     )
+
+val Shapes.roundedField: CornerBasedShape
+    get() = RoundedCornerShape(
+        topStart = 16.dp,
+        topEnd = 16.dp,
+        bottomStart = 16.dp,
+        bottomEnd = 16.dp
+    )
+
+val Shapes.chip: CornerBasedShape
+    get() = RoundedCornerShape(
+        topStart = 30.dp,
+        topEnd = 30.dp,
+        bottomStart = 30.dp,
+        bottomEnd = 30.dp
+    )
