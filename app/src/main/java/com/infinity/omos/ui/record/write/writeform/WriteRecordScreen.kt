@@ -45,6 +45,7 @@ import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.record.Category
+import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.write.MusicTopBar
 import com.infinity.omos.ui.record.write.RecordTitleBox
 import com.infinity.omos.ui.record.write.TextCount
@@ -75,6 +76,7 @@ fun WriteRecordScreen(
     val isPublic = viewModel.isPublic.collectAsState().value
     val lyrics = viewModel.lyrics.collectAsState().value
     val recordContents = viewModel.contents.collectAsState().value
+    val recordForm = viewModel.recordForm.collectAsState().value
 
     WriteRecordScreen(
         category = category,
@@ -84,6 +86,7 @@ fun WriteRecordScreen(
         isPublic = isPublic,
         lyrics = lyrics,
         recordContents = recordContents,
+        recordForm = recordForm,
         onBackClick = onBackClick,
         onCompleteClick = {
             // viewModel.saveRecord()
@@ -106,6 +109,7 @@ fun WriteRecordScreen(
     isPublic: Boolean = true,
     lyrics: String = "",
     recordContents: String = "",
+    recordForm: RecordForm = RecordForm.WRITE,
     onBackClick: () -> Unit = {},
     onCompleteClick: () -> Unit = {},
     onTitleChange: (String) -> Unit = {},
@@ -210,15 +214,23 @@ fun WriteRecordScreen(
                             onContentsChange = onContentsChange
                         )
                     }
-                    else -> item {
-                        BasicCategoryBox(
-                            modifier = Modifier.fillParentMaxSize(),
-                            contents = contents,
-                            onContentsChange = {
-                                contents = it
-                                onContentsChange(it)
+                    else -> {
+                        if (recordForm != RecordForm.KEYWORD) {
+                            item {
+                                BasicCategoryBox(
+                                    modifier = Modifier.fillParentMaxSize(),
+                                    contents = contents,
+                                    onContentsChange = {
+                                        contents = it
+                                        onContentsChange(it)
+                                    }
+                                )
                             }
-                        )
+                        } else {
+                            item {
+                                KeywordSelectionBox()
+                            }
+                        }
                     }
                 }
             }

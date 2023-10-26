@@ -30,7 +30,7 @@ import com.infinity.omos.ui.view.OmosTopAppBar
 fun SelectRecordFormScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: (Category, RecordForm) -> Unit
+    onNextClick: (Category) -> Unit
 ) {
     val category = viewModel.category.collectAsState().value
     val recordForm = viewModel.recordForm.collectAsState().value
@@ -38,7 +38,7 @@ fun SelectRecordFormScreen(
     SelectRecordFormScreen(
         recordForm = recordForm,
         onBackClick = onBackClick,
-        onNextClick = { onNextClick(category, recordForm) },
+        onNextClick = { onNextClick(category) },
         onWriteClick = { viewModel.setRecordForm(RecordForm.WRITE) },
         onKeywordClick = { viewModel.setRecordForm(RecordForm.KEYWORD) }
     )
