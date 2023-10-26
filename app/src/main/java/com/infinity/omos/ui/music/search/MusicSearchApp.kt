@@ -19,8 +19,8 @@ import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
 import com.infinity.omos.ui.record.write.SelectRecordFormScreen
 import com.infinity.omos.ui.record.write.WriteRecordViewModel
-import com.infinity.omos.ui.record.write.writeform.WriteLyricsScreen
-import com.infinity.omos.ui.record.write.writeform.WriteRecordScreen
+import com.infinity.omos.ui.record.write.WriteLyricsScreen
+import com.infinity.omos.ui.record.write.WriteRecordScreen
 
 @Composable
 fun MusicSearchApp() {

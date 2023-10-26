@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.record.write.writeform
+package com.infinity.omos.ui.record.write
 
 import android.net.Uri
 import android.widget.Toast
@@ -46,10 +46,6 @@ import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.RecordForm
-import com.infinity.omos.ui.record.write.MusicTopBar
-import com.infinity.omos.ui.record.write.RecordTitleBox
-import com.infinity.omos.ui.record.write.TextCount
-import com.infinity.omos.ui.record.write.WriteRecordViewModel
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.black_02
 import com.infinity.omos.ui.theme.grey_01
@@ -58,7 +54,7 @@ import com.infinity.omos.ui.theme.grey_03
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 
-private const val MAX_TITLE_LENGTH = 36
+const val MAX_TITLE_LENGTH = 36
 private const val MAX_LYRICS_CONTENTS_LENGTH = 380
 private const val MAX_A_LINE_CONTENTS_LENGTH = 50
 private const val MAX_CONTENTS_LENGTH = 164
