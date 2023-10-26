@@ -22,6 +22,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -74,7 +75,6 @@ fun WriteRecordScreen(
     val isPublic = viewModel.isPublic.collectAsState().value
     val lyrics = viewModel.lyrics.collectAsState().value
     val recordContents = viewModel.contents.collectAsState().value
-
 
     WriteRecordScreen(
         category = category,
@@ -132,9 +132,13 @@ fun WriteRecordScreen(
                             .padding(Dimens.PaddingNormal)
                             .clickable {
                                 if (title.isEmpty()) {
-                                    Toast.makeText(context, "레코드 제목을 입력하세요.", Toast.LENGTH_SHORT).show()
+                                    Toast
+                                        .makeText(context, "레코드 제목을 입력하세요.", Toast.LENGTH_SHORT)
+                                        .show()
                                 } else if (recordContents.isEmpty()) {
-                                    Toast.makeText(context, "레코드 내용을 입력하세요.", Toast.LENGTH_SHORT).show()
+                                    Toast
+                                        .makeText(context, "레코드 내용을 입력하세요.", Toast.LENGTH_SHORT)
+                                        .show()
                                 } else {
                                     onCompleteClick()
                                 }
@@ -185,104 +189,36 @@ fun WriteRecordScreen(
                 }
 
                 when (category) {
-                    Category.A_LINE -> {
-                        item {
-                            BasicTextField(
-                                modifier = Modifier
-                                    .fillParentMaxSize()
-                                    .padding(48.dp),
-                                value = contents,
-                                onValueChange = {
-                                    if (it.length <= MAX_A_LINE_CONTENTS_LENGTH) {
-                                        contents = it
-                                        onContentsChange(it)
-                                    }
-                                },
-                                textStyle = TextStyle(
-                                    fontSize = 22.sp,
-                                    lineHeight = 29.04.sp,
-                                    fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
-                                    fontWeight = FontWeight(400),
-                                    color = grey_01,
-                                    textAlign = TextAlign.Center
-                                ),
-                                keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
-                                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                                decorationBox = { innerTextField ->
-                                    if (contents.isEmpty()) {
-                                        Text(
-                                            text = stringResource(R.string.a_line_contents_hint),
-                                            style = TextStyle(
-                                                fontSize = 22.sp,
-                                                lineHeight = 29.04.sp,
-                                                fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
-                                                fontWeight = FontWeight(400),
-                                                color = grey_02,
-                                                textAlign = TextAlign.Center
-                                            )
-                                        )
-                                    }
-                                    innerTextField()
-                                }
-                            )
-                        }
+                    Category.A_LINE -> item {
+                        ALineBox(
+                            modifier = Modifier.fillParentMaxSize(),
+                            contents = contents,
+                            onContentsChange = {
+                                contents = it
+                                onContentsChange(it)
+                            }
+                        )
                     }
-
-                    Category.LYRICS -> {
-                        itemsIndexed(
-                            items = lyricsList
-                        ) { idx, row ->
-                            LyricsItem(
-                                modifier = Modifier.fillMaxWidth(),
-                                lyricsRow = row,
-                                contents = contentsList[idx].value,
-                                isLastItem = lyricsList.lastIndex == idx,
-                                onContentsChange = {
-                                    val contentsLength = contentsList.filterIndexed { index, _ ->
-                                        index != idx
-                                    }.sumOf { c -> c.value.length } + it.length
-                                    if (contentsLength <= MAX_LYRICS_CONTENTS_LENGTH) {
-                                        contentsList[idx].value = it
-                                        val result =
-                                            lyricsList.zip(contentsList) { lyricsRow, contents ->
-                                                "${lyricsRow}\n${contents.value}"
-                                            }.joinToString(separator = "\n")
-                                        onContentsChange(result)
-                                    }
-                                }
-                            )
-                        }
+                    Category.LYRICS -> itemsIndexed(
+                        items = lyricsList
+                    ) { idx, row ->
+                        LyricsBox(
+                            idx = idx,
+                            lyricsRow = row,
+                            lyricsList = lyricsList,
+                            contentsList = contentsList,
+                            onContentsChange = onContentsChange
+                        )
                     }
-
-                    else -> {
-                        item {
-                            BasicTextField(
-                                modifier = Modifier
-                                    .fillParentMaxSize()
-                                    .padding(horizontal = Dimens.PaddingNormal),
-                                value = contents,
-                                onValueChange = {
-                                    if (it.length <= MAX_CONTENTS_LENGTH) {
-                                        contents = it
-                                        onContentsChange(it)
-                                    }
-                                },
-                                textStyle = MaterialTheme.typography.bodyLarge.copy(
-                                    lineHeight = 25.6.sp,
-                                    color = grey_01
-                                ),
-                                cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
-                                decorationBox = { innerTextField ->
-                                    if (contents.isEmpty()) {
-                                        Text(
-                                            text = stringResource(R.string.record_contents_hint),
-                                            style = MaterialTheme.typography.bodyLarge.copy(color = grey_02)
-                                        )
-                                    }
-                                    innerTextField()
-                                }
-                            )
-                        }
+                    else -> item {
+                        BasicCategoryBox(
+                            modifier = Modifier.fillParentMaxSize(),
+                            contents = contents,
+                            onContentsChange = {
+                                contents = it
+                                onContentsChange(it)
+                            }
+                        )
                     }
                 }
             }
@@ -291,6 +227,11 @@ fun WriteRecordScreen(
                 thickness = 1.dp
             )
             Row {
+                val (count, maxLength) = when (category) {
+                    Category.A_LINE -> contents.length to MAX_A_LINE_CONTENTS_LENGTH
+                    Category.LYRICS -> contentsList.sumOf { it.value.length } to MAX_LYRICS_CONTENTS_LENGTH
+                    else -> contents.length to MAX_CONTENTS_LENGTH
+                }
                 TextCount(
                     modifier = Modifier.padding(horizontal = Dimens.PaddingNormal),
                     name = stringResource(R.string.title),
@@ -300,13 +241,121 @@ fun WriteRecordScreen(
                 TextCount(
                     modifier = Modifier.padding(horizontal = Dimens.PaddingNormal),
                     name = stringResource(R.string.contents),
-                    count = contentsList.sumOf { it.value.length },
-                    maxLength = MAX_LYRICS_CONTENTS_LENGTH
+                    count = count,
+                    maxLength = maxLength
                 )
             }
             Spacer(modifier = Modifier.height(Dimens.PaddingNormal))
         }
     }
+}
+
+@Composable
+fun ALineBox(
+    modifier: Modifier,
+    contents: String,
+    onContentsChange: (String) -> Unit
+) {
+    BasicTextField(
+        modifier = modifier.padding(48.dp),
+        value = contents,
+        onValueChange = {
+            if (it.length <= MAX_A_LINE_CONTENTS_LENGTH) {
+                onContentsChange(it)
+            }
+        },
+        textStyle = TextStyle(
+            fontSize = 22.sp,
+            lineHeight = 29.04.sp,
+            fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
+            fontWeight = FontWeight(400),
+            color = grey_01,
+            textAlign = TextAlign.Center
+        ),
+        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        decorationBox = { innerTextField ->
+            if (contents.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.a_line_contents_hint),
+                    style = TextStyle(
+                        fontSize = 22.sp,
+                        lineHeight = 29.04.sp,
+                        fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
+                        fontWeight = FontWeight(400),
+                        color = grey_02,
+                        textAlign = TextAlign.Center
+                    )
+                )
+            }
+            innerTextField()
+        }
+    )
+}
+
+@Composable
+fun LyricsBox(
+    idx: Int,
+    lyricsRow: String,
+    lyricsList: List<String>,
+    contentsList: Array<MutableState<String>>,
+    onContentsChange: (String) -> Unit
+) {
+    LyricsItem(
+        modifier = Modifier.fillMaxWidth(),
+        lyricsRow = lyricsRow,
+        contents = contentsList[idx].value,
+        isLastItem = lyricsList.lastIndex == idx,
+        onContentsChange = {
+            val contentsLength = contentsList.filterIndexed { index, _ ->
+                index != idx
+            }.sumOf { c -> c.value.length } + it.length
+            if (contentsLength <= MAX_LYRICS_CONTENTS_LENGTH) {
+                contentsList[idx].value = it
+                val result =
+                    lyricsList.zip(contentsList) { lyricsRow, contents ->
+                        "${lyricsRow}\n${contents.value}"
+                    }.joinToString(separator = "\n")
+                onContentsChange(result)
+            }
+        }
+    )
+}
+
+@Composable
+fun BasicCategoryBox(
+    modifier: Modifier,
+    contents: String,
+    onContentsChange: (String) -> Unit
+) {
+    BasicTextField(
+        modifier = modifier.padding(horizontal = Dimens.PaddingNormal),
+        value = contents,
+        onValueChange = {
+            if (it.length <= MAX_CONTENTS_LENGTH) {
+                onContentsChange(it)
+            }
+        },
+        textStyle = MaterialTheme.typography.bodyLarge.copy(
+            lineHeight = 25.6.sp,
+            color = grey_01
+        ),
+        cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
+        decorationBox = { innerTextField ->
+            if (contents.isEmpty()) {
+                Text(
+                    text = stringResource(R.string.record_contents_hint),
+                    style = MaterialTheme.typography.bodyLarge.copy(color = grey_02)
+                )
+            }
+            innerTextField()
+        }
+    )
+}
+
+@Composable
+fun KeywordSelectionBox() {
+
 }
 
 @Composable
