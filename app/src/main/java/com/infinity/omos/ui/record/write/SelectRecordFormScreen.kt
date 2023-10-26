@@ -26,6 +26,8 @@ import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 
+private val noKeywordList = listOf(Category.A_LINE, Category.LYRICS)
+
 @Composable
 fun SelectRecordFormScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
@@ -36,6 +38,7 @@ fun SelectRecordFormScreen(
     val recordForm = viewModel.recordForm.collectAsState().value
 
     SelectRecordFormScreen(
+        category = category,
         recordForm = recordForm,
         onBackClick = onBackClick,
         onNextClick = { onNextClick(category) },
@@ -47,6 +50,7 @@ fun SelectRecordFormScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectRecordFormScreen(
+    category: Category = Category.A_LINE,
     recordForm: RecordForm = RecordForm.WRITE,
     onBackClick: () -> Unit = {},
     onNextClick: () -> Unit = {},
@@ -96,6 +100,7 @@ fun SelectRecordFormScreen(
                 description = stringResource(R.string.select_keyword_description),
                 backgroundDrawable = R.drawable.img_select_keyword,
                 isClicked = recordForm == RecordForm.KEYWORD,
+                enabled = category !in noKeywordList,
                 onClick = onKeywordClick
             )
         }
