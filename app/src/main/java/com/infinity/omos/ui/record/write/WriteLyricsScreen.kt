@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.record.write.writeform
+package com.infinity.omos.ui.record.write
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -31,9 +31,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
-import com.infinity.omos.ui.record.write.MusicTopBar
-import com.infinity.omos.ui.record.write.TextCount
-import com.infinity.omos.ui.record.write.WriteRecordViewModel
 import com.infinity.omos.ui.theme.white
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar

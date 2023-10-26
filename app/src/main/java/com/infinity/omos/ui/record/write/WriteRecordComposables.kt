@@ -59,8 +59,6 @@ import com.infinity.omos.utils.uriToBitmap
 import com.infinity.omos.utils.useOpenImagePicker
 import com.skydoves.landscapist.glide.GlideImage
 
-private const val MAX_TITLE_LENGTH = 36
-
 @Composable
 fun MusicTopBar(
     music: MusicModel
