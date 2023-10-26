@@ -16,7 +16,6 @@ import com.infinity.omos.data.music.album.AlbumModel
 import com.infinity.omos.ui.music.search.album.AlbumScreen
 import com.infinity.omos.ui.music.search.artist.ArtistScreen
 import com.infinity.omos.ui.record.Category
-import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
 import com.infinity.omos.ui.record.write.SelectRecordFormScreen
 import com.infinity.omos.ui.record.write.WriteRecordViewModel
@@ -84,7 +83,6 @@ fun MusicSearchNavHost(
                 navArgument("musicId") { type = NavType.StringType }
             )
         ) { backStackEntry ->
-
             val musicId = backStackEntry.arguments?.getString("musicId") ?: ""
 
             SelectCategoryScreen(
@@ -98,32 +96,23 @@ fun MusicSearchNavHost(
             )
         }
         composable(
-            "selectRecordForm",
-            arguments = listOf()
+            "selectRecordForm"
         ) {
             SelectRecordFormScreen(
                 viewModel = writeRecordViewModel,
                 onBackClick = { navController.navigateUp() },
-                onNextClick = { category, recordForm ->
-                    when(recordForm) {
-                        RecordForm.WRITE -> {
-                            val direction = if (category == Category.LYRICS) {
-                                "writeLyrics"
-                            } else {
-                                "writeRecord"
-                            }
-                            navController.navigate(direction)
-                        }
-                        RecordForm.KEYWORD -> {
-
-                        }
+                onNextClick = { category ->
+                    val direction = if (category == Category.LYRICS) {
+                        "writeLyrics"
+                    } else {
+                        "writeRecord"
                     }
+                    navController.navigate(direction)
                 }
             )
         }
         composable(
-            "writeLyrics",
-            arguments = listOf()
+            "writeLyrics"
         ) {
             WriteLyricsScreen(
                 viewModel = writeRecordViewModel,
