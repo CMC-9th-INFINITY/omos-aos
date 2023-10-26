@@ -21,6 +21,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -165,6 +166,7 @@ fun CategoryCard(
     description: String,
     backgroundDrawable: Int,
     isClicked: Boolean,
+    enabled: Boolean = true,
     onClick: () -> Unit,
 ) {
     val border = if (isClicked) {
@@ -184,12 +186,20 @@ fun CategoryCard(
     } else {
         MaterialTheme.typography.titleSmall
     }
+    val alpha = if (enabled) {
+        1.0f
+    } else {
+        0.5f
+    }
 
     Card(
         onClick = onClick,
-        modifier = modifier.height(CARD_HEIGHT.dp),
+        modifier = modifier
+            .height(CARD_HEIGHT.dp)
+            .alpha(alpha),
         colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
-        border = border
+        border = border,
+        enabled = enabled
     ) {
         Box {
             Image(
