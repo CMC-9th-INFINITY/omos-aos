@@ -99,7 +99,7 @@ fun WriteRecordScreen(
         recordForm = recordForm,
         onBackClick = onBackClick,
         onCompleteClick = {
-            // viewModel.saveRecord()
+            // viewModel.saveRecord() TODO: 레코드 저장 로직 활성화
             onCompleteClick()
         },
         onTitleChange = { viewModel.setTitle(it) },
