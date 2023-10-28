@@ -31,7 +31,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.asImageBitmap
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -44,6 +43,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.rememberPermissionState
+import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
@@ -53,7 +53,6 @@ import com.infinity.omos.ui.theme.grey_02
 import com.infinity.omos.ui.theme.grey_03
 import com.infinity.omos.ui.theme.white
 import com.infinity.omos.utils.DateUtil
-import com.infinity.omos.utils.randomRecordImage
 import com.infinity.omos.utils.requestPermission
 import com.infinity.omos.utils.uriToBitmap
 import com.infinity.omos.utils.useOpenImagePicker
@@ -137,6 +136,7 @@ fun TextCount(
 fun RecordTitleBox(
     title: String = "",
     imageUri: Uri? = null,
+    defaultImageUrl: String = "",
     isPublic: Boolean = true,
     onTitleChange: (String) -> Unit = {},
     onImageChange: (Uri) -> Unit = {},
@@ -176,13 +176,10 @@ fun RecordTitleBox(
             }
     ) {
         val imageBitmap = uriToBitmap(context, uri)?.asImageBitmap()
-
         if (imageBitmap == null) {
-            Image(
+            GlideImage(
                 modifier = Modifier.fillMaxSize(),
-                painter = randomRecordImage(),
-                contentDescription = "",
-                contentScale = ContentScale.Crop
+                imageModel = { BuildConfig.S3_BASE_URL + defaultImageUrl }
             )
         } else {
             Image(

@@ -298,7 +298,7 @@ class WriteLyricsActivity : AppCompatActivity() {
                         val currentTime = System.currentTimeMillis()
                         if (imageFile != null){
                             // 이미지 파일 s3 업로드
-                            awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
+                            // awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
                             viewModel.saveRecord(SaveRecord(category, isPublic, musicId, recordContents, "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png", recordTitle, userId))
                         } else{
                             // 레코드 이미지 없을 때,
@@ -311,11 +311,11 @@ class WriteLyricsActivity : AppCompatActivity() {
                             // 이미지 파일 s3 업로드
                             if (recordImageUrl == ""){
                                 val currentTime = System.currentTimeMillis()
-                                awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
+                                // awsConnector.uploadFile("record/$userId$currentTime.png", imageFile!!)
                                 recordImageUrl = "${BuildConfig.S3_BASE_URL}record/$userId$currentTime.png"
                             } else{
                                 val s3Url = recordImageUrl.replace(BuildConfig.S3_BASE_URL, "")
-                                awsConnector.uploadFile(s3Url, imageFile!!)
+                                // awsConnector.uploadFile(s3Url, imageFile!!)
                             }
                         }
 

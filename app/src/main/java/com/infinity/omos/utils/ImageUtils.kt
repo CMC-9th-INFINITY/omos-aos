@@ -15,12 +15,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
-import com.infinity.omos.R
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import kotlin.random.Random
 
 @Composable
 fun useOpenImagePicker(
@@ -74,17 +70,4 @@ fun uriToBitmap(context: Context, uri: Uri?): Bitmap? {
         @Suppress("DEPRECATION")
         MediaStore.Images.Media.getBitmap(context.contentResolver, uri)
     }
-}
-
-@Composable
-fun randomRecordImage(): Painter {
-    val images = listOf(
-        R.drawable.img_record_1,
-        R.drawable.img_record_2,
-        R.drawable.img_record_3
-    )
-    val randomNumber = remember { Random.nextInt(0, images.size) }
-    val drawable = images[randomNumber]
-
-    return painterResource(id = drawable)
 }

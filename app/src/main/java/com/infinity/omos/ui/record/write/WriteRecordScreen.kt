@@ -85,6 +85,7 @@ fun WriteRecordScreen(
     val lyrics = viewModel.lyrics.collectAsState().value
     val recordContents = viewModel.contents.collectAsState().value
     val recordForm = viewModel.recordForm.collectAsState().value
+    val defaultImageUrl = viewModel.recordImageUrl.collectAsState().value
 
     WriteRecordScreen(
         category = category,
@@ -92,6 +93,7 @@ fun WriteRecordScreen(
         title = title,
         imageUri = imageUri,
         isPublic = isPublic,
+        defaultImageUrl = defaultImageUrl,
         lyrics = lyrics,
         recordContents = recordContents,
         recordForm = recordForm,
@@ -114,6 +116,7 @@ fun WriteRecordScreen(
     music: MusicModel,
     title: String = "",
     imageUri: Uri? = null,
+    defaultImageUrl: String = "",
     isPublic: Boolean = true,
     lyrics: String = "",
     recordContents: String = "",
@@ -192,6 +195,7 @@ fun WriteRecordScreen(
                     RecordTitleBox(
                         title = title,
                         imageUri = imageUri,
+                        defaultImageUrl = defaultImageUrl,
                         isPublic = isPublic,
                         onTitleChange = onTitleChange,
                         onImageChange = onImageChange,

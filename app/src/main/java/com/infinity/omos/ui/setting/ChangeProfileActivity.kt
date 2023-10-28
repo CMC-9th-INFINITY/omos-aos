@@ -130,7 +130,7 @@ class ChangeProfileActivity : AppCompatActivity() {
         binding.btnComplete.setOnClickListener {
             if (imageFile != null){
                 // 이미지 파일 s3 업로드
-                awsConnector.uploadFile("profile/$userId.png", imageFile!!)
+                // awsConnector.uploadFile("profile/$userId.png", imageFile!!)
             }
 
             if (tempImageUrl == ""){
