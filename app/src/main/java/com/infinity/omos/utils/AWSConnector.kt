@@ -1,7 +1,6 @@
 package com.infinity.omos.utils
 
 import android.content.Context
-import android.util.Log
 import com.amazonaws.auth.CognitoCachingCredentialsProvider
 import com.amazonaws.mobile.config.AWSConfiguration
 import com.amazonaws.mobileconnectors.s3.transferutility.TransferListener
@@ -11,11 +10,14 @@ import com.amazonaws.mobileconnectors.s3.transferutility.TransferUtility
 import com.amazonaws.regions.Region
 import com.amazonaws.regions.Regions
 import com.amazonaws.services.s3.AmazonS3Client
-import com.infinity.omos.BuildConfig
+import timber.log.Timber
 import java.io.File
 
+enum class S3ImageFolder(val str: String) {
+    PROFILE("profile"), RECORD("record")
+}
 
-class AWSConnector(private val context: Context){
+class AWSConnector(private val context: Context) {
 
     private lateinit var transferUtility: TransferUtility
 
@@ -38,50 +40,57 @@ class AWSConnector(private val context: Context){
             .build()
     }
 
-    fun uploadFile(objectKey: String, file: File) {
+    fun uploadFile(file: File, folder: S3ImageFolder, userId: Int, bucketName: String): String {
+        val currentTime = System.currentTimeMillis()
+        val objectKey = when (folder) {
+            S3ImageFolder.RECORD -> "${S3ImageFolder.RECORD.str}/$userId$currentTime.png"
+            S3ImageFolder.PROFILE -> "${S3ImageFolder.PROFILE.str}/$userId.png"
+        }
         val transferObserver: TransferObserver = transferUtility.upload(
-            "omos-image",
+            bucketName,
             objectKey,
             file
         )
         transferObserver.setTransferListener(object : TransferListener {
             override fun onStateChanged(id: Int, state: TransferState) {
-                Log.d("AWSConnector", "onStateChanged: $state")
+                Timber.d("onStateChanged: $state")
                 if (TransferState.COMPLETED == state) {
-                    Log.d("AWSConnector", "Image Upload!")
+                    Timber.d("Image Upload!")
                 }
             }
 
             override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
             override fun onError(id: Int, ex: Exception) {
-                Log.e("AWSConnector", "onError: ", ex)
+                Timber.e("onError: $ex")
             }
         })
+
+        return objectKey
     }
 
-//    fun download(objectKey: String?) {
-//        val fileDownload = File(getCacheDir(), objectKey)
-//        val transferObserver: TransferObserver = transferUtility.download(
-//            BUCKET_NAME,
-//            objectKey,
-//            fileDownload
-//        )
-//        transferObserver.setTransferListener(object : TransferListener {
-//            override fun onStateChanged(id: Int, state: TransferState) {
-//                Log.d("AWSConnector", "onStateChanged: $state")
-//                if (TransferState.COMPLETED.equals(state)) {
-//                    imageViewDownload.setImageBitmap(BitmapFactory.decodeFile(fileDownload.getAbsolutePath()))
-//                    progressDialogDownload.dismiss()
-//                    Toast.makeText(this@MainActivity, "Image downloaded", Toast.LENGTH_SHORT).show()
-//                }
-//            }
-//
-//            override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
-//            override fun onError(id: Int, ex: Exception) {
-//                progressDialogDownload.dismiss()
-//                Log.e("AWSConnector", "onError: ", ex)
-//                Toast.makeText(this@MainActivity, "Error: " + ex.message, Toast.LENGTH_SHORT).show()
-//            }
-//        })
-//    }
+    /*    fun download(objectKey: String?) {
+            val fileDownload = File(getCacheDir(), objectKey)
+            val transferObserver: TransferObserver = transferUtility.download(
+                BUCKET_NAME,
+                objectKey,
+                fileDownload
+            )
+            transferObserver.setTransferListener(object : TransferListener {
+                override fun onStateChanged(id: Int, state: TransferState) {
+                    Log.d("AWSConnector", "onStateChanged: $state")
+                    if (TransferState.COMPLETED.equals(state)) {
+                        imageViewDownload.setImageBitmap(BitmapFactory.decodeFile(fileDownload.getAbsolutePath()))
+                        progressDialogDownload.dismiss()
+                        Toast.makeText(this@MainActivity, "Image downloaded", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onProgressChanged(id: Int, bytesCurrent: Long, bytesTotal: Long) {}
+                override fun onError(id: Int, ex: Exception) {
+                    progressDialogDownload.dismiss()
+                    Log.e("AWSConnector", "onError: ", ex)
+                    Toast.makeText(this@MainActivity, "Error: " + ex.message, Toast.LENGTH_SHORT).show()
+                }
+            })
+        }*/
 }

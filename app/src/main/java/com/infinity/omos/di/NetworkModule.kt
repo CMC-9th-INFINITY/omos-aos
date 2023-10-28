@@ -1,12 +1,15 @@
 package com.infinity.omos.di
 
+import android.content.Context
 import com.infinity.omos.BuildConfig
 import com.infinity.omos.api.AuthService
+import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.DataStoreManager
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
@@ -113,4 +116,10 @@ object NetworkModule {
             .addConverterFactory(converterFactory)
             .build()
     }
+
+    @Provides
+    @Singleton
+    fun provideAWSConnector(
+        @ApplicationContext context: Context
+    ): AWSConnector = AWSConnector(context)
 }
