@@ -100,7 +100,8 @@ fun SelectRecordFormScreen(
                 description = stringResource(R.string.select_keyword_description),
                 backgroundDrawable = R.drawable.img_select_keyword,
                 isClicked = recordForm == RecordForm.KEYWORD,
-                enabled = category !in noKeywordList,
+                // enabled = category !in noKeywordList, TODO: 키워드 선택 화면 활성화
+                enabled = false,
                 onClick = onKeywordClick
             )
         }
