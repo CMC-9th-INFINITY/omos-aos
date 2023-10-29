@@ -1,4 +1,4 @@
-package com.infinity.omos.ui.record.write
+package com.infinity.omos.ui.record
 
 import android.Manifest
 import android.net.Uri
@@ -38,7 +38,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
@@ -47,7 +46,7 @@ import com.infinity.omos.BuildConfig
 import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
-import com.infinity.omos.ui.theme.OmosTheme
+import com.infinity.omos.ui.record.write.MAX_TITLE_LENGTH
 import com.infinity.omos.ui.theme.grey_01
 import com.infinity.omos.ui.theme.grey_02
 import com.infinity.omos.ui.theme.grey_03
@@ -110,24 +109,77 @@ fun MusicTopBar(
 }
 
 @Composable
-fun TextCount(
-    modifier: Modifier,
-    name: String,
-    count: Int,
-    maxLength: Int
+fun RecordTitleBox(
+    title: String,
+    imageUrl: String,
+    date: String,
+    isMine: Boolean,
+    isPublic: Boolean = true,
 ) {
-    Column(modifier = modifier) {
-        Text(
-            text = name,
-            fontSize = 14.sp,
-            color = grey_03
+    Box(
+        modifier = Modifier
+            .height(164.dp)
+            .fillMaxWidth()
+    ) {
+        GlideImage(
+            modifier = Modifier.fillMaxSize(),
+            imageModel = { imageUrl }
         )
-        Spacer(modifier = Modifier.height(8.dp))
-        Text(
-            text = "${count}/${maxLength}자",
-            fontSize = 14.sp,
-            color = grey_01
-        )
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(
+                    horizontal = Dimens.PaddingNormal,
+                    vertical = 12.dp
+                )
+        ) {
+            if (!isMine) {
+                Icon(
+                    modifier = Modifier
+                        .align(Alignment.TopEnd)
+                        .clickable {
+                            // TODO: 신고 팝업 띄우기
+                        },
+                    painter = painterResource(id = R.drawable.ic_report),
+                    contentDescription = "사진 아이콘",
+                    tint = white
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .align(Alignment.BottomStart)
+            ) {
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = title,
+                    style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.W500),
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    text = date,
+                    style = MaterialTheme.typography.labelMedium,
+                    color = grey_01
+                )
+            }
+            if (isMine) {
+                if (isPublic) {
+                    Icon(
+                        modifier = Modifier.align(Alignment.BottomEnd),
+                        painter = painterResource(id = R.drawable.ic_public),
+                        contentDescription = "자물쇠 열림 아이콘",
+                        tint = MaterialTheme.colorScheme.onBackground
+                    )
+                } else {
+                    Icon(
+                        modifier = Modifier.align(Alignment.BottomEnd),
+                        painter = painterResource(id = R.drawable.ic_private),
+                        contentDescription = "자물쇠 닫힘 아이콘",
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -268,10 +320,24 @@ fun RecordTitleBox(
     }
 }
 
-@Preview
 @Composable
-fun RecordTitleBoxPreview() {
-    OmosTheme {
-        RecordTitleBox()
+fun TextCount(
+    modifier: Modifier,
+    name: String,
+    count: Int,
+    maxLength: Int
+) {
+    Column(modifier = modifier) {
+        Text(
+            text = name,
+            fontSize = 14.sp,
+            color = grey_03
+        )
+        Spacer(modifier = Modifier.height(8.dp))
+        Text(
+            text = "${count}/${maxLength}자",
+            fontSize = 14.sp,
+            color = grey_01
+        )
     }
 }

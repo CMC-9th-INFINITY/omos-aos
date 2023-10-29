@@ -54,7 +54,10 @@ import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
 import com.infinity.omos.ui.record.Category
+import com.infinity.omos.ui.record.MusicTopBar
 import com.infinity.omos.ui.record.RecordForm
+import com.infinity.omos.ui.record.RecordTitleBox
+import com.infinity.omos.ui.record.TextCount
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.black_02
 import com.infinity.omos.ui.theme.chip
