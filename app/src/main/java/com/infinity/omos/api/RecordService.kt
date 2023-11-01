@@ -24,6 +24,12 @@ interface RecordService {
         @Path("userId") userId: Int
     ): AllRecords
 
+    @GET("/api/records/select/{postId}/user/{userId}")
+    suspend fun getDetailRecord(
+        @Path("postId") postId: Int,
+        @Path("userId") userId: Int
+    ): DetailRecord
+
     @GET("api/records/select/{userId}/my-dj")
     suspend fun getDetailRecords(
         @Path("userId") userId: Int,

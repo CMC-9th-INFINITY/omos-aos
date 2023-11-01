@@ -33,6 +33,12 @@ class RecordRemoteDataSourceImpl @Inject constructor(
         }
     }
 
+    override suspend fun getDetailRecord(postId: Int, userId: Int): Result<DetailRecord> {
+        return Result.runCatching {
+            recordService.getDetailRecord(postId, userId)
+        }
+    }
+
     override fun getDetailRecordsStream(toUserId: Int): Flow<PagingData<DetailRecord>> {
         return Pager(
             config = PagingConfig(
