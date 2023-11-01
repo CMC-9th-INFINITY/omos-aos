@@ -11,9 +11,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @HiltViewModel
-class DetailRecordViewModel(
+class DetailRecordViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle,
     dataStoreManager: DataStoreManager,
     private val recordRepository: RecordRepository
@@ -32,14 +33,14 @@ class DetailRecordViewModel(
     private fun fetchDetailRecord() {
         viewModelScope.launch {
             recordRepository.getDetailRecord(postId, userId)
-                .mapCatching { it.toPresentation() }
+                .mapCatching { it.toPresentation(userId) }
                 .onSuccess { _detailRecordUiState.value = DetailRecordUiState.Success(it) }
                 .onFailure { _detailRecordUiState.value = DetailRecordUiState.Error }
         }
     }
 
     companion object {
-        private const val POST_ID_SAVED_STATE_KEY = "postId"
+        private const val POST_ID_SAVED_STATE_KEY = "recordId"
     }
 }
 

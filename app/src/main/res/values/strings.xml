@@ -315,6 +315,7 @@ Omos 정보통신망법 및 개인정보 보호법에서 요구하는 수준 이
     <string name="top_searched">인기 검색어</string>
     <string name="standard_yesterday">전일 기준</string>
     <string name="title_activity_music_search">MusicSearchActivity</string>
+    <string name="title_activity_detail_record">DetailRecordActivity</string>
     <string name="clear">모든 텍스트 삭제</string>
     <string name="select_category">카테고리 선택</string>
     <string name="a_line_description">당신의 노래를 한 줄로\n표현한다면?</string>

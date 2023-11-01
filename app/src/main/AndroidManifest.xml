@@ -24,6 +24,11 @@
             android:theme="@style/Theme.Omos"
             android:windowSoftInputMode="adjustResize" />
         <activity
+            android:name=".ui.record.detail.DetailRecordActivity"
+            android:exported="false"
+            android:label="@string/title_activity_detail_record"
+            android:theme="@style/Theme.Omos" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait">

@@ -14,5 +14,6 @@ data class DetailRecordModel(
     val date: String,
     val isPublic: Boolean,
     val scrapCount: Int,
-    val sympathyCount: Int
+    val sympathyCount: Int,
+    val isMine: Boolean
 )

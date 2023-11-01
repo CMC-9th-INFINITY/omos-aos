@@ -30,7 +30,7 @@ class CategoryListAdapter :
         private val binding: ListItemCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val adapter = HorizontalRecordListAdapter()
+        private val adapter = HorizontalRecordListAdapter(onClick = {})
 
         init {
             binding.layoutCategory.ivMove.setOnClickListener {

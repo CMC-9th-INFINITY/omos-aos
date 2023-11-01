@@ -17,8 +17,8 @@ class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
     private val viewModel: MyPageViewModel by viewModels()
 
-    private val scrapedAdapter = HorizontalRecordListAdapter()
-    private val likedAdapter = HorizontalRecordListAdapter()
+    private val scrapedAdapter = HorizontalRecordListAdapter(onClick = {})
+    private val likedAdapter = HorizontalRecordListAdapter(onClick = {})
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

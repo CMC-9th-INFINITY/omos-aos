@@ -52,7 +52,7 @@ fun AllRecords.toPresentation(): List<CategoryModel> {
     )
 }
 
-fun DetailRecord.toPresentation(): DetailRecordModel {
+fun DetailRecord.toPresentation(myId: Int): DetailRecordModel {
     return DetailRecordModel(
         music = music.toPresentation(),
         recordId = recordId,
@@ -65,7 +65,8 @@ fun DetailRecord.toPresentation(): DetailRecordModel {
         date = DateUtil.convertToUiRecordDate(createdDate),
         isPublic = isPublic,
         scrapCount = scrapCnt,
-        sympathyCount = likeCnt
+        sympathyCount = likeCnt,
+        isMine = myId == userId
     )
 }
 

@@ -8,10 +8,13 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.record.HorizontalPreviewRecordModel
 import com.infinity.omos.databinding.ListItemHorizontalRecordBinding
 
-class HorizontalRecordListAdapter : ListAdapter<HorizontalPreviewRecordModel, RecyclerView.ViewHolder>(HorizontalRecordDiffCallback()) {
+class HorizontalRecordListAdapter(
+    private val onClick: (Int) -> Unit
+) : ListAdapter<HorizontalPreviewRecordModel, RecyclerView.ViewHolder>(HorizontalRecordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return HorizontalRecordViewHolder(
+            onClick,
             ListItemHorizontalRecordBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -26,12 +29,13 @@ class HorizontalRecordListAdapter : ListAdapter<HorizontalPreviewRecordModel, Re
     }
 
     class HorizontalRecordViewHolder(
+        onClick: (Int) -> Unit,
         private val binding: ListItemHorizontalRecordBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
-                // TODO: 아이템 클릭 시
+                onClick(binding.record?.recordId ?: -1)
             }
         }
 

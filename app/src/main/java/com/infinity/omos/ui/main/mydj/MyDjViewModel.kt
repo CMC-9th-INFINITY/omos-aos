@@ -75,7 +75,7 @@ class MyDjViewModel @Inject constructor(
      */
     fun fetchDetailRecords() {
         recordRepository.getDetailRecordsStream(toUserId).map { records ->
-            records.map { it.toPresentation() }
+            records.map { it.toPresentation(userId) }
         }
             .onEach { pagingData ->
                 detailRecords.value = pagingData

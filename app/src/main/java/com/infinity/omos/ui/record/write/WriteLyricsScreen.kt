@@ -31,6 +31,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.ui.Dimens
+import com.infinity.omos.ui.record.MusicTopBar
+import com.infinity.omos.ui.record.TextCount
 import com.infinity.omos.ui.theme.white
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
