@@ -52,8 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.infinity.omos.R
 import com.infinity.omos.data.music.MusicModel
+import com.infinity.omos.data.record.RecordCategory
 import com.infinity.omos.ui.Dimens
-import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.MusicTopBar
 import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.RecordTitleBox
@@ -115,7 +115,7 @@ fun WriteRecordScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WriteRecordScreen(
-    category: Category,
+    category: RecordCategory,
     music: MusicModel,
     title: String = "",
     imageUri: Uri? = null,
@@ -132,17 +132,10 @@ fun WriteRecordScreen(
     onContentsChange: (String) -> Unit = {}
 ) {
     val context = LocalContext.current
-    val appBarTitle = when (category) {
-        Category.A_LINE -> stringResource(id = R.string.a_line)
-        Category.STORY -> stringResource(id = R.string.story)
-        Category.OST -> stringResource(id = R.string.ost)
-        Category.LYRICS -> stringResource(id = R.string.lyrics)
-        Category.FREE -> stringResource(id = R.string.free)
-    }
     Scaffold(
         topBar = {
             OmosTopAppBar(
-                title = appBarTitle,
+                title = category.str,
                 navigationIcon = { BackIcon(onClick = onBackClick) },
                 actions = {
                     Text(
@@ -208,7 +201,7 @@ fun WriteRecordScreen(
                 }
 
                 when (category) {
-                    Category.A_LINE -> item {
+                    RecordCategory.A_LINE -> item {
                         ALineBox(
                             modifier = Modifier.fillParentMaxSize(),
                             contents = contents,
@@ -219,7 +212,7 @@ fun WriteRecordScreen(
                         )
                     }
 
-                    Category.LYRICS -> itemsIndexed(
+                    RecordCategory.LYRICS -> itemsIndexed(
                         items = lyricsList
                     ) { idx, row ->
                         LyricsBox(
@@ -267,8 +260,8 @@ fun WriteRecordScreen(
             )
             Row {
                 val (count, maxLength) = when (category) {
-                    Category.A_LINE -> contents.length to MAX_A_LINE_CONTENTS_LENGTH
-                    Category.LYRICS -> contentsList.sumOf { it.value.length } to MAX_LYRICS_CONTENTS_LENGTH
+                    RecordCategory.A_LINE -> contents.length to MAX_A_LINE_CONTENTS_LENGTH
+                    RecordCategory.LYRICS -> contentsList.sumOf { it.value.length } to MAX_LYRICS_CONTENTS_LENGTH
                     else -> contents.length to MAX_CONTENTS_LENGTH
                 }
                 TextCount(
@@ -443,7 +436,7 @@ fun BasicCategoryBox(
 fun KeywordSelectionBox(
     modifier: Modifier = Modifier,
     contents: String = "",
-    category: Category = Category.OST,
+    category: RecordCategory = RecordCategory.OST,
     onContentsChange: (String) -> Unit = {}
 ) {
     var text by remember { mutableStateOf(contents) }
@@ -459,7 +452,7 @@ fun KeywordSelectionBox(
         "🧘🏻‍♀️️️ 평화로움", "🥲️️ 감동적인"
     )
     val (question3, chipList3) = when (category) {
-        Category.OST -> "이 노래가 인생의 OST인 이유가 무엇인가요?" to listOf(
+        RecordCategory.OST -> "이 노래가 인생의 OST인 이유가 무엇인가요?" to listOf(
             "💫 이 노래를 들었던 그 순간이 특별해서",
             "📖 내게 뜻깊은 교훈을 주어서",
             "😌 행복한 추억을 떠오르게 만들어서",
@@ -467,14 +460,14 @@ fun KeywordSelectionBox(
             "🖋️ 내 이야기같은 가사에 공감이 되어서",
             "💪🏼 힘들 때 큰 위로와 힘이 돼주어서"
         )
-        Category.STORY -> "Q. 이 노래에 담긴 특별한 이야기는 무엇인가요?" to listOf(
+        RecordCategory.STORY -> "Q. 이 노래에 담긴 특별한 이야기는 무엇인가요?" to listOf(
             "😍 사랑하는 사람과의 행복했던 시간들",
             "👦🏻 어릴 적 간직한 아련한 추억",
             "👯 소중한 친구들과 즐거웠던 기억",
             "👍🏼 힘든 순간을 이겨내고 극복해낸 경험",
             "⏳ 돌아갈 수 없는 그리운 순간들"
         )
-        Category.FREE -> "Q. 이 노래는 OO한 노래다!" to listOf(
+        RecordCategory.FREE -> "Q. 이 노래는 OO한 노래다!" to listOf(
             "🧡 사랑하고 싶게 만드는", "😚 즐거움을 주는",
             "🎧 들어도 또 듣고싶은", "👩‍❤️‍👨 연‍‍인과 들으면 딱인",
             "🌃 반짝이는 야경과 어울리는",
@@ -599,7 +592,7 @@ fun ChipItem(text: String) {
 fun WriteRecordScreenPreview() {
     OmosTheme {
         WriteRecordScreen(
-            category = Category.STORY,
+            category = RecordCategory.STORY,
             music = MusicModel("", "", "", "", "", "")
         )
     }

@@ -13,9 +13,9 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.infinity.omos.data.music.album.AlbumModel
+import com.infinity.omos.data.record.RecordCategory
 import com.infinity.omos.ui.music.search.album.AlbumScreen
 import com.infinity.omos.ui.music.search.artist.ArtistScreen
-import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.write.SelectCategoryScreen
 import com.infinity.omos.ui.record.write.SelectRecordFormScreen
 import com.infinity.omos.ui.record.write.WriteRecordViewModel
@@ -102,7 +102,7 @@ fun MusicSearchNavHost(
                 viewModel = writeRecordViewModel,
                 onBackClick = { navController.navigateUp() },
                 onNextClick = { category ->
-                    val direction = if (category == Category.LYRICS) {
+                    val direction = if (category == RecordCategory.LYRICS) {
                         "writeLyrics"
                     } else {
                         "writeRecord"

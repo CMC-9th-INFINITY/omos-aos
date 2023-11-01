@@ -6,10 +6,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.infinity.omos.data.music.MusicModel
 import com.infinity.omos.data.music.toPresentation
+import com.infinity.omos.data.record.RecordCategory
 import com.infinity.omos.data.record.SaveRecordRequest
 import com.infinity.omos.repository.music.MusicRepository
 import com.infinity.omos.repository.record.RecordRepository
-import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.utils.AWSConnector
 import com.infinity.omos.utils.DataStoreManager
@@ -37,7 +37,7 @@ class WriteRecordViewModel @Inject constructor(
     )
     val music = _music.asStateFlow()
 
-    val category = MutableStateFlow(Category.A_LINE)
+    val category = MutableStateFlow(RecordCategory.A_LINE)
     val recordForm = MutableStateFlow(RecordForm.WRITE)
 
     val title = MutableStateFlow("")
@@ -49,7 +49,7 @@ class WriteRecordViewModel @Inject constructor(
     private val randomNumber = Random.nextInt(0, DEFAULT_IMAGE_COUNT) + 1
     val recordImageUrl = MutableStateFlow("${S3ImageFolder.RECORD.str}/${getDefaultRecordImageName(randomNumber)}.png")
 
-    fun setCategory(newCategory: Category) {
+    fun setCategory(newCategory: RecordCategory) {
         category.value = newCategory
     }
 

@@ -19,20 +19,20 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
+import com.infinity.omos.data.record.RecordCategory
 import com.infinity.omos.ui.Dimens
-import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
 
-private val noKeywordList = listOf(Category.A_LINE, Category.LYRICS)
+private val noKeywordList = listOf(RecordCategory.A_LINE, RecordCategory.LYRICS)
 
 @Composable
 fun SelectRecordFormScreen(
     viewModel: WriteRecordViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onNextClick: (Category) -> Unit
+    onNextClick: (RecordCategory) -> Unit
 ) {
     val category = viewModel.category.collectAsState().value
     val recordForm = viewModel.recordForm.collectAsState().value
@@ -50,7 +50,7 @@ fun SelectRecordFormScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectRecordFormScreen(
-    category: Category = Category.A_LINE,
+    category: RecordCategory = RecordCategory.A_LINE,
     recordForm: RecordForm = RecordForm.WRITE,
     onBackClick: () -> Unit = {},
     onNextClick: () -> Unit = {},

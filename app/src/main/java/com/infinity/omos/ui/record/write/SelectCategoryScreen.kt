@@ -33,8 +33,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
+import com.infinity.omos.data.record.RecordCategory
 import com.infinity.omos.ui.Dimens
-import com.infinity.omos.ui.record.Category
 import com.infinity.omos.ui.theme.OmosTheme
 import com.infinity.omos.ui.theme.gradation
 import com.infinity.omos.ui.view.BackIcon
@@ -56,18 +56,18 @@ fun SelectCategoryScreen(
         category = category,
         onBackClick = onBackClick,
         onNextClick = onNextClick,
-        onALineClick = { viewModel.setCategory(Category.A_LINE) },
-        onOstClick = { viewModel.setCategory(Category.OST) },
-        onStoryClick = { viewModel.setCategory(Category.STORY) },
-        onLyricsClick = { viewModel.setCategory(Category.LYRICS) },
-        onFreeClick = { viewModel.setCategory(Category.FREE) }
+        onALineClick = { viewModel.setCategory(RecordCategory.A_LINE) },
+        onOstClick = { viewModel.setCategory(RecordCategory.OST) },
+        onStoryClick = { viewModel.setCategory(RecordCategory.STORY) },
+        onLyricsClick = { viewModel.setCategory(RecordCategory.LYRICS) },
+        onFreeClick = { viewModel.setCategory(RecordCategory.FREE) }
     )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SelectCategoryScreen(
-    category: Category = Category.A_LINE,
+    category: RecordCategory = RecordCategory.A_LINE,
     onBackClick: () -> Unit = {},
     onNextClick: () -> Unit = {},
     onALineClick: () -> Unit = {},
@@ -112,7 +112,7 @@ fun SelectCategoryScreen(
                     name = stringResource(id = R.string.a_line),
                     description = stringResource(R.string.a_line_description),
                     backgroundDrawable = R.drawable.ic_a_line,
-                    isClicked = category == Category.A_LINE,
+                    isClicked = category == RecordCategory.A_LINE,
                     onClick = onALineClick
                 )
                 Spacer(modifier = Modifier.width(16.dp))
@@ -121,7 +121,7 @@ fun SelectCategoryScreen(
                     name = stringResource(id = R.string.ost),
                     description = stringResource(R.string.ost_description),
                     backgroundDrawable = R.drawable.ic_ost,
-                    isClicked = category == Category.OST,
+                    isClicked = category == RecordCategory.OST,
                     onClick = onOstClick
                 )
             }
@@ -132,7 +132,7 @@ fun SelectCategoryScreen(
                     name = stringResource(id = R.string.story),
                     description = stringResource(R.string.story_description),
                     backgroundDrawable = R.drawable.ic_story,
-                    isClicked = category == Category.STORY,
+                    isClicked = category == RecordCategory.STORY,
                     onClick = onStoryClick
                 )
                 Spacer(modifier = Modifier.width(16.dp))
@@ -141,7 +141,7 @@ fun SelectCategoryScreen(
                     name = stringResource(id = R.string.lyrics),
                     description = stringResource(R.string.lyrics_description),
                     backgroundDrawable = R.drawable.ic_lyrics,
-                    isClicked = category == Category.LYRICS,
+                    isClicked = category == RecordCategory.LYRICS,
                     onClick = onLyricsClick
                 )
             }
@@ -151,7 +151,7 @@ fun SelectCategoryScreen(
                 name = stringResource(id = R.string.free),
                 description = stringResource(R.string.free_description),
                 backgroundDrawable = R.drawable.ic_free,
-                isClicked = category == Category.FREE,
+                isClicked = category == RecordCategory.FREE,
                 onClick = onFreeClick
             )
         }
