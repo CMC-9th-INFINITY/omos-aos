@@ -66,16 +66,6 @@ val Typography = Typography(
     )
 )
 
-val Typography.aline: TextStyle
-    get() = TextStyle(
-        fontSize = 22.sp,
-        lineHeight = 29.04.sp,
-        fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
-        fontWeight = FontWeight(400),
-        color = grey_01,
-        textAlign = TextAlign.Center
-    )
-
 val Typography.alineContents: TextStyle
     get() = TextStyle(
         fontSize = 22.sp,
@@ -96,7 +86,9 @@ val Typography.lyricsContents: TextStyle
     )
 
 val Typography.basicContents: TextStyle
-    get() = bodyLarge.copy(
+    get() = TextStyle(
+        fontSize = 16.sp,
         lineHeight = 25.6.sp,
+        fontWeight = FontWeight(400),
         color = grey_01
     )
