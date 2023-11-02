@@ -132,7 +132,7 @@ class DetailCategoryListAdapter internal constructor(
             }
 
             if (num >= heartStarList.size){
-                heartStarList.add(num, LikeScrap(category.isLiked, category.isScraped, category.likeCnt, category.scrapCnt))
+                heartStarList.add(num, LikeScrap(category.isLiked, category.isScrapped, category.sympathyCount, category.scrapCount))
             }
             setHeartStar(binding, heartStarList[num])
 
@@ -196,7 +196,7 @@ class DetailCategoryListAdapter internal constructor(
                         itemView.tv_star_cnt.text = String.format("%03d", heartStarList[num].scrapCnt)
 
                         // 상태 변화 확인
-                        if (category.isScraped){
+                        if (category.isScrapped){
                             deleteScrapList.add(category.recordId)
                         } else{
                             saveScrapList.remove(category.recordId)
@@ -209,7 +209,7 @@ class DetailCategoryListAdapter internal constructor(
 
                         itemView.tv_star_cnt.text = String.format("%03d", heartStarList[num].scrapCnt)
 
-                        if (category.isScraped){
+                        if (category.isScrapped){
                             deleteScrapList.remove(category.recordId)
                         } else{
                             saveScrapList.add(category.recordId)

@@ -85,13 +85,13 @@ class DetailRecordActivity : AppCompatActivity() {
                 binding.tvArtist.text = artists
                 binding.tvDate.text = GlobalFunction.setDate(it.createdDate)
                 binding.tvCategory.text = GlobalFunction.categoryEngToKr(this, it.category)
-                binding.tvHeartCnt.text = String.format("%03d", it.likeCnt)
-                binding.tvStarCnt.text = String.format("%03d", it.scrapCnt)
+                binding.tvHeartCnt.text = String.format("%03d", it.sympathyCount)
+                binding.tvStarCnt.text = String.format("%03d", it.scrapCount)
 
                 prevHeart = it.isLiked
-                prevStar = it.isScraped
-                heartCnt = it.likeCnt
-                starCnt = it.scrapCnt
+                prevStar = it.isScrapped
+                heartCnt = it.sympathyCount
+                starCnt = it.scrapCount
                 toUserId = it.userId
 
                 stateCategory = it.category
@@ -124,7 +124,7 @@ class DetailRecordActivity : AppCompatActivity() {
                 }
 
                 // 스크랩 상태
-                star = if (it.isScraped) {
+                star = if (it.isScrapped) {
                     binding.imgStar.setImageDrawable(
                         ContextCompat.getDrawable(
                             this,

@@ -64,9 +64,11 @@ fun DetailRecord.toPresentation(myId: Int): DetailRecordModel {
         category = RecordCategory.valueOf(category),
         date = DateUtil.convertToUiRecordDate(createdDate),
         isPublic = isPublic,
-        scrapCount = scrapCnt,
-        sympathyCount = likeCnt,
-        isMine = myId == userId
+        scrapCount = scrapCount,
+        sympathyCount = sympathyCount,
+        isMine = myId == userId,
+        isLiked = isLiked,
+        isScrapped = isScrapped
     )
 }
 
