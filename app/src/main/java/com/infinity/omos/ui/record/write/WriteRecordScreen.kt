@@ -59,11 +59,13 @@ import com.infinity.omos.ui.record.RecordForm
 import com.infinity.omos.ui.record.RecordTitleBox
 import com.infinity.omos.ui.record.TextCount
 import com.infinity.omos.ui.theme.OmosTheme
+import com.infinity.omos.ui.theme.alineContents
+import com.infinity.omos.ui.theme.basicContents
 import com.infinity.omos.ui.theme.black_02
 import com.infinity.omos.ui.theme.chip
-import com.infinity.omos.ui.theme.grey_01
 import com.infinity.omos.ui.theme.grey_02
 import com.infinity.omos.ui.theme.grey_03
+import com.infinity.omos.ui.theme.lyricsContents
 import com.infinity.omos.ui.theme.roundedField
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
@@ -202,7 +204,7 @@ fun WriteRecordScreen(
 
                 when (category) {
                     RecordCategory.A_LINE -> item {
-                        ALineBox(
+                        ALineContents(
                             modifier = Modifier.fillParentMaxSize(),
                             contents = contents,
                             onContentsChange = {
@@ -215,7 +217,7 @@ fun WriteRecordScreen(
                     RecordCategory.LYRICS -> itemsIndexed(
                         items = lyricsList
                     ) { idx, row ->
-                        LyricsBox(
+                        LyricsContents(
                             idx = idx,
                             lyricsRow = row,
                             lyricsList = lyricsList,
@@ -227,7 +229,7 @@ fun WriteRecordScreen(
                     else -> {
                         if (recordForm != RecordForm.KEYWORD) {
                             item {
-                                BasicCategoryBox(
+                                BasicCategoryContents(
                                     modifier = Modifier.fillParentMaxSize(),
                                     contents = contents,
                                     onContentsChange = {
@@ -238,7 +240,7 @@ fun WriteRecordScreen(
                             }
                         } else {
                             item {
-                                KeywordSelectionBox(
+                                KeywordSelectionContents(
                                     category = category
                                 )
                             }
@@ -285,7 +287,7 @@ fun WriteRecordScreen(
 }
 
 @Composable
-fun ALineBox(
+private fun ALineContents(
     modifier: Modifier,
     contents: String,
     onContentsChange: (String) -> Unit
@@ -298,14 +300,7 @@ fun ALineBox(
                 onContentsChange(it)
             }
         },
-        textStyle = TextStyle(
-            fontSize = 22.sp,
-            lineHeight = 29.04.sp,
-            fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
-            fontWeight = FontWeight(400),
-            color = grey_01,
-            textAlign = TextAlign.Center
-        ),
+        textStyle = MaterialTheme.typography.alineContents,
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = { innerTextField ->
@@ -328,7 +323,7 @@ fun ALineBox(
 }
 
 @Composable
-fun LyricsBox(
+private fun LyricsContents(
     idx: Int,
     lyricsRow: String,
     lyricsList: List<String>,
@@ -370,23 +365,14 @@ fun LyricsItem(
         Text(
             modifier = modifier,
             text = lyricsRow,
-            style = TextStyle(
-                fontSize = 18.sp,
-                lineHeight = 26.64.sp,
-                fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
-                fontWeight = FontWeight(400),
-                color = grey_03
-            )
+            style = MaterialTheme.typography.lyricsContents
         )
         Spacer(modifier = Modifier.height(8.dp))
         BasicTextField(
             modifier = modifier,
             value = contents,
             onValueChange = onContentsChange,
-            textStyle = MaterialTheme.typography.bodyLarge.copy(
-                lineHeight = 25.6.sp,
-                color = grey_01
-            ),
+            textStyle = MaterialTheme.typography.basicContents,
             keyboardOptions = KeyboardOptions(
                 imeAction = if (isLastItem) {
                     ImeAction.Done
@@ -401,7 +387,7 @@ fun LyricsItem(
 }
 
 @Composable
-fun BasicCategoryBox(
+private fun BasicCategoryContents(
     modifier: Modifier,
     contents: String,
     onContentsChange: (String) -> Unit
@@ -414,10 +400,7 @@ fun BasicCategoryBox(
                 onContentsChange(it)
             }
         },
-        textStyle = MaterialTheme.typography.bodyLarge.copy(
-            lineHeight = 25.6.sp,
-            color = grey_01
-        ),
+        textStyle = MaterialTheme.typography.basicContents,
         cursorBrush = SolidColor(MaterialTheme.colorScheme.primary),
         decorationBox = { innerTextField ->
             if (contents.isEmpty()) {
@@ -433,7 +416,7 @@ fun BasicCategoryBox(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun KeywordSelectionBox(
+private fun KeywordSelectionContents(
     modifier: Modifier = Modifier,
     contents: String = "",
     category: RecordCategory = RecordCategory.OST,
@@ -602,6 +585,6 @@ fun WriteRecordScreenPreview() {
 @Composable
 fun KeywordSelectionBoxPreview() {
     OmosTheme {
-        KeywordSelectionBox()
+        KeywordSelectionContents()
     }
 }

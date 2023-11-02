@@ -2,9 +2,12 @@ package com.infinity.omos.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
+import com.infinity.omos.R
 
 val Typography = Typography(
     headlineMedium = TextStyle(
@@ -62,3 +65,38 @@ val Typography = Typography(
         color = grey_02
     )
 )
+
+val Typography.aline: TextStyle
+    get() = TextStyle(
+        fontSize = 22.sp,
+        lineHeight = 29.04.sp,
+        fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
+        fontWeight = FontWeight(400),
+        color = grey_01,
+        textAlign = TextAlign.Center
+    )
+
+val Typography.alineContents: TextStyle
+    get() = TextStyle(
+        fontSize = 22.sp,
+        lineHeight = 29.04.sp,
+        fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
+        fontWeight = FontWeight(400),
+        color = grey_01,
+        textAlign = TextAlign.Center
+    )
+
+val Typography.lyricsContents: TextStyle
+    get() = TextStyle(
+        fontSize = 18.sp,
+        lineHeight = 26.64.sp,
+        fontFamily = FontFamily(Font(R.font.cafe24oneprettynight)),
+        fontWeight = FontWeight(400),
+        color = grey_03
+    )
+
+val Typography.basicContents: TextStyle
+    get() = bodyLarge.copy(
+        lineHeight = 25.6.sp,
+        color = grey_01
+    )
