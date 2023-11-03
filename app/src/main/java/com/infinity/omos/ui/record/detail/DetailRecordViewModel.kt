@@ -39,6 +39,30 @@ class DetailRecordViewModel @Inject constructor(
         }
     }
 
+    fun saveLikeRecord() {
+        viewModelScope.launch {
+            recordRepository.saveLikeRecord(postId, userId)
+        }
+    }
+
+    fun deleteLikeRecord() {
+        viewModelScope.launch {
+            recordRepository.deleteLikeRecord(postId, userId)
+        }
+    }
+
+    fun saveScrapRecord() {
+        viewModelScope.launch {
+            recordRepository.saveScrapRecord(postId, userId)
+        }
+    }
+
+    fun deleteScrapRecord() {
+        viewModelScope.launch {
+            recordRepository.deleteScrapRecord(postId, userId)
+        }
+    }
+
     companion object {
         private const val POST_ID_SAVED_STATE_KEY = "recordId"
     }

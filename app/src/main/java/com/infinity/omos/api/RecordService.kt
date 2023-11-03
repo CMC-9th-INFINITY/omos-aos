@@ -7,6 +7,7 @@ import com.infinity.omos.data.record.DetailRecord
 import com.infinity.omos.data.record.MyRecord
 import com.infinity.omos.data.record.SaveRecordRequest
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -51,5 +52,29 @@ interface RecordService {
     @POST("/api/records/save")
     suspend fun saveRecord(
         @Body params: SaveRecordRequest
+    ): NetworkResult
+
+    @POST("/api/like/save/{postsId}/{userId}")
+    suspend fun saveLikeRecord(
+        @Path("postsId") postId: Int,
+        @Path("userId") userId: Int
+    ): NetworkResult
+
+    @DELETE("/api/like/delete/{postsId}/{userId}")
+    suspend fun deleteLikeRecord(
+        @Path("postsId") postId: Int,
+        @Path("userId") userId: Int
+    ): NetworkResult
+
+    @POST("/api/scrap/save/{postsId}/{userId}")
+    suspend fun saveScrapRecord(
+        @Path("postsId") postId: Int,
+        @Path("userId") userId: Int
+    ): NetworkResult
+
+    @DELETE("/api/scrap/delete/{postsId}/{userId}")
+    suspend fun deleteScrapRecord(
+        @Path("postsId") postId: Int,
+        @Path("userId") userId: Int
     ): NetworkResult
 }

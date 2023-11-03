@@ -60,6 +60,22 @@ class RecordRemoteDataSourceImpl @Inject constructor(
         return recordService.saveRecord(record)
     }
 
+    override suspend fun saveLikeRecord(postId: Int, userId: Int): NetworkResult {
+        return recordService.saveLikeRecord(postId, userId)
+    }
+
+    override suspend fun deleteLikeRecord(postId: Int, userId: Int): NetworkResult {
+        return recordService.deleteLikeRecord(postId, userId)
+    }
+
+    override suspend fun saveScrapRecord(postId: Int, userId: Int): NetworkResult {
+        return recordService.saveScrapRecord(postId, userId)
+    }
+
+    override suspend fun deleteScrapRecord(postId: Int, userId: Int): NetworkResult {
+        return recordService.deleteScrapRecord(postId, userId)
+    }
+
     companion object {
         private const val DETAIL_RECORD_PAGE_SIZE = 10
     }

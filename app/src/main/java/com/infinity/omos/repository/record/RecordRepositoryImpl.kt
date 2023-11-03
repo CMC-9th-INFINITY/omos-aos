@@ -38,4 +38,20 @@ class RecordRepositoryImpl @Inject constructor(
     override suspend fun saveRecord(record: SaveRecordRequest): NetworkResult {
         return recordRemoteDataSource.saveRecord(record)
     }
+
+    override suspend fun saveLikeRecord(postId: Int, userId: Int): NetworkResult {
+        return recordRemoteDataSource.saveLikeRecord(postId, userId)
+    }
+
+    override suspend fun deleteLikeRecord(postId: Int, userId: Int): NetworkResult {
+        return recordRemoteDataSource.deleteLikeRecord(postId, userId)
+    }
+
+    override suspend fun saveScrapRecord(postId: Int, userId: Int): NetworkResult {
+        return recordRemoteDataSource.saveScrapRecord(postId, userId)
+    }
+
+    override suspend fun deleteScrapRecord(postId: Int, userId: Int): NetworkResult {
+        return recordRemoteDataSource.deleteScrapRecord(postId, userId)
+    }
 }

@@ -54,7 +54,21 @@ fun DetailRecordScreen(
 
     DetailRecordScreen(
         detailRecordUiState = detailRecordUiState,
-        onBackClick = onBackClick
+        onBackClick = onBackClick,
+        onLikeButtonClick = { clicked ->
+            if (clicked) {
+                viewModel.saveLikeRecord()
+            } else {
+                viewModel.deleteLikeRecord()
+            }
+        },
+        onScrapButtonClick = { clicked ->
+            if (clicked) {
+                viewModel.saveScrapRecord()
+            } else {
+                viewModel.deleteScrapRecord()
+            }
+        }
     )
 }
 
@@ -63,6 +77,8 @@ fun DetailRecordScreen(
 fun DetailRecordScreen(
     detailRecordUiState: DetailRecordUiState,
     onBackClick: () -> Unit = {},
+    onLikeButtonClick: (Boolean) -> Unit = {},
+    onScrapButtonClick: (Boolean) -> Unit = {}
 ) {
     when (detailRecordUiState) {
         is DetailRecordUiState.Success -> with(detailRecordUiState.detailRecord){
@@ -163,12 +179,14 @@ fun DetailRecordScreen(
                                 Spacer(modifier = Modifier.weight(1f))
                                 LikeButton(
                                     isLiked = isLiked,
-                                    sympathyCount = sympathyCount
+                                    sympathyCount = sympathyCount,
+                                    onLikeButtonClick = onLikeButtonClick
                                 )
                                 Spacer(modifier = Modifier.width(24.dp))
                                 ScrapButton(
                                     isScrapped = isScrapped,
-                                    scrapCount = scrapCount
+                                    scrapCount = scrapCount,
+                                    onScrapButtonClick = onScrapButtonClick
                                 )
                             }
                             Spacer(modifier = Modifier.height(20.dp))
@@ -243,7 +261,8 @@ private fun BasicCategoryContents(
 @Composable
 private fun LikeButton(
     isLiked: Boolean,
-    sympathyCount: Int
+    sympathyCount: Int,
+    onLikeButtonClick: (Boolean) -> Unit
 ) {
     var clicked by remember { mutableStateOf(isLiked) }
     var cnt by remember { mutableIntStateOf(sympathyCount) }
@@ -256,6 +275,7 @@ private fun LikeButton(
                 } else {
                     cnt -= 1
                 }
+                onLikeButtonClick(clicked)
             },
             painter = painterResource(
                 id = if (clicked) {
@@ -286,7 +306,8 @@ private fun LikeButton(
 @Composable
 private fun ScrapButton(
     isScrapped: Boolean,
-    scrapCount: Int
+    scrapCount: Int,
+    onScrapButtonClick: (Boolean) -> Unit
 ) {
     var clicked by remember { mutableStateOf(isScrapped) }
     var cnt by remember { mutableIntStateOf(scrapCount) }
@@ -299,6 +320,7 @@ private fun ScrapButton(
                 } else {
                     cnt -= 1
                 }
+                onScrapButtonClick(clicked)
             },
             painter = painterResource(
                 id = if (clicked) {

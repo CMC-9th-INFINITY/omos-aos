@@ -22,4 +22,12 @@ interface RecordRemoteDataSource {
     suspend fun getMyPageRecords(userId: Int): Result<MyPageRecord>
 
     suspend fun saveRecord(record: SaveRecordRequest): NetworkResult
+
+    suspend fun saveLikeRecord(postId: Int, userId: Int): NetworkResult
+
+    suspend fun deleteLikeRecord(postId: Int, userId: Int): NetworkResult
+
+    suspend fun saveScrapRecord(postId: Int, userId: Int): NetworkResult
+
+    suspend fun deleteScrapRecord(postId: Int, userId: Int): NetworkResult
 }
