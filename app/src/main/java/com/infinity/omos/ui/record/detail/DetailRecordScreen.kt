@@ -2,6 +2,7 @@ package com.infinity.omos.ui.record.detail
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -63,133 +64,128 @@ fun DetailRecordScreen(
     detailRecordUiState: DetailRecordUiState,
     onBackClick: () -> Unit = {},
 ) {
-    var category by remember { mutableStateOf(RecordCategory.A_LINE) }
-    if (detailRecordUiState is DetailRecordUiState.Success) {
-        with(detailRecordUiState.detailRecord) {
-            category = this.category
-        }
-    }
-
-    Scaffold(
-        topBar = {
-            OmosTopAppBar(
-                title = category.str,
-                navigationIcon = { BackIcon(onClick = onBackClick) },
-                actions = {
-                    Icon(
-                        modifier = Modifier.clickable {
-                            // 인스타 공유
-                        },
-                        painter = painterResource(id = R.drawable.ic_insta),
-                        contentDescription = "인스타그램"
-                    )
-                    Spacer(modifier = Modifier.width(24.dp))
-                    Icon(
-                        modifier = Modifier.clickable {
-                            // 레코드 수정 및 삭제
-                        },
-                        painter = painterResource(id = R.drawable.ic_more),
-                        contentDescription = "더보기"
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
-                }
-            )
-        }
-    ) { paddingValues ->
-        if (detailRecordUiState is DetailRecordUiState.Success) {
-            Column(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(paddingValues)
-                    .background(color = black_02)
-            ) {
-                val lazyListState = rememberLazyListState()
-
-                LazyColumn(
-                    state = lazyListState,
-                    modifier = Modifier.fillMaxWidth()
-                ) {
-                    item {
-                        Spacer(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(12.dp)
-                                .background(color = MaterialTheme.colorScheme.background)
-                        )
-                        MusicTopBar(music = detailRecordUiState.detailRecord.music)
-                        RecordTitleBox(
-                            title = detailRecordUiState.detailRecord.recordTitle,
-                            imageUrl = detailRecordUiState.detailRecord.recordImageUrl,
-                            date = detailRecordUiState.detailRecord.date,
-                            isMine = detailRecordUiState.detailRecord.isMine,
-                            isPublic = detailRecordUiState.detailRecord.isPublic
-                        )
-                        Spacer(modifier = Modifier.height(20.dp))
-                    }
-
-                    when (category) {
-                        RecordCategory.A_LINE -> item {
-                            ALineContents(
-                                contents = detailRecordUiState.detailRecord.recordContents
-                            )
-                        }
-
-                        RecordCategory.LYRICS -> item {
-                            LyricsContents(
-                                contents = detailRecordUiState.detailRecord.recordContents
-                            )
-                        }
-
-                        else -> item {
-                            BasicCategoryContents(
-                                contents = detailRecordUiState.detailRecord.recordContents,
-                            )
-                        }
-                    }
-
-                    item {
-                        Spacer(modifier = Modifier.height(20.dp))
-                        Divider(
-                            modifier = Modifier.padding(
-                                bottom = 20.dp,
-                                start = 20.dp,
-                                end = 20.dp
-                            ),
-                            thickness = 1.dp
-                        )
-                        Row(
-                            modifier = Modifier.padding(horizontal = 16.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                text = detailRecordUiState.detailRecord.nickname,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                            Spacer(modifier = Modifier.weight(1f))
-                            LikeButton(
-                                isLiked = detailRecordUiState.detailRecord.isLiked,
-                                sympathyCount = detailRecordUiState.detailRecord.sympathyCount
+    when (detailRecordUiState) {
+        is DetailRecordUiState.Success -> with(detailRecordUiState.detailRecord){
+            Scaffold(
+                topBar = {
+                    OmosTopAppBar(
+                        title = category.str,
+                        navigationIcon = { BackIcon(onClick = onBackClick) },
+                        actions = {
+                            Icon(
+                                modifier = Modifier.clickable {
+                                    // 인스타 공유
+                                },
+                                painter = painterResource(id = R.drawable.ic_insta),
+                                contentDescription = "인스타그램"
                             )
                             Spacer(modifier = Modifier.width(24.dp))
-                            ScrapButton(
-                                isScrapped = detailRecordUiState.detailRecord.isScrapped,
-                                scrapCount = detailRecordUiState.detailRecord.scrapCount
+                            Icon(
+                                modifier = Modifier.clickable {
+                                    // 레코드 수정 및 삭제
+                                },
+                                painter = painterResource(id = R.drawable.ic_more),
+                                contentDescription = "더보기"
                             )
+                            Spacer(modifier = Modifier.width(16.dp))
                         }
-                        Spacer(modifier = Modifier.height(20.dp))
+                    )
+                }
+            ) { paddingValues ->
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(paddingValues)
+                        .background(color = black_02)
+                ) {
+                    val lazyListState = rememberLazyListState()
+
+                    LazyColumn(
+                        state = lazyListState,
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        item {
+                            Spacer(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(12.dp)
+                                    .background(color = MaterialTheme.colorScheme.background)
+                            )
+                            MusicTopBar(music = music)
+                            RecordTitleBox(
+                                title = recordTitle,
+                                imageUrl = recordImageUrl,
+                                date = date,
+                                isMine = isMine,
+                                isPublic = isPublic
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
+
+                        when (category) {
+                            RecordCategory.A_LINE -> item {
+                                ALineContents(
+                                    contents = recordContents
+                                )
+                            }
+
+                            RecordCategory.LYRICS -> item {
+                                LyricsContents(
+                                    contents = recordContents
+                                )
+                            }
+
+                            else -> item {
+                                BasicCategoryContents(
+                                    contents = recordContents,
+                                )
+                            }
+                        }
+
+                        item {
+                            Spacer(modifier = Modifier.height(20.dp))
+                            Divider(
+                                modifier = Modifier.padding(
+                                    bottom = 20.dp,
+                                    start = 20.dp,
+                                    end = 20.dp
+                                ),
+                                thickness = 1.dp
+                            )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 16.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                Text(
+                                    text = nickname,
+                                    style = MaterialTheme.typography.bodyMedium
+                                )
+                                Spacer(modifier = Modifier.weight(1f))
+                                LikeButton(
+                                    isLiked = isLiked,
+                                    sympathyCount = sympathyCount
+                                )
+                                Spacer(modifier = Modifier.width(24.dp))
+                                ScrapButton(
+                                    isScrapped = isScrapped,
+                                    scrapCount = scrapCount
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(20.dp))
+                        }
                     }
                 }
             }
-        } else {
-            Column(
+        }
+        DetailRecordUiState.Loading -> {
+            Box(
+                contentAlignment = Alignment.Center,
                 modifier = Modifier.fillMaxSize()
             ) {
-                CircularProgressIndicator(
-                    modifier = Modifier.align(Alignment.CenterHorizontally),
-                    color = MaterialTheme.colorScheme.surface
-                )
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         }
+        DetailRecordUiState.Error -> {}
     }
 }
 
