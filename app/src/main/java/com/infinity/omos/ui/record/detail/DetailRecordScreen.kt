@@ -30,6 +30,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.infinity.omos.R
@@ -44,6 +45,9 @@ import com.infinity.omos.ui.theme.grey_01
 import com.infinity.omos.ui.theme.lyricsContents
 import com.infinity.omos.ui.view.BackIcon
 import com.infinity.omos.ui.view.OmosTopAppBar
+
+private const val MAX_BASIC_LINES = 7
+private const val MAX_LYRICS_LINES = 5
 
 @Composable
 fun DetailRecordScreen(
@@ -81,7 +85,7 @@ fun DetailRecordScreen(
     onScrapButtonClick: (Boolean) -> Unit = {}
 ) {
     when (detailRecordUiState) {
-        is DetailRecordUiState.Success -> with(detailRecordUiState.detailRecord){
+        is DetailRecordUiState.Success -> with(detailRecordUiState.detailRecord) {
             Scaffold(
                 topBar = {
                     OmosTopAppBar(
@@ -147,7 +151,7 @@ fun DetailRecordScreen(
 
                             RecordCategory.LYRICS -> item {
                                 LyricsContents(
-                                    contents = recordContents
+                                    recordContents = recordContents
                                 )
                             }
 
@@ -195,6 +199,7 @@ fun DetailRecordScreen(
                 }
             }
         }
+
         DetailRecordUiState.Loading -> {
             Box(
                 contentAlignment = Alignment.Center,
@@ -203,6 +208,7 @@ fun DetailRecordScreen(
                 CircularProgressIndicator(color = MaterialTheme.colorScheme.primary)
             }
         }
+
         DetailRecordUiState.Error -> {}
     }
 }
@@ -213,7 +219,9 @@ private fun ALineContents(
     contents: String
 ) {
     Text(
-        modifier = modifier.padding(48.dp),
+        modifier = modifier
+            .fillMaxSize()
+            .padding(48.dp),
         text = contents,
         style = MaterialTheme.typography.alineContents
     )
@@ -222,26 +230,54 @@ private fun ALineContents(
 @Composable
 private fun LyricsContents(
     modifier: Modifier = Modifier,
-    contents: String
+    recordContents: String
 ) {
-    val lyricsList = contents.split("\n")
-    Column {
-        lyricsList.forEachIndexed { index, row ->
-            if (index % 2 == 0) {
-                Text(
-                    modifier = modifier,
-                    text = row,
-                    style = MaterialTheme.typography.lyricsContents
-                )
-                Spacer(modifier = Modifier.height(8.dp))
-            } else {
-                Text(
-                    modifier = modifier,
-                    text = row,
-                    style = MaterialTheme.typography.basicContents
-                )
-                Spacer(modifier = Modifier.height(32.dp))
+    val lyricsList = recordContents.split("\n")
+    var expanded by remember { mutableStateOf(lyricsList.size < MAX_LYRICS_LINES) }
+    var lineCount by remember { mutableIntStateOf(0) }
+    val maxLines = if (expanded) Int.MAX_VALUE else MAX_LYRICS_LINES
+
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp)
+    ) {
+        Column {
+            lyricsList.forEachIndexed { index, row ->
+                if (index < maxLines) {
+                    if (index % 2 == 0) {
+                        Text(
+                            modifier = modifier,
+                            text = row,
+                            style = MaterialTheme.typography.lyricsContents,
+                            onTextLayout = { textLayoutResult ->
+                                lineCount += textLayoutResult.lineCount
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(8.dp))
+                    } else {
+                        Text(
+                            modifier = modifier,
+                            text = row,
+                            style = MaterialTheme.typography.basicContents,
+                            onTextLayout = { textLayoutResult ->
+                                lineCount += textLayoutResult.lineCount
+                            }
+                        )
+                        Spacer(modifier = Modifier.height(32.dp))
+                    }
+                }
             }
+        }
+
+        if (!expanded) {
+            MoreText(
+                modifier = modifier
+                    .align(Alignment.BottomEnd)
+                    .clickable {
+                        expanded = !expanded
+                    }
+            )
         }
     }
 }
@@ -251,11 +287,32 @@ private fun BasicCategoryContents(
     modifier: Modifier = Modifier,
     contents: String
 ) {
-    Text(
+    var expanded by remember { mutableStateOf(false) }
+    val maxLines = if (expanded) Int.MAX_VALUE else MAX_BASIC_LINES
+
+    Box(
         modifier = modifier.padding(horizontal = Dimens.PaddingNormal),
-        text = contents,
-        style = MaterialTheme.typography.basicContents
-    )
+    ) {
+        Text(
+            text = contents,
+            style = MaterialTheme.typography.basicContents,
+            maxLines = maxLines,
+            onTextLayout = { textLayoutResult ->
+                if (textLayoutResult.lineCount < MAX_BASIC_LINES) {
+                    expanded = true
+                }
+            }
+        )
+        if (!expanded) {
+            MoreText(
+                modifier = modifier
+                    .align(Alignment.BottomEnd)
+                    .clickable {
+                        expanded = true
+                    }
+            )
+        }
+    }
 }
 
 @Composable
@@ -346,6 +403,15 @@ private fun ScrapButton(
             }
         )
     }
+}
+
+@Composable
+fun MoreText(modifier: Modifier) {
+    Text(
+        modifier = modifier.background(color = black_02),
+        text = stringResource(id = R.string.read_more),
+        style = MaterialTheme.typography.labelLarge
+    )
 }
 
 private fun formatCountNumber(number: Int): String {
