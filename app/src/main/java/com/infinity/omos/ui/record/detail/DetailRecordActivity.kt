@@ -1,5 +1,7 @@
 package com.infinity.omos.ui.record.detail
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -18,4 +20,10 @@ class DetailRecordActivity : ComponentActivity() {
             }
         }
     }
+}
+
+fun moveDetailRecord(context: Context, recordId: Int) {
+    val intent = Intent(context, DetailRecordActivity::class.java)
+    intent.putExtra("recordId", recordId)
+    context.startActivity(intent)
 }

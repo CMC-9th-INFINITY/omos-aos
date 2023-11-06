@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyPageBinding
+import com.infinity.omos.ui.record.detail.moveDetailRecord
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -17,8 +18,12 @@ class MyPageFragment : Fragment() {
     private lateinit var binding: FragmentMyPageBinding
     private val viewModel: MyPageViewModel by viewModels()
 
-    private val scrapedAdapter = HorizontalRecordListAdapter(onClick = {})
-    private val likedAdapter = HorizontalRecordListAdapter(onClick = {})
+    private val scrapedAdapter = HorizontalRecordListAdapter(onClick = { recordId ->
+        moveDetailRecord(requireContext(), recordId)
+    })
+    private val likedAdapter = HorizontalRecordListAdapter(onClick = { recordId ->
+        moveDetailRecord(requireContext(), recordId)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

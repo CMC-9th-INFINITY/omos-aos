@@ -9,7 +9,7 @@ import com.infinity.omos.data.record.HorizontalPreviewRecordModel
 import com.infinity.omos.databinding.ListItemHorizontalRecordBinding
 
 class HorizontalRecordListAdapter(
-    private val onClick: (Int) -> Unit
+    private val onClick: (Int) -> Unit,
 ) : ListAdapter<HorizontalPreviewRecordModel, RecyclerView.ViewHolder>(HorizontalRecordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

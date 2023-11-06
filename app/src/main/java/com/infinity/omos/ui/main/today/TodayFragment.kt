@@ -13,7 +13,7 @@ import com.infinity.omos.adapters.dj.RecommendedDjListAdapter
 import com.infinity.omos.adapters.record.HorizontalRecordListAdapter
 import com.infinity.omos.databinding.FragmentTodayBinding
 import com.infinity.omos.ui.music.search.MusicSearchActivity
-import com.infinity.omos.ui.record.detail.DetailRecordActivity
+import com.infinity.omos.ui.record.detail.moveDetailRecord
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.*
@@ -24,7 +24,9 @@ class TodayFragment : Fragment() {
     private lateinit var binding: FragmentTodayBinding
     private val viewModel: TodayViewModel by viewModels()
 
-    private val horizontalRecordAdapter = HorizontalRecordListAdapter(::moveDetailRecord)
+    private val horizontalRecordAdapter = HorizontalRecordListAdapter(onClick = { recordId ->
+        moveDetailRecord(requireContext(), recordId)
+    })
     private val recommendedDjAdapter = RecommendedDjListAdapter()
 
     override fun onCreateView(
@@ -62,12 +64,6 @@ class TodayFragment : Fragment() {
             val intent = Intent(context, MusicSearchActivity::class.java)
             startActivity(intent)
         }
-    }
-
-    private fun moveDetailRecord(recordId: Int) {
-        val intent = Intent(context, DetailRecordActivity::class.java)
-        intent.putExtra("recordId", recordId)
-        startActivity(intent)
     }
 
     private fun collectData() {

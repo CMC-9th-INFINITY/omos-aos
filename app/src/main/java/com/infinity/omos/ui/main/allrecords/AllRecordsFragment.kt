@@ -9,6 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import com.infinity.omos.adapters.record.CategoryListAdapter
 import com.infinity.omos.databinding.FragmentAllRecordsBinding
+import com.infinity.omos.ui.record.detail.moveDetailRecord
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -18,7 +19,9 @@ class AllRecordsFragment : Fragment() {
     private lateinit var binding: FragmentAllRecordsBinding
     private val viewModel: AllRecordsViewModel by viewModels()
 
-    private val adapter = CategoryListAdapter()
+    private val adapter = CategoryListAdapter(onRecordClick = { recordId ->
+        moveDetailRecord(requireContext(), recordId)
+    })
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

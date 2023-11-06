@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.record.CategoryModel
 import com.infinity.omos.databinding.ListItemCategoryBinding
 
-class CategoryListAdapter :
+class CategoryListAdapter(
+    private val onRecordClick: (Int) -> Unit,
+) :
     ListAdapter<CategoryModel, RecyclerView.ViewHolder>(CategoryDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return CategoryViewHolder(
+            onRecordClick,
             ListItemCategoryBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -27,10 +30,11 @@ class CategoryListAdapter :
     }
 
     class CategoryViewHolder(
+        onRecordClick: (Int) -> Unit,
         private val binding: ListItemCategoryBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
-        private val adapter = HorizontalRecordListAdapter(onClick = {})
+        private val adapter = HorizontalRecordListAdapter(onClick = onRecordClick)
 
         init {
             binding.layoutCategory.ivMove.setOnClickListener {
