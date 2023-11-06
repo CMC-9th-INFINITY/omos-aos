@@ -1,5 +1,6 @@
 package com.infinity.omos.ui.main.myrecord
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,12 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
-import com.infinity.omos.R
 import com.infinity.omos.adapters.record.VerticalRecordListAdapter
 import com.infinity.omos.databinding.FragmentMyRecordBinding
+import com.infinity.omos.ui.record.detail.DetailRecordActivity
 import com.infinity.omos.utils.repeatOnStarted
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 @AndroidEntryPoint
 class MyRecordFragment : Fragment() {
@@ -20,7 +20,7 @@ class MyRecordFragment : Fragment() {
     private lateinit var binding: FragmentMyRecordBinding
     private val viewModel: MyRecordViewModel by viewModels()
 
-    private val adapter = VerticalRecordListAdapter()
+    private val adapter = VerticalRecordListAdapter(::moveDetailRecord)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,5 +50,11 @@ class MyRecordFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun moveDetailRecord(recordId: Int) {
+        val intent = Intent(context, DetailRecordActivity::class.java)
+        intent.putExtra("recordId", recordId)
+        startActivity(intent)
     }
 }

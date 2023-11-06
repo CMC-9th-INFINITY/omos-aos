@@ -8,11 +8,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.infinity.omos.data.record.VerticalPreviewRecordModel
 import com.infinity.omos.databinding.ListItemVerticalRecordBinding
 
-class VerticalRecordListAdapter :
+class VerticalRecordListAdapter(
+    private val onClick: (Int) -> Unit
+) :
     ListAdapter<VerticalPreviewRecordModel, RecyclerView.ViewHolder>(VerticalRecordDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return VerticalRecordViewHolder(
+            onClick,
             ListItemVerticalRecordBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
@@ -27,12 +30,13 @@ class VerticalRecordListAdapter :
     }
 
     class VerticalRecordViewHolder(
+        onClick: (Int) -> Unit,
         private val binding: ListItemVerticalRecordBinding
     ) : RecyclerView.ViewHolder(binding.root) {
 
         init {
             itemView.setOnClickListener {
-                // TODO: 아이템 클릭 시
+                onClick(binding.record?.recordId ?: -1)
             }
         }
 
